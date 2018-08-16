@@ -1,13 +1,13 @@
-# KSP API Extensions Unofficial
+# KSP API Extensions /L
 
-Extensions and utilities for Kerbal Space Program. Unofficial fork by Lisias.
+New extensions and utilities for Kerbal Space Program by Lisias.
 
 
 ## In a Hurry
 
-* [Latest Release](https://github.com/net-lisias-kspu/KSPAPIExtensions/releases)
-* [Source](https://github.com/net-lisias-kspu/KSPAPIExtensions)
-* [Binaries](https://github.com/net-lisias-kspu/KSPAPIExtensions/tree/Archive)
+* [Latest Release](https://github.com/net-lisias-ksp/KSPAPIExtensions/releases)
+* [Source](https://github.com/net-lisias-ksp/KSPAPIExtensions)
+* [Binaries](https://github.com/net-lisias-ksp/KSPAPIExtensions/tree/Archive)
 * [Change Log](./CHANGE_LOG.md)
 
 
