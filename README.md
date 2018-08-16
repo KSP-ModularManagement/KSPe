@@ -1,16 +1,23 @@
-KSPAPIExtensions
-================
+# KSP API Extensions Unofficial
 
-Extensions and utilities for Kerbal Space Program
+Extensions and utilities for Kerbal Space Program. Unofficial fork by Lisias.
 
+
+## In a Hurry
+
+* [Latest Release](https://github.com/net-lisias-kspu/KSPAPIExtensions/releases)
+* [Source](https://github.com/net-lisias-kspu/KSPAPIExtensions)
+* [Binaries](https://github.com/net-lisias-kspu/KSPAPIExtensions/tree/Archive)
+* [Change Log](./CHANGE_LOG.md)
+
+
+## Descrption
 This add in is useful for providing some functions that make interacting with the KSP API functionally nicer and with an improved interface. 
 
-# Utility classes
-
+### Utility classes
 There are a number of utility classes available that do different functions. If you don't want to distribute the whole DLL with your plugin, you can just copy the appropriate source file into your project.
 
-## Math Utils
-
+#### Math Utils
 The main feature of this is formatting of floats and doubles with SI prefixes. 
 
 Examples:
@@ -26,16 +33,13 @@ Examples:
 	(1.254).ToStringExt("S4-3") -> "1.254 m"  (-3 means the 'natural prefix' is m)
 ````
 
-## Other utility classes
-
+#### Other utility classes
 Utility methods to determine relationships between parts, plus some debugging code.
 
-# Improvements to tweakables
-
+### Improvements to tweakables
 Available is two extra tweakable controls, plus improvements to the stock tweakers. To use these you *must* include the KSIAPIUtils.dll in your project rather than just copying the code as there's an election process to ensure the latest version is being run. If backwards compatibility breaks, I will ensure that the user is warned to upgrade plugins.
 
-## SI Formatting for label fields.
-
+#### SI Formatting for label fields.
 Just use an 'S' type format code and SI prefixes will be handled. 
 
 ````c#
@@ -45,8 +49,7 @@ Just use an 'S' type format code and SI prefixes will be handled.
 
 For this example, the tankVolume variable is in kL, and will be displayed with 3 sig figs of accuracy.
 
-## SI Formatting and dynamic updating for resources in the editor
-
+#### SI Formatting and dynamic updating for resources in the editor
 This happens transparently. You can change the amount and maxAmount variables in your PartResource object in the editor, and they will be updated in the tweaker.
 
 The amount and max amount are displayed with four significant figures of accuracy.
@@ -59,8 +62,7 @@ If you add and remove resources, you will need to force a refresh of the part tw
 		window.displayDirty = true;
 ````
 
-## UI_ChooseOption
-
+#### UI_ChooseOption
 This allows the user to chose from a range of options. It's equivalent to a dropdown list only without the dropdown (dropdowns were difficult to do with the API).
 
 Use it like this:
@@ -90,8 +92,7 @@ Usually it's more appropriate to set the list of options at runtime:
 	}
 ````
 
-## UI_FloatEdit
-
+#### UI_FloatEdit
 This is a much improved version of UI_FloatRange. 
 
 You can select a float value with a set range. The value can be edited with optional large and small offsets, plus a slider to choose values between. Naturally SI formatting is available.
@@ -106,16 +107,14 @@ if incrementSmall is not set, then no button is visible in the control. If incre
 
 The slider is set to run between the smallest available increment, so in the above if the current value was 1.3, then the slider would run from 1.25 to 1.5.
 
-# PartMessage
-
+### PartMessage
 This is an improvement over the existing SendMessage system of Unity. It creates a publish/subscribe model for messages both within and between parts on a vessel. It will automatically wire message event senders and listeners in a PartModule or Part if they have the appropriate attributes.
 
 There's also a set of common messages defined, so addon builders can send and listen for those events in their code.
 
 Once again, to use these you *must* include the KSIAPIUtils.dll in your project rather than just copying the code as there's an election process to ensure the latest version is being run. If backwards compatibility breaks, I will ensure that the user is warned to upgrade plugins.
 
-## Initialization of message system
-
+#### Initialization of message system
 Any class or module that uses part messages must initialize the system. The easiest way is like this:
 
 ````c#
@@ -130,8 +129,7 @@ Any class or module that uses part messages must initialize the system. The easi
 
 You need to do this in OnAwake, as the part variable needs to be initialized.
 
-## Part messages
-
+#### Part messages
 Event types are declared as delegates with a special marker interface:
 
 ````c#
@@ -157,8 +155,7 @@ Note the [UseLatest] attribute for the PartMassChanged event. This indicates tha
 
 Above is an example of where this is not the case, the resource name uniquely identifies a message, however multiple messages with the same source but differ only in the maxAmount can be consolidated.
 
-## Message sending
-
+#### Message sending
 In your PartModule and Part objects, you can just declare and use an event like so:
 
 ````c#
@@ -174,8 +171,7 @@ In your PartModule and Part objects, you can just declare and use an event like 
 
 If you can send the update message from some other source, see the code for details of how to do it.
 
-## Message receiving
-
+#### Message receiving
 You can listen for messages by just declaring a method with a marker attribute:
 
 ````c#
@@ -189,6 +185,18 @@ Note the two optional filtering properties.
 
 *relations:* If not specified, the default is to only listen for messages from the same part, however you can listen to messages from Parents, Siblings, Ancestors... others.
 
-## Advanced message management
-
+#### Advanced message management
 You can filter messages, buffer them up and send them in one hit, and send them dynamically. I won't go into the full details in this document. Have a look at the source for more details.
+
+## License
+
+[CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). See [here](./LICENSE).
+
+
+## UPSTREAM
+
+* [swamp_ig](https://forum.kerbalspaceprogram.com/index.php?/profile/85299-pellinor/): ROOT
+	+ [Forum](https://forum.kerbalspaceprogram.com/index.php?/topic/73648-104-kspapiextensions-v175-utilities-for-shared-mod-use-25-jun/)
+	+ [GitHub](https://github.com/Swamp-Ig/KSPAPIExtensions)
+* [toadicus](https://forum.kerbalspaceprogram.com/index.php?/profile/67745-toadicus/): Parallel Fork
+	+ [GitHub](https://github.com/toadicus/KSPAPIExtensions)
