@@ -50,13 +50,13 @@ gen_tagged_class_wrappers() {
     echo "}"
 }
 
-sed -e "s/@VERSION@/$version/;s/@MAJOR/$major/;s/@MINOR/$minor/" Source/Properties/AssemblyInfo.in > tmp
-cmp -s Source/Properties/AssemblyInfo.cs tmp || cp tmp Source/Properties/AssemblyInfo.cs
+sed -e "s/@VERSION@/$version/;s/@MAJOR/$major/;s/@MINOR/$minor/" Source/KSPAPIExtensions/Properties/AssemblyInfo.in > tmp
+cmp -s Source/KSPAPIExtensions/Properties/AssemblyInfo.cs tmp || cp tmp Source/KSPAPIExtensions/Properties/AssemblyInfo.cs
 
 #sed -e "s/@VERSION@/$short_version/" ProceduralParts.version.in > tmp
 #cmp -s ProceduralParts.version tmp || cp tmp ProceduralParts.version
 
 gen_tagged_class_wrappers > tmp
-cmp -s Source/tagged_classes.cs tmp || cp tmp Source/tagged_classes.cs
+cmp -s Source/KSPAPIExtensions/tagged_classes.cs tmp || cp tmp Source/KSPAPiExtensions/tagged_classes.cs
 
 rm tmp
