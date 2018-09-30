@@ -85,5 +85,11 @@ namespace KSPe
 			string fn = GeneratePathname<T>(name + ".cfg");
 			return new PluginConfig(name, fn);
 		}
+
+		public static PluginConfig ForType<T>(string name, string filename)
+		{
+			string fn = GeneratePathname<T>(filename);
+			return new PluginConfig(name, fn);
+		}
 	}
 }

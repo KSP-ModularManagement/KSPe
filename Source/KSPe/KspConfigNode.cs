@@ -38,6 +38,12 @@ namespace KSPe
 			this.Node = new ConfigNode(name);
 		}
 
+		public KspConfig(string name, string filename)
+		{
+			this.Path = GeneratePathname(filename);
+			this.Node = new ConfigNode(name);
+		}
+
 		public KspConfig Load()
 		{
 			if (!System.IO.File.Exists(this.Path))
