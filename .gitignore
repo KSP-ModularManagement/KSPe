@@ -2,12 +2,11 @@
 bin
 obj
 GameData/*/Plugins/*.dll
-GameData/*/LICENSE
+GameData/*/*.LICENSE
 GameData/*/README.md
 GameData/*/CHANGE_LOG.md
 GameData/*/CHANGES.md
 GameData/*/*.version
-Source/KSPAPIExtensions/Properties/AssemblyInfo.cs
 Source/KSPAPIExtensions/tagged_classes.cs
 Source/*/Properties/Version.cs
 Source/*/*.user

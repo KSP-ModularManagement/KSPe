@@ -55,7 +55,7 @@ check
 cp $VERSIONFILE "./GameData/$TARGETDIR"
 cp CHANGE_LOG.md "./GameData/$TARGETDIR"
 cp README.md  "./GameData/$TARGETDIR"
-cp LICENSE "./GameData/$TARGETDIR"
+cp *.LICENSE "./GameData/$TARGETDIR"
 for dll in KSPAPIExtensions ; do
     deploy_dev $dll
     deploy $dll
