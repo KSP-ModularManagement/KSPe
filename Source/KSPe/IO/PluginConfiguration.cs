@@ -36,11 +36,14 @@ namespace KSPe.IO
 			Type target = typeof(T);
 			string fn = Path.Combine(KSPUtil.ApplicationRootPath, "PluginData");
 			fn = Path.Combine(fn, target.Namespace);
-			if (!System.IO.Directory.Exists(fn))
-				System.IO.Directory.CreateDirectory(fn);
 
 			// TODO: Checar como funciona o Vessel. Possivelmente nesse caso o XML deve estar no savegame!
 			fn = Path.Combine(fn, filename);
+			{
+				string d = System.IO.Path.GetDirectoryName(fn);
+				if (!System.IO.Directory.Exists(d))
+					System.IO.Directory.CreateDirectory(d);
+			}
 			return new PluginConfiguration(fn);
 		}
 

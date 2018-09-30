@@ -71,9 +71,12 @@ namespace KSPe
 			Type target = typeof(T);
 			string fn = System.IO.Path.Combine(KSPUtil.ApplicationRootPath, "PluginData");
 			fn = System.IO.Path.Combine(fn, target.Namespace);
-			if (!System.IO.Directory.Exists(fn))
-				System.IO.Directory.CreateDirectory(fn);
 			fn = System.IO.Path.Combine(fn, filename);
+			{
+				string d = System.IO.Path.GetDirectoryName(fn);
+				if (!System.IO.Directory.Exists(d))
+					System.IO.Directory.CreateDirectory(d);
+			}
 			return fn;
 		}
 
