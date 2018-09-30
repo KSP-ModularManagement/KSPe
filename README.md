@@ -11,7 +11,7 @@ New extensions and utilities for Kerbal Space Program by Lisias.
 * [Change Log](./CHANGE_LOG.md)
 
 
-## Descrption
+## Description
 This add in is useful for providing some functions that make interacting with the KSP API functionally nicer and with an improved interface. 
 
 ### Utility classes
@@ -188,8 +188,23 @@ Note the two optional filtering properties.
 #### Advanced message management
 You can filter messages, buffer them up and send them in one hit, and send them dynamically. I won't go into the full details in this document. Have a look at the source for more details.
 
-## License
+### KSPe
 
+Documentation is Work In Progress. See the source for while. :)
+
+
+## Installation
+
+To install, place the GameData folder inside your Kerbal Space Program folder.
+
+**REMOVE ANY OLD VERSIONS OF THE PRODUCT BEFORE INSTALLING**.
+
+### Dependencies
+
+* [KSP API Extensions/L](https://github.com/net-lisias-ksp/KSPAPIExtensions)
+
+
+## Licensing
 * KSPAPIExtensions.dll
 	+ [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). See [here](./KSPAPIExtensions.LICENSE).
 		+ You are free to:
@@ -221,6 +236,7 @@ You can filter messages, buffer them up and send them in one hit, and send them 
 			- You relicense (and fully comply) your works using GPL 2.0 (or later)
 			- You don't mix your work with GPL incompatible works.
 	* If by some reason the GPL would be invalid for you, rest assured that you still retain the right to Use the Work under SKL 1.0. 
+
 
 ## UPSTREAM
 
