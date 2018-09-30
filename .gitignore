@@ -11,3 +11,4 @@ Source/KSPAPIExtensions/Properties/AssemblyInfo.cs
 Source/KSPAPIExtensions/tagged_classes.cs
 Source/*/Properties/Version.cs
 Source/*/*.user
+GameData/000_*.dll
