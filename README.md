@@ -1,6 +1,6 @@
-# KSP API Extensions Unofficial
+# KSP API Extensions /L (Archive)
 
-Extensions and utilities for Kerbal Space Program. Unofficial fork by Lisias.
+New extensions and utilities for Kerbal Space Program by Lisias.
 
 
 ## In a Hurry
@@ -11,7 +11,7 @@ Extensions and utilities for Kerbal Space Program. Unofficial fork by Lisias.
 * [Change Log](./CHANGE_LOG.md)
 
 
-## Descrption
+## Description
 This add in is useful for providing some functions that make interacting with the KSP API functionally nicer and with an improved interface. 
 
 ### Utility classes
@@ -188,9 +188,54 @@ Note the two optional filtering properties.
 #### Advanced message management
 You can filter messages, buffer them up and send them in one hit, and send them dynamically. I won't go into the full details in this document. Have a look at the source for more details.
 
-## License
+### KSPe
 
-[CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). See [here](./LICENSE).
+Documentation is Work In Progress. See the source for while. :)
+
+
+## Installation
+
+To install, place the GameData folder inside your Kerbal Space Program folder.
+
+**REMOVE ANY OLD VERSIONS OF THE PRODUCT BEFORE INSTALLING**.
+
+### Dependencies
+
+* [KSP API Extensions/L](https://github.com/net-lisias-ksp/KSPAPIExtensions)
+
+
+## Licensing
+* KSPAPIExtensions.dll
+	+ [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). See [here](./KSPAPIExtensions.LICENSE).
+		+ You are free to:
+			- Share : copy and redistribute the material in any medium or format
+			- Adapt : remix, transform, and build upon the material for any purpose, even commercially. 
+		+ Under the following terms:
+			- Attribution : You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+			- ShareAlike : If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
+* KSPe.dll is double licensed at user discretion:
+	+ [SKL 1.0](https://ksp.lisias.net/SKL-1_0.txt). See [here](./KSPe.SKL-1_0.LICENSE)
+		+ You are free to:
+			- Use : unpack and use the material in any computer or device
+			- Redistribute: redistribute the original package in any medium
+		+ Under the following terms:
+			- You agree to use the material only on (or to) KSP
+			- You don't alter the package in any form or way (but you can embedded it)
+			- You don't change the material in any way, and retain any copyright notices
+			- You must explicitly state the author's Copyright, as well an Official Site for downloading the original and new versions (the one you used to download is good enough) 
+	+ [GPL 2.0](https://www.gnu.org/licenses/gpl-2.0.txt). See [here](./KSPe.GPL-2_0.LICENSE)
+		+ You are free to:
+			- Use : unpack and use the material in any computer or device
+			- Redistribute : redistribute the original package in any medium
+			- Adapt : Reuse, modify or incorporate source code into your works (and redistribute it!) 
+		+ Under the following terms:
+			- You retain any copyright notices
+			- You recognize and respect any trademarks
+			- You don't impersonate the authors, neither redistribute a derivative that could be misrepresented as theirs.
+			- You credit the author and republish the copyright notices on your works where the code is used.
+			- You relicense (and fully comply) your works using GPL 2.0 (or later)
+			- You don't mix your work with GPL incompatible works.
+	* If by some reason the GPL would be invalid for you, rest assured that you still retain the right to Use the Work under SKL 1.0. 
 
 
 ## UPSTREAM
@@ -200,3 +245,4 @@ You can filter messages, buffer them up and send them in one hit, and send them 
 	+ [GitHub](https://github.com/Swamp-Ig/KSPAPIExtensions)
 * [toadicus](https://forum.kerbalspaceprogram.com/index.php?/profile/67745-toadicus/): Parallel Fork
 	+ [GitHub](https://github.com/toadicus/KSPAPIExtensions)
+
