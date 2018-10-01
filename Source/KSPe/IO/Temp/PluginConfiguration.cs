@@ -25,7 +25,7 @@ using System;
 using SIO = System.IO;
 using KSP;
 
-namespace KSPe.IO
+namespace KSPe.IO.Temp
 {
 	public class PluginConfiguration : KSP.IO.PluginConfiguration
 	{
@@ -47,7 +47,7 @@ namespace KSPe.IO
 
 		public static PluginConfiguration CreateForType<T>(string filename)
 		{
-			string fn = File<T>.FullPathName(filename, "PluginData", true);
+			string fn = File<T>.TempPathName(filename);
 			return new PluginConfiguration(fn);
 		}
 

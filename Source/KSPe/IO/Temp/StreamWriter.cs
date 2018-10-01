@@ -24,16 +24,16 @@
 using System;
 using SIO = System.IO;
 
-namespace KSPe.IO
+namespace KSPe.IO.Temp
 {
-	public class FileStream : SIO.FileStream
+	public class StreamWriter : SIO.StreamWriter
 	{
-		protected FileStream(string filename, SIO.FileMode filemode) : base(filename, filemode) {}
+		internal StreamWriter(string path) : base(path) {}
 
-		public static FileStream CreateForType<T>(string filename, FileMode mode)
+		public static StreamWriter CreateForType<T>(string filename)
 		{
-			string fn = File<T>.FullPathName(filename, "PluginData", true);
-			return new FileStream(fn, (SIO.FileMode)mode);
+			string fn = File<T>.TempPathName(filename);
+			return new StreamWriter(fn);
 		}
 	}
 }

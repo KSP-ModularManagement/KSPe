@@ -24,16 +24,16 @@
 using System;
 using SIO = System.IO;
 
-namespace KSPe.IO
+namespace KSPe.IO.Local
 {
-	public class StreamReader : SIO.StreamReader
+	public class FileStream : SIO.FileStream
 	{
-		protected StreamReader(string path) : base(path) {}
+		protected FileStream(string filename, SIO.FileMode filemode) : base(filename, filemode) {}
 
-		public static StreamReader CreateForType<T>(string filename)
+		public static FileStream CreateForType<T>(string filename, FileMode mode)
 		{
-			string fn = File<T>.FullPathName(filename, "PluginData", true);
-			return new StreamReader(fn);
+			string fn = File<T>.FullPathName(filename, File<Object>.DATA, true);
+			return new FileStream(fn, (SIO.FileMode)mode);
 		}
 	}
 }

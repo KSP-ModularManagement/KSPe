@@ -23,17 +23,43 @@
 
 using System;
 using SIO = System.IO;
+using KSP;
 
-namespace KSPe.IO
+namespace KSPe.IO.Data
 {
-	public class StreamWriter : SIO.StreamWriter
+	public class PluginConfiguration : KSP.IO.PluginConfiguration
 	{
-		protected StreamWriter(string path) : base(path) { }
+		protected readonly string pathname;
+		protected PluginConfiguration(string pathname) : base(pathname) {
+			this.pathname = pathname;
+		}
 
-		public static StreamWriter CreateForType<T>(string filename)
+		public bool exists()
 		{
-			string fn = File<T>.FullPathName(filename, "PluginData", true);
-			return new StreamWriter(fn);
+			return SIO.File.Exists(this.pathname);
+		}
+
+		public void delete()
+		{
+			if (SIO.File.Exists(this.pathname))
+				SIO.File.Delete(this.pathname);
+		}
+
+		public static PluginConfiguration CreateForType<T>(string filename)
+		{
+			string fn = File<T>.FullPathName(filename, File<Object>.DATA, true);
+			return new PluginConfiguration(fn);
+		}
+
+		public static new PluginConfiguration CreateForType<T>(Vessel flight)
+		{
+			Type target = typeof(T);
+			return CreateForType<T>((flight ? flight.GetName() + "." + target.Name : target.Name) + ".xml");
+		}
+
+		public static PluginConfiguration CreateForType<T>()
+		{
+			return CreateForType<T>((Vessel)null);
 		}
 	}
 }

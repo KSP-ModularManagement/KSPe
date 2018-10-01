@@ -40,7 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IO\PluginConfiguration.cs" />
     <Compile Include="Properties\Version.cs">
       <DependentUpon>Version.tt</DependentUpon>
     </Compile>
@@ -48,15 +47,33 @@
     <Compile Include="KspConfigNode.cs" />
     <Compile Include="IO\File.cs" />
     <Compile Include="IO\FileMode.cs" />
-    <Compile Include="IO\FileStream.cs" />
-    <Compile Include="IO\StreamReader.cs" />
-    <Compile Include="IO\StreamWriter.cs" />
+    <Compile Include="IO\Asset\FileStream.cs" />
+    <Compile Include="IO\Asset\PluginConfiguration.cs" />
+    <Compile Include="IO\Asset\StreamReader.cs" />
+    <Compile Include="IO\Local\FileStream.cs" />
+    <Compile Include="IO\Local\PluginConfiguration.cs" />
+    <Compile Include="IO\Local\StreamReader.cs" />
+    <Compile Include="IO\Local\StreamWriter.cs" />
+    <Compile Include="IO\Data\FileStream.cs" />
+    <Compile Include="IO\Data\PluginConfiguration.cs" />
+    <Compile Include="IO\Data\StreamReader.cs" />
+    <Compile Include="IO\Data\StreamWriter.cs" />
+    <Compile Include="IO\Temp\FileStream.cs" />
+    <Compile Include="IO\Temp\PluginConfiguration.cs" />
+    <Compile Include="IO\Temp\StreamReader.cs" />
+    <Compile Include="IO\Temp\StreamWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Version.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="IO\Asset\" />
+    <Folder Include="IO\Data\" />
+    <Folder Include="IO\Local\" />
+    <Folder Include="IO\Temp\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
