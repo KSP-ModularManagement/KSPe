@@ -23,43 +23,17 @@
 
 using System;
 using SIO = System.IO;
-using KSP;
 
 namespace KSPe.IO
 {
-	public class PluginConfiguration : KSP.IO.PluginConfiguration
+	public class FileStream : SIO.FileStream
 	{
-		protected readonly string pathname;
-		protected PluginConfiguration(string pathname) : base(pathname) {
-			this.pathname = pathname;
-		}
+		protected FileStream(string filename, SIO.FileMode filemode) : base(filename, filemode) {}
 
-		public bool exists()
-		{
-			return SIO.File.Exists(this.pathname);
-		}
-
-		public void delete()
-		{
-			if (SIO.File.Exists(this.pathname))
-				SIO.File.Delete(this.pathname);
-		}
-
-		public static PluginConfiguration CreateForType<T>(string filename)
+		public static FileStream CreateForType<T>(string filename, FileMode mode)
 		{
 			string fn = File<T>.FullPathName(filename, "PluginData", true);
-			return new PluginConfiguration(fn);
-		}
-
-		public static new PluginConfiguration CreateForType<T>(Vessel flight)
-		{
-			Type target = typeof(T);
-			return CreateForType<T>((flight ? flight.GetName() + "." + target.Name : target.Name) + ".xml");
-		}
-
-		public static PluginConfiguration CreateForType<T>()
-		{
-			return CreateForType<T>((Vessel)null);
+			return new FileStream(fn, (SIO.FileMode)mode);
 		}
 	}
 }

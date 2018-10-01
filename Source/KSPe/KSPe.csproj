@@ -46,6 +46,11 @@
     </Compile>
     <Compile Include="PluginConfigNode.cs" />
     <Compile Include="KspConfigNode.cs" />
+    <Compile Include="IO\File.cs" />
+    <Compile Include="IO\FileMode.cs" />
+    <Compile Include="IO\FileStream.cs" />
+    <Compile Include="IO\StreamReader.cs" />
+    <Compile Include="IO\StreamWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">

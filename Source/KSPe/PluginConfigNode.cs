@@ -56,6 +56,8 @@ namespace KSPe
 
 		public void Save(ConfigNode node)
 		{
+			if (null == node)
+				throw new IOException("Invalid NULL config for saving!");
 			this.Node = node;
 			this.Save();
 		}
@@ -66,29 +68,15 @@ namespace KSPe
 				File.Delete(this.Path);
 		}
 
-		private static string GeneratePathname<T>(string filename)
-		{
-			Type target = typeof(T);
-			string fn = System.IO.Path.Combine(KSPUtil.ApplicationRootPath, "PluginData");
-			fn = System.IO.Path.Combine(fn, target.Namespace);
-			fn = System.IO.Path.Combine(fn, filename);
-			{
-				string d = System.IO.Path.GetDirectoryName(fn);
-				if (!System.IO.Directory.Exists(d))
-					System.IO.Directory.CreateDirectory(d);
-			}
-			return fn;
-		}
-
 		public static PluginConfig ForType<T>(string name)
 		{
-			string fn = GeneratePathname<T>(name + ".cfg");
+			string fn = IO.File<T>.FullPathName(name + ".cfg", "PluginData", true);
 			return new PluginConfig(name, fn);
 		}
 
 		public static PluginConfig ForType<T>(string name, string filename)
 		{
-			string fn = GeneratePathname<T>(filename);
+			string fn = IO.File<T>.FullPathName(filename, "PluginData", true);
 			return new PluginConfig(name, fn);
 		}
 	}

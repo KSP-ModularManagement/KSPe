@@ -22,44 +22,20 @@
 */
 
 using System;
+using System.Runtime.InteropServices;
 using SIO = System.IO;
-using KSP;
 
 namespace KSPe.IO
 {
-	public class PluginConfiguration : KSP.IO.PluginConfiguration
+	[Serializable]
+	[ComVisible(true)]
+	public enum FileMode
 	{
-		protected readonly string pathname;
-		protected PluginConfiguration(string pathname) : base(pathname) {
-			this.pathname = pathname;
-		}
-
-		public bool exists()
-		{
-			return SIO.File.Exists(this.pathname);
-		}
-
-		public void delete()
-		{
-			if (SIO.File.Exists(this.pathname))
-				SIO.File.Delete(this.pathname);
-		}
-
-		public static PluginConfiguration CreateForType<T>(string filename)
-		{
-			string fn = File<T>.FullPathName(filename, "PluginData", true);
-			return new PluginConfiguration(fn);
-		}
-
-		public static new PluginConfiguration CreateForType<T>(Vessel flight)
-		{
-			Type target = typeof(T);
-			return CreateForType<T>((flight ? flight.GetName() + "." + target.Name : target.Name) + ".xml");
-		}
-
-		public static PluginConfiguration CreateForType<T>()
-		{
-			return CreateForType<T>((Vessel)null);
-		}
+		Append = SIO.FileMode.Append,
+		Create = SIO.FileMode.Create,
+		CreateNew = SIO.FileMode.CreateNew,
+		Open = SIO.FileMode.Open,
+		OpenOrCreate = SIO.FileMode.OpenOrCreate,
+		Truncate = SIO.FileMode.Truncate
 	}
 }
