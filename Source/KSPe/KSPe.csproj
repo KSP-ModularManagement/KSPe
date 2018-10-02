@@ -63,6 +63,7 @@
     <Compile Include="IO\Temp\StreamReader.cs" />
     <Compile Include="IO\Temp\StreamWriter.cs" />
     <Compile Include="Util\Log.cs" />
+    <Compile Include="AbstractConfigNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">

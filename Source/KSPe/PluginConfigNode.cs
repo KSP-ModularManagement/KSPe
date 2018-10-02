@@ -21,32 +21,20 @@
     
 */
 
-using System;
 using System.IO;
 
 namespace KSPe
 {
-	public class PluginConfig
+	public class PluginConfig: AbstractConfig
 	{
-		public ConfigNode Node { get; private set; }
-		public string Path { get; private set; }
-		public bool IsLoadable => System.IO.File.Exists(this.Path) && (0 == (FileAttributes.Directory & System.IO.File.GetAttributes(this.Path)));
-
-		protected PluginConfig(string name, string fn)
+		protected PluginConfig(string name, string fn): base(name)
 		{
 			this.Path = fn;
-			this.Node = new ConfigNode(name);
 		}
 
-		public PluginConfig Load()
+		public new PluginConfig Load()
 		{
-			if (!System.IO.File.Exists(this.Path))
-				throw new FileNotFoundException(this.Path);
-			ConfigNode n = ConfigNode.Load(this.Path);
-			if (null == n)
-				throw new IOException("Invalid config on " + this.Path);
-			this.Node = n;
-			return this;
+			return (PluginConfig)base.Load();
 		}
 
 		public void Save()
