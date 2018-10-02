@@ -25,6 +25,7 @@ using System;
 using System.Linq;
 using SIO = System.IO;
 using KSP.IO;
+using System.IO.IsolatedStorage;
 
 namespace KSPe.IO
 {
@@ -36,6 +37,9 @@ namespace KSPe.IO
 
 		internal static string TempPathName(string filename)
 		{
+			if (!string.IsNullOrEmpty(SIO.Path.GetDirectoryName(filename)))
+				throw new IsolatedStorageException(String.Format("filename cannot have subdirectories! [{0}]", filename));
+
 			Type target = typeof(T);
 			string fn = System.IO.Path.GetTempPath();
 			fn = SIO.Path.Combine(fn, "ksp");
@@ -49,11 +53,13 @@ namespace KSPe.IO
 			return fn;
 		}
 		
-		internal static string FullPathName(string partialPathname, string subdir, string hierarchy, bool createDirs = false)
+		internal static string FullPathName(string partialPathname, string rootDir, string hierarchy, bool createDirs = false)
 		{
+			if (SIO.Path.IsPathRooted(partialPathname))
+				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
+
 			string fn = SIO.Path.Combine(KSPUtil.ApplicationRootPath, hierarchy);
-			fn = SIO.Path.Combine(fn, subdir);
-			if (SIO.Path.IsPathRooted(partialPathname)) throw new ArgumentException(String.Format("pathname cannot be full! [{0}]", partialPathname));
+			fn = SIO.Path.Combine(fn, rootDir);
 			fn = SIO.Path.Combine(fn, SIO.Path.GetFileName(partialPathname));
 			if (createDirs)
 			{
@@ -64,21 +70,21 @@ namespace KSPe.IO
 			return fn;
 		}
 
-		internal static string FullPathName(string filename, string hierarchy, bool createDirs = false)
+		internal static string FullPathName(string partialPathname, string hierarchy, bool createDirs = false)
 		{
 			Type target = typeof(T);
-			string subdir = target.Namespace;
+			string rooDir = target.Namespace;
 			{
 				var t = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
 						 from tt in assembly.GetTypes()
 						 where tt.Namespace == target.Namespace && tt.Name == "Version" && tt.GetMembers().Any(m => m.Name == "Vendor")
 						 select tt).FirstOrDefault();
 
-				subdir = (null == t)
+				rooDir = (null == t)
 					? target.Namespace
 					: SIO.Path.Combine(t.GetField("Vendor").GetValue(null).ToString(), target.Namespace);
 			}
-			return FullPathName(filename, subdir, hierarchy, createDirs);
+			return FullPathName(partialPathname, rooDir, hierarchy, createDirs);
 		}
 
 		public static class Asset
