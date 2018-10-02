@@ -62,6 +62,7 @@
     <Compile Include="IO\Temp\PluginConfiguration.cs" />
     <Compile Include="IO\Temp\StreamReader.cs" />
     <Compile Include="IO\Temp\StreamWriter.cs" />
+    <Compile Include="Util\Log.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
@@ -74,6 +75,7 @@
     <Folder Include="IO\Data\" />
     <Folder Include="IO\Local\" />
     <Folder Include="IO\Temp\" />
+    <Folder Include="Util\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
