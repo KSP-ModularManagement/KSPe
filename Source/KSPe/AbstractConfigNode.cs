@@ -31,6 +31,12 @@ namespace KSPe
 		public string Path { get; protected set; }
 		public bool IsLoadable => System.IO.File.Exists(this.Path) && (0 == (FileAttributes.Directory & System.IO.File.GetAttributes(this.Path)));
 
+		// KSP automatically prefixes all paths with the ApplicationRootPath before using it internally, what plays
+		// havoc with our way to keep plugins sandboxed (by always using hardpaths).
+		// So we use this when giving such paths to KSP, so it can find the file.
+		// (found this due a problem with "my" ModuleManager when loading TechTree.cfg!)
+		public string KspPath => this.Path.Replace(KSPUtil.ApplicationRootPath, "");
+
 		protected AbstractConfig(string name)
 		{
 			this.Node = new ConfigNode(name);
