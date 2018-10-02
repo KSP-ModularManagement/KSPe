@@ -8,7 +8,14 @@ New extensions and utilities for Kerbal Space Program by Lisias.
 * [Latest Release](https://github.com/net-lisias-ksp/KSPAPIExtensions/releases)
 * [Source](https://github.com/net-lisias-ksp/KSPAPIExtensions)
 * [Binaries](https://github.com/net-lisias-ksp/KSPAPIExtensions/tree/Archive)
-* [Change Log](./CHANGE_LOG.md)
+* Documentation	
+	+ [Homepage](http://ksp.lisias.net/add-ons/KSPAPIExtensions) on L Aerospace KSP Division
+	+ [Project's README](https://github.com/net-lisias-ksp/KSPAPIExtensions/blob/master/README.md)
+	+ [Change Log](./CHANGE_LOG.md)
+	+ [TODO](./TODO.md) list
+* Official Distribution Sites:
+	+ [Homepage](http://ksp.lisias.net/add-ons/KSPAPIExtensions) on L Aerospace
+	+ [Source and Binaries](https://github.com/net-lisias-ksp/KSPAPIExtensions) on GitHub.
 
 
 ## Descrption
