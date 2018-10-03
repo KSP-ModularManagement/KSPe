@@ -28,9 +28,17 @@ namespace KSPe
 {
 	public class AbstractConfig
 	{
-		public ConfigNode Node { get; protected set; }
 		public string Path { get; protected set; }
 		public bool IsLoadable => System.IO.File.Exists(this.Path) && (0 == (FileAttributes.Directory & System.IO.File.GetAttributes(this.Path)));
+
+		private ConfigNode _Node;
+		public ConfigNode Node {
+			get {
+				if (null == this._Node)
+					this._Node = (null != this.name ? this.RawNode.GetNode(this.name) : this.RawNode);
+				return this._Node;
+			}
+		}
 
 		// KSP automatically prefixes all paths with the ApplicationRootPath before using it internally, what plays
 		// havoc with our way to keep plugins sandboxed (by always using hardpaths).
@@ -38,6 +46,7 @@ namespace KSPe
 		// (found this due a problem with "my" ModuleManager when loading TechTree.cfg!)
 		public string KspPath => this.Path.Replace(KSPUtil.ApplicationRootPath, "");
 
+		protected ConfigNode RawNode;
 		protected readonly string name;
 		protected AbstractConfig(string name)
 		{
@@ -53,14 +62,18 @@ namespace KSPe
 			if (null == n)
 				throw new IOException(string.Format("Invalid config on {0}.", this.Path));
 			if (null != this.name && this.name != n.GetNodes()[0].name)
-				throw new FormatException(string.Format("Incompatible config for '{0}'/'{1}' on {2}.", this.name, n.GetNodes()[0].name, this.Path));
-			this.Node = n;
+				throw new FormatException(string.Format("Incompatible Node '{1}' for Config '{0}' on {2}.", this.name, n.GetNodes()[0].name, this.Path));
+			this.RawNode = n;
 			return this;
 		}
 
 		public void Clear()
 		{
-			this.Node = null == this.name ? new ConfigNode() : new ConfigNode(this.name);
+			this._Node = null;
+			ConfigNode n = null == this.name ? new ConfigNode() : new ConfigNode(this.name);
+			this.RawNode = new ConfigNode();
+			if (null != this.name)
+				this.RawNode.AddNode(new ConfigNode(this.name));
 		}
 	}
 }

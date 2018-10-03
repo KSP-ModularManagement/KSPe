@@ -40,7 +40,7 @@ namespace KSPe
 
 		public void Save()
 		{
-			this.Node.Save(this.Path);
+			this.RawNode.Save(this.Path);
 		}
 
 		public void Save(ConfigNode node)
@@ -49,13 +49,13 @@ namespace KSPe
 				throw new FormatException("Invalid NULL config for saving!");
 			
 			if (null == this.name)
-				this.Node = node;
+				this.RawNode = node;
 			else if (this.name == node.GetNodes()[0].name)
-				this.Node = node;
+				this.RawNode = node;
 			else if (this.name == node.name)
 			{
 				this.Clear();
-				this.Node.AddNode(node);
+				this.RawNode.AddNode(this.name, node);
 			}
 			else
 				throw new FormatException(string.Format("Incompatible Node '{1}' for Config '{0}' on {2}.", this.name, node.name, this.Path));
