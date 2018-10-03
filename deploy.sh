@@ -10,41 +10,41 @@ check() {
 }
 
 deploy_dev() {
-	local DLL=$1
+	local DLL=$1.dll
 
-	if [ -f "./bin/Release/$DLL.dll" ] ; then
-		cp "./bin/Release/$DLL.dll" "$LIB"
+	if [ -f "./bin/Release/$DLL" ] ; then
+		cp "./bin/Release/$DLL" "$LIB"
 	fi
 }
 
 deploy() {
-	local DLL=$1
+	local DLL=$1.dll
 
-	if [ -f "./bin/Release/$DLL.dll" ] ; then
-		cp "./bin/Release/$DLL.dll" "./GameData/$TARGETBINDIR/"
+	if [ -f "./bin/Release/$DLL" ] ; then
+		cp "./bin/Release/$DLL" "./GameData/$TARGETBINDIR/"
 		if [ -d "${KSP_DEV}/GameData/$TARGETBINDIR/" ] ; then
-			cp "./bin/Release/$DLL.dll" "${KSP_DEV/}GameData/$TARGETBINDIR/"
+			cp "./bin/Release/$DLL" "${KSP_DEV/}GameData/$TARGETBINDIR/"
 		fi
 	fi
-	if [ -f "./bin/Debug/$DLL.dll" ] ; then
+	if [ -f "./bin/Debug/$DLL" ] ; then
 		if [ -d "${KSP_DEV}/GameData/$TARGETBINDIR/" ] ; then
-			cp "./bin/Debug/$DLL.dll" "${KSP_DEV}GameData/$TARGETBINDIR/"
+			cp "./bin/Debug/$DLL" "${KSP_DEV}GameData/$TARGETBINDIR/"
 		fi
 	fi
 }
 
 deploy_gamedata() {
-	local DLL=$1
+	local DLL=$1.dll
 
-	if [ -f "./bin/Release/$DLL.dll" ] ; then
-		cp "./bin/Release/$DLL.dll" "./GameData/000_$DLL.dll"
+	if [ -f "./bin/Release/$DLL" ] ; then
+		cp "./bin/Release/$DLL" "./GameData/000_$DLL"
 		if [ -d "${KSP_DEV}/GameData/" ] ; then
-			cp "./bin/Release/$DLL.dll" "${KSP_DEV/}GameData/000_$DLL.dll"
+			cp "./bin/Release/$DLL" "${KSP_DEV/}GameData/000_$DLL"
 		fi
 	fi
-	if [ -f "./bin/Debug/$DLL.dll" ] ; then
+	if [ -f "./bin/Debug/$DLL" ] ; then
 		if [ -d "${KSP_DEV}/GameData/" ] ; then
-			cp "./bin/Debug/$DLL.dll" "${KSP_DEV}GameData/000_$DLL.dll"
+			cp "./bin/Debug/$DLL" "${KSP_DEV}GameData/000_$DLL"
 		fi
 	fi
 }
