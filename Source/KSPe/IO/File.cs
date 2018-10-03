@@ -23,9 +23,9 @@
 
 using System;
 using System.Linq;
+using System.IO.IsolatedStorage;
 using SIO = System.IO;
 using KSP.IO;
-using System.IO.IsolatedStorage;
 
 namespace KSPe.IO
 {

@@ -23,8 +23,6 @@
 
 using System;
 using System.Diagnostics;
-using UnityEngine;
-using System.Runtime.CompilerServices;
 
 namespace KSPe.Util.Log {
 
