@@ -21,6 +21,7 @@
     
 */
 
+using System;
 using System.IO;
 
 namespace KSPe
@@ -40,7 +41,8 @@ namespace KSPe
 		protected readonly string name;
 		protected AbstractConfig(string name)
 		{
-			this.Node = new ConfigNode(this.name);
+			this.name = name;
+			this.Clear();
 		}
 
 		public AbstractConfig Load()
@@ -49,14 +51,16 @@ namespace KSPe
 				throw new FileNotFoundException(this.Path);
 			ConfigNode n = ConfigNode.Load(this.Path);
 			if (null == n)
-				throw new IOException("Invalid config on " + this.Path);
+				throw new IOException(string.Format("Invalid config on {0}.", this.Path));
+			if (null != this.name && this.name != n.GetNodes()[0].name)
+				throw new FormatException(string.Format("Incompatible config for '{0}'/'{1}' on {2}.", this.name, n.GetNodes()[0].name, this.Path));
 			this.Node = n;
 			return this;
 		}
 
 		public void Clear()
 		{
-			this.Node = new ConfigNode(this.Node.name);
+			this.Node = null == this.name ? new ConfigNode() : new ConfigNode(this.name);
 		}
 	}
 }

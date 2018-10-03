@@ -21,6 +21,7 @@
     
 */
 
+using System;
 using System.IO;
 
 namespace KSPe
@@ -57,9 +58,9 @@ namespace KSPe
 			this.Clear();
 		}
 
-		public static PluginConfig ForType<T>(string name)
+		public static PluginConfig ForType<T>(string name = null)
 		{
-			string fn = IO.File<T>.FullPathName(name + ".cfg", "PluginData", true);
+			string fn = IO.File<T>.FullPathName( (name ?? typeof(T).FullName) + ".cfg", "PluginData", true);
 			return new PluginConfig(name, fn);
 		}
 
