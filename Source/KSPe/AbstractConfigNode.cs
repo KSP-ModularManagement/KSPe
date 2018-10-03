@@ -37,9 +37,10 @@ namespace KSPe
 		// (found this due a problem with "my" ModuleManager when loading TechTree.cfg!)
 		public string KspPath => this.Path.Replace(KSPUtil.ApplicationRootPath, "");
 
+		protected readonly string name;
 		protected AbstractConfig(string name)
 		{
-			this.Node = new ConfigNode(name);
+			this.Node = new ConfigNode(this.name);
 		}
 
 		public AbstractConfig Load()
@@ -53,5 +54,9 @@ namespace KSPe
 			return this;
 		}
 
+		public void Clear()
+		{
+			this.Node = new ConfigNode(this.Node.name);
+		}
 	}
 }

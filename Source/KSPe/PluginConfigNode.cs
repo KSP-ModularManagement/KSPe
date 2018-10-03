@@ -54,6 +54,7 @@ namespace KSPe
 		{
 			if (File.Exists(this.Path))
 				File.Delete(this.Path);
+			this.Clear();
 		}
 
 		public static PluginConfig ForType<T>(string name)
