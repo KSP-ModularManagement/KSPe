@@ -59,12 +59,28 @@ namespace KSPe.Util.Log {
 			return new UnityLogger(forceThisNamespace, forceThisClassName);
 		}
 
-		public Level level =
+		protected delegate void LogMethod(string message);
+		protected Level _level =
 #if DEBUG
             Level.TRACE;
 #else
 			Level.ERROR;
 #endif
+		public Level level
+		{
+			get => this._level;
+			set
+			{
+				if (this._level != value)
+		            this.force("Log is set to level {0}.", value);
+				this._level = value;
+			}
+		}
+		public bool IsLoggable(Level level)
+		{
+			return level <= this._level;
+		}
+
 		private readonly String prefix;
 
 		protected Logger(string forceThisNamespace)
@@ -76,72 +92,68 @@ namespace KSPe.Util.Log {
 		{
 			this.prefix = string.Format("[{0}-{1}]", forceThisNamespace, forceThisClassName);
 		}
-
-		protected abstract void log(string message, params object[] @params);
-		protected abstract void log(Level level, Exception e, string message, params object[] @params);
+		
+		protected abstract LogMethod select();
+		protected abstract void log(string message);
+		protected abstract void logException(string message, Exception e);
 
 		public void force(string message, params object[] @params)
 		{
-			this.log(message, @params);
+			this.select()(this.BuildMessage(message, @params));
 		}
 
 		public void trace(string message, params object[] @params)
 		{
-			if (!this.IsLoggable(level)) return;
-			this.log(Level.TRACE, null, message, @params);
+			if (!this.IsLoggable(Level.DETAIL)) return;
+			this.select()(this.BuildMessage(Level.TRACE, message, @params));
 		}
 
 		public void detail(string message, params object[] @params)
 		{
-			if (!this.IsLoggable(level)) return;
-			this.log(Level.DETAIL, null, message, @params);
+			if (!this.IsLoggable(Level.DETAIL)) return;
+			this.select()(this.BuildMessage(Level.DETAIL, message, @params));
 		}
 
 		[ConditionalAttribute("DEBUG")]
 		public void dbg(string message, params object[] @params)
 		{
-			this.log(Level.TRACE, null, message, @params);
+			this.select()(this.BuildMessage(Level.TRACE, message, @params));
 		}
 
 		public void info(string message, params object[] @params)
 		{
-			if (!this.IsLoggable(level)) return;
-			this.log(Level.INFO, null, message, @params);
+			if (!this.IsLoggable(Level.INFO)) return;
+			this.select()(this.BuildMessage(Level.INFO, message, @params));
 		}
 
 		public void warn(string message, params object[] @params)
 		{
-			if (!this.IsLoggable(level)) return;
-			this.log(Level.WARNING, null, message, @params);
+			if (!this.IsLoggable(Level.WARNING)) return;
+			this.select()(this.BuildMessage(Level.WARNING, message, @params));
 		}
 
 		public void warn(Exception e, string message, params object[] @params)
 		{
-			if (!this.IsLoggable(level)) return;
-			this.log(Level.WARNING, e, message, @params);
+			if (!this.IsLoggable(Level.WARNING)) return;
+			this.logException(this.BuildMessage(Level.WARNING, message, @params),e);
 		}
 
 		public void error(string message, params object[] @params)
 		{
-			if (!this.IsLoggable(level)) return;
-			this.log(Level.ERROR, null, message, @params);
+			if (!this.IsLoggable(Level.ERROR)) return;
+			this.select()(this.BuildMessage(Level.ERROR, message, @params));
 		}
 
 		public void error(Exception e, string message, params object[] @params)
 		{
-			if (!this.IsLoggable(level)) return;
-			this.log(Level.ERROR, e, message, @params);
+			if (!this.IsLoggable(Level.ERROR)) return;
+			this.logException(this.BuildMessage(Level.ERROR, message, @params), e);
 		}
 
 		public void error(System.Object offended, System.Exception e)
 		{
-			if (!this.IsLoggable(level)) return;
-			this.log(Level.ERROR, e, "{0} raised Exception {1}", offended.GetType().FullName, e.ToString());
-		}
-
-		protected bool IsLoggable(Level level)
-		{
-			return level <= this.level;
+			if (!this.IsLoggable(Level.ERROR)) return;
+			this.logException(this.BuildMessage(Level.ERROR, "{0} raised Exception {1}", offended.GetType().FullName, e.ToString()), e);
 		}
 
 		protected string BuildMessage(string message, params object[] @params)
@@ -165,42 +177,41 @@ namespace KSPe.Util.Log {
 		public UnityLogger(string forceThisNamespace) : base(forceThisNamespace) { }
 		public UnityLogger(string forceThisNamespace, string forceThisClassName) : base(forceThisNamespace, forceThisClassName) { }
 
-		private delegate void LogMethod(string message);
-
-		protected override void log(string message, params object[] @params)
+		protected override LogMethod select()
 		{
-			UnityEngine.Debug.Log(this.BuildMessage(message, @params));
-		}
-		
-		protected override void log(Level level, Exception e, string message, params object[] @params)
-		{
-			LogMethod logMethod;
-			switch (level)
+			switch (this._level)
 			{
 				case Level.OFF:
-					return;
+					return dummy;
 					
 				case Level.TRACE:
 					goto case Level.INFO;
 				case Level.DETAIL:
 					goto case Level.INFO;
 				case Level.INFO:
-					logMethod = UnityEngine.Debug.Log;
-					break;
+					return UnityEngine.Debug.Log;
 
 				case Level.WARNING:
-					logMethod = UnityEngine.Debug.LogWarning;
-					break;
+					return UnityEngine.Debug.LogWarning;
 
 				case Level.ERROR:
-					logMethod = UnityEngine.Debug.LogError;
-					break;
+					return UnityEngine.Debug.LogError;
 
 				default:
 					throw new ArgumentException("unknown log level: " + level);
 			}
+		}
 
-			logMethod(this.BuildMessage(level, message, @params));
+		protected void dummy(string message) {}
+
+		protected override void log(string message)
+		{
+			UnityEngine.Debug.Log(message);
+		}
+
+		protected override void logException(string message, Exception e)
+		{
+			UnityEngine.Debug.LogError(message);
 			if (e != null)
 			{
 				UnityEngine.Debug.LogException(e);

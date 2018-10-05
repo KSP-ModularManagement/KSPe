@@ -27,7 +27,6 @@ using System.Reflection;
 using System.IO.IsolatedStorage;
 
 using SIO = System.IO;
-using KSP.IO;
 using System.IO;
 
 namespace KSPe.IO
@@ -100,7 +99,7 @@ namespace KSPe.IO
 					throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
 				
 				string fn = SIO.Path.GetDirectoryName(typeof(T).Assembly.Location);
-				for (int i = ASSET.Length; --i > 0;)
+				for (int i = ASSET.Length; --i >= 0;)
 				{
 					string t = SIO.Path.Combine(fn, ASSET[i]);
 					if (SIO.File.Exists(t))
@@ -375,7 +374,7 @@ namespace KSPe.IO
 			}
 
 			public static SIO.FileAttributes GetAttributes(string path)
-						{
+			{
 				path = makepath(path, false);
 				return SIO.File.GetAttributes(path);
 			}
