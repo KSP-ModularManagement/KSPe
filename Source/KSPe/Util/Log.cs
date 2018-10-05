@@ -91,6 +91,12 @@ namespace KSPe.Util.Log {
 			this.log(Level.TRACE, null, message, @params);
 		}
 
+		public void detail(string message, params object[] @params)
+		{
+			if (!this.IsLoggable(level)) return;
+			this.log(Level.DETAIL, null, message, @params);
+		}
+
 		[ConditionalAttribute("DEBUG")]
 		public void dbg(string message, params object[] @params)
 		{
