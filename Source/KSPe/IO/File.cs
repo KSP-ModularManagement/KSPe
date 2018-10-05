@@ -23,17 +23,20 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using System.IO.IsolatedStorage;
+
 using SIO = System.IO;
 using KSP.IO;
+using System.IO;
 
 namespace KSPe.IO
 {
 	public static class File<T>
 	{
-		public const string DATA = "PluginData";        // Writeable data on <KSP_ROO>/PluginData/<plugin_name>/
-		public const string ASSET = "PluginData";       // ReadOnly data on <KSP_ROO>/GameData/<plugin_name>/Plugin/PluginData/
-		public const string LOCAL = "GameData/__LOCAL"; // Custom runtime generated parts on <KSP_ROO>/GameData/__LOCAL/<plugin_name> (specially made for UbioWeldingLtd)
+		public const string DATA = "PluginData";                                // Writeable data on <KSP_ROO>/PluginData/<plugin_name>/
+		public static readonly string[] ASSET = { "PluginData", "Assets", "." }; // ReadOnly data on <KSP_ROO>/GameData/<plugin_name>/Plugin/PluginData/ or whatever the DLL is.
+		public const string LOCAL = "GameData/__LOCAL";                         // Custom runtime generated parts on <KSP_ROO>/GameData/__LOCAL/<plugin_name> (specially made for UbioWeldingLtd)
 
 		internal static readonly string KSP_ROOTPATH = SIO.Path.GetFullPath(KSPUtil.ApplicationRootPath);
 
@@ -91,9 +94,25 @@ namespace KSPe.IO
 
 		public static class Asset
 		{
-			private static string makepath(string path, bool createDirs)
+			private static string makepath(string partialPathname)
 			{
-				return FullPathName(path, ASSET, createDirs);
+				if (SIO.Path.IsPathRooted(partialPathname))
+					throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
+				
+				string fn = SIO.Path.GetDirectoryName(typeof(T).Assembly.Location);
+				for (int i = ASSET.Length; --i > 0;)
+				{
+					string t = SIO.Path.Combine(fn, ASSET[i]);
+					if (SIO.File.Exists(t))
+					{
+						fn = SIO.Path.Combine(t, partialPathname);
+						fn = SIO.Path.GetFullPath(fn);
+						if (!SIO.File.Exists(fn))
+							throw new FileNotFoundException(fn);
+						return fn;
+					}
+				}
+				throw new FileNotFoundException(partialPathname);
 			}
 			
 			public static void CopyToData(string sourceFileName, string destDataFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Asset.CopyToData"); }
@@ -104,61 +123,61 @@ namespace KSPe.IO
 	
 			public static bool Exists(string path)
 			{
-				path = makepath(path, false);
+				path = makepath(path);
 				return SIO.File.Exists(path);
 			}
 			
 			public static System.Security.AccessControl.FileSecurity GetAccessControl(string path)
 			{
-				path = makepath(path, false);
+				path = makepath(path);
 				return SIO.File.GetAccessControl(path);
 			}
 			
 			public static System.Security.AccessControl.FileSecurity GetAccessControl(string path, System.Security.AccessControl.AccessControlSections includeSections)
 			{
-				path = makepath(path, false);
+				path = makepath(path);
 				return SIO.File.GetAccessControl(path, includeSections);
 			}
 
 			public static SIO.FileAttributes GetAttributes(string path)
 						{
-				path = makepath(path, false);
+				path = makepath(path);
 				return SIO.File.GetAttributes(path);
 			}
 
 			public static DateTime GetCreationTime(string path)
 			{
-				path = makepath(path, false);
+				path = makepath(path);
 				return SIO.File.GetCreationTime(path);
 			}
 
 			public static DateTime GetCreationTimeUtc(string path)
 			{
-				path = makepath(path, false);
+				path = makepath(path);
 				return SIO.File.GetCreationTimeUtc(path);
 			}
 
 			public static DateTime GetLastAccessTime(string path)
 			{
-				path = makepath(path, false);
+				path = makepath(path);
 				return SIO.File.GetLastAccessTime(path);
 			}
 
 			public static DateTime GetLastAccessTimeUtc(string path)
 			{
-				path = makepath(path, false);
+				path = makepath(path);
 				return SIO.File.GetLastAccessTimeUtc(path);
 			}
 
 			public static DateTime GetLastWriteTime(string path)
 			{
-				path = makepath(path, false);
+				path = makepath(path);
 				return SIO.File.GetLastWriteTime(path);
 			}
 
 			public static DateTime GetLastWriteTimeUtc(string path)
 			{
-				path = makepath(path, false);
+				path = makepath(path);
 				return SIO.File.GetLastWriteTimeUtc(path);
 			}
 
