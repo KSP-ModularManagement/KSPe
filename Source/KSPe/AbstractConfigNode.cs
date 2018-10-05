@@ -22,14 +22,14 @@
 */
 
 using System;
-using System.IO;
+using SIO = System.IO;
 
 namespace KSPe
 {
 	public class AbstractConfig
 	{
 		public string Path { get; protected set; }
-		public bool IsLoadable => System.IO.File.Exists(this.Path) && (0 == (FileAttributes.Directory & System.IO.File.GetAttributes(this.Path)));
+		public bool IsLoadable => SIO.File.Exists(this.Path) && (0 == (SIO.FileAttributes.Directory & SIO.File.GetAttributes(this.Path)));
 
 		private ConfigNode _Node;
 		public ConfigNode Node {
@@ -44,7 +44,7 @@ namespace KSPe
 		// havoc with our way to keep plugins sandboxed (by always using hardpaths).
 		// So we use this when giving such paths to KSP, so it can find the file.
 		// (found this due a problem with "my" ModuleManager when loading TechTree.cfg!)
-		public string KspPath => this.Path.Replace(KSPUtil.ApplicationRootPath, "");
+		public string KspPath => this.Path.Replace(IO.File<object>.KSP_ROOTPATH, "");
 
 		protected ConfigNode RawNode;
 		protected readonly string name;
@@ -57,10 +57,10 @@ namespace KSPe
 		public AbstractConfig Load()
 		{
 			if (!System.IO.File.Exists(this.Path))
-				throw new FileNotFoundException(this.Path);
+				throw new SIO.FileNotFoundException(this.Path);
 			ConfigNode n = ConfigNode.Load(this.Path);
 			if (null == n)
-				throw new IOException(string.Format("Invalid config on {0}.", this.Path));
+				throw new SIO.IOException(string.Format("Invalid config on {0}.", this.Path));
 			if (null != this.name && this.name != n.GetNodes()[0].name)
 				throw new FormatException(string.Format("Incompatible Node '{1}' for Config '{0}' on {2}.", this.name, n.GetNodes()[0].name, this.Path));
 			this.RawNode = n;

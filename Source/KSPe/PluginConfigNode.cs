@@ -22,7 +22,7 @@
 */
 
 using System;
-using System.IO;
+using SIO = System.IO;
 
 namespace KSPe
 {
@@ -65,8 +65,8 @@ namespace KSPe
 
 		public void Destroy()
 		{
-			if (File.Exists(this.Path))
-				File.Delete(this.Path);
+			if (SIO.File.Exists(this.Path))
+				SIO.File.Delete(this.Path);
 			this.Clear();
 		}
 

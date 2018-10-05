@@ -35,6 +35,8 @@ namespace KSPe.IO
 		public const string ASSET = "PluginData";       // ReadOnly data on <KSP_ROO>/GameData/<plugin_name>/Plugin/PluginData/
 		public const string LOCAL = "GameData/__LOCAL"; // Custom runtime generated parts on <KSP_ROO>/GameData/__LOCAL/<plugin_name> (specially made for UbioWeldingLtd)
 
+		internal static readonly string KSP_ROOTPATH = SIO.Path.GetFullPath(KSPUtil.ApplicationRootPath);
+
 		internal static string TempPathName(string filename)
 		{
 			if (!string.IsNullOrEmpty(SIO.Path.GetDirectoryName(filename)))
@@ -50,7 +52,7 @@ namespace KSPe.IO
 				if (!System.IO.Directory.Exists(d))
 					System.IO.Directory.CreateDirectory(d);
 			}
-			return fn;
+			return SIO.Path.GetFullPath(fn);
 		}
 		
 		internal static string FullPathName(string partialPathname, string rootDir, string hierarchy, bool createDirs = false)
@@ -58,7 +60,7 @@ namespace KSPe.IO
 			if (SIO.Path.IsPathRooted(partialPathname))
 				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
 
-			string fn = SIO.Path.Combine(KSPUtil.ApplicationRootPath, hierarchy);
+			string fn = SIO.Path.Combine(KSP_ROOTPATH, hierarchy);
 			fn = SIO.Path.Combine(fn, rootDir);
 			fn = SIO.Path.Combine(fn, SIO.Path.GetFileName(partialPathname));
 			if (createDirs)
@@ -67,7 +69,7 @@ namespace KSPe.IO
 				if (!System.IO.Directory.Exists(d))
 					System.IO.Directory.CreateDirectory(d);
 			}
-			return fn;
+			return SIO.Path.GetFullPath(fn);
 		}
 
 		internal static string FullPathName(string partialPathname, string hierarchy, bool createDirs = false)

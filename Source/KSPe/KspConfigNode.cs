@@ -42,7 +42,7 @@ namespace KSPe
 		
 		protected static string GeneratePathname(string filename)
 		{
-			string fn = System.IO.Path.Combine(KSPUtil.ApplicationRootPath, filename);
+			string fn = System.IO.Path.Combine(KSPe.IO.File<object>.KSP_ROOTPATH, filename);
 			return fn;
 		}
 
