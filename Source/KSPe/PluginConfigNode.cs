@@ -81,5 +81,11 @@ namespace KSPe
 			string fn = IO.File<T>.FullPathName(filename, "PluginData", true);
 			return new PluginConfig(name, fn);
 		}
+
+		public static string[] ListForType<T>(string mask = "*.cfg", bool subdirs = false)
+		{
+			string dir = IO.File<T>.FullPathName(".", "PluginData");
+			return ListFiles(SIO.Path.GetDirectoryName(dir), mask, subdirs);
+		}
 	}
 }
