@@ -18,6 +18,22 @@ namespace Tests
 
 			if (null != t)
 				Console.WriteLine(t.GetField("Vendor").GetValue(null).ToString());
-		}
+
+			string[] files = System.IO.Directory.GetFiles("/Users/lisias/Applications/Games/KSP/Exodus/", "*.cfg", System.IO.SearchOption.AllDirectories);
+			for (int i = files.Length; --i >= 0;)
+				files[i] = files[i].Replace("/Users/lisias/Applications/Games/KSP/Exodus/", "");
+			foreach (string f in files.OrderBy(x => x).ToArray())
+			{
+				Console.WriteLine(f);
+			}
+			Console.WriteLine(files.Length.ToString());
+			
+			string[] strings = { "S1", "a1", "S11", "a11", "S2", "a2"};
+			foreach (string f in strings.OrderBy(x => x).ToArray())
+			{
+				Console.WriteLine(f);
+			}
+			Console.WriteLine(System.IO.Path.GetFullPath("/Users/lisias/Applications/.././Blah/../Bleh/./"));
+		}   
 	}
 }
