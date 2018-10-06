@@ -39,12 +39,6 @@ namespace KSPe.IO.Asset
 			return SIO.File.Exists(this.pathname);
 		}
 
-		public void delete()
-		{
-			if (SIO.File.Exists(this.pathname))
-				SIO.File.Delete(this.pathname);
-		}
-
 		public static PluginConfiguration CreateForType<T>(string filename)
 		{
 			string fn = File<T>.FullPathName(filename, File<Object>.DATA, true);

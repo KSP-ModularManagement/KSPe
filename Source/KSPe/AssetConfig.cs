@@ -15,28 +15,25 @@ namespace KSPe
 			return (AssetConfig)base.Load();
 		}
 
-		protected static string GeneratePathname<T>(string filename)
-		{
-			string fn = IO.File<T>.FullPathName(filename, "GameData");
-			return fn;
-		}
-
 		public static AssetConfig ForType<T>(string name = null)
 		{
-			string fn = GeneratePathname<T>(name ?? typeof(T).FullName + ".cfg");
+			string fn = IO.File<T>.Asset.FullPathName(name ?? typeof(T).FullName + ".cfg");
 			return new AssetConfig(name, fn);
 		}
 
 		public static AssetConfig ForType<T>(string name, string filename)
 		{
-			string fn = GeneratePathname<T>(filename);
+			string fn = IO.File<T>.Asset.FullPathName(filename);
 			return new AssetConfig(name, fn);
 		}
 
 		public static string[] ListForType<T>(string mask = "*.cfg", bool subdirs = false)
 		{
-			string dir = GeneratePathname<T>(".");
-			return ListFiles(SIO.Path.GetDirectoryName(dir), mask, subdirs);
+			string dir = SIO.Path.GetFullPath(IO.File<T>.Asset.FullPathName("."));
+			string[] files = AbstractConfig.ListFiles(SIO.Path.GetDirectoryName(dir), mask, subdirs);
+			for (int i = files.Length; --i >= 0;)
+				files[i] = files[i].Substring(files[i].IndexOf(dir) + dir.Length);
+			return files;
 		}
 	}
 }

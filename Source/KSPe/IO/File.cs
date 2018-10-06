@@ -34,7 +34,7 @@ namespace KSPe.IO
 	public static class File<T>
 	{
 		public const string DATA = "PluginData";                                // Writeable data on <KSP_ROO>/PluginData/<plugin_name>/
-		public static readonly string[] ASSET = { "PluginData", "Assets", "." }; // ReadOnly data on <KSP_ROO>/GameData/<plugin_name>/Plugin/PluginData/ or whatever the DLL is.
+		public static readonly string[] ASSET = { "PluginData", "Assets" };     // ReadOnly data on <KSP_ROO>/GameData/<plugin_name>/Plugin/PluginData/ or whatever the DLL is.
 		public const string LOCAL = "GameData/__LOCAL";                         // Custom runtime generated parts on <KSP_ROO>/GameData/__LOCAL/<plugin_name> (specially made for UbioWeldingLtd)
 
 		internal static readonly string KSP_ROOTPATH = SIO.Path.GetFullPath(KSPUtil.ApplicationRootPath);
@@ -93,27 +93,36 @@ namespace KSPe.IO
 
 		public static class Asset
 		{
-			private static string makepath(string partialPathname)
+			internal static string solveRoot()
 			{
-				if (SIO.Path.IsPathRooted(partialPathname))
-					throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
-				
 				string fn = SIO.Path.GetDirectoryName(typeof(T).Assembly.Location);
 				for (int i = ASSET.Length; --i >= 0;)
 				{
 					string t = SIO.Path.Combine(fn, ASSET[i]);
 					if (SIO.File.Exists(t))
-					{
-						fn = SIO.Path.Combine(t, partialPathname);
-						fn = SIO.Path.GetFullPath(fn);
-						if (!SIO.File.Exists(fn))
-							throw new FileNotFoundException(fn);
-						return fn;
-					}
+						return t;
 				}
+				return fn;							
+			}
+			
+			internal static string FullPathName(string partialPathname)
+			{
+				if (SIO.Path.IsPathRooted(partialPathname))
+					throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
+
+				string fn = SIO.Path.Combine(solveRoot(), partialPathname);
+				fn = SIO.Path.GetFullPath(fn);
+				if (SIO.File.Exists(fn))
+					return fn;
+					
 				throw new FileNotFoundException(partialPathname);
 			}
 			
+			public static string Solve(string fn)
+			{
+				return SIO.Path.GetFullPath(SIO.Path.Combine(solveRoot(), fn));
+			}
+
 			public static void CopyToData(string sourceFileName, string destDataFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Asset.CopyToData"); }
 			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Asset.CopyToLocal"); }
 			public static void CopyToTemp(string sourceFileName, string destTempFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Asset.CopyToTemp"); }
@@ -122,61 +131,61 @@ namespace KSPe.IO
 	
 			public static bool Exists(string path)
 			{
-				path = makepath(path);
+				path = FullPathName(path);
 				return SIO.File.Exists(path);
 			}
 			
 			public static System.Security.AccessControl.FileSecurity GetAccessControl(string path)
 			{
-				path = makepath(path);
+				path = FullPathName(path);
 				return SIO.File.GetAccessControl(path);
 			}
 			
 			public static System.Security.AccessControl.FileSecurity GetAccessControl(string path, System.Security.AccessControl.AccessControlSections includeSections)
 			{
-				path = makepath(path);
+				path = FullPathName(path);
 				return SIO.File.GetAccessControl(path, includeSections);
 			}
 
 			public static SIO.FileAttributes GetAttributes(string path)
 						{
-				path = makepath(path);
+				path = FullPathName(path);
 				return SIO.File.GetAttributes(path);
 			}
 
 			public static DateTime GetCreationTime(string path)
 			{
-				path = makepath(path);
+				path = FullPathName(path);
 				return SIO.File.GetCreationTime(path);
 			}
 
 			public static DateTime GetCreationTimeUtc(string path)
 			{
-				path = makepath(path);
+				path = FullPathName(path);
 				return SIO.File.GetCreationTimeUtc(path);
 			}
 
 			public static DateTime GetLastAccessTime(string path)
 			{
-				path = makepath(path);
+				path = FullPathName(path);
 				return SIO.File.GetLastAccessTime(path);
 			}
 
 			public static DateTime GetLastAccessTimeUtc(string path)
 			{
-				path = makepath(path);
+				path = FullPathName(path);
 				return SIO.File.GetLastAccessTimeUtc(path);
 			}
 
 			public static DateTime GetLastWriteTime(string path)
 			{
-				path = makepath(path);
+				path = FullPathName(path);
 				return SIO.File.GetLastWriteTime(path);
 			}
 
 			public static DateTime GetLastWriteTimeUtc(string path)
 			{
-				path = makepath(path);
+				path = FullPathName(path);
 				return SIO.File.GetLastWriteTimeUtc(path);
 			}
 
@@ -200,6 +209,11 @@ namespace KSPe.IO
 				return FullPathName(path, DATA, createDirs);
 			}
 			
+			public static string Solve(string fn)
+			{
+				return makepath(fn, false).Replace(IO.File<object>.KSP_ROOTPATH, "");
+			}
+
 			public static void AppendAllText(string path, string contents) { throw new NotImplementedException("KSPe.IO.File.Data.AppendAllText"); }
 			public static void AppendAllText(string path, string contents, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Data.AppendAllText"); }
 			public static IO.Data.StreamWriter AppendText(string path) { throw new NotImplementedException("KSPe.IO.File.Data.AppendText"); }
@@ -324,6 +338,12 @@ namespace KSPe.IO
 			private static string makepath(string path, bool createDirs)
 			{
 				return FullPathName(path, LOCAL, createDirs);
+			}
+
+			public static string Solve(string fn)
+			{
+				string r = makepath(fn, false).Replace(IO.File<object>.KSP_ROOTPATH, "");
+				return r.Substring(r.IndexOf("GameData/")+9);
 			}
 
 			public static void AppendAllText(string path, string contents) { throw new NotImplementedException("KSPe.IO.File.Local.AppendAllText"); }	
