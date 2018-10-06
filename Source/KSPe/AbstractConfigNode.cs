@@ -79,13 +79,14 @@ namespace KSPe
 
 		protected static string[] ListFiles(string dir, string mask = "*.cfg", bool subdirs = false)
 		{
+			if (!System.IO.Directory.Exists(dir))
+				throw new System.IO.FileNotFoundException(dir);
+
 			string[] files = System.IO.Directory.GetFiles(
 									dir,
 									mask,
 									subdirs ? SIO.SearchOption.AllDirectories : SIO.SearchOption.TopDirectoryOnly
 								);
-			for (int i = files.Length; --i >= 0;)
-				files[i] = files[i].Replace(IO.File<object>.KSP_ROOTPATH, "");
 			return files.OrderBy(x => x).ToArray();             // This will sort 1, 2, 10, 12 
 //          Array.Sort(files, StringComparer.CurrentCulture);   // This will sort 1, 10, 12, 2
 //          return files;

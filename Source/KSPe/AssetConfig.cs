@@ -30,9 +30,9 @@ namespace KSPe
 		public static string[] ListForType<T>(string mask = "*.cfg", bool subdirs = false)
 		{
 			string dir = SIO.Path.GetFullPath(IO.File<T>.Asset.FullPathName("."));
-			string[] files = AbstractConfig.ListFiles(SIO.Path.GetDirectoryName(dir), mask, subdirs);
+			string[] files = AbstractConfig.ListFiles(dir, mask, subdirs);
 			for (int i = files.Length; --i >= 0;)
-				files[i] = files[i].Substring(files[i].IndexOf(dir) + dir.Length);
+				files[i] = files[i].Substring(files[i].IndexOf(dir) + dir.Length + 1); // +1 to get rid of the trailling "/"
 			return files;
 		}
 	}

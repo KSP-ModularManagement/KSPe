@@ -85,7 +85,10 @@ namespace KSPe
 		public static string[] ListForType<T>(string mask = "*.cfg", bool subdirs = false)
 		{
 			string dir = IO.File<T>.FullPathName(".", "PluginData");
-			return ListFiles(SIO.Path.GetDirectoryName(dir), mask, subdirs);
+			string[] files = AbstractConfig.ListFiles(SIO.Path.GetDirectoryName(dir), mask, subdirs);
+			for (int i = files.Length; --i >= 0;)
+				files[i] = files[i].Replace(IO.File<object>.KSP_ROOTPATH, "");
+			return files;
 		}
 	}
 }

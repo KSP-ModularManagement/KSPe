@@ -112,10 +112,7 @@ namespace KSPe.IO
 
 				string fn = SIO.Path.Combine(solveRoot(), partialPathname);
 				fn = SIO.Path.GetFullPath(fn);
-				if (SIO.File.Exists(fn))
-					return fn;
-					
-				throw new FileNotFoundException(partialPathname);
+				return fn;
 			}
 			
 			public static string Solve(string fn)
