@@ -64,6 +64,7 @@
     <Compile Include="Util\Log.cs" />
     <Compile Include="AbstractConfigNode.cs" />
     <Compile Include="AssetConfig.cs" />
+    <Compile Include="GameDB\Asset.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
@@ -77,6 +78,7 @@
     <Folder Include="IO\Local\" />
     <Folder Include="IO\Temp\" />
     <Folder Include="Util\" />
+    <Folder Include="GameDB\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
