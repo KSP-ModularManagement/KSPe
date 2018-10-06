@@ -81,12 +81,22 @@ namespace KSPe.IO
 			{
 				var t = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
 						 from tt in assembly.GetTypes()
+						 where tt.Namespace == target.Namespace && tt.Name == "Version" && tt.GetMembers().Any(m => m.Name == "Namespace")
+						 select tt).FirstOrDefault();
+
+				rooDir = (null == t)
+					? rooDir
+					: t.GetField("Namespace").GetValue(null).ToString();
+			}
+			{
+				var t = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
+						 from tt in assembly.GetTypes()
 						 where tt.Namespace == target.Namespace && tt.Name == "Version" && tt.GetMembers().Any(m => m.Name == "Vendor")
 						 select tt).FirstOrDefault();
 
 				rooDir = (null == t)
-					? target.Namespace
-					: SIO.Path.Combine(t.GetField("Vendor").GetValue(null).ToString(), target.Namespace);
+					? rooDir
+					: SIO.Path.Combine(t.GetField("Vendor").GetValue(null).ToString(), rooDir);
 			}
 			return FullPathName(partialPathname, rooDir, hierarchy, createDirs);
 		}
