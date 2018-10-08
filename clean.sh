@@ -5,8 +5,8 @@ source ./CONFIG.inc
 clean() {
 	local DLL=$1.dll
 
-	rm -f "./bin/Release/$DLL"
-	rm -f "./bin/Debug/$DLL"
+	find ./bin -name "$DLL" -delete
+	find ./obj -name "$DLL" -delete
 	rm -f "./GameData/$DLL"
 	rm -f "./GameData/$TARGETBINDIR/$DLL"
 	rm -f "$LIB/$DLL"
