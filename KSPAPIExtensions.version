@@ -1,13 +1,13 @@
 {
-	"NAME":		"KSP API Extensions /L",
-	"URL":		"https://raw.githubusercontent.com/net-lisias-ksp/KSPAPIExtensions/master/KSPAPIExtensions.version",
-	"DOWNLOAD":	"https://github.com/net-lisias-ksp/KSPAPIExtensions/releases",
-	"CHANGE_LOG":	"https://raw.githubusercontent.com/net-lisias-ksp/KSPAPIExtensions/CHANGE_LOG.md",
-	"CHANGE_LOG_URL":"https://raw.githubusercontent.com/net-lisias-ksp/KSPAPIExtensions/CHANGES.md",
+	"NAME"		: "KSP API Extensions /L",
+	"URL"		: "https://raw.githubusercontent.com/net-lisias-ksp/KSPAPIExtensions/master/KSPAPIExtensions.version",
+	"DOWNLOAD"	: "https://github.com/net-lisias-ksp/KSPAPIExtensions/releases",
+	"CHANGE_LOG"	: "https://raw.githubusercontent.com/net-lisias-ksp/KSPAPIExtensions/CHANGE_LOG.md",
+	"CHANGE_LOG_URL": "https://raw.githubusercontent.com/net-lisias-ksp/KSPAPIExtensions/CHANGES.md",
 	"GITHUB":{
-		"USERNAME":"net-lisias-ksp",
-		"REPOSITORY":"KSPAPIExtensions",
-		"ALLOW_PRE_RELEASE":false
+		"USERNAME"		: "net-lisias-ksp",
+		"REPOSITORY"		: "KSPAPIExtensions",
+		"ALLOW_PRE_RELEASE"	: false
 		},
 	"VERSION":{
 		"MAJOR":2,
@@ -26,8 +26,8 @@
 		"PATCH":1
 		},
 	"KSP_VERSION_MAX":{
-		"MAJOR": 1,
-		"MINOR": 4,
-		"PATCH": 99
+		"MAJOR":1,
+		"MINOR":4,
+		"PATCH":99
 		}
 }
