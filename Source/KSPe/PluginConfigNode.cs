@@ -47,19 +47,19 @@ namespace KSPe
 		{
 			if (null == node)
 				throw new FormatException("Invalid NULL config for saving!");
-			
+
 			if (null == this.name)
 				this.RawNode = node;
-			else if (this.name == node.GetNodes()[0].name)
-				this.RawNode = node;
 			else if (this.name == node.name)
-			{
-				this.Clear();
-				this.RawNode.AddNode(this.name, node);
-			}
+				this.RawNode = node;
 			else
-				throw new FormatException(string.Format("Incompatible Node '{1}' for Config '{0}' on {2}.", this.name, node.name, this.Path));
-				
+			{
+				ConfigNode[] n = node.GetNodes(this.name);
+				if (0 != n.Length)
+					this.RawNode = n[0];
+				else
+					throw new FormatException(string.Format("Incompatible Node '{1}' for Config '{0}' on {2}.", this.name, node.name, this.Path));
+			}	
 			this.Save();
 		}
 
