@@ -62,3 +62,8 @@ for dll in KSPe ; do
     deploy_dev $dll
     deploy_gamedata $dll
 done
+
+for dll in KSPAPIExtensions ; do
+    deploy_dev $dll
+    deploy $dll
+done
