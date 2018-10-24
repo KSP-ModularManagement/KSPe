@@ -244,6 +244,8 @@ To install, place the GameData folder inside your Kerbal Space Program folder.
 			- You don't mix your work with GPL incompatible works.
 	* If by some reason the GPL would be invalid for you, rest assured that you still retain the right to Use the Work under SKL 1.0. 
 
+Please note the copyrights and trademarks in [NOTICE](./NOTICE).
+
 
 ## UPSTREAM
 
