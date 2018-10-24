@@ -202,11 +202,35 @@ namespace KSPe.IO
 			public static IO.Asset.FileStream OpenRead(string path) { throw new NotImplementedException("KSPe.IO.File.Asset.OpenRead"); }
 			public static IO.Asset.StreamReader OpenText(string path) { throw new NotImplementedException("KSPe.IO.File.Asset.OpenText"); }
 
-			public static byte[] ReadAllBytes(string path) { throw new NotImplementedException("KSPe.IO.File.Asset.ReadAllBytes"); }
-			public static string[] ReadAllLines(string path) { throw new NotImplementedException("KSPe.IO.File.Asset.ReadAllLines"); }
-			public static string[] ReadAllLines(string path, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Asset.ReadAllLines"); }
-			public static string ReadAllText(string path) { throw new NotImplementedException("KSPe.IO.File.Asset.ReadAllText"); }
-			public static string ReadAllText(string path, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Asset.ReadAllText"); }
+			public static byte[] ReadAllBytes(string path)
+			{
+				path = FullPathName(path);
+				return SIO.File.ReadAllBytes(path);
+			}
+			
+			public static string[] ReadAllLines(string path)
+			{
+				path = FullPathName(path);
+				return SIO.File.ReadAllLines(path);
+			}
+			
+			public static string[] ReadAllLines(string path, System.Text.Encoding encoding)
+			{
+				path = FullPathName(path);
+				return SIO.File.ReadAllLines(path, encoding);
+			}
+			
+			public static string ReadAllText(string path)
+			{
+				path = FullPathName(path);
+				return SIO.File.ReadAllText(path);
+			}
+			
+			public static string ReadAllText(string path, System.Text.Encoding encoding)
+			{
+				path = FullPathName(path);
+				return SIO.File.ReadAllText(path, encoding);
+			}
 		}
 		
 		public static class Data
@@ -320,11 +344,37 @@ namespace KSPe.IO
 			public static IO.Data.FileStream OpenRead(string path) { throw new NotImplementedException("KSPe.IO.File.Data.OpenRead"); }
 			public static IO.Data.StreamReader OpenText(string path) { throw new NotImplementedException("KSPe.IO.File.Data.OpenText"); }
 			public static IO.Data.FileStream OpenWrite(string path) { throw new NotImplementedException("KSPe.IO.File.Data.OpenWrite"); }
-			public static byte[] ReadAllBytes(string path) { throw new NotImplementedException("KSPe.IO.File.Data.ReadAllBytes"); }
-			public static string[] ReadAllLines(string path) { throw new NotImplementedException("KSPe.IO.File.Data.ReadAllLines"); }
-			public static string[] ReadAllLines(string path, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Data.ReadAllLines"); }
-			public static string ReadAllText(string path) { throw new NotImplementedException("KSPe.IO.File.Data.ReadAllText"); }
-			public static string ReadAllText(string path, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Data.ReadAllText"); }
+
+			public static byte[] ReadAllBytes(string path)
+			{
+				path = makepath(path, false);
+				return SIO.File.ReadAllBytes(path);
+			}
+			
+			public static string[] ReadAllLines(string path)
+			{
+				path = makepath(path, false);
+				return SIO.File.ReadAllLines(path);
+			}
+			
+			public static string[] ReadAllLines(string path, System.Text.Encoding encoding)
+			{
+				path = makepath(path, false);
+				return SIO.File.ReadAllLines(path, encoding);
+			}
+			
+			public static string ReadAllText(string path)
+			{
+				path = makepath(path, false);
+				return SIO.File.ReadAllText(path);
+			}
+			
+			public static string ReadAllText(string path, System.Text.Encoding encoding)
+			{
+				path = makepath(path, false);
+				return SIO.File.ReadAllText(path, encoding);
+			}
+
 			public static void SetAccessControl(string path, System.Security.AccessControl.FileSecurity fileSecurity) { throw new NotImplementedException("KSPe.IO.File.Data.SetAttributes"); }
 			public static void SetAttributes(string path, SIO.FileAttributes fileAttributes) { throw new NotImplementedException("KSPe.IO.File.Data.SetAttributes"); }
 			public static void SetCreationTime(string path, DateTime creationTime) { throw new NotImplementedException("KSPe.IO.File.Data.SetCreationTime"); }
@@ -452,11 +502,37 @@ namespace KSPe.IO
 			public static IO.Local.FileStream OpenWrite(string path) { throw new NotImplementedException("KSPe.IO.File.Local.OpenWrite"); }
 			public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName) { throw new NotImplementedException("KSPe.IO.File.Local.Replace"); }
 			public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors) { throw new NotImplementedException("KSPe.IO.File.Local.Replace"); }
-			public static byte[] ReadAllBytes(string path) { throw new NotImplementedException("KSPe.IO.File.Local.ReadAllBytes"); }
-			public static string[] ReadAllLines(string path) { throw new NotImplementedException("KSPe.IO.File.Local.ReadAllLines"); }
-			public static string[] ReadAllLines(string path, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Local.ReadAllLines"); }
-			public static string ReadAllText(string path) { throw new NotImplementedException("KSPe.IO.File.Local.ReadAllText"); }
-			public static string ReadAllText(string path, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Local.ReadAllText"); }
+
+			public static byte[] ReadAllBytes(string path)
+			{
+				path = makepath(path, false);
+				return SIO.File.ReadAllBytes(path);
+			}
+			
+			public static string[] ReadAllLines(string path)
+			{
+				path = makepath(path, false);
+				return SIO.File.ReadAllLines(path);
+			}
+			
+			public static string[] ReadAllLines(string path, System.Text.Encoding encoding)
+			{
+				path = makepath(path, false);
+				return SIO.File.ReadAllLines(path, encoding);
+			}
+			
+			public static string ReadAllText(string path)
+			{
+				path = makepath(path, false);
+				return SIO.File.ReadAllText(path);
+			}
+			
+			public static string ReadAllText(string path, System.Text.Encoding encoding)
+			{
+				path = makepath(path, false);
+				return SIO.File.ReadAllText(path, encoding);
+			}
+
 			public static void SetAccessControl(string path, System.Security.AccessControl.FileSecurity fileSecurity) { throw new NotImplementedException("KSPe.IO.File.Local.SetAttributes"); }
 			public static void SetAttributes(string path, SIO.FileAttributes fileAttributes) { throw new NotImplementedException("KSPe.IO.File.Local.SetAttributes"); }
 			public static void SetCreationTime(string path, DateTime creationTime) { throw new NotImplementedException("KSPe.IO.File.Local.SetCreationTime"); }
@@ -573,11 +649,37 @@ namespace KSPe.IO
 			public static IO.Temp.FileStream OpenWrite(string path) { throw new NotImplementedException("KSPe.IO.File.Temp.OpenWrite"); }
 			public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName) { throw new NotImplementedException("KSPe.IO.File.Temp.Replace"); }
 			public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors) { throw new NotImplementedException("KSPe.IO.File.Temp.Replace"); }
-			public static byte[] ReadAllBytes(string path) { throw new NotImplementedException("KSPe.IO.File.Temp.ReadAllBytes"); }
-			public static string[] ReadAllLines(string path) { throw new NotImplementedException("KSPe.IO.File.Temp.ReadAllLines"); }
-			public static string[] ReadAllLines(string path, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Temp.ReadAllLines"); }
-			public static string ReadAllText(string path) { throw new NotImplementedException("KSPe.IO.File.Temp.ReadAllText"); }
-			public static string ReadAllText(string path, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Temp.ReadAllText"); }
+
+			public static byte[] ReadAllBytes(string path)
+			{
+				path = File<T>.TempPathName(path);
+				return SIO.File.ReadAllBytes(path);
+			}
+			
+			public static string[] ReadAllLines(string path)
+			{
+				path = File<T>.TempPathName(path);
+				return SIO.File.ReadAllLines(path);
+			}
+			
+			public static string[] ReadAllLines(string path, System.Text.Encoding encoding)
+			{
+				path = File<T>.TempPathName(path);
+				return SIO.File.ReadAllLines(path, encoding);
+			}
+			
+			public static string ReadAllText(string path)
+			{
+				path = File<T>.TempPathName(path);
+				return SIO.File.ReadAllText(path);
+			}
+			
+			public static string ReadAllText(string path, System.Text.Encoding encoding)
+			{
+				path = File<T>.TempPathName(path);
+				return SIO.File.ReadAllText(path, encoding);
+			}
+
 			public static void SetAccessControl(string path, System.Security.AccessControl.FileSecurity fileSecurity) { throw new NotImplementedException("KSPe.IO.File.Temp.SetAttributes"); }
 			public static void SetAttributes(string path, SIO.FileAttributes fileAttributes) { throw new NotImplementedException("KSPe.IO.File.Temp.SetAttributes"); }
 			public static void SetCreationTime(string path, DateTime creationTime) { throw new NotImplementedException("KSPe.IO.File.Temp.SetCreationTime"); }
