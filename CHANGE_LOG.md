@@ -1,5 +1,8 @@
 # KSP API Extensions/L :: Change Log
 
+* 2018-1024: 2.1.0.0 (Lisias) for KSP 1.4 PRE-RELEASE
+	+ Implementing sandboxed File<type> decorators:
+		- [Asset|Data|Local|Temp].ReadAll*()
 * 2018-1010: 2.0.0.2 (Lisias) for KSP 1.4
 	+ Dumb mistake on the PluginConfig.Save method.
 		- Critical for [ModuleManager](https://github.com/net-lisias-kspu/ModuleManager). 
