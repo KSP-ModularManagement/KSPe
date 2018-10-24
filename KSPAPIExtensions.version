@@ -1,14 +1,14 @@
 {
 	"NAME"		: "KSP API Extensions /L",
-	"URL"		: "https://raw.githubusercontent.com/net-lisias-ksp/KSPAPIExtensions/master/KSPAPIExtensions.version",
+	"URL"		: "https://raw.githubusercontent.com/net-lisias-ksp/KSPAPIExtensions/dev/KSPAPIExtensions.version",
 	"DOWNLOAD"	: "https://github.com/net-lisias-ksp/KSPAPIExtensions/releases",
 	"CHANGE_LOG"	: "https://raw.githubusercontent.com/net-lisias-ksp/KSPAPIExtensions/CHANGE_LOG.md",
 	"CHANGE_LOG_URL": "https://raw.githubusercontent.com/net-lisias-ksp/KSPAPIExtensions/CHANGES.md",
 	"VERSION":{
 		"MAJOR":2,
-		"MINOR":0,
+		"MINOR":1,
 		"PATCH":0,
-		"BUILD":2
+		"BUILD":0
 		},
 	"KSP_VERSION":{
 		"MAJOR":1,
