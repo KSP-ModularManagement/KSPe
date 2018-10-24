@@ -23,11 +23,9 @@
 
 using System;
 using System.Linq;
-using System.Reflection;
 using System.IO.IsolatedStorage;
 
 using SIO = System.IO;
-using System.IO;
 
 namespace KSPe.IO
 {
@@ -109,7 +107,7 @@ namespace KSPe.IO
 				for (int i = ASSET.Length; --i >= 0;)
 				{
 					string t = SIO.Path.Combine(fn, ASSET[i]);
-					if (SIO.File.Exists(t))
+					if (SIO.Directory.Exists(t))
 						return t;
 				}
 				return fn;							
