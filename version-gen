@@ -57,6 +57,6 @@ cmp -s Source/KSPAPIExtensions/Properties/AssemblyInfo.cs tmp || cp tmp Source/K
 #cmp -s ProceduralParts.version tmp || cp tmp ProceduralParts.version
 
 gen_tagged_class_wrappers > tmp
-cmp -s Source/KSPAPIExtensions/tagged_classes.cs tmp || cp tmp Source/KSPAPiExtensions/tagged_classes.cs
+cmp -s Source/KSPAPIExtensions/tagged_classes.cs tmp || cp tmp Source/KSPAPIExtensions/tagged_classes.cs
 
 rm tmp
