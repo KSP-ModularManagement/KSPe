@@ -64,7 +64,7 @@ namespace KSPe.Util.Log {
 #if DEBUG
             Level.TRACE;
 #else
-			Level.ERROR;
+			Level.INFO;
 #endif
 		public Level level
 		{
@@ -104,7 +104,7 @@ namespace KSPe.Util.Log {
 
 		public void trace(string message, params object[] @params)
 		{
-			if (!this.IsLoggable(Level.DETAIL)) return;
+			if (!this.IsLoggable(Level.TRACE)) return;
 			this.select()(this.BuildMessage(Level.TRACE, message, @params));
 		}
 
