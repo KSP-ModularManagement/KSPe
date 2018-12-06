@@ -12,6 +12,7 @@ New extensions and utilities for Kerbal Space Program by Lisias.
 * Documentation	
 	+ [Homepage](http://ksp.lisias.net/add-ons/KSPAPIExtensions) on L Aerospace KSP Division
 	+ [Project's README](https://github.com/net-lisias-ksp/KSPAPIExtensions/blob/master/README.md)
+	+ [Install Instructions](https://github.com/net-lisias-ksp/KSPAPIExtensions/blob/master/INSTALL.md)
 	+ [Change Log](./CHANGE_LOG.md)
 	+ [TODO](./TODO.md) list
 * Official Distribution Sites:
@@ -203,13 +204,7 @@ Documentation is Work In Progress. See the source for while. :)
 
 ## Installation
 
-To install, place the GameData folder inside your Kerbal Space Program folder.
-
-**REMOVE ANY OLD VERSIONS OF THE PRODUCT BEFORE INSTALLING**.
-
-### Dependencies
-
-* [KSP API Extensions/L](https://github.com/net-lisias-ksp/KSPAPIExtensions)
+Detailed installation instructions are now on its own file (see the [In a Hurry](#in-a-hurry) section) and on the distribution file.
 
 ### Licensing
 * KSPAPIExtensions.dll
