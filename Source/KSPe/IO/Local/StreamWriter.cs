@@ -32,7 +32,7 @@ namespace KSPe.IO.Local
 
 		public static StreamWriter CreateForType<T>(string filename)
 		{
-			string fn = File<T>.FullPathName(filename, File<Object>.DATA, true);
+			string fn = File<T>.Local.FullPathName(filename, true);
 			return new StreamWriter(fn);
 		}
 	}

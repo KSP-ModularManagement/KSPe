@@ -32,7 +32,7 @@ namespace KSPe.IO.Data
 
 		public static StreamReader CreateForType<T>(string filename)
 		{
-			string fn = File<T>.FullPathName(filename, File<Object>.DATA, true);
+			string fn = File<T>.Data.FullPathName(filename, false);
 			return new StreamReader(fn);
 		}
 	}

@@ -47,7 +47,7 @@ namespace KSPe.IO.Data
 
 		public static PluginConfiguration CreateForType<T>(string filename)
 		{
-			string fn = File<T>.FullPathName(filename, File<Object>.DATA, true);
+			string fn = File<T>.Data.FullPathName(filename, true);
 			return new PluginConfiguration(fn);
 		}
 

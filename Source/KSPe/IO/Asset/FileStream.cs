@@ -32,7 +32,7 @@ namespace KSPe.IO.Asset
 
 		public static FileStream CreateForType<T>(string filename, FileMode mode)
 		{
-			string fn = File<T>.FullPathName(filename, File<Object>.DATA, true);
+			string fn = File<T>.Asset.FullPathName(filename);
 			return new FileStream(fn, (SIO.FileMode)mode);
 		}
 	}

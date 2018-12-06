@@ -31,8 +31,8 @@ namespace KSPe.IO
 {
 	public static class File<T>
 	{
-		public const string DATA = "PluginData";                                // Writeable data on <KSP_ROO>/PluginData/<plugin_name>/
-		public static readonly string[] ASSET = { "PluginData", "Assets" };     // ReadOnly data on <KSP_ROO>/GameData/<plugin_name>/Plugin/PluginData/ or whatever the DLL is.
+		public const string DATA = "PluginData";                                // Writeable data on <KSP_ROOT>/PluginData/<plugin_name>/
+		public static readonly string[] ASSET = { "PluginData", "Assets" };     // ReadOnly data on <KSP_ROOT>/GameData/<plugin_name>/Plugin/{PluginData|Assets|null}/ or whatever the DLL is.
 		public const string LOCAL = "GameData/__LOCAL";                         // Custom runtime generated parts on <KSP_ROO>/GameData/__LOCAL/<plugin_name> (specially made for UbioWeldingLtd)
 
 		internal static readonly string KSP_ROOTPATH = SIO.Path.GetFullPath(KSPUtil.ApplicationRootPath);
@@ -125,7 +125,7 @@ namespace KSPe.IO
 			
 			public static string Solve(string fn)
 			{
-				return SIO.Path.GetFullPath(SIO.Path.Combine(solveRoot(), fn));
+				return FullPathName(fn).Replace(IO.File<object>.KSP_ROOTPATH, "");
 			}
 
 			public static void CopyToData(string sourceFileName, string destDataFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Asset.CopyToData"); }
@@ -233,14 +233,14 @@ namespace KSPe.IO
 		
 		public static class Data
 		{
-			private static string makepath(string path, bool createDirs)
+			internal static string FullPathName(string path, bool createDirs)
 			{
-				return FullPathName(path, DATA, createDirs);
+				return File<T>.FullPathName(path, DATA, createDirs);
 			}
 			
 			public static string Solve(string fn)
 			{
-				return makepath(fn, false).Replace(IO.File<object>.KSP_ROOTPATH, "");
+				return FullPathName(fn, false).Replace(IO.File<object>.KSP_ROOTPATH, "");
 			}
 
 			public static void AppendAllText(string path, string contents) { throw new NotImplementedException("KSPe.IO.File.Data.AppendAllText"); }
@@ -256,7 +256,7 @@ namespace KSPe.IO
 
 			public static IO.Data.StreamWriter CreateText(string path)
 			{
-				path = makepath(path, true);
+				path = FullPathName(path, true);
 				var t = SIO.File.CreateText(path);      // Does the magic
 				t.Close();                              // TODO: Get rid of this stunt.             
 				return new IO.Data.StreamWriter(path);  // Reopens the stream as our own type.
@@ -266,7 +266,7 @@ namespace KSPe.IO
 
 			public static void Delete(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				SIO.File.Delete(path);
 			}
 	
@@ -274,61 +274,61 @@ namespace KSPe.IO
 
 			public static bool Exists(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.Exists(path);
 			}
 
 			public static System.Security.AccessControl.FileSecurity GetAccessControl(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetAccessControl(path);
 			}
 			
 			public static System.Security.AccessControl.FileSecurity GetAccessControl(string path, System.Security.AccessControl.AccessControlSections includeSections)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetAccessControl(path, includeSections);
 			}
 
 			public static SIO.FileAttributes GetAttributes(string path)
 						{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetAttributes(path);
 			}
 
 			public static DateTime GetCreationTime(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetCreationTime(path);
 			}
 
 			public static DateTime GetCreationTimeUtc(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetCreationTimeUtc(path);
 			}
 
 			public static DateTime GetLastAccessTime(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetLastAccessTime(path);
 			}
 
 			public static DateTime GetLastAccessTimeUtc(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetLastAccessTimeUtc(path);
 			}
 
 			public static DateTime GetLastWriteTime(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetLastWriteTime(path);
 			}
 
 			public static DateTime GetLastWriteTimeUtc(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetLastWriteTimeUtc(path);
 			}
 
@@ -345,31 +345,31 @@ namespace KSPe.IO
 
 			public static byte[] ReadAllBytes(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.ReadAllBytes(path);
 			}
 			
 			public static string[] ReadAllLines(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.ReadAllLines(path);
 			}
 			
 			public static string[] ReadAllLines(string path, System.Text.Encoding encoding)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.ReadAllLines(path, encoding);
 			}
 			
 			public static string ReadAllText(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.ReadAllText(path);
 			}
 			
 			public static string ReadAllText(string path, System.Text.Encoding encoding)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.ReadAllText(path, encoding);
 			}
 
@@ -390,14 +390,14 @@ namespace KSPe.IO
 			
 		public static class Local
 		{
-			private static string makepath(string path, bool createDirs)
+			internal static string FullPathName(string path, bool createDirs)
 			{
-				return FullPathName(path, LOCAL, createDirs);
+				return File<T>.FullPathName(path, LOCAL, createDirs);
 			}
 
 			public static string Solve(string fn)
 			{
-				string r = makepath(fn, false).Replace(IO.File<object>.KSP_ROOTPATH, "");
+				string r = FullPathName(fn, false).Replace(IO.File<object>.KSP_ROOTPATH, "");
 				return r.Substring(r.IndexOf("GameData/")+9);
 			}
 
@@ -414,7 +414,7 @@ namespace KSPe.IO
 
 			public static IO.Local.StreamWriter CreateText(string path)
 			{
-				path = makepath(path, true);
+				path = FullPathName(path, true);
 				var t = SIO.File.CreateText(path);      // Does the magic
 				t.Close();                              // TODO: Get rid of this stunt.             
 				return new IO.Local.StreamWriter(path);  // Reopens the stream as our own type.
@@ -424,7 +424,7 @@ namespace KSPe.IO
 
 			public static void Delete(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				SIO.File.Delete(path);
 			}
 
@@ -432,61 +432,61 @@ namespace KSPe.IO
 			
 			public static bool Exists(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.Exists(path);
 			}
 
 			public static System.Security.AccessControl.FileSecurity GetAccessControl(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetAccessControl(path);
 			}
 			
 			public static System.Security.AccessControl.FileSecurity GetAccessControl(string path, System.Security.AccessControl.AccessControlSections includeSections)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetAccessControl(path, includeSections);
 			}
 
 			public static SIO.FileAttributes GetAttributes(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetAttributes(path);
 			}
 
 			public static DateTime GetCreationTime(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetCreationTime(path);
 			}
 
 			public static DateTime GetCreationTimeUtc(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetCreationTimeUtc(path);
 			}
 
 			public static DateTime GetLastAccessTime(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetLastAccessTime(path);
 			}
 
 			public static DateTime GetLastAccessTimeUtc(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetLastAccessTimeUtc(path);
 			}
 
 			public static DateTime GetLastWriteTime(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetLastWriteTime(path);
 			}
 
 			public static DateTime GetLastWriteTimeUtc(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.GetLastWriteTimeUtc(path);
 			}
 			
@@ -503,31 +503,31 @@ namespace KSPe.IO
 
 			public static byte[] ReadAllBytes(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.ReadAllBytes(path);
 			}
 			
 			public static string[] ReadAllLines(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.ReadAllLines(path);
 			}
 			
 			public static string[] ReadAllLines(string path, System.Text.Encoding encoding)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.ReadAllLines(path, encoding);
 			}
 			
 			public static string ReadAllText(string path)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.ReadAllText(path);
 			}
 			
 			public static string ReadAllText(string path, System.Text.Encoding encoding)
 			{
-				path = makepath(path, false);
+				path = FullPathName(path, false);
 				return SIO.File.ReadAllText(path, encoding);
 			}
 
@@ -548,6 +548,11 @@ namespace KSPe.IO
 
 		public static class Temp
 		{
+			internal static string FullPathName(string path)
+			{
+				return File<T>.TempPathName(path);
+			}
+
 			public static void AppendAllText(string path, string contents) { throw new NotImplementedException("KSPe.IO.File.Temp.AppendAllText"); }	
 			public static void AppendAllText(string path, string contents, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Temp.AppendAllText"); }
 			public static IO.Temp.StreamWriter AppendText(string path) { throw new NotImplementedException("KSPe.IO.File.Temp.AppendText"); }
@@ -561,7 +566,7 @@ namespace KSPe.IO
 
 			public static IO.Temp.StreamWriter CreateText(string path)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				var t = SIO.File.CreateText(path);      // Does the magic
 				t.Close();                              // TODO: Get rid of this stunt.             
 				return new IO.Temp.StreamWriter(path);  // Reopens the stream as our own type.
@@ -571,7 +576,7 @@ namespace KSPe.IO
 
 			public static void Delete(string path)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				SIO.File.Delete(path);
 			}
 
@@ -579,61 +584,61 @@ namespace KSPe.IO
 			
 			public static bool Exists(string path)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.Exists(path);
 			}
 
 			public static System.Security.AccessControl.FileSecurity GetAccessControl(string path)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.GetAccessControl(path);
 			}
 			
 			public static System.Security.AccessControl.FileSecurity GetAccessControl(string path, System.Security.AccessControl.AccessControlSections includeSections)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.GetAccessControl(path, includeSections);
 			}
 
 			public static SIO.FileAttributes GetAttributes(string path)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.GetAttributes(path);
 			}
 
 			public static DateTime GetCreationTime(string path)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.GetCreationTime(path);
 			}
 
 			public static DateTime GetCreationTimeUtc(string path)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.GetCreationTimeUtc(path);
 			}
 
 			public static DateTime GetLastAccessTime(string path)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.GetLastAccessTime(path);
 			}
 
 			public static DateTime GetLastAccessTimeUtc(string path)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.GetLastAccessTimeUtc(path);
 			}
 
 			public static DateTime GetLastWriteTime(string path)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.GetLastWriteTime(path);
 			}
 
 			public static DateTime GetLastWriteTimeUtc(string path)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.GetLastWriteTimeUtc(path);
 			}
 			
@@ -650,31 +655,31 @@ namespace KSPe.IO
 
 			public static byte[] ReadAllBytes(string path)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.ReadAllBytes(path);
 			}
 			
 			public static string[] ReadAllLines(string path)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.ReadAllLines(path);
 			}
 			
 			public static string[] ReadAllLines(string path, System.Text.Encoding encoding)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.ReadAllLines(path, encoding);
 			}
 			
 			public static string ReadAllText(string path)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.ReadAllText(path);
 			}
 			
 			public static string ReadAllText(string path, System.Text.Encoding encoding)
 			{
-				path = File<T>.TempPathName(path);
+				path = FullPathName(path);
 				return SIO.File.ReadAllText(path, encoding);
 			}
 
