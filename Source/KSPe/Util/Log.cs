@@ -114,7 +114,6 @@ namespace KSPe.Util.Log {
 			this.select()(this.BuildMessage(Level.DETAIL, message, @params));
 		}
 
-		[ConditionalAttribute("DEBUG")]
 		public void dbg(string message, params object[] @params)
 		{
 			this.select()(this.BuildMessage(Level.TRACE, message, @params));
