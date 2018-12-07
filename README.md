@@ -208,7 +208,7 @@ Detailed installation instructions are now on its own file (see the [In a Hurry]
 
 ### Licensing
 * KSPAPIExtensions.dll
-	+ [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). See [here](./KSPAPIExtensions.LICENSE).
+	+ [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). See [here](./LICENSE.KSPAPIExtensions).
 		+ You are free to:
 			- Share : copy and redistribute the material in any medium or format
 			- Adapt : remix, transform, and build upon the material for any purpose, even commercially. 
@@ -216,7 +216,7 @@ Detailed installation instructions are now on its own file (see the [In a Hurry]
 			- Attribution : You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
 			- ShareAlike : If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
 * KSPe.dll is double licensed at user discretion:
-	+ [SKL 1.0](https://ksp.lisias.net/SKL-1_0.txt). See [here](./KSPe.SKL-1_0.LICENSE)
+	+ [SKL 1.0](https://ksp.lisias.net/SKL-1_0.txt). See [here](./LICENSE.KSPe.SKL-1_0)
 		+ You are free to:
 			- Use : unpack and use the material in any computer or device
 			- Redistribute: redistribute the original package in any medium
@@ -225,7 +225,7 @@ Detailed installation instructions are now on its own file (see the [In a Hurry]
 			- You don't alter the package in any form or way (but you can embedded it)
 			- You don't change the material in any way, and retain any copyright notices
 			- You must explicitly state the author's Copyright, as well an Official Site for downloading the original and new versions (the one you used to download is good enough) 
-	+ [GPL 2.0](https://www.gnu.org/licenses/gpl-2.0.txt). See [here](./KSPe.GPL-2_0.LICENSE)
+	+ [GPL 2.0](https://www.gnu.org/licenses/gpl-2.0.txt). See [here](./LICENSE.KSPe.GPL-2_0)
 		+ You are free to:
 			- Use : unpack and use the material in any computer or device
 			- Redistribute : redistribute the original package in any medium
