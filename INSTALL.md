@@ -12,7 +12,7 @@ To install, place the GameData folder inside your Kerbal Space Program folder. O
 	+ Delete `<KSP_ROOT>/GameData/000_KSPAPIExtensions`
 * Extract the package's `GameData` folder into your KSP's root:
 	+ \<PACKAGE>/GameData --> \<KSP_ROOT>/GameData
-* Extract the package's `PluginData` folder (if available) into your KSP's root, taking precautions to do overwrite your custom settings if this is not what you want to.
+* Extract the package's `PluginData` folder (if available) into your KSP's root, taking precautions to do not overwrite your custom settings if this is not what you want to.
 	+ \<PACKAGE>/PluginData --> \<KSP_ROOT>/PluginData
 	+ You can safely ignore this step if you already had installed it previously and didn't deleted your custom configurable files.
 
