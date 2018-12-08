@@ -61,7 +61,6 @@
     <Compile Include="IO\Temp\StreamWriter.cs" />
     <Compile Include="Util\Log.cs" />
     <Compile Include="GameDB\Asset.cs" />
-    <Compile Include="IO\AbstractConfigNode.cs" />
     <Compile Include="IO\Asset\ConfigNode.cs" />
     <Compile Include="IO\Data\ConfigNode.cs" />
     <Compile Include="IO\KspConfigNode.cs" />
