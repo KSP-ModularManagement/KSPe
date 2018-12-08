@@ -44,6 +44,12 @@ namespace KSPe.IO.Data
 			if (SIO.File.Exists(this.pathname))
 				SIO.File.Delete(this.pathname);
 		}
+		
+		public new PluginConfiguration load()
+		{
+			base.load();
+			return this;
+		}
 
 		public static PluginConfiguration CreateForType<T>(string filename)
 		{

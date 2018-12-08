@@ -38,6 +38,12 @@ namespace KSPe.IO.Asset
 		{
 			return SIO.File.Exists(this.pathname);
 		}
+		
+		public new PluginConfiguration load()
+		{
+			base.load();
+			return this;
+		}
 
 		public static PluginConfiguration CreateForType<T>(string filename)
 		{
