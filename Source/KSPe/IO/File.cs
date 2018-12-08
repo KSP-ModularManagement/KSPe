@@ -43,14 +43,14 @@ namespace KSPe.IO
 				throw new IsolatedStorageException(String.Format("filename cannot have subdirectories! [{0}]", filename));
 
 			Type target = typeof(T);
-			string fn = System.IO.Path.GetTempPath();
+			string fn = SIO.Path.GetTempPath();
 			fn = SIO.Path.Combine(fn, "ksp");
 			fn = SIO.Path.Combine(fn, target.Namespace);
 			fn = SIO.Path.Combine(fn, SIO.Path.GetFileName(filename));
 			{
-				string d = System.IO.Path.GetDirectoryName(fn);
-				if (!System.IO.Directory.Exists(d))
-					System.IO.Directory.CreateDirectory(d);
+				string d = SIO.Path.GetDirectoryName(fn);
+				if (!SIO.Directory.Exists(d))
+					SIO.Directory.CreateDirectory(d);
 			}
 			return SIO.Path.GetFullPath(fn);
 		}
