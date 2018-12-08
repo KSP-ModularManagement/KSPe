@@ -21,23 +21,23 @@
     
 */
 
-namespace KSPe
+namespace KSPe.IO
 {
-	public class KspConfig : AbstractConfig
+	public class KspConfigNode : ReadableConfigNode
 	{
-		public KspConfig(string name) : base(name)
+		public KspConfigNode(string name) : base(name)
 		{
 			this.Path = GeneratePathname(name + ".cfg");
 		}
 
-		public KspConfig(string name, string filename) : base(name)
+		public KspConfigNode(string name, string filename) : base(name)
 		{
 			this.Path = GeneratePathname(filename);
 		}
 
-		public new KspConfig Load()
+		public new KspConfigNode Load()
 		{
-			return (KspConfig)base.Load();
+			return (KspConfigNode)base.Load();
 		}
 		
 		protected static string GeneratePathname(string filename)

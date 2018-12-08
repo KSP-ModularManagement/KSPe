@@ -25,9 +25,9 @@ using System;
 using System.Linq;
 using SIO = System.IO;
 
-namespace KSPe
+namespace KSPe.IO
 {
-	public class AbstractConfig
+	public abstract class ReadableConfigNode
 	{
 		public string Path { get; protected set; }
 		public bool IsLoadable => SIO.File.Exists(this.Path) && (0 == (SIO.FileAttributes.Directory & SIO.File.GetAttributes(this.Path)));
@@ -49,13 +49,13 @@ namespace KSPe
 
 		protected ConfigNode RawNode;
 		protected readonly string name;
-		protected AbstractConfig(string name)
+		protected ReadableConfigNode(string name)
 		{
 			this.name = name;
 			this.Clear();
 		}
 
-		public AbstractConfig Load()
+		public ReadableConfigNode Load()
 		{
 			if (!System.IO.File.Exists(this.Path))
 				throw new SIO.FileNotFoundException(this.Path);
@@ -79,17 +79,59 @@ namespace KSPe
 
 		protected static string[] ListFiles(string dir, string mask = "*.cfg", bool subdirs = false)
 		{
-			if (!System.IO.Directory.Exists(dir))
-				throw new System.IO.FileNotFoundException(dir);
+			if (!SIO.Directory.Exists(dir))
+				throw new SIO.FileNotFoundException(dir);
 
 			string[] files = System.IO.Directory.GetFiles(
 									dir,
 									mask,
 									subdirs ? SIO.SearchOption.AllDirectories : SIO.SearchOption.TopDirectoryOnly
 								);
-			return files.OrderBy(x => x).ToArray();             // This will sort 1, 2, 10, 12 
+			files = files.OrderBy(x => x).ToArray();            // This will sort 1, 2, 10, 12 
 //          Array.Sort(files, StringComparer.CurrentCulture);   // This will sort 1, 10, 12, 2
-//          return files;
+			
+			for (int i = files.Length; --i >= 0;)
+				files[i] = files[i].Substring(files[i].IndexOf(dir, StringComparison.Ordinal) + dir.Length + 1); // +1 to get rid of the trailling "/"
+
+	        return files;
 		}
 	}
+	
+	public abstract class WritableConfigNode : ReadableConfigNode
+	{
+		protected WritableConfigNode(string name) : base(name){}
+
+		public void Save()
+		{
+			this.RawNode.Save(this.Path);
+		}
+
+		public void Save(ConfigNode node)
+		{
+			if (null == node)
+				throw new FormatException("Invalid NULL config for saving!");
+
+			if (null == this.name)
+				this.RawNode = node;
+			else if (this.name == node.name)
+				this.RawNode = node;
+			else
+			{
+				ConfigNode[] n = node.GetNodes(this.name);
+				if (0 != n.Length)
+					this.RawNode = n[0];
+				else
+					throw new FormatException(string.Format("Incompatible Node '{1}' for Config '{0}' on {2}.", this.name, node.name, this.Path));
+			}	
+			this.Save();
+		}
+
+		public void Destroy()
+		{
+			if (SIO.File.Exists(this.Path))
+				SIO.File.Delete(this.Path);
+			this.Clear();
+		}
+	}
+
 }

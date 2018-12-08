@@ -42,8 +42,6 @@
     <Compile Include="Properties\Version.cs">
       <DependentUpon>Version.tt</DependentUpon>
     </Compile>
-    <Compile Include="PluginConfigNode.cs" />
-    <Compile Include="KspConfigNode.cs" />
     <Compile Include="IO\File.cs" />
     <Compile Include="IO\FileMode.cs" />
     <Compile Include="IO\Asset\FileStream.cs" />
@@ -62,9 +60,18 @@
     <Compile Include="IO\Temp\StreamReader.cs" />
     <Compile Include="IO\Temp\StreamWriter.cs" />
     <Compile Include="Util\Log.cs" />
-    <Compile Include="AbstractConfigNode.cs" />
-    <Compile Include="AssetConfig.cs" />
     <Compile Include="GameDB\Asset.cs" />
+    <Compile Include="IO\AbstractConfigNode.cs" />
+    <Compile Include="IO\Asset\ConfigNode.cs" />
+    <Compile Include="IO\Data\ConfigNode.cs" />
+    <Compile Include="IO\KspConfigNode.cs" />
+    <Compile Include="IO\Local\ConfigNode.cs" />
+    <Compile Include="IO\Temp\ConfigNode.cs" />
+    <Compile Include="AssetConfig.cs" />
+    <Compile Include="KspConfigNode.cs" />
+    <Compile Include="PluginConfigNode.cs" />
+    <Compile Include="AbstractConfigNode.cs" />
+    <Compile Include="IO\AbstractConfigNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
