@@ -40,6 +40,7 @@ namespace KSPe.IO
 				return this._Node;
 			}
 		}
+		public ConfigNodeWithSteroids NodeWithSteroids => ConfigNodeWithSteroids.from(this.Node);
 
 		// KSP automatically prefixes all paths with the ApplicationRootPath before using it internally, what plays
 		// havoc with our way to keep plugins sandboxed (by always using hardpaths).

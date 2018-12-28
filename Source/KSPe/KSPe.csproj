@@ -71,6 +71,7 @@
     <Compile Include="PluginConfigNode.cs" />
     <Compile Include="AbstractConfigNode.cs" />
     <Compile Include="IO\AbstractConfigNode.cs" />
+    <Compile Include="ConfigNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
