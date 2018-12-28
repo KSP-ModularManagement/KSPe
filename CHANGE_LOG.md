@@ -1,5 +1,13 @@
 # KSP API Extensions/L :: Change Log
 
+* 2018-1228: 2.1.0.5 (Lisias) for KSP >= 1.2 PRE-RELEASE
+	+ Some more syntactic sugar
+		- Adding generics syntax to ConfigNode's GetValue, making easier to port code from XML (PluginConfiguration) to CFG (ConfigNode) and vice versa
+	+ Small refactorings on the class hierarchy
+		- Some classes were deprecated, but will be maintained until the version 3
+		- No impact to the user base, I'm the only client for this stunt! :D
+	+ Removed Max KSP version check.
+	+ Fixed a glitch that prevented debug messages from being suppressed.
 * 2018-1206: 2.1.0.4 (Lisias) for {1.2 <= KSP <= 1.5.1} PRE-RELEASE
 	+ Implementing Helper Classes for Assets, Local and Temp files
 	+ Some minor code sanitizing and normalizing to promote maintainability
