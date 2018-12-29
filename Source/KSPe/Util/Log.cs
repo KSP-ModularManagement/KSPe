@@ -116,6 +116,7 @@ namespace KSPe.Util.Log {
 
 		public void dbg(string message, params object[] @params)
 		{
+			if (!this.IsLoggable(Level.DETAIL)) return;
 			this.select()(this.BuildMessage(Level.TRACE, message, @params));
 		}
 
