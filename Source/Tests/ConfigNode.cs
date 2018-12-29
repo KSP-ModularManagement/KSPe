@@ -5,15 +5,28 @@ using KSPe;
 
 namespace Tests
 {
-	class ConfigNodeWithSteroids
+	public class ConfigNodeWithSteroids
 	{
 		public static void test()
 		{
 			Console.WriteLine("Tests.ConfigNodeWithSteroids");
-			ConfigNode node = ConfigNode.Load("/Users/lisias/Workspaces/KSP/runtime/1.6.0/PluginData/KerbalJointReinforcement/user.cfg");
-			KSPe.ConfigNodeWithSteroids sn = KSPe.ConfigNodeWithSteroids.from(node);
+			// We run from inside bin/[debug|release]/Tests
+			ConfigNode node = ConfigNode.Load("../../../Tests/user.cfg");
+			KSPe.ConfigNodeWithSteroids sn = KSPe.ConfigNodeWithSteroids.from(node).GetNode("KJR");
 			bool b = sn.GetValue<bool>("debug");
 			System.Console.WriteLine(b ? "TRUE" : "FALSE");
+			int i=0;
+			foreach (ConfigNode cc in sn.GetNodes("Exempt"))
+			{
+				System.Console.WriteLine(i++.ToString());
+				KSPe.ConfigNodeWithSteroids c = KSPe.ConfigNodeWithSteroids.from(cc);
+				if (c.HasValue("PartType"))
+					System.Console.WriteLine(c.GetValue<string>("PartType"));
+				if (c.HasValue("ModuleType"))
+					System.Console.WriteLine(c.GetValue<string>("ModuleType"));
+				if (c.HasValue("DecouplerStiffeningExtensionType"))
+					System.Console.WriteLine(c.GetValue<string>("DecouplerStiffeningExtensionType"));
+			}
 		}   
 	}
 }
