@@ -99,6 +99,25 @@ namespace KSPe.IO
 			return FullPathName(partialPathname, rooDir, hierarchy, createDirs);
 		}
 
+		internal static string[] List(string rawdir, string mask = "*", bool include_subdirs = false)
+		{
+			if (!SIO.Directory.Exists(rawdir))
+				throw new SIO.FileNotFoundException(rawdir);
+
+			string[] files = System.IO.Directory.GetFiles(
+									rawdir,
+									mask,
+									include_subdirs ? SIO.SearchOption.AllDirectories : SIO.SearchOption.TopDirectoryOnly
+								);
+			files = files.OrderBy(x => x).ToArray();            // This will sort 1, 2, 10, 12 
+//          Array.Sort(files, StringComparer.CurrentCulture);   // This will sort 1, 10, 12, 2
+			
+			for (int i = files.Length; --i >= 0;)
+				files[i] = files[i].Substring(files[i].IndexOf(rawdir, StringComparison.Ordinal) + rawdir.Length + 1); // +1 to get rid of the trailling "/"
+
+	        return files;
+		}
+
 		public static class Asset
 		{
 			internal static string solveRoot()
@@ -126,6 +145,11 @@ namespace KSPe.IO
 			public static string Solve(string fn)
 			{
 				return FullPathName(fn).Replace(IO.File<object>.KSP_ROOTPATH, "");
+			}
+
+			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)
+			{
+				return File<T>.List(SIO.Path.Combine(solveRoot(), subdir??"."), mask, include_subdirs);
 			}
 
 			public static void CopyToData(string sourceFileName, string destDataFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Asset.CopyToData"); }
@@ -241,6 +265,11 @@ namespace KSPe.IO
 			public static string Solve(string fn)
 			{
 				return FullPathName(fn, false).Replace(IO.File<object>.KSP_ROOTPATH, "");
+			}
+
+			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)
+			{
+				return File<T>.List(SIO.Path.Combine(FullPathName(".", false), subdir??"."), mask, include_subdirs);
 			}
 
 			public static void AppendAllText(string path, string contents) { throw new NotImplementedException("KSPe.IO.File.Data.AppendAllText"); }
@@ -401,6 +430,11 @@ namespace KSPe.IO
 				return r.Substring(r.IndexOf("GameData/")+9);
 			}
 
+			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)
+			{
+				return File<T>.List(SIO.Path.Combine(FullPathName(".", false), subdir??"."), mask, include_subdirs);
+			}
+
 			public static void AppendAllText(string path, string contents) { throw new NotImplementedException("KSPe.IO.File.Local.AppendAllText"); }	
 			public static void AppendAllText(string path, string contents, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Local.AppendAllText"); }
 			public static IO.Local.StreamWriter AppendText(string path) { throw new NotImplementedException("KSPe.IO.File.Local.AppendText"); }
@@ -551,6 +585,11 @@ namespace KSPe.IO
 			internal static string FullPathName(string path)
 			{
 				return File<T>.TempPathName(path);
+			}
+
+			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)
+			{
+				return File<T>.List(SIO.Path.Combine(FullPathName("."), subdir??"."), mask, include_subdirs);
 			}
 
 			public static void AppendAllText(string path, string contents) { throw new NotImplementedException("KSPe.IO.File.Temp.AppendAllText"); }	

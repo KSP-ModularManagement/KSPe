@@ -80,21 +80,7 @@ namespace KSPe.IO
 
 		protected static string[] ListFiles(string dir, string mask = "*.cfg", bool subdirs = false)
 		{
-			if (!SIO.Directory.Exists(dir))
-				throw new SIO.FileNotFoundException(dir);
-
-			string[] files = System.IO.Directory.GetFiles(
-									dir,
-									mask,
-									subdirs ? SIO.SearchOption.AllDirectories : SIO.SearchOption.TopDirectoryOnly
-								);
-			files = files.OrderBy(x => x).ToArray();            // This will sort 1, 2, 10, 12 
-//          Array.Sort(files, StringComparer.CurrentCulture);   // This will sort 1, 10, 12, 2
-			
-			for (int i = files.Length; --i >= 0;)
-				files[i] = files[i].Substring(files[i].IndexOf(dir, StringComparison.Ordinal) + dir.Length + 1); // +1 to get rid of the trailling "/"
-
-	        return files;
+			return File<string>.List(dir, mask, subdirs);
 		}
 	}
 	
