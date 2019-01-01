@@ -1,6 +1,6 @@
 # KSP API Extensions/L :: Changes
 
-* 2018-1231: 2.1.0.6 (Lisias) for KSP >= 1.2 PRE-RELEASE
+* 2019-0101: 2.1.0.7 (Lisias) for KSP >= 1.2 PRE-RELEASE
 	+ Better Listing Files support.
 	+ Some more syntactic sugar
 		- Adding generics syntax to ConfigNode's GetValue, making easier to port code from XML (PluginConfiguration) to CFG (ConfigNode) and vice versa
@@ -9,6 +9,8 @@
 		- No impact to the user base, I'm the only client for this stunt! :D
 	+ Removed Max KSP version check.
 	+ Fixed a glitch that prevented debug messages from being suppressed.
+* 2018-1231: 2.1.0.6 (Lisias) for KSP >= 1.2 PRE-RELEASE
+	+ **DITCHED** (again! =P)
 * 2018-1228: 2.1.0.5 (Lisias) for KSP >= 1.2 PRE-RELEASE
 	+ **DITCHED**
 * 2018-1206: 2.1.0.4 (Lisias) for {1.2 <= KSP <= 1.5.1} PRE-RELEASE
