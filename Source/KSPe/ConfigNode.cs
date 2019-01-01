@@ -26,8 +26,8 @@ namespace KSPe
 		{
 			return base.HasValue(name) ? this.GetValue<T>(name) : defaultValue;
 		}
-		
-		public ConfigNodeWithSteroids GetNode(string name)
+
+		public new ConfigNodeWithSteroids GetNode(string name)
 		{
 			return ConfigNodeWithSteroids.from(base.GetNode(name));
 		}
