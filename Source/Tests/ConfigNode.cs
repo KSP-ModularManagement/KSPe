@@ -5,11 +5,12 @@ using KSPe;
 
 namespace Tests
 {
-	public class ConfigNodeWithSteroids
+	public static class ConfigNodeWithSteroids
 	{
-		public static void test()
+		public static void Test()
 		{
-			Console.WriteLine("Tests.ConfigNodeWithSteroids");
+			Console.WriteLine("ConfigNodeWithSteroids.Test");
+			
 			// We run from inside bin/[debug|release]/Tests
 			ConfigNode node = ConfigNode.Load("../../../Tests/user.cfg");
 			KSPe.ConfigNodeWithSteroids sn = KSPe.ConfigNodeWithSteroids.from(node).GetNode("KJR");
