@@ -3,10 +3,12 @@ using System.Linq;
 using KSPe;
 namespace Tests
 {
-	public class MisceTests
+	public static class MisceTests
 	{
-		public static void test1()
+		public static void Test1()
 		{
+			Console.WriteLine("MisceTests.Test1");
+
 			Type target = typeof(KSPe.KspConfig);
 			var t = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
 					 from tt in assembly.GetTypes()
