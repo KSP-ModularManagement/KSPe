@@ -62,7 +62,7 @@ namespace KSPe.IO
 
 			string fn = SIO.Path.Combine(KSP_ROOTPATH, hierarchy);
 			fn = SIO.Path.Combine(fn, rootDir);
-			fn = SIO.Path.Combine(fn, SIO.Path.GetFileName(partialPathname));
+			fn = SIO.Path.Combine(fn, partialPathname);
 			if (createDirs)
 			{
 				string d = System.IO.Path.GetDirectoryName(fn);
