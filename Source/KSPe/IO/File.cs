@@ -61,15 +61,19 @@ namespace KSPe.IO
 				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
 
 			string fn = SIO.Path.Combine(KSP_ROOTPATH, hierarchy);
-			fn = SIO.Path.Combine(fn, rootDir);
-			fn = SIO.Path.Combine(fn, partialPathname);
+			rootDir = SIO.Path.GetFullPath(SIO.Path.Combine(fn, rootDir));
+			fn = SIO.Path.GetFullPath(SIO.Path.Combine(rootDir, partialPathname));
+
+			if (!fn.StartsWith(rootDir, StringComparison.Ordinal))
+				throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the designed file hierarchy! [{0}]", partialPathname));
+
 			if (createDirs)
 			{
 				string d = System.IO.Path.GetDirectoryName(fn);
 				if (!System.IO.Directory.Exists(d))
 					System.IO.Directory.CreateDirectory(d);
 			}
-			return SIO.Path.GetFullPath(fn);
+			return fn;
 		}
 
 		internal static string FullPathName(string partialPathname, string hierarchy, bool createDirs = false)
