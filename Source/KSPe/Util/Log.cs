@@ -174,6 +174,8 @@ namespace KSPe.Util.Log {
 
 	public class UnityLogger : Logger
 	{
+		private static readonly object MUTEX = new object();
+		
 		public UnityLogger(string forceThisNamespace) : base(forceThisNamespace) { }
 		public UnityLogger(string forceThisNamespace, string forceThisClassName) : base(forceThisNamespace, forceThisClassName) { }
 
@@ -189,13 +191,13 @@ namespace KSPe.Util.Log {
 				case Level.DETAIL:
 					goto case Level.INFO;
 				case Level.INFO:
-					return UnityEngine.Debug.Log;
+					return this.log;
 
 				case Level.WARNING:
-					return UnityEngine.Debug.LogWarning;
+					return this.logWarning;
 
 				case Level.ERROR:
-					return UnityEngine.Debug.LogError;
+					return this.logError;
 
 				default:
 					throw new ArgumentException("unknown log level: " + level);
@@ -206,15 +208,33 @@ namespace KSPe.Util.Log {
 
 		protected override void log(string message)
 		{
-			UnityEngine.Debug.Log(message);
+			lock (MUTEX) { 
+				UnityEngine.Debug.Log(message);
+			}
+		}
+
+		protected void logWarning(string message)
+		{
+			lock (MUTEX) { 
+				UnityEngine.Debug.Log(message);
+			}
+		}
+
+		protected void logError(string message)
+		{
+			lock (MUTEX) {
+				UnityEngine.Debug.Log(message);
+			}
 		}
 
 		protected override void logException(string message, Exception e)
 		{
-			UnityEngine.Debug.LogError(message);
-			if (e != null)
-			{
-				UnityEngine.Debug.LogException(e);
+			lock (MUTEX) {
+				UnityEngine.Debug.LogError(message);
+				if (e != null)
+				{
+					UnityEngine.Debug.LogException(e);
+				}
 			}
 		}
 	}
