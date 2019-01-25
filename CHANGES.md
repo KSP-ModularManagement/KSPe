@@ -1,6 +1,8 @@
 # KSP API Extensions/L :: Changes
 
-* 2019-0101: 2.1.0.7 (Lisias) for KSP >= 1.2 PRE-RELEASE
+* 2019-0125: 2.1.0.8 (Lisias) for KSP >= 1.2 PRE-RELEASE
+	+ Preventing concurrent processes from playing havoc on the KSP/Unity logging.
+		- No more entries being written in the middle of the previous ones! :) 	
 	+ Better Listing Files support.
 	+ Some more syntactic sugar
 		- Adding generics syntax to ConfigNode's GetValue, making easier to port code from XML (PluginConfiguration) to CFG (ConfigNode) and vice versa
