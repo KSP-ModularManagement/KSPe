@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("L Aerospace KSP Division")]
 [assembly: AssemblyProduct("KSP API Extensions/L")]
-[assembly: AssemblyCopyright("©2018 Lisias")]
+[assembly: AssemblyCopyright("©2018-19 Lisias")]
 [assembly: AssemblyTrademark("KSPe")]
 [assembly: AssemblyCulture("")]
 

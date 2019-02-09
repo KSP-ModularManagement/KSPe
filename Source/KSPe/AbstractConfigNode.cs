@@ -1,6 +1,6 @@
 ﻿/*
     This file is part of KSPe, a component for KSP API Extensions/L
-    (C) 2018 Lisias T : http://lisias.net <support@lisias.net>
+    (C) 2018-19 Lisias T : http://lisias.net <support@lisias.net>
 
 	KSPe API Extensions/L is double licensed, as follows:
 
@@ -20,7 +20,6 @@
     along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
     
 */
-
 using System;
 using System.Linq;
 using SIO = System.IO;
