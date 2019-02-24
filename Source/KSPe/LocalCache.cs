@@ -20,31 +20,20 @@
     along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
     
 */
+using System;
+using System.Collections.Generic;
 
-namespace KSPe.IO
+namespace KSPe
 {
-	public class KspConfigNode : ReadableConfigNode
+	public class LocalCache<T>
 	{
-		public KspConfigNode(string name) : base(name)
+		public class Dictionary :  Dictionary<string, T>
 		{
-			this.Path = GeneratePathname(name + ".cfg");
+		    public Dictionary() : base() { }
 		}
 
-		public KspConfigNode(string name, string filename) : base(name)
-		{
-			this.Path = GeneratePathname(filename);
-		}
-
-		public new KspConfigNode Load()
-		{
-			return (KspConfigNode)base.Load();
-		}
-		
-		protected static string GeneratePathname(string filename)
-		{
-			string fn = System.IO.Path.Combine(KSPe.IO.File.KSP_ROOTPATH, filename);
-			return fn;
-		}
-
-	}
+		private readonly Dictionary<Type, Dictionary> cache = new Dictionary<Type, Dictionary>();
+		public LocalCache(){}
+        internal Dictionary this[Type i] => this.cache.ContainsKey(i) ? this.cache[i] : ( this.cache[i] = new Dictionary() ) ;
+    }
 }

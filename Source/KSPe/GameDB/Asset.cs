@@ -21,17 +21,24 @@
     
 */
 using System;
+using System.Collections.Generic;
 
 namespace KSPe.GameDB
 
 {
 	public static class Asset<T>
 	{
-		public static string Solve(string fn)
+        public static string Solve(string fn)
 		{
 			string r = KSPe.IO.File<T>.Asset.Solve(fn);
-			r = r.Substring(r.IndexOf("GameData/") + 9);
+			r = r.Substring(r.IndexOf("GameData/", StringComparison.Ordinal) + 9);
 			return r;
+		}
+
+        public static string Solve(string fn, LocalCache<string> cache)
+		{
+            LocalCache<string>.Dictionary c = cache[typeof(T)];
+            return c.ContainsKey(fn) ? c[fn] : (c[fn] = Solve(fn));
 		}
 	}
 }

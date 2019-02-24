@@ -7,7 +7,7 @@ namespace Tests
 		public static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");
-			AbstractConfigNode.Test();
+			MisceTests.Test_CalculateRelativePath();
 		}   
 	}
 }

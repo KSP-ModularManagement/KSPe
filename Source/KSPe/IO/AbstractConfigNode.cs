@@ -45,7 +45,7 @@ namespace KSPe.IO
 		// havoc with our way to keep plugins sandboxed (by always using hardpaths).
 		// So we use this when giving such paths to KSP, so it can find the file.
 		// (found this due a problem with "my" ModuleManager when loading TechTree.cfg!)
-		public string KspPath => this.Path.Replace(IO.File<object>.KSP_ROOTPATH, "");
+		public string KspPath => this.Path.Replace(IO.File.KSP_ROOTPATH, "");
 
 		protected ConfigNode RawNode;
 		protected readonly string name;
@@ -79,7 +79,7 @@ namespace KSPe.IO
 
 		protected static string[] ListFiles(string dir, string mask = "*.cfg", bool subdirs = false)
 		{
-			return File<string>.List(dir, mask, subdirs);
+			return File.List(dir, mask, subdirs);
 		}
 	}
 	
