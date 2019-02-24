@@ -89,10 +89,23 @@ namespace KSPe.IO
 
 		public void Save()
 		{
-			this.RawNode.Save(this.Path);
+			this.Save((string)null);
+		}
+
+		public void Save(string header)
+		{
+			if (null != header)
+				this.RawNode.Save(this.Path, header);
+			else
+				this.RawNode.Save(this.Path);
 		}
 
 		public void Save(ConfigNode node)
+        {
+			this.Save(node, null);
+        }
+        
+        public void Save(ConfigNode node, string header)
 		{
 			if (null == node)
 				throw new FormatException("Invalid NULL config for saving!");
@@ -109,7 +122,7 @@ namespace KSPe.IO
 				else
 					throw new FormatException(string.Format("Incompatible Node '{1}' for Config '{0}' on {2}.", this.name, node.name, this.Path));
 			}	
-			this.Save();
+			this.Save(header);
 		}
 
 		public void Destroy()
