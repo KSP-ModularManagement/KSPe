@@ -1,5 +1,8 @@
 # KSP API Extensions/L :: Changes
 
+* 2019-0503: 2.1.0.9 (Lisias) for KSP >= 1.2 PRE-RELEASE
+	+ Adding support for headers when saving ConfigNodes.
+	+ Adding local cache support to the *.Solve functions (saving some processing on the client side, by avoiding hitting the Reflection stuff more than one time for file)
 * 2019-0125: 2.1.0.8 (Lisias) for KSP >= 1.2 PRE-RELEASE
 	+ Preventing concurrent processes from playing havoc on the KSP/Unity logging.
 		- No more entries being written in the middle of the previous ones! :) 	
