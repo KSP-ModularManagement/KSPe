@@ -1,5 +1,10 @@
 # KSP API Extensions/L :: Changes
 
+* 2019-0524: 2.1.0.10 (Lisias) for KSP >= 1.2
+	+ KSPe goes gold after 8 months in development! :)
+	+ Adding a proxy to [Click Through Blocker](https://forum.kerbalspaceprogram.com/index.php?/topic/170747-151-click-through-blocker/), what will allow seamless integration with it and new solutions
+		- Including selecting the desired one in runtime!
+		- Will raise the minimum supported KSP to the installed Click Through Blocker supported version.
 * 2019-0503: 2.1.0.9 (Lisias) for KSP >= 1.2 PRE-RELEASE
 	+ Adding support for headers when saving ConfigNodes.
 	+ Adding local cache support to the *.Solve functions (saving some processing on the client side, by avoiding hitting the Reflection stuff more than one time for file)
@@ -14,10 +19,6 @@
 		- No impact to the user base, I'm the only client for this stunt! :D
 	+ Removed Max KSP version check.
 	+ Fixed a glitch that prevented debug messages from being suppressed.
-* 2018-1231: 2.1.0.6 (Lisias) for KSP >= 1.2 PRE-RELEASE
-	+ **DITCHED** (again! =P)
-* 2018-1228: 2.1.0.5 (Lisias) for KSP >= 1.2 PRE-RELEASE
-	+ **DITCHED**
 * 2018-1206: 2.1.0.4 (Lisias) for {1.2 <= KSP <= 1.5.1} PRE-RELEASE
 	+ Implementing Helper Classes for Assets, Local and Temp files
 	+ Some minor code sanitizing and normalizing to promote maintainability
@@ -30,11 +31,4 @@
 	+ Implementing sandboxed File<type> decorators:
 		- [Asset|Data|Local|Temp].ReadAll*()
 	+ Fixed bug on KSPe.IO.File<type>.Asset pathname solving algorithm.
-* 2018-1010: 2.0.0.2 (Lisias) for KSP 1.4
-	+ Dumb mistake on the PluginConfig.Save method.
-		- Critical for [ModuleManager](https://github.com/net-lisias-kspu/ModuleManager). 
-* 2018-1008: 2.0.0.1 (Lisias) for KSP 1.4
-	+ Logging Helpers (`KSPe.Util.Log`)
-		- Currently, only `UnitEngine.Debug.Log*` as target. 
-	+ This is a proper release.
-		+ All plugins with KSPe 2.0 dependencies will be satisfied by this version.
+
