@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSPe", "Source\KSPe\KSPe.cs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Source\Tests\Tests.csproj", "{6AD0ED57-6AA6-459C-B287-C263DFF5B3FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSPe.UI", "Source\KSPe.UI\KSPe.UI.csproj", "{93F4C3CA-722B-47C2-80D8-B5F7204E1EC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6AD0ED57-6AA6-459C-B287-C263DFF5B3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AD0ED57-6AA6-459C-B287-C263DFF5B3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AD0ED57-6AA6-459C-B287-C263DFF5B3FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93F4C3CA-722B-47C2-80D8-B5F7204E1EC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93F4C3CA-722B-47C2-80D8-B5F7204E1EC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93F4C3CA-722B-47C2-80D8-B5F7204E1EC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93F4C3CA-722B-47C2-80D8-B5F7204E1EC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

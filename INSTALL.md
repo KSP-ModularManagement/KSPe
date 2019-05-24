@@ -19,5 +19,6 @@ To install, place the GameData folder inside your Kerbal Space Program folder. O
 
 ### Dependencies
 
-* None at the moment. :)
+* Hard
+	+ [Click Through Blocker](https://forum.kerbalspaceprogram.com/index.php?/topic/170747-151-click-through-blocker/) 
 
