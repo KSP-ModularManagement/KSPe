@@ -44,8 +44,10 @@ namespace KSPe.IO
 
 		internal static string CalculateRelativePath(string fullDestinationPath, string rootPath)
         {
+#if DEBUG
             UnityEngine.Debug.Log(fullDestinationPath);
             UnityEngine.Debug.Log(rootPath);
+#endif
             // from https://social.msdn.microsoft.com/Forums/vstudio/en-US/954346c8-cbe8-448c-80d0-d3fc27796e9c - Wednesday, May 20, 2009 3:37 PM
             string[] startPathParts = SIO.Path.GetFullPath(rootPath).Trim(SIO.Path.DirectorySeparatorChar).Split(SIO.Path.DirectorySeparatorChar);
             string[] destinationPathParts = SIO.Path.GetFullPath(fullDestinationPath).Trim(SIO.Path.DirectorySeparatorChar).Split(SIO.Path.DirectorySeparatorChar);
@@ -70,7 +72,9 @@ namespace KSPe.IO
 
             relativePath.Length--; // Gets rid of the trailig "/" that is always appended
 
+#if DEBUG
             UnityEngine.Debug.Log(relativePath.ToString());
+#endif
             return relativePath.ToString();
         }
         
