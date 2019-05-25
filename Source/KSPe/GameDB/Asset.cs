@@ -21,10 +21,8 @@
     
 */
 using System;
-using System.Collections.Generic;
 
 namespace KSPe.GameDB
-
 {
 	public static class Asset<T>
 	{

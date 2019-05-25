@@ -25,7 +25,6 @@ using System.Linq;
 using System.IO.IsolatedStorage;
 
 using SIO = System.IO;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace KSPe.IO
@@ -154,7 +153,7 @@ namespace KSPe.IO
         {
 			string rootDir = typeof(T).Namespace;
 			{
-				var t = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                Type t = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
 						 from tt in assembly.GetTypes()
 						 where tt.Namespace == typeof(T).Namespace && tt.Name == "Version" && tt.GetMembers().Any(m => m.Name == "Namespace")
 						 select tt).FirstOrDefault();
@@ -164,7 +163,7 @@ namespace KSPe.IO
 					: t.GetField("Namespace").GetValue(null).ToString();
 			}
 			{
-				var t = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                Type t = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
 						 from tt in assembly.GetTypes()
 						 where tt.Namespace == typeof(T).Namespace && tt.Name == "Version" && tt.GetMembers().Any(m => m.Name == "Vendor")
 						 select tt).FirstOrDefault();
