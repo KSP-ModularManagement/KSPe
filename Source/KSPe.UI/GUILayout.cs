@@ -30,9 +30,8 @@ namespace KSPe.UI {
 		public static Rect Window (int id, Rect screenRect, UnityEngine.GUI.WindowFunction func, GUIContent content, params GUILayoutOption[] options)                  { return ClickThroughFix.ClickThruBlocker.GUILayoutWindow(id, screenRect, func, content, options); }
 		public static Rect Window (int id, Rect screenRect, UnityEngine.GUI.WindowFunction func, string text, GUIStyle style, params GUILayoutOption[] options)         { return ClickThroughFix.ClickThruBlocker.GUILayoutWindow(id, screenRect, func, text, style, options); }
 		
-		// FIXME : https://github.com/linuxgurugamer/ClickThroughBlocker/issues/6
-		public static Rect Window (int id, Rect screenRect, UnityEngine.GUI.WindowFunction func, Texture image, GUIStyle style, params GUILayoutOption[] options)       { return UnityEngine.GUILayout.Window(id, screenRect, func, image, style, options); }
-		public static Rect Window (int id, Rect screenRect, UnityEngine.GUI.WindowFunction func, GUIContent content, GUIStyle style, params GUILayoutOption[] options)  { return UnityEngine.GUILayout.Window(id, screenRect, func, content, style, options); }
+		public static Rect Window (int id, Rect screenRect, UnityEngine.GUI.WindowFunction func, Texture image, GUIStyle style, params GUILayoutOption[] options)       { return ClickThroughFix.ClickThruBlocker.GUILayoutWindow(id, screenRect, func, image, style, options); }
+		public static Rect Window (int id, Rect screenRect, UnityEngine.GUI.WindowFunction func, GUIContent content, GUIStyle style, params GUILayoutOption[] options)  { return ClickThroughFix.ClickThruBlocker.GUILayoutWindow(id, screenRect, func, content, style, options); }
 	
 	    public static void Label (Texture image, params GUILayoutOption[] options)                      { UnityEngine.GUILayout.Label(image, options); }
 	    public static void Label (string text, params GUILayoutOption[] options)                        { UnityEngine.GUILayout.Label(text, options); }

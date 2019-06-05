@@ -79,13 +79,12 @@ namespace KSPe.UI
 		public static Rect Window (int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, Texture image, GUIStyle style)     { return ClickThroughFix.ClickThruBlocker.GUIWindow(id, clientRect, func, image, style); }
 		public static Rect Window (int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, GUIContent title, GUIStyle style)  { return ClickThroughFix.ClickThruBlocker.GUIWindow(id, clientRect, func, title, style); }
 
-		// FIXME : https://github.com/linuxgurugamer/ClickThroughBlocker/issues/6
-		public static Rect ModalWindow (int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, string text)                          { return UnityEngine.GUI.ModalWindow(id, clientRect, func, text); } 
-        public static Rect ModalWindow (int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, Texture image)                        { return UnityEngine.GUI.ModalWindow(id, clientRect, func, image); }
-		public static Rect ModalWindow (int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, GUIContent content)                   { return UnityEngine.GUI.ModalWindow(id, clientRect, func, content); }
-        public static Rect ModalWindow (int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, string text, GUIStyle style)          { return UnityEngine.GUI.ModalWindow(id, clientRect, func, text, style); }
-        public static Rect ModalWindow (int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, Texture image, GUIStyle style)        { return UnityEngine.GUI.ModalWindow(id, clientRect, func, image, style); }
-        public static Rect ModalWindow (int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, GUIContent content, GUIStyle style)   { return UnityEngine.GUI.ModalWindow(id, clientRect, func, content, style); }
+		public static Rect ModalWindow (int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, string text)                          { return ClickThroughFix.ClickThruBlocker.GUIModalWindow(id, clientRect, func, text); } 
+        public static Rect ModalWindow (int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, Texture image)                        { return ClickThroughFix.ClickThruBlocker.GUIModalWindow(id, clientRect, func, image); }
+		public static Rect ModalWindow (int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, GUIContent content)                   { return ClickThroughFix.ClickThruBlocker.GUIModalWindow(id, clientRect, func, content); }
+        public static Rect ModalWindow (int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, string text, GUIStyle style)          { return ClickThroughFix.ClickThruBlocker.GUIModalWindow(id, clientRect, func, text, style); }
+        public static Rect ModalWindow (int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, Texture image, GUIStyle style)        { return ClickThroughFix.ClickThruBlocker.GUIModalWindow(id, clientRect, func, image, style); }
+        public static Rect ModalWindow (int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, GUIContent content, GUIStyle style)   { return ClickThroughFix.ClickThruBlocker.GUIModalWindow(id, clientRect, func, content, style); }
 
         public static void Label (Rect position, string text)                           { UnityEngine.GUI.Label(position, text); }
 		public static void Label (Rect position, Texture image)                         { UnityEngine.GUI.Label(position, image); }
