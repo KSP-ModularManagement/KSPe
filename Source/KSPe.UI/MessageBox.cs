@@ -27,14 +27,14 @@ namespace KSPe.UI
 {
 	public class MessageBox : MonoBehaviour {
 	
-	    private readonly string title;
-	    private readonly string msg;
-	    private readonly Action action;
+	    private string title;
+	    private string msg;
+	    private Action action;
 	
 	    private Rect windowRect;
 	
 	    // MessageBox("SNAFU", "Situation Normal... All F* Up!", () => { Application.Quit() });
-	    public MessageBox(string title, string msg, Action action)
+	    public void Show(string title, string msg, Action action)
 	    {
 	        this.title = title;
 	        this.msg = msg;
