@@ -30,7 +30,7 @@ namespace KSPe
 		[UsedImplicitly]
 		private void Start()
 		{
-			LOG.force("Version {0}", Version.Text);
+			LOG.force("Version {0} for KSP-Recall", Version.Text);
 		}
 
 		[UsedImplicitly]
@@ -59,6 +59,6 @@ namespace KSPe
 			}
 		}
 
-		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>("KSPe.Light", false, 0);
+		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>("KSPe.Light.Recall", false, 0);
 	}
 }
