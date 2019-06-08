@@ -15,6 +15,7 @@ deploy_dev() {
 
 	if [ -f "./bin/Release/$DLL" ] ; then
 		cp "./bin/Release/$DLL" "$LIB"
+		cp "./bin/Release/$DLL" ~/Workspaces/KSP/GIT/net-lisias/ksp/TweakScale/GameData/TweakScale/Plugins/
 	fi
 }
 
