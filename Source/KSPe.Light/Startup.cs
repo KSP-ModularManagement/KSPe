@@ -27,34 +27,34 @@ namespace KSPe
 	{
 		private void Start()
 		{
-			LOG.force("Version {0}", Version.Text);
+			Log.force("Version {0} for KAX", Version.Text);
 		}
 
 		private void OnDestroy()
 		{
-			// Someone, probably a FatalError, told us to quit the game.
 			if (!quitOnDestroy) return;
 
-			LOG.info("Quitting KSP due an unrecoreable error.");
+			// Someone, probably a FatalError, told us to quit the game.
+			Log.force("Quitting KSP due an unrecoverable error.");
 			UnityEngine.Application.Quit();
 		}
 
 		// Be *REALLY* cautious with this one!
 		// This is used as a fallback in the case the user don't click on the FatalError MsgBox
 		private static bool quitOnDestroy = false;
-		internal static bool QuitOnDestroy
+		public static bool QuitOnDestroy
 		{
 			set
 			{
 				if (value)
 				{
-					System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
-					LOG.warn("was told to quit the game. Stackdump of the caller: {0}", t);
+					Log.fatal(1, "I was told to quit the game. Stackdump of the caller follows.");
+					Log.stack(typeof(Startup), true);
+					quitOnDestroy = value;
 				}
-				quitOnDestroy = value;
 			}
 		}
 
-		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>("KSPe.Light", false, 0);
+		private static readonly Util.Log.Logger Log = Util.Log.Logger.CreateForType<Startup>("KSPe.Light.TweakScale");
 	}
 }
