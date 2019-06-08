@@ -18,7 +18,6 @@
 
 	You should have received a copy of the GNU General Public License 2.0
     along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
-    
 */
 using UnityEngine;
  	

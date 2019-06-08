@@ -17,8 +17,7 @@
     along with KSPe API Extensions/L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.
 
 	You should have received a copy of the GNU General Public License 2.0
-    along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
-    
+    along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.    
 */
 using UnityEngine;
 

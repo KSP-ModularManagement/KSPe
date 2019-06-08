@@ -51,6 +51,8 @@
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="GUI.cs" />
+    <Compile Include="MessageBox.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KSPe\KSPe.csproj">
