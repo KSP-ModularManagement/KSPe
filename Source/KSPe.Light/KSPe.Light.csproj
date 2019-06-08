@@ -6,7 +6,7 @@
     <ProjectGuid>{61CAD292-88E3-4168-815E-2C1CCB3680F1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>KSPe.Light</RootNamespace>
-    <AssemblyName>KSPe.Light</AssemblyName>
+    <AssemblyName>KSPe.Light.KAX</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>..\..\obj\KSPeLight</BaseIntermediateOutputPath>
   </PropertyGroup>
@@ -126,6 +126,12 @@
     </Compile>
     <Compile Include="..\KSPe\LocalCache.cs">
       <Link>LocalCache.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\SanityChecks.cs">
+      <Link>SanityChecks.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\Properties\Annotations.cs">
+      <Link>Properties\Annotations.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
