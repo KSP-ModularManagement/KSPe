@@ -30,15 +30,34 @@ namespace KSPe.UI
 	    private string title;
 	    private string msg;
 	    private Action action;
+	    private GUIStyle win_style;
+	    private GUIStyle text_style;
 	
 	    private Rect windowRect;
 	
-	    // MessageBox("SNAFU", "Situation Normal... All F* Up!", () => { Application.Quit() });
+	    public void Show(string title, string msg)
+	    {
+	        Show(title, msg, null, null, null);
+	    }
+	
+    // MessageBox("SNAFU", "Situation Normal... All F* Up!", () => { Application.Quit() });
 	    public void Show(string title, string msg, Action action)
+	    {
+	        Show(title, msg, action, null, null);
+	    }
+	
+	    public void Show(string title, string msg, GUIStyle win_style, GUIStyle text_style)
+	    {
+	        Show(title, msg, null, win_style, text_style);
+	    }
+	
+	    public void Show(string title, string msg, Action action, GUIStyle win_style, GUIStyle text_style)
 	    {
 	        this.title = title;
 	        this.msg = msg;
 	        this.action = action;
+	        this.win_style = win_style;
+	        this.text_style = text_style;
 	    }
 	
 	    private void OnGUI()
@@ -52,30 +71,36 @@ namespace KSPe.UI
 	            (Screen.width - width) / 2, (Screen.height - height) / 2,
 	            width, height
 	        );
-	
-	        this.windowRect = UGUI.Window(0, this.windowRect, WindowFunc, this.title);
-	    }
-	
-	    private void WindowFunc(int windowID)
+
+            this.windowRect = this.win_style is null
+                ? UGUI.ModalWindow(0, this.windowRect, WindowFunc, this.title)
+                : UGUI.ModalWindow(0, this.windowRect, WindowFunc, this.title, this.win_style);
+        }
+
+        private void WindowFunc(int windowID)
 	    {
 	        const int border = 10;
 	        const int width = 50;
 	        const int height = 25;
 	        const int spacing = 10;
-	
-	        Rect l = new Rect(
-		            border, border + spacing,
-		            this.windowRect.width - border * 2, this.windowRect.height - border * 2 - height - spacing
-	            );
-	        UGUI.Label(l, this.msg);
-	
-	        Rect b = new Rect(
-	            this.windowRect.width - width - border,
-	            this.windowRect.height - height - border,
-	            width,
-	            height);
-	
-	        if (UGUI.Button(b, "OK"))
+
+            Rect l = new Rect(
+                    border, border + spacing,
+                    this.windowRect.width - border * 2, this.windowRect.height - border * 2 - height - spacing
+                );
+            
+            if (this.text_style is null)
+                UGUI.Label(l, this.msg);
+            else
+                UGUI.Label(l, this.msg, this.text_style);
+
+            Rect b = new Rect(
+                this.windowRect.width - width - border,
+                this.windowRect.height - height - border,
+                width,
+                height);
+
+            if (UGUI.Button(b, "OK"))
 	        {
 	            if (!(this.action is null)) this.action();
                 Destroy(this.gameObject);
