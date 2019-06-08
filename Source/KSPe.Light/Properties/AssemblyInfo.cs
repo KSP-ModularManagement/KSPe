@@ -4,12 +4,12 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("KSPe.Light")]
+[assembly: AssemblyTitle("KSPe.Light for TweakScale")]
 [assembly: AssemblyDescription("Light, embeddadble subset from KSPe.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("L Aerospace KSP Division")]
 [assembly: AssemblyProduct("KSP Extensions Light")]
-[assembly: AssemblyCopyright("©2018-19 Lisias")]
+[assembly: AssemblyCopyright("©2019 Lisias")]
 [assembly: AssemblyTrademark("KSPe.Light")]
 [assembly: AssemblyCulture("")]
 
@@ -19,7 +19,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyVersion(KSPe.Version.Number)]
 [assembly: AssemblyFileVersion(KSPe.Version.Number)]
-[assembly: KSPAssembly("KSPe.Light", KSPe.Version.major, KSPe.Version.minor)]
+[assembly: KSPAssembly("KSPe.Light.TweakScale", KSPe.Version.major, KSPe.Version.minor)]
 
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.
