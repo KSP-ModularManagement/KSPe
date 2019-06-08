@@ -7,6 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>KSPe.Light</RootNamespace>
     <AssemblyName>KSPe.Light</AssemblyName>
+    <AssemblyName>KSPe.Light.Recall</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>..\..\obj\KSPeLight</BaseIntermediateOutputPath>
   </PropertyGroup>
@@ -139,6 +140,9 @@
       <Link>Util\Text.cs</Link>
     </Compile>
     <Compile Include="Util\Image.Local.cs" />
+    <Compile Include="..\KSPe.UI\Common\Dialogs\Error.cs">
+      <Link>Common\Dialogs\Error.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />
