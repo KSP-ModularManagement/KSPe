@@ -29,7 +29,7 @@ namespace KSPe
 		private void Start()
 		{
 			// Nope, we should not use the Log Facilities ourselves. Ironic, uh? :)
-			UnityEngine.Debug.LogFormat("[KSPe.Light] Version {0}", Version.Text);
+			UnityEngine.Debug.LogFormat("[KSPe.Light.KAX] Version {0}", Version.Text);
 		}
 
 		private void OnDestroy()
