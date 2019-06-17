@@ -100,12 +100,18 @@ namespace KSPe.UI
                 width,
                 height);
 
-            if (UGUI.Button(b, "OK"))
-	        {
-	            if (!(this.action is null)) this.action();
-                Destroy(this.gameObject);
-	        }
-	
+            if (this.action is null)
+            {
+	            if (UGUI.Button(b, "OK"))       Destroy(this.gameObject);
+            }
+            else
+            {
+	            if (UGUI.Button(b, "OK"))       { this.action(); Destroy(this.gameObject); }
+	            
+	            Rect b1 = new Rect(b);
+	            b1.x -= b.width+spacing;
+	            if (UGUI.Button(b1, "Cancel"))   Destroy(this.gameObject);
+            }
 	    }
 	} 
 }
