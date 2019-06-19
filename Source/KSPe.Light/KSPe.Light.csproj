@@ -55,6 +55,9 @@
     <Compile Include="..\KSPe.UI\TimedMessageBox.cs">
       <Link>GUI\TimedMessageBox.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe.UI\WindowUtils.cs">
+      <Link>GUI\WindowUtils.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />

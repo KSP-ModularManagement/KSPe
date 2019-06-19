@@ -34,7 +34,7 @@ namespace KSPe.UI
 	    private int pos_vertical;   // -1 Top ; 0 Center ; +1 Bottom
 	    private GUIStyle win_style;
 	    private GUIStyle text_style;
-	
+	    private int window_id;
 	    private Rect windowRect;
 	
 	    public void Show(string title, string msg)
@@ -42,7 +42,6 @@ namespace KSPe.UI
 	        Show(title, msg, 15, 0, 0, null, null);
 	    }
 	
-    // MessageBox("SNAFU", "Situation Normal... All F* Up!", () => { Application.Quit() });
 	    public void Show(string title, string msg, int seconds_to_show)
 	    {
 	        Show(title, msg, seconds_to_show, 0, 0, null, null);
@@ -62,6 +61,7 @@ namespace KSPe.UI
 	        this.pos_vertical = pos_vertical;
 	        this.win_style = win_style;
 	        this.text_style = text_style;
+	        this.window_id = (int)WindowUtils.window_id_seed;
 	    }
 	
 	    private void OnGUI()
@@ -73,14 +73,14 @@ namespace KSPe.UI
 	        int height = Mathf.Min(maxHeight, Screen.height - 20);
 	        int win_pos_x = (Screen.width - width) / 2;
 	        int win_pos_y = (Screen.height - height) / 2;
-	        this.windowRect = new Rect(
+	        Rect windowRect = new Rect(
 	            win_pos_x + (float)(this.pos_horizontal * win_pos_x * .80), win_pos_y + (float)(this.pos_vertical * win_pos_y * .80),
 	            width, height
 	        );
 
             this.windowRect = this.win_style is null
-                ? UGUI.Window(0, this.windowRect, WindowFunc, this.title)
-                : UGUI.Window(0, this.windowRect, WindowFunc, this.title, this.win_style);
+                ? UGUI.Window(this.window_id, windowRect, WindowFunc, this.title)
+                : UGUI.Window(this.window_id, windowRect, WindowFunc, this.title, this.win_style);
         }
 
         private void WindowFunc(int windowID)

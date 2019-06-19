@@ -54,6 +54,7 @@
     <Compile Include="MessageBox.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TimedMessageBox.cs" />
+    <Compile Include="WindowUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KSPe\KSPe.csproj">

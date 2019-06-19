@@ -32,7 +32,7 @@ namespace KSPe.UI
 	    private Action action;
 	    private GUIStyle win_style;
 	    private GUIStyle text_style;
-	
+	    private int window_id;
 	    private Rect windowRect;
 	
 	    public void Show(string title, string msg)
@@ -40,7 +40,7 @@ namespace KSPe.UI
 	        Show(title, msg, null, null, null);
 	    }
 	
-    // MessageBox("SNAFU", "Situation Normal... All F* Up!", () => { Application.Quit() });
+        // MessageBox("SNAFU", "Situation Normal... All F* Up!", () => { Application.Quit() });
 	    public void Show(string title, string msg, Action action)
 	    {
 	        Show(title, msg, action, null, null);
@@ -58,6 +58,7 @@ namespace KSPe.UI
 	        this.action = action;
 	        this.win_style = win_style;
 	        this.text_style = text_style;
+	        this.window_id = (int)WindowUtils.window_id_seed;
 	    }
 	
 	    private void OnGUI()
@@ -67,14 +68,14 @@ namespace KSPe.UI
 	
 	        int width = Mathf.Min(maxWidth, Screen.width - 20);
 	        int height = Mathf.Min(maxHeight, Screen.height - 20);
-	        this.windowRect = new Rect(
+	        Rect windowRect = new Rect(
 	            (Screen.width - width) / 2, (Screen.height - height) / 2,
 	            width, height
 	        );
 
             this.windowRect = this.win_style is null
-                ? UGUI.ModalWindow(0, this.windowRect, WindowFunc, this.title)
-                : UGUI.ModalWindow(0, this.windowRect, WindowFunc, this.title, this.win_style);
+                ? UGUI.ModalWindow(this.window_id, windowRect, WindowFunc, this.title)
+                : UGUI.ModalWindow(this.window_id, windowRect, WindowFunc, this.title, this.win_style);
         }
 
         private void WindowFunc(int windowID)
