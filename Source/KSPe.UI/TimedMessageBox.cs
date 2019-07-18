@@ -111,12 +111,19 @@ namespace KSPe.UI
 				width,
 				height);
 
+			if ((0 ==  Event.current.button) && (EventType.MouseUp == Event.current.type))
+				this.isTicking = false;
+
+			string label = this.isTicking ? string.Format("{0}", (int)(this.seconds_to_show - this.timer)) : "OK";
+			if (UGUI.Button(b, label))
+				Destroy(this.gameObject);
 		}
 
 		private float timer = 0.0f;
+		private bool isTicking = true;
 		protected void Update()
 		{
-			timer += Time.smoothDeltaTime;
+			timer += this.isTicking ? Time.smoothDeltaTime : 0;
 			if (timer > this.seconds_to_show)
 				Destroy(this.gameObject);
 		}
