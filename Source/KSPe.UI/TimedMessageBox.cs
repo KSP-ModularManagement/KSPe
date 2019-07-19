@@ -117,6 +117,8 @@ namespace KSPe.UI
 			string label = this.isTicking ? string.Format("{0}", (int)(this.seconds_to_show - this.timer)) : "OK";
 			if (UGUI.Button(b, label))
 				Destroy(this.gameObject);
+
+			GUI.DragWindow();
 		}
 
 		private float timer = 0.0f;
