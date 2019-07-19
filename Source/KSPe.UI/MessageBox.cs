@@ -27,7 +27,6 @@ namespace KSPe.UI
 {
 	public class MessageBox : MonoBehaviour
 	{
-
 		private string title;
 		private string msg;
 		private Action action;
@@ -60,23 +59,30 @@ namespace KSPe.UI
 			this.win_style = win_style;
 			this.text_style = text_style;
 			this.window_id = (int)WindowUtils.window_id_seed;
+
+			this.windowRect = this.calculateWindow();
 		}
 
-		private void OnGUI()
+		private Rect calculateWindow()
 		{
 			const int maxWidth = 640;
 			const int maxHeight = 480;
 
 			int width = Mathf.Min(maxWidth, Screen.width - 20);
 			int height = Mathf.Min(maxHeight, Screen.height - 20);
-			Rect windowRect = new Rect(
+			
+			return new Rect(
 				(Screen.width - width) / 2, (Screen.height - height) / 2,
 				width, height
 			);
 
+		}
+
+		private void OnGUI()
+		{
 			this.windowRect = this.win_style is null
-				? UGUI.ModalWindow(this.window_id, windowRect, WindowFunc, this.title)
-				: UGUI.ModalWindow(this.window_id, windowRect, WindowFunc, this.title, this.win_style);
+				? UGUI.ModalWindow(this.window_id, this.windowRect, WindowFunc, this.title)
+				: UGUI.ModalWindow(this.window_id, this.windowRect, WindowFunc, this.title, this.win_style);
 		}
 
 		private void WindowFunc(int windowID)

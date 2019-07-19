@@ -63,9 +63,11 @@ namespace KSPe.UI
 			this.win_style = win_style;
 			this.text_style = text_style;
 			this.window_id = (int)WindowUtils.window_id_seed;
+
+			this.windowRect = this.calculateWindow();
 		}
 
-		private void OnGUI()
+		private Rect calculateWindow()
 		{
 			const int minWidth = 400;
 			const int minHeight = 300;
@@ -78,14 +80,17 @@ namespace KSPe.UI
 			int diff_x = Screen.width - width - win_pos_x;
 			int diff_y = Screen.height - height - win_pos_y;
 
-			Rect windowRect = new Rect(
+			return new Rect(
 				win_pos_x + (float)(this.pos_horizontal * diff_x), win_pos_y + (float)(this.pos_vertical * diff_y),
 				width, height
 			);
+		}
 
+		private void OnGUI()
+		{
 			this.windowRect = this.win_style is null
-				? UGUI.Window(this.window_id, windowRect, WindowFunc, this.title)
-				: UGUI.Window(this.window_id, windowRect, WindowFunc, this.title, this.win_style);
+				? UGUI.Window(this.window_id, this.windowRect, WindowFunc, this.title)
+				: UGUI.Window(this.window_id, this.windowRect, WindowFunc, this.title, this.win_style);
 		}
 
 		private void WindowFunc(int windowID)
