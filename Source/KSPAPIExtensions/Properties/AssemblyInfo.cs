@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("L Aerospace KSP Division")]
 [assembly: AssemblyProduct("KSP API Extensions/L")]
-[assembly: AssemblyCopyright("© 2014-2018 swamp_ig, taniwha & Lisias")]
+[assembly: AssemblyCopyright("© 2014-2019 swamp_ig, taniwha & Lisias")]
 [assembly: AssemblyTrademark("KSP API Extensions/L")]
 [assembly: AssemblyCulture("")]
 
