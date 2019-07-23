@@ -73,6 +73,8 @@
     <Compile Include="IO\AbstractConfigNode.cs" />
     <Compile Include="ConfigNode.cs" />
     <Compile Include="LocalCache.cs" />
+    <Compile Include="Util\ImageTex.cs" />
+    <Compile Include="Util\Image.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">

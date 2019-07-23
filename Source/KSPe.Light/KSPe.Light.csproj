@@ -58,6 +58,9 @@
     <Compile Include="..\KSPe.UI\WindowUtils.cs">
       <Link>GUI\WindowUtils.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe\Util\Image.cs">
+      <Link>Util\Image.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />
