@@ -1,5 +1,5 @@
 ﻿/*
-	This file is part of KSPe.UI, a component for KSP API Extensions/L
+	This file is part of KSPe, a component for KSP API Extensions/L
 	(C) 2018-19 Lisias T : http://lisias.net <support@lisias.net>
 
 	KSPe API Extensions/L is double licensed, as follows:
@@ -17,7 +17,8 @@
 	along with KSPe API Extensions/L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.
 
 	You should have received a copy of the GNU General Public License 2.0
-	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.   
+	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
+
 */
 using System;
 namespace KSPe.UI
