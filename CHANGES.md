@@ -1,6 +1,6 @@
 # KSP API Extensions/L :: Changes
 
-* 2019-0718: 2.1.0.14 (Lisias) for KSP >= 1.2
+* 2019-0727: 2.1.0.14 (Lisias) for KSP >= 1.2 REISSUE
 	+ Adding formal dependency for [Click Through Blocker](https://forum.kerbalspaceprogram.com/index.php?/topic/170747-151-click-through-blocker/) 1.7.2 on KSPe.UI.
 	+ New UI helpers:
 		- Message Box : Big, centered and modal Window
