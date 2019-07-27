@@ -78,7 +78,6 @@ namespace KSPe.Util.Image {
 				{
 					// Look for the file with an appended suffix.
 					for (int i = 0; i < imgSuffixes.Length; i++)
-
 						if (SIO.File.Exists(fileNamePath + imgSuffixes[i]))
 						{
 							path = fileNamePath + imgSuffixes[i];
@@ -170,28 +169,40 @@ namespace KSPe.Util.Image {
 			return (texture);
 		}
 
+		private static bool ExistsInDatabase(string texturePath)
+		{
+			return (GameDatabase.Instance.ExistsTexture(texturePath));
+		}
+
 		public static bool Exists(string texturePath)
 		{
-			if (GameDatabase.Instance.ExistsTexture(texturePath))
-				return true;
+			if (ExistsInDatabase(texturePath)) return true;
+
 			string fileNamePath = TexPathname(texturePath);
+
+			for (int i = 0; i < imgSuffixes.Length; ++i)
+				if (fileNamePath.EndsWith(imgSuffixes[i]))
+					return SIO.File.Exists(fileNamePath);
 			for (int i = 0; i < imgSuffixes.Length; ++i)
 				if (SIO.File.Exists(fileNamePath + imgSuffixes[i]))
 					return true;
+
+			dbg("KSPe.ImageTex.Exists: {0} NOT FOUND!", texturePath);
 			return false;
 		}
 
 		private static string TexPathname(string path)
 		{
 			string s =	SIO.Path.Combine(KSPUtil.ApplicationRootPath, "GameData");
+			dbg("KSPe.ImageTex.TexPathname: {0}", path);
 			s = SIO.Path.Combine(s,  path);
 			return s;
 		}
 
 		public static UTexture2D Get(string path, bool mipmap)
 		{
-			if (!Exists(TexPathname(path)))
-				return GameDatabase.Instance.GetTexture(path, false);
+			if (ExistsInDatabase(path))
+				return GameDatabase.Instance.GetTexture(path, mipmap);
 
 			try
 			{ 
