@@ -190,15 +190,9 @@ namespace KSPe.IO
 		{
             private static string solveRoot()
 			{
-                {
-					for (int i = ASSET.Length; --i >= 0;)
-					{
-						string t = File<T>.FullPathName(ASSET[i], File.GAMEDATA);
-						if (SIO.Directory.Exists(t))
-							return t;
-					}
-                }
-                {
+				// Better coping with the current way of things
+				
+				{	// First, let's try the PluginData que should be in the same dir level that the DLL.
 	                string fn = SIO.Path.GetDirectoryName(typeof(T).Assembly.Location);
 					for (int i = ASSET.Length; --i >= 0;)
 					{
@@ -207,6 +201,16 @@ namespace KSPe.IO
 							return t;
 					}
                 }
+
+                {	// Just now we sarch for them on the KSPe cannonical hierarchy.
+					for (int i = ASSET.Length; --i >= 0;)
+					{
+						string t = File<T>.FullPathName(ASSET[i], File.GAMEDATA);
+						if (SIO.Directory.Exists(t))
+							return t;
+					}
+                }
+
 				throw new IsolatedStorageException(String.Format("Assembly {0} doesn't resolved to a KSPe Asset location!", typeof(T).Assembly.FullName));
 			}
 
