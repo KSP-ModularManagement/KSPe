@@ -72,36 +72,61 @@ namespace KSPe.Util.Image {
 	{
 		public static bool Load(out UTexture2D tex, byte[] data, bool markNonReadable = false)
 		{
-    		bool unity5 = typeof(UTexture2D).GetMethod("LoadImage") != null;
 			tex = new UTexture2D(16, 16, TextureFormat.ARGB32, false);
-			return unity5
-				? (bool)loadImageMethod(unity5).Invoke(tex, new object[] { data })
-				: (bool)loadImageMethod(unity5).Invoke(null, new object[] { tex, data, markNonReadable });
+			switch (unityVersion())
+			{
+				case 5:		return (bool)loadImageMethod().Invoke(tex, new object[] { data });
+				case 2017:	return (bool)loadImageMethod().Invoke(null, new object[] { tex, data, markNonReadable });
+				default:	return false;
+			}
+		}
+
+		private static int _unityVersion = -1;
+		private static int unityVersion()
+		{
+			if (_unityVersion < 0)
+			{
+				dbg("KSPe.Util.Image: {0}", UnityEngine.Application.unityVersion);
+				_unityVersion = 
+					(UnityEngine.Application.unityVersion.StartsWith("5.")) // 5.4.0p4
+						? 5
+					: (UnityEngine.Application.unityVersion.StartsWith("2017."))  // 2017.1.3p4
+						? 2017
+					: 0;
+			}
+			return _unityVersion;
 		}
 
 		private static MethodInfo _loadImageMethod = null;
-		private static MethodInfo loadImageMethod(bool unity5)
+		private static MethodInfo loadImageMethod()
 		{
 			if (null == _loadImageMethod)
 			{
-				if (unity5)
+				switch(unityVersion())
 				{
-					dbg("Unity 5 : KSP <= 1.3.1");
-					_loadImageMethod = typeof(UTexture2D).GetMethod("LoadImage");
+					case 5:
+						dbg("Unity 5 : KSP <= 1.3.1");
+						_loadImageMethod = typeof(UTexture2D).GetMethod("LoadImage", new [] {typeof(byte[])});
+						break;
+
+					case 2017:
+						dbg("Unity 2018 : KSP >= 1.4");
+						Assembly unityEngineAssembly = Assembly.Load("UnityEngine");
+						Type imageConversionClass = unityEngineAssembly.GetType("UnityEngine.ImageConversion");
+						_loadImageMethod = imageConversionClass.GetMethod(
+									"LoadImage", 
+									BindingFlags.Static | BindingFlags.Public, 
+									null,  
+									new [] {typeof(UTexture2D), typeof(byte[]), typeof(bool)}, 
+									null
+								);
+						break;
+
+					default:
+						// Houston, we have a problem!
+						dbg("Unity Version not recognized!");
+						break;
 				}
-				else
-				{
-					dbg("Unity 2018 : KSP >= 1.4");
-					Assembly unityEngineAssembly = Assembly.Load("UnityEngine");
-					Type imageConversionClass = unityEngineAssembly.GetType("UnityEngine.ImageConversion");
-					_loadImageMethod = imageConversionClass.GetMethod(
-								"LoadImage", 
-								BindingFlags.Static | BindingFlags.Public, 
-								null,  
-								new [] {typeof(UTexture2D), typeof(byte[]), typeof(bool)}, 
-								null
-							);
-					}
 			}
 			return _loadImageMethod;
 		}
