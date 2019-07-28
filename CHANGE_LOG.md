@@ -1,5 +1,11 @@
 # KSP API Extensions/L :: Change Log
 
+* 2019-0728: 2.1.0.15 (Lisias) for KSP >= 1.2
+	+ Fixing last minute mishaps:
+		- More robust Unity version identification and handling
+		- Better coping with current practices on KSPe.IO.File.Assets
+	+ Known issue:
+		- KSPe.UI doesn't loads on KSP <= 1.3.1 due an idiotic mistake on handling dependencies. Delete it from `000_KSPAPIExtensions/Plugins` as a temporary measure.  
 * 2019-0727: 2.1.0.14 (Lisias) for KSP >= 1.2 REISSUE
 	+ Adding formal dependency for [Click Through Blocker](https://forum.kerbalspaceprogram.com/index.php?/topic/170747-151-click-through-blocker/) 1.7.2 on KSPe.UI.
 	+ New UI helpers:
