@@ -121,7 +121,7 @@ namespace KSPe.Util.Image {
 					catch (Exception ex)
 					{
 						dbg(ex);
-						throw new Error(ex, "Failed to load the texture: {0}", path);
+						throw new Error(ex, "Failed to load the texture: {0} due {1}.", path, ex);
 					}
 				}
 				else

@@ -76,7 +76,8 @@ namespace KSPe.Util.Image {
 			switch (unityVersion())
 			{
 				case 5:		return (bool)loadImageMethod().Invoke(tex, new object[] { data });
-				case 2017:	return (bool)loadImageMethod().Invoke(null, new object[] { tex, data, markNonReadable });
+				case 2017:
+				case 2019:	return (bool)loadImageMethod().Invoke(null, new object[] { tex, data, markNonReadable });
 				default:	return false;
 			}
 		}
@@ -92,6 +93,8 @@ namespace KSPe.Util.Image {
 						? 5
 					: (UnityEngine.Application.unityVersion.StartsWith("2017."))  // 2017.1.3p4
 						? 2017
+					: (UnityEngine.Application.unityVersion.StartsWith("2019."))  // 2019.2.????
+						? 2019
 					: 0;
 			}
 			return _unityVersion;
@@ -104,12 +107,12 @@ namespace KSPe.Util.Image {
 			{
 				switch(unityVersion())
 				{
-					case 5:
+					case 5: {
 						dbg("Unity 5 : KSP <= 1.3.1");
 						_loadImageMethod = typeof(UTexture2D).GetMethod("LoadImage", new [] {typeof(byte[])});
-						break;
+						} break;
 
-					case 2017:
+					case 2017: {
 						dbg("Unity 2018 : KSP >= 1.4");
 						Assembly unityEngineAssembly = Assembly.Load("UnityEngine");
 						Type imageConversionClass = unityEngineAssembly.GetType("UnityEngine.ImageConversion");
@@ -120,7 +123,20 @@ namespace KSPe.Util.Image {
 									new [] {typeof(UTexture2D), typeof(byte[]), typeof(bool)}, 
 									null
 								);
-						break;
+						} break;
+
+					case 2019: {
+						dbg("Unity 2019 : KSP >= 1.8");
+						Assembly unityEngineAssembly = Assembly.Load("UnityEngine");
+						Type imageConversionClass = unityEngineAssembly.GetType("UnityEngine.ImageConversion");
+						_loadImageMethod = imageConversionClass.GetMethod(
+									"LoadImage", 
+									BindingFlags.Static | BindingFlags.Public, 
+									null,  
+									new [] {typeof(UTexture2D), typeof(byte[]), typeof(bool)}, 
+									null
+								);
+						} break;
 
 					default:
 						// Houston, we have a problem!
