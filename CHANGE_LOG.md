@@ -1,5 +1,10 @@
 # KSP API Extensions/L :: Change Log
 
+* 2019-1005: 2.1.0.16 (Lisias) for KSP >= 1.2
+	+ Preemptive update to support Unity 2019.2 (KSP 1.8) 
+	+ Known issue:
+		- KSPe.UI doesn't loads on KSP <= 1.3.1 . Delete it from `000_KSPAPIExtensions/Plugins` as a temporary measure.  
+		- See Issue [#3](https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/3)
 * 2019-0728: 2.1.0.15 (Lisias) for KSP >= 1.2
 	+ Fixing last minute mishaps:
 		- More robust Unity version identification and handling
