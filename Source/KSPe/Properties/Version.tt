@@ -83,6 +83,10 @@ namespace KSPe
 		public const int patch = <#= patch #>;
 		public const int build = <#= build #>;
 		public const string Number = "<#= major #>.<#= minor #>.<#= patch #>.<#= build #>";
+#if DEBUG
+		public const string Text = Number + " /L DEBUG";
+#else
 		public const string Text = Number + " /L";
+#endif
 	}
 }
