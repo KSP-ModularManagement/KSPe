@@ -55,12 +55,17 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TimedMessageBox.cs" />
     <Compile Include="WindowUtils.cs" />
+    <Compile Include="Common\Dialogs\FatalError.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KSPe\KSPe.csproj">
       <Project>{1DCC1744-4EEF-49DF-961C-A73F3ADCC6C5}</Project>
       <Name>KSPe</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="Common\Dialogs\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

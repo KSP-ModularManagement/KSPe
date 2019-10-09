@@ -75,6 +75,8 @@
     <Compile Include="LocalCache.cs" />
     <Compile Include="Util\ImageTex.cs" />
     <Compile Include="Util\Image.cs" />
+    <Compile Include="Util\Installation.cs" />
+    <Compile Include="AbstractException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
