@@ -104,11 +104,9 @@ It should be installed on {1} but it's currently installed on {2} ! Delete the l
 
 			string intendedPath = SIO.Path.Combine(kspRoot, "GameData");
 			if (null != vendor)	intendedPath = SIO.Path.Combine(intendedPath, vendor);
-			intendedPath = SIO.Path.Combine(intendedPath, name) + "/";
-			int dashCount = intendedPath.Length - intendedPath.Replace("/", "").Length;
+			intendedPath = SIO.Path.Combine(intendedPath, name) + SIO.Path.DirectorySeparatorChar;
 
-			string installedDllPath =  SIO.Path.GetDirectoryName(SIO.Path.GetFullPath(type.Assembly.Location)) + "/";
-			installedDllPath = string.Join("/", installedDllPath.Split('/').Take(dashCount).ToArray()) + "/";
+			string installedDllPath =  SIO.Path.GetDirectoryName(SIO.Path.GetFullPath(type.Assembly.Location)).Replace("Plugins","").Replace("Plugin","");
 
 			if (installedDllPath.StartsWith(intendedPath)) return;
 
