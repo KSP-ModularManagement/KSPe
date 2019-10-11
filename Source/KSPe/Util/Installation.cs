@@ -37,7 +37,7 @@ namespace KSPe.Util
 		{
 			private static readonly string message = @"Unfortunately {0} is installed on the wrong Directory!
 
-It should be installed on {1} but it's currently installed on {2} ! Delete the later and be sure to install {0} on the former.";
+It should be installed on {1} but it's currently installed on {2} ! Delete the latter and be sure to install {0} on the former.";
 			private static readonly string shortMessage = "{0} should be installed on [{1}], not on [{2}].";
 
 			public readonly string name;
