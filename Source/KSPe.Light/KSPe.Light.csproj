@@ -73,6 +73,9 @@
     <Compile Include="..\KSPe\AbstractException.cs">
       <Link>AbstractException.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe.UI\Common\Dialogs\Abstract.cs">
+      <Link>Common\Dialogs\Abstract.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />

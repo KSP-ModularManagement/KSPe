@@ -26,7 +26,7 @@ using KSPe.UI;
 
 namespace KSPe.Common.Dialogs
 {
-	public static class ShowStopperAlertBox
+	public class ShowStopperAlertBox : AbstractDialog
 	{
 		private static readonly string aMSG = "close KSP and then fix the problem described above";
 
@@ -58,6 +58,7 @@ Backup everything *NOW* if you choose to ignore this message and proceed - it's 
 			GameObject go = new GameObject("KSPe.Common.Diallgs.ShowStopperAlertBox");
 			MessageBox dlg = go.AddComponent<MessageBox>();
 
+			//GUIStyle win = new GUIStyle(HighLogic.Skin.window)
 			GUIStyle win = new GUIStyle("Window")
 			{
 				fontSize = 26,
@@ -66,7 +67,10 @@ Backup everything *NOW* if you choose to ignore this message and proceed - it's 
 				wordWrap = false
 			};
 			win.normal.textColor = Color.red;
-			win.border.top = 36;
+			win.border.top = 0;
+			win.padding.top = -5;
+			SetWindowBackground(win);
+			win.active.background =	win.focused.background = win.normal.background;
 
 			GUIStyle text = new GUIStyle("Label")
 			{
@@ -80,13 +84,9 @@ Backup everything *NOW* if you choose to ignore this message and proceed - it's 
 			text.padding.bottom = text.padding.top;
 			text.padding.left = text.padding.top;
 			text.padding.right = text.padding.top;
-			{
-				Texture2D tex = new Texture2D(1, 1);
-				tex.SetPixel(0, 0, new Color(0f, 0f, 0f, 0.45f));
-				tex.Apply();
-				text.normal.background = tex;
-			}
+			SetTextBackground(text);
 
+			// TODO: Shove a MUTEX here to prevent more than one AlertBox to be displayed at the same time!
 			dlg.Show(
 				"Houston, we have a Problem!",
 				String.Format(MSG, errorMessage, actionMessage),

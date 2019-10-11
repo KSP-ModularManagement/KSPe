@@ -56,6 +56,7 @@
     <Compile Include="TimedMessageBox.cs" />
     <Compile Include="WindowUtils.cs" />
     <Compile Include="Common\Dialogs\FatalError.cs" />
+    <Compile Include="Common\Dialogs\Abstract.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KSPe\KSPe.csproj">
