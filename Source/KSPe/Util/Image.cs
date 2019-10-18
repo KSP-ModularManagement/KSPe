@@ -73,7 +73,7 @@ namespace KSPe.Util.Image {
 		public static bool Load(out UTexture2D tex, byte[] data, bool markNonReadable = false)
 		{
 			tex = new UTexture2D(16, 16, TextureFormat.ARGB32, false);
-			switch (UnityTools.UnityVersion())
+			switch (UnityTools.UnityVersion)
 			{
 				case 5:		return (bool)LoadImageMethod().Invoke(tex, new object[] { data });
 				case 2017:
@@ -87,7 +87,7 @@ namespace KSPe.Util.Image {
 		{
 			if (null == _loadImageMethod)
 			{
-				switch(UnityTools.UnityVersion())
+				switch(UnityTools.UnityVersion)
 				{
 					case 5: {
 						dbg("Unity 5 : KSP <= 1.3.1");

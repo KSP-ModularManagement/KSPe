@@ -147,7 +147,7 @@ It will only run on the following Unity Versions [ {3} ] ! Install {0} on a KSP 
 
 			public override string ToLongMessage()
 			{
-				return string.Format(message, this.name, this.version, UnityTools.UnityVersion(), this.JoinUnityVersions(), this.JoinKSPVersions());
+				return string.Format(message, this.name, this.version, UnityTools.UnityVersion, this.JoinUnityVersions(), this.JoinKSPVersions());
 			}
 
 			private string JoinUnityVersions()
@@ -217,7 +217,7 @@ It will only run on the following Unity Versions [ {3} ] ! Install {0} on a KSP 
 		public static void CheckForCompatibleUnity<T>(string name, string version, int[] unityVersions)
 		{
 			foreach (int unityVersion in unityVersions)
-				if (UnityTools.UnityVersion() == unityVersion) return;
+				if (UnityTools.UnityVersion == unityVersion) return;
 
 			throw new IncompatibleUnityException(name, version, unityVersions);
 		}

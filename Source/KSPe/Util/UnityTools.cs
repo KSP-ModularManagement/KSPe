@@ -28,21 +28,24 @@ namespace KSPe.Util
 	public static class UnityTools
 	{
 		private static int _unityVersion = -1;
-		public static int UnityVersion()
+		public static int UnityVersion
 		{
-			if (_unityVersion < 0)
+			get
 			{
-				dbg("KSPe.Util.UnityTools: {0}", UnityEngine.Application.unityVersion);
-				_unityVersion = 
-					(UnityEngine.Application.unityVersion.StartsWith("5.")) // 5.4.0p4
-						? 5
-					: (UnityEngine.Application.unityVersion.StartsWith("2017."))  // 2017.1.3p4
-						? 2017
-					: (UnityEngine.Application.unityVersion.StartsWith("2019."))  // 2019.2.????
-						? 2019
-					: 0;
+				if (_unityVersion < 0)
+				{
+					dbg("KSPe.Util.UnityTools: {0}", UnityEngine.Application.unityVersion);
+					_unityVersion =
+						(UnityEngine.Application.unityVersion.StartsWith("5.")) // 5.4.0p4
+							? 5
+						: (UnityEngine.Application.unityVersion.StartsWith("2017."))  // 2017.1.3p4
+							? 2017
+						: (UnityEngine.Application.unityVersion.StartsWith("2019."))  // 2019.2.????
+							? 2019
+						: 0;
+				}
+				return _unityVersion;
 			}
-			return _unityVersion;
 		}
 
 		[ConditionalAttribute("DEBUG")]
