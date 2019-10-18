@@ -1,5 +1,9 @@
 # KSP API Extensions/L :: Change Log
 
+* 2019-1018: 2.1.0.17 (Lisias) for KSP >= 1.2
+	+ New Installment facilities:
+		- Checking on compatible Unity version(s) 
+	+ Fixing a stupid mistake on handling pathnames that rendered this thing unusable on Windows!
 * 2019-1005: 2.1.0.16 (Lisias) for KSP >= 1.2
 	+ Preemptive update to support Unity 2019.2 (KSP 1.8) 
 	+ Known issue:
