@@ -23,6 +23,7 @@
 using UnityEngine;
 namespace KSPe
 {
+	[KSPAddon(KSPAddon.Startup.Instantly, true)]
 	public class Startup:MonoBehaviour
 	{
 		private void Start()
