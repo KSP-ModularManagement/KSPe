@@ -21,6 +21,7 @@
 
 */
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using SIO = System.IO;
 
@@ -28,12 +29,12 @@ namespace KSPe.Util
 {
 	public static class Installaltion
 	{
-		public class InstallationException : AbstractException
+		public class Exception : AbstractException
 		{
-			internal InstallationException(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
+			internal Exception(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
 		}
 
-		public class WrongDirectoryInstallationException : InstallationException
+		public class WrongDirectoryInstallationException : Exception
 		{
 			private static readonly string message = @"Unfortunately {0} is installed on the wrong Directory!
 
@@ -53,7 +54,7 @@ It should be installed on {1} but it's currently installed on {2} ! Delete the l
 
 			public override string ToLongMessage()
 			{
-				return string.Format(message, name, intendedPath, installedDllPath);
+				return string.Format(message, this.name, this.intendedPath, this.installedDllPath);
 			}
 		}
 
@@ -111,6 +112,109 @@ It should be installed on {1} but it's currently installed on {2} ! Delete the l
 			if (installedDllPath.StartsWith(intendedPath)) return;
 
 			throw new WrongDirectoryInstallationException(name, intendedPath, installedDllPath);
+		}
+	}
+
+	public static class Compatibility
+	{
+		public class Exception : AbstractException
+		{
+			internal Exception(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
+		}
+
+		public class IncompatibleUNityException : Exception
+		{
+			private static readonly string message = @"Unfortunately {0} i{1} s not compatible with currently used Unity {2}!
+
+It will only run on the following Uniy Versions [ {3} ] ! Install {0} on a compatible runtime : {4}.";
+			private static readonly string shortMessage = "{0} {1} is incompatible  with Unity in use.";
+
+			public readonly string name;
+			public readonly string version;
+			public readonly int[] desiredUnityVersions;
+
+			internal IncompatibleUNityException(string name, string version, int[] desiredUnityVersions) : base(shortMessage, name, version)
+			{
+				this.name = name;
+				this.version = version;
+				this.desiredUnityVersions = desiredUnityVersions;
+			}
+
+			public override string ToLongMessage()
+			{
+				return string.Format(message, this.name, this.version, UnityTools.UnityVersion(), this.JoinUnityVersions(), this.JoinKSPVersions());
+			}
+
+			private string JoinUnityVersions()
+			{
+				return String.Join(", ", this.desiredUnityVersions.Select(p=>p.ToString()).ToArray());
+			}
+
+			private string JoinKSPVersions() // TODO: To filter KSP versions compatible with the Add'On!
+			{
+				List<KSP.Version> compatibleOnes = new List<KSP.Version>();
+				foreach (int desiredUnityVersion in this.desiredUnityVersions)
+					compatibleOnes.AddRange(KSP.Version.FindByUnity(desiredUnityVersion));
+				return String.Join(", ", compatibleOnes.Select(p=>p.ToString()).ToArray());
+			}
+		}
+
+		public static void Check<T>(System.Type versionClass, System.Type compatibilityClass)
+		{
+			string name = typeof(T).Namespace;
+			try
+			{
+				name = versionClass.GetField("Namespace").GetValue(null).ToString();
+			}
+			catch (ArgumentNullException) { }
+			catch (NotSupportedException) { }
+			catch (FieldAccessException) { }
+			catch (ArgumentException) { }
+			catch (NullReferenceException) { }
+
+			string versionText = null;
+			try
+			{
+				versionText = versionClass.GetField("versionText").GetValue(null).ToString();
+			}
+			catch (ArgumentNullException) { }
+			catch (NotSupportedException) { }
+			catch (FieldAccessException) { }
+			catch (ArgumentException) { }
+			catch (NullReferenceException) { }
+
+			int[] desiredunityVersions;
+			try
+			{
+				desiredunityVersions = (int[])compatibilityClass.GetField("Unity").GetValue(null);
+				CheckForCompatibleUnity<T>(name, versionText, desiredunityVersions);
+			}
+			catch (ArgumentNullException) { }
+			catch (NotSupportedException) { }
+			catch (FieldAccessException) { }
+			catch (ArgumentException) { }
+			catch (NullReferenceException) { }
+		}
+
+		public static void Check<T>()
+		{
+			Type versionClass = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
+					from tt in assembly.GetTypes()
+					where tt.Namespace == typeof(T).Namespace && tt.Name == "Version"
+					select tt).FirstOrDefault();
+			Type compatibilityClass = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
+					from tt in assembly.GetTypes()
+					where tt.Namespace == typeof(T).Namespace && tt.Name == "Compatibility"
+					select tt).FirstOrDefault();
+			Check<T>(versionClass, compatibilityClass);
+		}
+
+		public static void CheckForCompatibleUnity<T>(string name, string version, int[] unityVersions)
+		{
+			foreach (int unityVersion in unityVersions)
+				if (UnityTools.UnityVersion() == unityVersion) return;
+
+			throw new IncompatibleUNityException(name, version, unityVersions);
 		}
 	}
 }

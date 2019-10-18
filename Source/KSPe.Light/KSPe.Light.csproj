@@ -76,6 +76,12 @@
     <Compile Include="..\KSPe.UI\Common\Dialogs\Abstract.cs">
       <Link>Common\Dialogs\Abstract.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe\Util\KSPTools.cs">
+      <Link>Util\KSPTools.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\Util\UnityTools.cs">
+      <Link>Util\UnityTools.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />

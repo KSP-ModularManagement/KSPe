@@ -77,6 +77,8 @@
     <Compile Include="Util\Image.cs" />
     <Compile Include="Util\Installation.cs" />
     <Compile Include="AbstractException.cs" />
+    <Compile Include="Util\KSPTools.cs" />
+    <Compile Include="Util\UnityTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
