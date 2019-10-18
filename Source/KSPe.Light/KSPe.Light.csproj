@@ -64,9 +64,6 @@
     <Compile Include="..\KSPe\Util\ImageTex.cs">
       <Link>Util\ImageTex.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\Installation.cs">
-      <Link>Util\Installation.cs</Link>
-    </Compile>
     <Compile Include="..\KSPe.UI\Common\Dialogs\FatalError.cs">
       <Link>Common\Dialogs\FatalError.cs</Link>
     </Compile>
@@ -81,6 +78,12 @@
     </Compile>
     <Compile Include="..\KSPe\Util\UnityTools.cs">
       <Link>Util\UnityTools.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\Startup.cs">
+      <Link>Startup.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\Util\Installment.cs">
+      <Link>Util\Installment.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

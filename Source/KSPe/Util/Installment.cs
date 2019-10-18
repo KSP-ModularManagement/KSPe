@@ -27,9 +27,14 @@ using SIO = System.IO;
 
 namespace KSPe.Util
 {
-	public static class Installaltion
+	public class InstallmentException : AbstractException
 	{
-		public class Exception : AbstractException
+		internal InstallmentException(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
+	}
+
+	public static class Installation
+	{
+		public class Exception : InstallmentException
 		{
 			internal Exception(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
 		}
@@ -117,23 +122,23 @@ It should be installed on {1} but it's currently installed on {2} ! Delete the l
 
 	public static class Compatibility
 	{
-		public class Exception : AbstractException
+		public class Exception : InstallmentException
 		{
 			internal Exception(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
 		}
 
-		public class IncompatibleUNityException : Exception
+		public class IncompatibleUnityException : Exception
 		{
-			private static readonly string message = @"Unfortunately {0} i{1} s not compatible with currently used Unity {2}!
+			private static readonly string message = @"Unfortunately {0} {1} is not compatible with currently running Unity {2}!
 
-It will only run on the following Uniy Versions [ {3} ] ! Install {0} on a compatible runtime : {4}.";
+It will only run on the following Unity Versions [ {3} ] ! Install {0} on a KSP with a compatible Unity runtime : {4}.";
 			private static readonly string shortMessage = "{0} {1} is incompatible  with Unity in use.";
 
 			public readonly string name;
 			public readonly string version;
 			public readonly int[] desiredUnityVersions;
 
-			internal IncompatibleUNityException(string name, string version, int[] desiredUnityVersions) : base(shortMessage, name, version)
+			internal IncompatibleUnityException(string name, string version, int[] desiredUnityVersions) : base(shortMessage, name, version)
 			{
 				this.name = name;
 				this.version = version;
@@ -175,7 +180,7 @@ It will only run on the following Uniy Versions [ {3} ] ! Install {0} on a compa
 			string versionText = null;
 			try
 			{
-				versionText = versionClass.GetField("versionText").GetValue(null).ToString();
+				versionText = versionClass.GetField("Text").GetValue(null).ToString();
 			}
 			catch (ArgumentNullException) { }
 			catch (NotSupportedException) { }
@@ -214,7 +219,7 @@ It will only run on the following Uniy Versions [ {3} ] ! Install {0} on a compa
 			foreach (int unityVersion in unityVersions)
 				if (UnityTools.UnityVersion() == unityVersion) return;
 
-			throw new IncompatibleUNityException(name, version, unityVersions);
+			throw new IncompatibleUnityException(name, version, unityVersions);
 		}
 	}
 }

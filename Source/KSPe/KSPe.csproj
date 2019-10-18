@@ -75,10 +75,11 @@
     <Compile Include="LocalCache.cs" />
     <Compile Include="Util\ImageTex.cs" />
     <Compile Include="Util\Image.cs" />
-    <Compile Include="Util\Installation.cs" />
     <Compile Include="AbstractException.cs" />
     <Compile Include="Util\KSPTools.cs" />
     <Compile Include="Util\UnityTools.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="Util\Installment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
