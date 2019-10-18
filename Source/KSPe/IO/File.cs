@@ -34,7 +34,7 @@ namespace KSPe.IO
 		internal static readonly string KSP_ROOTPATH = SIO.Path.GetFullPath(KSPUtil.ApplicationRootPath);
         public const string GAMEDATA = "GameData";
 		public const string PLUGINDATA = "PluginData";                                // Writeable data on <KSP_ROOT>/PluginData/<plugin_name>/
-		public const string LOCALDATA = "GameData/__LOCAL";                           // Custom runtime generated parts on <KSP_ROO>/GameData/__LOCAL/<plugin_name> (specially made for UbioWeldingLtd)
+		public static string LOCALDATA =>  SIO.Path.Combine(GAMEDATA, "__LOCAL");	  // Custom runtime generated parts on <KSP_ROO>/GameData/__LOCAL/<plugin_name> (specially made for UbioWeldingLtd)
 
         public static string CalculateRelativePath(string fullDestinationPath)
         {
@@ -533,7 +533,7 @@ namespace KSPe.IO
 			public static string Solve(string fn)
 			{
 				string r = FullPathName(fn, false).Replace(File.KSP_ROOTPATH, "");
-				return r.Substring(r.IndexOf("GameData/", StringComparison.Ordinal) + 9);
+				return r.Substring(r.IndexOf(File.GAMEDATA+SIO.Path.DirectorySeparatorChar, StringComparison.Ordinal) + 9);
 			}
 	        
 			public static string Solve(string fn, LocalCache<string> cache)
