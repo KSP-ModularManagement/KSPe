@@ -27,13 +27,13 @@ namespace KSPe
 {
 	public class LocalCache<T>
 	{
-		public class Dictionary :  Dictionary<string, T>
+		public class Dictionary:Dictionary<string, T>
 		{
-		    public Dictionary() : base() { }
+			public Dictionary() : base() { }
 		}
 
 		private readonly Dictionary<Type, Dictionary> cache = new Dictionary<Type, Dictionary>();
-		public LocalCache(){}
-        internal Dictionary this[Type i] => this.cache.ContainsKey(i) ? this.cache[i] : ( this.cache[i] = new Dictionary() ) ;
-    }
+		public LocalCache() { }
+		internal Dictionary this[Type i] => this.cache.ContainsKey(i) ? this.cache[i] : (this.cache[i] = new Dictionary());
+	}
 }

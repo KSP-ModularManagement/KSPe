@@ -29,20 +29,20 @@ namespace KSPe
 	public class ConfigNodeWithSteroids : global::ConfigNode
 	{
 		public ConfigNodeWithSteroids() : base() { }
-		
+
 		public static ConfigNodeWithSteroids from (global::ConfigNode obj)
 		{
 			ConfigNodeWithSteroids r = new ConfigNodeWithSteroids();
 			r.CopyFrom(obj);
 			return r;
 		}
-		
+
 		public T GetValue<T>(string name)
 		{
 			string value = base.GetValue(name);
 			return (T)Convert.ChangeType(value, typeof(T));
 		}
-		
+
 		public T GetValue<T>(string name, T defaultValue)
 		{
 			return base.HasValue(name) ? this.GetValue<T>(name) : defaultValue;

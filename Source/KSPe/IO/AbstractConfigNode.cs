@@ -102,11 +102,11 @@ namespace KSPe.IO
 		}
 
 		public void Save(ConfigNode node)
-        {
+		{
 			this.Save(node, null);
-        }
-        
-        public void Save(ConfigNode node, string header)
+		}
+
+		public void Save(ConfigNode node, string header)
 		{
 			if (null == node)
 				throw new FormatException("Invalid NULL config for saving!");

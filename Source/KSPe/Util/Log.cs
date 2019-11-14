@@ -65,13 +65,14 @@ namespace KSPe.Util.Log {
 #else
 			Level.INFO;
 #endif
+
 		public Level level
 		{
 			get => this._level;
 			set
 			{
 				if (this._level != value)
-		            this.force("Log is set to level {0}.", value);
+					this.force("Log is set to level {0}.", value);
 				this._level = value;
 			}
 		}
