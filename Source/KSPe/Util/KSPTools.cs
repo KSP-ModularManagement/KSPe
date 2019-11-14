@@ -92,7 +92,7 @@ namespace KSPe.Util
 			new Version(1,2,1,  "2016-1101", 5),
 			new Version(1,2,2,  "2016-1206", 5),
 			new Version(1,3,0,  "2017-0525", 5),	// First release after TTI acquired KSP.
-			new Version(1,3,1,  "2017-1005", 5),	// 
+			new Version(1,3,1,  "2017-1005", 5),	// Last release before KSP2 kick off?
 			new Version(1,4,0,  "2018-0306", 2017),
 			new Version(1,4,1,  "2018-0313", 2017),
 			new Version(1,4,2,  "2018-0328", 2017),
@@ -107,6 +107,7 @@ namespace KSPe.Util
 			new Version(1,7,2,  "2019-0612", 2017),
 			new Version(1,7,3,  "2019-0711", 2017),
 			new Version(1,8,0,  "2019-1016", 2019),
+			new Version(1,8,0,  "2019-1029", 2019),
 		};
 
 		public class Version
