@@ -61,10 +61,11 @@ namespace KSPe.Util.Log {
 		protected delegate void LogMethod(string message);
 		protected Level _level =
 #if DEBUG
-            Level.TRACE;
+			Level.TRACE
 #else
-			Level.INFO;
+			GameSettings.VERBOSE_DEBUG_LOG ? Level.DETAIL : Level.INFO
 #endif
+		;
 
 		public Level level
 		{
