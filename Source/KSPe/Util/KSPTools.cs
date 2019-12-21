@@ -107,7 +107,7 @@ namespace KSPe.Util
 			new Version(1,7,2,  "2019-0612", 2017),
 			new Version(1,7,3,  "2019-0711", 2017),
 			new Version(1,8,0,  "2019-1016", 2019),
-			new Version(1,8,0,  "2019-1029", 2019),
+			new Version(1,8,1,  "2019-1029", 2019),
 		};
 
 		public class Version
