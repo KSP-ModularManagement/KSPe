@@ -146,9 +146,7 @@ namespace KSPe.IO
 			return SIO.Path.GetFullPath(fn);
 		}
 
-#pragma warning disable RECS0108 // Warns about static fields in generic types
 		private static readonly LocalCache<string> HIERARCHY_CACHE = new LocalCache<string>();
-#pragma warning restore RECS0108 // Warns about static fields in generic types
 		private static string calculateRoot()
 		{
 			string rootDir = typeof(T).Namespace;

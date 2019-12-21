@@ -80,6 +80,8 @@
     <Compile Include="Util\UnityTools.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Util\Installment.cs" />
+    <Compile Include="IO\Simple.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
