@@ -113,6 +113,8 @@ It should be installed on {1} but it's currently installed on {2} ! Delete the l
 			intendedPath = SIO.Path.Combine(intendedPath, name) + SIO.Path.DirectorySeparatorChar;
 
 			string installedDllPath =  SIO.Path.GetDirectoryName(SIO.Path.GetFullPath(type.Assembly.Location)).Replace("Plugins","").Replace("Plugin","");
+			if (installedDllPath[installedDllPath.Length-1] != SIO.Path.DirectorySeparatorChar)
+				installedDllPath += SIO.Path.DirectorySeparatorChar;
 
 			if (installedDllPath.StartsWith(intendedPath)) return;
 
