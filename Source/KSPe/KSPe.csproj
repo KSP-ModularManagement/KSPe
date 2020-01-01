@@ -82,6 +82,8 @@
     <Compile Include="Util\Installment.cs" />
     <Compile Include="IO\Simple.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="IO\Asset\Texture2D.cs" />
+    <Compile Include="IO\Asset\Asset.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
