@@ -37,6 +37,8 @@ namespace KSPe.IO.Asset
 			return SIO.File.Exists(this.pathname);
 		}
 		
+		public bool delete() { throw new System.NotSupportedException(); }
+
 		public new PluginConfiguration load()
 		{
 			base.load();

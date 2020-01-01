@@ -403,10 +403,9 @@ namespace KSPe.IO
 				return FullPathName(false, fn).Replace(File.KSP_ROOTPATH, "");
 			}
 
-			public static string Solve(string fn, LocalCache<string> cache)
+			public static string Solve(string fn, params string[] fns)
 			{
-				LocalCache<string>.Dictionary c = cache[typeof(T)];
-				return c.ContainsKey(fn) ? c[fn] : (c[fn] = Solve(fn));
+				return FullPathName(false, fn, fns).Replace(File.KSP_ROOTPATH, "");
 			}
 
 			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)
@@ -582,10 +581,10 @@ namespace KSPe.IO
 				return r.Substring(r.IndexOf(File.GAMEDATA+SIO.Path.DirectorySeparatorChar, StringComparison.Ordinal) + 9);
 			}
 
-			public static string Solve(string fn, LocalCache<string> cache)
+			public static string Solve(string fn, params string[] fns)
 			{
-				LocalCache<string>.Dictionary c = cache[typeof(T)];
-				return c.ContainsKey(fn) ? c[fn] : (c[fn] = Solve(fn));
+				string r = FullPathName(false, fn, fns).Replace(File.KSP_ROOTPATH, "");
+				return r.Substring(r.IndexOf(File.GAMEDATA+SIO.Path.DirectorySeparatorChar, StringComparison.Ordinal) + 9);
 			}
 
 			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)
