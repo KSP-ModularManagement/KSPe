@@ -24,6 +24,8 @@ using SIO = System.IO;
 
 namespace KSPe.IO.Temp
 {
+	// TODO: Eliminate on Vesion 3
+	[System.Obsolete("KSPe.IO.Temp.ConfigNode is deprecated, please use KSPe.IO.Temp<T>.ConfigNode instead.")]
 	public class ConfigNode: WritableConfigNode
 	{
 		protected ConfigNode(string name, string fn): base(name)

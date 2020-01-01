@@ -83,7 +83,10 @@
     <Compile Include="IO\Simple.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IO\Asset\Texture2D.cs" />
-    <Compile Include="IO\Asset\Asset.cs" />
+    <Compile Include="IO\Asset\_PublicFacade.cs" />
+    <Compile Include="IO\Local\_PublicFacade.cs" />
+    <Compile Include="IO\Data\_PublicFacade.cs" />
+    <Compile Include="IO\Temp\_PublicFacade.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">

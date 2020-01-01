@@ -24,6 +24,8 @@ using SIO = System.IO;
 
 namespace KSPe.IO.Asset
 {
+	// TODO: Eliminate on Vesion 3
+	[System.Obsolete("KSPe.IO.Asset.StreamReader is deprecated, please use KSPe.IO.Asset<T>.StreamReader instead.")]
 	public class StreamReader : SIO.StreamReader
 	{
 		protected StreamReader(string path) : base(path) {}

@@ -25,6 +25,8 @@ using SIO = System.IO;
 
 namespace KSPe.IO.Local
 {
+	// TODO: Eliminate on Vesion 3
+	[System.Obsolete("KSPe.IO.Local.PluginConfiguration is deprecated, please use KSPe.IO.Local<T>.PluginConfiguration instead.")]
 	public class PluginConfiguration : KSP.IO.PluginConfiguration
 	{
 		protected readonly string pathname;

@@ -24,6 +24,8 @@ using SIO = System.IO;
 
 namespace KSPe.IO.Local
 {
+	// TODO: Eliminate on Vesion 3
+	[System.Obsolete("KSPe.IO.Local.FileStream is deprecated, please use KSPe.IO.Local<T>.FileStream instead.")]
 	public class FileStream : SIO.FileStream
 	{
 		protected FileStream(string filename, SIO.FileMode filemode) : base(filename, filemode) {}

@@ -24,11 +24,12 @@ using SIO = System.IO;
 
 namespace KSPe.IO.Asset
 {
+	// TODO: Eliminate on Vesion 3
+	[System.Obsolete("KSPe.IO.Asset.FileStream is deprecated, please use KSPe.IO.Asset<T>.FileStream instead.")]
 	public class FileStream : SIO.FileStream
 	{
 		protected FileStream(string filename, SIO.FileMode filemode) : base(filename, filemode) {}
 
-		[System.Obsolete("KSPe.IO.Asset.CreateForType<T>(string, FileMode) is deprecated, please use CreateForType<T>(FileMode, string) instead.")]
 		public static FileStream CreateForType<T>(string filename, FileMode mode) // To favor easy replacement from the System one
 		{
 			return CreateForType<T>(mode, filename);

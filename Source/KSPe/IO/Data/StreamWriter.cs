@@ -25,6 +25,8 @@ using SIO = System.IO;
 
 namespace KSPe.IO.Data
 {
+	// TODO: Eliminate on Vesion 3
+	[System.Obsolete("KSPe.IO.Data.StreamWriter is deprecated, please use KSPe.IO.Data<T>.StreamWriter instead.")]
 	public class StreamWriter : SIO.StreamWriter
 	{
 		internal StreamWriter(string path) : base(path) {}

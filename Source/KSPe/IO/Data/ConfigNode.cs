@@ -23,6 +23,8 @@
 
 namespace KSPe.IO.Data
 {
+	// TODO: Eliminate on Vesion 3
+	[System.Obsolete("KSPe.IO.Data.ConfigNode is deprecated, please use KSPe.IO.Data<T>.ConfigNode instead.")]
 	public class ConfigNode: WritableConfigNode
 	{
 		protected ConfigNode(string name, string fn): base(name)

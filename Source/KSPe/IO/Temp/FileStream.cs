@@ -24,6 +24,8 @@ using SIO = System.IO;
 
 namespace KSPe.IO.Temp
 {
+	// TODO: Eliminate on Vesion 3
+	[System.Obsolete("KSPe.IO.Temp.FileStream is deprecated, please use KSPe.IO.Temp<T>.FileStream instead.")]
 	public class FileStream : SIO.FileStream
 	{
 		protected FileStream(string filename, SIO.FileMode filemode) : base(filename, filemode) {}

@@ -23,6 +23,8 @@
 
 namespace KSPe.IO.Local
 {
+	// TODO: Eliminate on Vesion 3
+	[System.Obsolete("KSPe.IO.Local.ConfigNode is deprecated, please use KSPe.IO.Local<T>.ConfigNode instead.")]
 	public class ConfigNode: WritableConfigNode
 	{
 		protected ConfigNode(string name, string fn): base(name)

@@ -23,6 +23,8 @@
 
 namespace KSPe.IO.Asset
 {
+	// TODO: Eliminate on Vesion 3
+	[System.Obsolete("KSPe.IO.Asset.ConfigNode is deprecated, please use KSPe.IO.Asset<T>.ConfigNode instead.")]
 	public class ConfigNode : ReadableConfigNode
 	{
 		protected ConfigNode(string name, string fn) : base(name)

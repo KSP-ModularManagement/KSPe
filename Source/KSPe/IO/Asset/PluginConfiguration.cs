@@ -25,6 +25,8 @@ using SIO = System.IO;
 
 namespace KSPe.IO.Asset
 {
+	// TODO: Eliminate on Vesion 3
+	[System.Obsolete("KSPe.IO.Asset.PluginConfiguration is deprecated, please use KSPe.IO.Asset<T>.PluginConfiguration instead.")]
 	public class PluginConfiguration : KSP.IO.PluginConfiguration
 	{
 		protected readonly string pathname;
