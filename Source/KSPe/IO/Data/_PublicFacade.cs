@@ -178,5 +178,48 @@ namespace KSPe.IO
 			}
 		}
 
+		public static class Texture2D
+		{
+			public static UTexture2D LoadFromFile(String fn)
+			{
+				return KSPe.IO.Data.Texture2D<T>.LoadFromFile(fn);
+			}
+
+			public static UTexture2D LoadFromFile(String fn, params string[] fns)
+			{
+				return KSPe.IO.Data.Texture2D<T>.LoadFromFile(fn, fns);
+			}
+
+			public static UTexture2D LoadFromFile(int width, int height, string fn)
+			{
+				return KSPe.IO.Data.Texture2D<T>.LoadFromFile(width, height, fn);
+			}
+
+			public static UTexture2D LoadFromFile(int width, int height, string fn, params string[] fns)
+			{
+				return KSPe.IO.Data.Texture2D<T>.LoadFromFile(width, height, fn, fns);
+			}
+
+			public static UTexture2D LoadFromFile(bool mipmap, String fn)
+			{
+				return KSPe.IO.Data.Texture2D<T>.LoadFromFile(mipmap, fn);
+			}
+
+			public static UTexture2D LoadFromFile(bool mipmap, string fn, params string[] fns)
+			{
+				return KSPe.IO.Data.Texture2D<T>.LoadFromFile(mipmap, fn, fns);
+			}
+
+			public static UTexture2D LoadFromFile(int width, int height, bool mipmap, String fn)
+			{
+				return KSPe.IO.Data.Texture2D<T>.LoadFromFile(width, height, mipmap, fn);
+			}
+
+			public static UTexture2D LoadFromFile(int width, int height, bool mipmap, string fn, params string[] fns)
+			{
+				return KSPe.IO.Data.Texture2D<T>.LoadFromFile(width, height, mipmap, fn, fns);
+			}
+		}
+
 	}
 }
