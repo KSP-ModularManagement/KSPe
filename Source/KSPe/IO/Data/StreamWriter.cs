@@ -31,8 +31,14 @@ namespace KSPe.IO.Data
 
 		public static StreamWriter CreateForType<T>(string filename)
 		{
-			string fn = File<T>.Data.FullPathName(filename, true);
-			return new StreamWriter(fn);
+			string path = File<T>.Data.FullPathName(true, filename);
+			return new StreamWriter(path);
+		}
+
+		public static StreamWriter CreateForType<T>(string fn, params string[] fns)
+		{
+			string path = File<T>.Data.FullPathName(true, fn, fns);
+			return new StreamWriter(path);
 		}
 	}
 }

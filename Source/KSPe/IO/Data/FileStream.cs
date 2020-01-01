@@ -29,10 +29,22 @@ namespace KSPe.IO.Data
 	{
 		protected FileStream(string filename, SIO.FileMode filemode) : base(filename, filemode) {}
 
+		[System.Obsolete("KSPe.IO.Data.CreateForType<T>(string, FileMode) is deprecated, please use CreateForType<T>(FileMode, string) instead.")]
 		public static FileStream CreateForType<T>(string filename, FileMode mode)
 		{
-			string fn = File<T>.Data.FullPathName(filename, true);
-			return new FileStream(fn, (SIO.FileMode)mode);
+			return CreateForType<T>(mode, filename);
+		}
+
+		public static FileStream CreateForType<T>(FileMode mode, string filename)
+		{
+			string path = File<T>.Data.FullPathName(true, filename);
+			return new FileStream(path, (SIO.FileMode)mode);
+		}
+
+		public static FileStream CreateForType<T>(FileMode mode, string fn, params string[] fns)
+		{
+			string path = File<T>.Data.FullPathName(true, fn, fns);
+			return new FileStream(path, (SIO.FileMode)mode);
 		}
 	}
 }

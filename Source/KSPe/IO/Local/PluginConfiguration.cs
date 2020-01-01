@@ -22,7 +22,6 @@
 */
 using System;
 using SIO = System.IO;
-using KSP;
 
 namespace KSPe.IO.Local
 {
@@ -52,14 +51,32 @@ namespace KSPe.IO.Local
 
 		public static PluginConfiguration CreateForType<T>(string filename)
 		{
-			string fn = File<T>.Local.FullPathName(filename, true);
-			return new PluginConfiguration(fn);
+			string path = File<T>.Local.FullPathName(true, filename);
+			return new PluginConfiguration(path);
+		}
+
+		public static PluginConfiguration CreateForType<T>(string fn, params string[] fns)
+		{
+			string path = File<T>.Local.FullPathName(true, fn, fns);
+			return new PluginConfiguration(path);
 		}
 
 		public static new PluginConfiguration CreateForType<T>(Vessel flight)
 		{
 			Type target = typeof(T);
 			return CreateForType<T>((flight ? flight.GetName() + "." + target.Name : target.Name) + ".xml");
+		}
+
+		public static PluginConfiguration CreateForType<T>(Vessel flight, params string[] fns)
+		{
+			Type target = typeof(T);
+			string path = fns[0];
+			string[] ffns = new string[fns.Length];
+			Array.Copy(fns, 1, ffns, 0, ffns.Length);
+			foreach (string s in ffns)
+				path = SIO.Path.Combine(path, s);
+			path = SIO.Path.Combine(path, (flight ? flight.GetName() + "." + target.Name : target.Name) + ".xml");
+			return CreateForType<T>(path);
 		}
 
 		public static PluginConfiguration CreateForType<T>()

@@ -20,7 +20,6 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using System;
 using SIO = System.IO;
 
 namespace KSPe.IO.Asset
@@ -31,8 +30,14 @@ namespace KSPe.IO.Asset
 
 		public static StreamReader CreateForType<T>(string filename)
 		{
-			string fn = File<T>.Asset.FullPathName(filename);
-			return new StreamReader(fn);
+			string path = File<T>.Asset.FullPathName(filename);
+			return new StreamReader(path);
+		}
+
+		public static StreamReader CreateForType<T>(string fn, params string[] fns)
+		{
+			string path = File<T>.Asset.FullPathName(fn, fns);
+			return new StreamReader(path);
 		}
 	}
 }

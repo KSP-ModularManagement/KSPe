@@ -21,6 +21,7 @@
 
 */
 using System;
+using SIO = System.IO;
 
 namespace KSPe.GameDB
 {
@@ -33,10 +34,32 @@ namespace KSPe.GameDB
 			return r;
 		}
 
+		public static string Solve(string fn, params string[] fns)
+		{
+			string path = fn;
+			foreach (string s in fns)
+				path = SIO.Path.Combine(fn, s);
+			return Solve(path);
+		}
+
+		[System.Obsolete("KSPe.GameDB.Asset<T>.Solve(string, LocalCache) is deprecated, please use Solve(LocalCache, string) instead.")]
 		public static string Solve(string fn, LocalCache<string> cache)
+		{
+			return Solve(cache, fn);
+		}
+
+		public static string Solve(LocalCache<string> cache, string fn)
 		{
 			LocalCache<string>.Dictionary c = cache[typeof(T)];
 			return c.ContainsKey(fn) ? c[fn] : (c[fn] = Solve(fn));
+		}
+
+		public static string Solve(LocalCache<string> cache, string fn, params string[] fns)
+		{
+			string path = fn;
+			foreach (string s in fns)
+				path = SIO.Path.Combine(fn, s);
+			return Solve(cache, path);
 		}
 	}
 }

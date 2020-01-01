@@ -73,19 +73,19 @@ namespace KSPe
 
 		public static PluginConfig ForType<T>(string name = null)
 		{
-			string fn = IO.File<T>.Data.FullPathName( (name ?? typeof(T).FullName) + ".cfg", true);
+			string fn = IO.File<T>.Data.FullPathName(true, (name ?? typeof(T).FullName) + ".cfg");
 			return new PluginConfig(name, fn);
 		}
 
 		public static PluginConfig ForType<T>(string name, string filename)
 		{
-			string fn = IO.File<T>.Data.FullPathName(filename, true);
+			string fn = IO.File<T>.Data.FullPathName(true, filename);
 			return new PluginConfig(name, fn);
 		}
 
 		public static string[] ListForType<T>(string mask = "*.cfg", bool subdirs = false)
 		{
-			string dir = IO.File<T>.Data.FullPathName(".", false);
+			string dir = IO.File<T>.Data.FullPathName(false, ".");
 			string[] files = AbstractConfig.ListFiles(dir, mask, subdirs);
 			return files;
 		}

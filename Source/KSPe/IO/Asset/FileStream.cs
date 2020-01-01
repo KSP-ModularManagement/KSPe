@@ -20,7 +20,6 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using System;
 using SIO = System.IO;
 
 namespace KSPe.IO.Asset
@@ -29,10 +28,22 @@ namespace KSPe.IO.Asset
 	{
 		protected FileStream(string filename, SIO.FileMode filemode) : base(filename, filemode) {}
 
-		public static FileStream CreateForType<T>(string filename, FileMode mode)
+		[System.Obsolete("KSPe.IO.Asset.CreateForType<T>(string, FileMode) is deprecated, please use CreateForType<T>(FileMode, string) instead.")]
+		public static FileStream CreateForType<T>(string filename, FileMode mode) // To favor easy replacement from the System one
 		{
-			string fn = File<T>.Asset.FullPathName(filename);
-			return new FileStream(fn, (SIO.FileMode)mode);
+			return CreateForType<T>(mode, filename);
+		}
+
+		public static FileStream CreateForType<T>(FileMode mode, string filename) // To favor conformity
+		{
+			string path = File<T>.Asset.FullPathName(filename);
+			return new FileStream(path, (SIO.FileMode)mode);
+		}
+
+		public static FileStream CreateForType<T>(FileMode mode, string fn, params string[] fns)
+		{
+			string path = File<T>.Asset.FullPathName(fn, fns);
+			return new FileStream(path, (SIO.FileMode)mode);
 		}
 	}
 }

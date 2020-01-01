@@ -20,9 +20,6 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using System;
-using SIO = System.IO;
-using BaseConfigNode = ConfigNode;
 
 namespace KSPe.IO.Local
 {
@@ -40,19 +37,25 @@ namespace KSPe.IO.Local
 
 		public static ConfigNode ForType<T>(string name = null)
 		{
-			string fn = IO.File<T>.Local.FullPathName( (name ?? typeof(T).FullName) + ".cfg", true);
-			return new ConfigNode(name, fn);
+			string path = IO.File<T>.Local.FullPathName(true, (name ?? typeof(T).FullName) + ".cfg");
+			return new ConfigNode(name, path);
 		}
 
 		public static ConfigNode ForType<T>(string name, string filename)
 		{
-			string fn = IO.File<T>.Local.FullPathName(".", true);
-			return new ConfigNode(name, fn);
+			string path = IO.File<T>.Local.FullPathName(true, filename);
+			return new ConfigNode(name, path);
+		}
+
+		public static ConfigNode ForType<T>(string name, string fn, params string[] fns)
+		{
+			string path = IO.File<T>.Local.FullPathName(true, fn, fns);
+			return new ConfigNode(name, path);
 		}
 
 		public static string[] ListForType<T>(string mask = "*.cfg", bool subdirs = false)
 		{
-			string dir = IO.File<T>.Local.FullPathName(".", false);
+			string dir = IO.File<T>.Local.FullPathName(false, ".");
 			string[] files = ReadableConfigNode.ListFiles(dir, mask, subdirs);
 			return files;
 		}

@@ -20,7 +20,6 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using System;
 
 namespace KSPe.IO.Asset
 {
@@ -38,14 +37,20 @@ namespace KSPe.IO.Asset
 
 		public static ConfigNode ForType<T>(string name = null)
 		{
-			string fn = IO.File<T>.Asset.FullPathName(name ?? typeof(T).FullName + ".cfg");
-			return new ConfigNode(name, fn);
+			string path = IO.File<T>.Asset.FullPathName(name ?? typeof(T).FullName + ".cfg");
+			return new ConfigNode(name, path);
 		}
 
 		public static ConfigNode ForType<T>(string name, string filename)
 		{
-			string fn = IO.File<T>.Asset.FullPathName(filename);
-			return new ConfigNode(name, fn);
+			string path = IO.File<T>.Asset.FullPathName(filename);
+			return new ConfigNode(name, path);
+		}
+
+		public static ConfigNode ForType<T>(string name, string fn, params string[] fns)
+		{
+			string path = IO.File<T>.Asset.FullPathName(fn, fns);
+			return new ConfigNode(name, path);
 		}
 
 		public static string[] ListForType<T>(string mask = "*.cfg", bool subdirs = false)
