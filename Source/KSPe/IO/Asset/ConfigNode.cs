@@ -25,7 +25,7 @@ namespace KSPe.IO.Asset
 {
 	public class ConfigNode : ReadableConfigNode
 	{
-		public ConfigNode(string name, string fn) : base(name)
+		protected ConfigNode(string name, string fn) : base(name)
 		{
 			this.Path = fn;
 		}
