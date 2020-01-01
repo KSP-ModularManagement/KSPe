@@ -61,12 +61,23 @@ namespace KSPe.Util.Image {
 		//
 		// easier to specify different cases than to change case to lower.	This will fail on MacOS and Linux
 		// if a suffix has mixed case
-		private static string[] imgSuffixes = new string[] { ".png", ".jpg", ".gif", ".dds", ".PNG", ".JPG", ".GIF", ".DDS" };
+		private static string[] imgSuffixes = { ".png", ".jpg", ".gif", ".dds", ".PNG", ".JPG", ".GIF", ".DDS" };
 		public static UTexture2D LoadFromFile(String fileNamePath)
 		{
-			return LoadFromFile(fileNamePath, false);
+			return LoadFromFile(fileNamePath, -1, -1, false);
 		}
+
+		public static UTexture2D LoadFromFile(String fileNamePath, int width, int height)
+		{
+			return LoadFromFile(fileNamePath, width, height, false);
+		}
+
 		public static UTexture2D LoadFromFile(String fileNamePath, bool mipmap)
+		{
+			return LoadFromFile(fileNamePath, -1, -1, mipmap);
+		}
+
+		public static UTexture2D LoadFromFile(String fileNamePath, int width, int height, bool mipmap)
 		{
 			UTexture2D tex = null;
 			bool validReturn = false;
@@ -93,29 +104,15 @@ namespace KSPe.Util.Image {
 					{
 						if (dds)
 						{
-							byte[] bytes = SIO.File.ReadAllBytes(path);
-
-							SIO.BinaryReader binaryReader = new SIO.BinaryReader(new SIO.MemoryStream(bytes));
-							uint num = binaryReader.ReadUInt32();
-
-							if (num != DDSValues.uintMagic)
-								throw new Error("DDS: File {0} is not a DDS format file!", fileNamePath);
-
-							DDSHeader ddSHeader = new DDSHeader(binaryReader);
-
-							TextureFormat tf = TextureFormat.Alpha8;
-							if (ddSHeader.ddspf.dwFourCC == DDSValues.uintDXT1)
-								tf = TextureFormat.DXT1;
-							if (ddSHeader.ddspf.dwFourCC == DDSValues.uintDXT5)
-								tf = TextureFormat.DXT5;
-							if (tf == TextureFormat.Alpha8)
-								throw new Error("DDS: TextureFormat {0} File {1} is not supported!", tf, fileNamePath);
-							tex = LoadDXT(bytes, tf, mipmap);
+							LoadDXT(out tex, path, mipmap, fileNamePath);
 							validReturn = true;
 						}
 						else
 						{
-							validReturn = File.Load(out tex, SIO.File.ReadAllBytes(path));
+							validReturn = (width > 0 && height > 0)
+								? File.Load(out tex, width, height, SIO.File.ReadAllBytes(path))
+								: File.Load(out tex, SIO.File.ReadAllBytes(path))
+								;
 						}
 					}
 					catch (Exception ex)
@@ -144,6 +141,29 @@ namespace KSPe.Util.Image {
 			if (!validReturn && null != tex) UnityEngine.Object.Destroy(tex);
 
 			return tex;
+		}
+
+		private static void LoadDXT(out UTexture2D tex, string effectivePath, bool mipmap, string fileNamePath)
+		{
+			byte[] bytes = SIO.File.ReadAllBytes(effectivePath);
+
+			SIO.BinaryReader binaryReader = new SIO.BinaryReader(new SIO.MemoryStream(bytes));
+			uint num = binaryReader.ReadUInt32();
+
+			if (num != DDSValues.uintMagic)
+				throw new Error("DDS: File {0} is not a DDS format file!", fileNamePath);
+
+			DDSHeader ddSHeader = new DDSHeader(binaryReader);
+
+			TextureFormat tf = TextureFormat.Alpha8;
+			if (ddSHeader.ddspf.dwFourCC == DDSValues.uintDXT1)
+				tf = TextureFormat.DXT1;
+			if (ddSHeader.ddspf.dwFourCC == DDSValues.uintDXT5)
+				tf = TextureFormat.DXT5;
+			if (tf == TextureFormat.Alpha8)
+				throw new Error("DDS: TextureFormat {0} File {1} is not supported!", tf, fileNamePath);
+
+			tex = LoadDXT(bytes, tf, mipmap);
 		}
 
 		private static UTexture2D LoadDXT(byte[] ddsBytes, TextureFormat textureFormat, bool mipmap)

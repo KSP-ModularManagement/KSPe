@@ -72,7 +72,12 @@ namespace KSPe.Util.Image {
 	{
 		public static bool Load(out UTexture2D tex, byte[] data, bool markNonReadable = false)
 		{
-			tex = new UTexture2D(16, 16, TextureFormat.ARGB32, false);
+			return Load(out tex, 16, 16, data, markNonReadable);
+		}
+
+		public static bool Load(out UTexture2D tex, int width, int height, byte[] data, bool markNonReadable = false)
+		{
+			tex = new UTexture2D(width, height, TextureFormat.ARGB32, false);
 			switch (UnityTools.UnityVersion)
 			{
 				case 5:		return (bool)LoadImageMethod().Invoke(tex, new object[] { data });
