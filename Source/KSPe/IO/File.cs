@@ -122,6 +122,7 @@ namespace KSPe.IO
 	{
 #pragma warning disable RECS0108 // Warns about static fields in generic types
 		public static readonly string[] ASSET = { "PluginData", "Assets" };     // ReadOnly data on <KSP_ROOT>/GameData/<plugin_name>/Plugin/{PluginData|Assets|null}/ or whatever the DLL is.
+		private static readonly string RANDOM_TEMP_DIR = SIO.Path.GetRandomFileName();
 #pragma warning restore RECS0108 // Warns about static fields in generic types
 
 		public static string CalculateRelativePath(string fullDestinationPath)
@@ -129,13 +130,15 @@ namespace KSPe.IO
 			return File.CalculateRelativePath(fullDestinationPath, SIO.Path.GetDirectoryName(typeof(T).Assembly.Location));
 		}
 
-		internal static string TempPathName(string filename)
+		internal static string TempPathName(string filename = null)
 		{
+			filename = filename ?? SIO.Path.GetRandomFileName();
 			if (!string.IsNullOrEmpty(SIO.Path.GetDirectoryName(filename)))
 				throw new IsolatedStorageException(String.Format("filename cannot have subdirectories! [{0}]", filename));
 
 			string fn = SIO.Path.GetTempPath();
 			fn = SIO.Path.Combine(fn, "ksp");
+			fn = SIO.Path.Combine(fn, RANDOM_TEMP_DIR);
 			fn = SIO.Path.Combine(fn, CalculateRoot());
 			fn = SIO.Path.Combine(fn, SIO.Path.GetFileName(filename));
 			{

@@ -31,7 +31,7 @@ namespace KSPe.IO.Temp
 
 		public static StreamReader CreateForType<T>(string filename)
 		{
-			string fn = File<T>.TempPathName(filename);
+			string fn = File<T>.Temp.FullPathName(filename);
 			return new StreamReader(fn);
 		}
 	}

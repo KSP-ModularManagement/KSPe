@@ -29,9 +29,9 @@ namespace KSPe.IO.Temp
 	{
 		internal StreamWriter(string path) : base(path) {}
 
-		public static StreamWriter CreateForType<T>(string filename)
+		public static StreamWriter CreateForType<T>(string filename = null)
 		{
-			string fn = File<T>.TempPathName(filename);
+			string fn = File<T>.Temp.FullPathName(filename);
 			return new StreamWriter(fn);
 		}
 	}
