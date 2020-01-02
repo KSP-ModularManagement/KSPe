@@ -1,11 +1,11 @@
 # KSP API Extensions/L :: Changes
 
-* 2019-1018: 2.1.0.17 (Lisias) for KSP >= 1.2
-	+ New Installment facilities:
-		- Checking on compatible Unity version(s) 
-	+ Fixing a stupid mistake on handling pathnames that rendered this thing unusable on Windows!
-* 2019-1005: 2.1.0.16 (Lisias) for KSP >= 1.2
-	+ Preemptive update to support Unity 2019.2 (KSP 1.8) 
-	+ Known issue:
-		- KSPe.UI doesn't loads on KSP <= 1.3.1 due an idiotic mistake on handling dependencies. Delete it from `000_KSPAPIExtensions/Plugins` as a temporary measure.  
-		- See Issue [#3](https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/3)
+* 2020-0101: 2.1.1.0 (Lisias) for KSP >= 1.2
+	+ New Features 
+		- Added support for seamless subdirectories definitions when naming filenames
+			- No more System.IO.Path.Combine !
+		- More versatile Textures Loading
+		- New public Facade for the abstract file system features
+	+ Bug fixes
+		- Better TEMP files handling
+		- GameDB Asset solver now solves correctly
