@@ -1,5 +1,7 @@
 # KSP API Extensions/L :: Change Log
 
+* 2020-0105: 2.1.1.1 (Lisias) for KSP >= 1.2
+	+ Fixed stupid mistake on handling pathnames on fetching Textures on the old API.
 * 2020-0101: 2.1.1.0 (Lisias) for KSP >= 1.2
 	+ New Features 
 		- Added support for seamless subdirectories definitions when naming filenames
