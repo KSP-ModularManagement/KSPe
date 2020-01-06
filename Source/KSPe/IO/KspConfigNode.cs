@@ -34,15 +34,26 @@ namespace KSPe.IO
 			this.Path = GeneratePathname(filename);
 		}
 
+		public KspConfigNode(string name, string fn, params string[] fns) : base(name)
+		{
+			this.Path = GeneratePathname(fn, fns);
+		}
+
 		public new KspConfigNode Load()
 		{
 			return (KspConfigNode)base.Load();
 		}
-		
+
 		protected static string GeneratePathname(string filename)
 		{
-			string fn = System.IO.Path.Combine(KSPe.IO.File.KSP_ROOTPATH, filename);
-			return fn;
+			string path = File.FullPathName(".", ".", false, filename);
+			return path;
+		}
+
+		protected static string GeneratePathname(string fn, params string[] fns)
+		{
+			string path = File.FullPathName(".", ".", false, fn, fns);
+			return path;
 		}
 
 	}
