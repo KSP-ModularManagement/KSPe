@@ -41,7 +41,8 @@ namespace KSPe.GameDB
 				r = r.Replace("PluginData/","");
 			}
 
-			return r;
+			return r.Replace("\\", "/"); // GameDatabase uses "/" on the naming.
+			// FIXME: I need to do furher transformations (underscores, dots, etc)
 		}
 
 		public static string Solve(string fn)
