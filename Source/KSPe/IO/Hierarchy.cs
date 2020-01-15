@@ -31,31 +31,28 @@ namespace KSPe.IO
 	{
 		internal static readonly string ROOTPATH = SIO.Path.GetFullPath(KSPUtil.ApplicationRootPath);
 
-		public static Hierarchy ROOT = new Hierarchy("ROOT", ".");
-		public static Hierarchy GAMEDATA = new Hierarchy("GAMEDATA", "GameData");
-		public static Hierarchy PLUGINDATA = new Hierarchy("PLUGINDATA", "PluginData");
-		public static Hierarchy LOCALDATA = new Hierarchy("LOCALDATA", SIO.Path.Combine(GAMEDATA.dirName, "__LOCAL"));
-		public static Hierarchy SCREENSHOT = new Hierarchy("SCREENSHOT", "Screenshots");
-		public static Hierarchy SAVE = new Hierarchy("SAVE", "saves");
-		public static Hierarchy THUMB = new Hierarchy("THUMB", "thumbs");
+		public static readonly Hierarchy ROOT = new Hierarchy("ROOT");
+		public static readonly Hierarchy GAMEDATA = new Hierarchy("GAMEDATA", "GameData");
+		public static readonly Hierarchy PLUGINDATA = new Hierarchy("PLUGINDATA", "PluginData");
+		public static readonly Hierarchy LOCALDATA = new Hierarchy("LOCALDATA", SIO.Path.Combine(GAMEDATA.relativePathName, "__LOCAL"));
+		public static readonly Hierarchy SCREENSHOT = new Hierarchy("SCREENSHOT", "Screenshots");
+		public static readonly Hierarchy SAVE = new Hierarchy("SAVE", "saves");
+		public static readonly Hierarchy THUMB = new Hierarchy("THUMB", "thumbs");
 
 		private readonly string name;
-		internal readonly string dirName;
 		internal readonly string fullPathName;
 		internal readonly string relativePathName;
-		private Hierarchy(string name, string dirName)
+		protected Hierarchy(string name)
 		{
 			this.name = name;
-			this.dirName = dirName;
-			this.fullPathName = SIO.Path.Combine(ROOTPATH, dirName);
-			this.relativePathName = this.fullPathName.Replace(ROOTPATH, "");
+			this.relativePathName = ".";
+			this.fullPathName = SIO.Path.GetFullPath(SIO.Path.Combine(ROOTPATH, relativePathName)); // Ensures any path shenanigans are resolved.
 		}
-		protected Hierarchy(Hierarchy hierarchy)
+		protected Hierarchy(string name, string dirName)
 		{
-			this.name = hierarchy.name;
-			this.dirName = hierarchy.dirName;
-			this.fullPathName = hierarchy.fullPathName;
-			this.relativePathName = hierarchy.relativePathName;
+			this.name = name;
+			this.fullPathName = SIO.Path.GetFullPath(SIO.Path.Combine(ROOTPATH, dirName)); // Ensures any path shenanigans are resolved.
+			this.relativePathName = this.fullPathName.Replace(ROOTPATH, "");
 		}
 
 		new public String ToString() { return this.name; }
@@ -72,30 +69,28 @@ namespace KSPe.IO
 
 		public string Solve(bool createDirs, string fname, params string[] fnames)
 		{
-			string combinedFnames = SIO.Path.Combine(this.relativePathName, fname);
+			string combinedFnames = fname;
 			foreach (string s in fnames)
 				combinedFnames = SIO.Path.Combine(combinedFnames, s);
 
-			string partialPathName;
-			string fullPathName;
+			string resultRelativePathName,resultFullPathName;
 
-			this.Calculate(createDirs, combinedFnames, out partialPathName, out fullPathName);
+			this.Calculate(createDirs, combinedFnames, out resultRelativePathName, out resultFullPathName);
 
-			return partialPathName;
+			return resultFullPathName;
 		}
 
 		internal string SolveFull(bool createDirs, string fname, params string[] fnames)
 		{
-			string combinedFnames = SIO.Path.Combine(this.relativePathName, fname);
+			string combinedFnames = fname;
 			foreach (string s in fnames)
 				combinedFnames = SIO.Path.Combine(combinedFnames, s);
 
-			string partialPathName;
-			string fullPathName;
+			string resultRelativePathName, resultFullPathName;
 
-			this.Calculate(createDirs, combinedFnames, out partialPathName, out fullPathName);
+			this.Calculate(createDirs, combinedFnames, out resultRelativePathName, out resultFullPathName);
 
-			return fullPathName;
+			return resultFullPathName;
 		}
 
 		private void Calculate(bool createDirs, string fname, out string partialPathname, out string fullPathname)
@@ -105,11 +100,11 @@ namespace KSPe.IO
 			if (SIO.Path.IsPathRooted(partialPathname))
 				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
 
-			string fn = SIO.Path.Combine(ROOTPATH, partialPathname);
+			string fn = SIO.Path.Combine(this.fullPathName, fname);
 			fullPathname = SIO.Path.GetFullPath(fn); // Checks against a series of ".." trying to escape the intended sandbox
 
 			if (!fullPathname.StartsWith(this.fullPathName, StringComparison.Ordinal))
-				throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the KSP file system! [{0}]", partialPathname));
+				throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the sandboxed file system! [{0}]", partialPathname));
 
 			if (createDirs)
 			{

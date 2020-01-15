@@ -29,50 +29,24 @@ namespace KSPe.IO
 {
 	public class Hierarchy<T> : Hierarchy
 	{
-		private Hierarchy(Hierarchy hierarchy) : base(hierarchy) { }
-
-		new public static Hierarchy ROOT = new Hierarchy<T>(Hierarchy.ROOT);
-		new public static Hierarchy GAMEDATA = new Hierarchy<T>(Hierarchy.GAMEDATA);
-		new public static Hierarchy PLUGINDATA = new Hierarchy<T>(Hierarchy.PLUGINDATA);
-		new public static Hierarchy LOCALDATA = new Hierarchy<T>(Hierarchy.LOCALDATA);
-		new public static Hierarchy SCREENSHOT = new Hierarchy<T>(Hierarchy.SCREENSHOT);
-		new public static Hierarchy SAVE = new Hierarchy<T>(Hierarchy.SAVE);
-		new public static Hierarchy THUMB = new Hierarchy<T>(Hierarchy.THUMB);
-
 		internal static readonly LocalCache<string> CACHE = new LocalCache<string>();
+		private Hierarchy(Hierarchy hierarchy) : base(hierarchy.ToString(), SIO.Path.Combine(hierarchy.relativePathName, CalculateTypeRoot())) {}
 
-		new public string Solve()
-		{
-			return CalculateRoot(this);
-		}
+		new public static readonly Hierarchy<T> ROOT = new Hierarchy<T>(Hierarchy.ROOT);
+		new public static readonly Hierarchy<T> GAMEDATA = new Hierarchy<T>(Hierarchy.GAMEDATA);
+		new public static readonly Hierarchy<T> PLUGINDATA = new Hierarchy<T>(Hierarchy.PLUGINDATA);
+		new public static readonly Hierarchy<T> LOCALDATA = new Hierarchy<T>(Hierarchy.LOCALDATA);
+		new public static readonly Hierarchy<T> SCREENSHOT = new Hierarchy<T>(Hierarchy.SCREENSHOT);
+		new public static readonly Hierarchy<T> SAVE = new Hierarchy<T>(Hierarchy.SAVE);
+		new public static readonly Hierarchy<T> THUMB = new Hierarchy<T>(Hierarchy.THUMB);
 
-		new public string Solve(bool createDirs, string fname, params string[] fnames)
-		{
-			string rootDir = this.Solve();
-			string path = SIO.Path.Combine(rootDir, fname);
-			return this.Solve(createDirs, path, fnames);
-		}
-
-		new internal string SolveFull(bool createDirs, string fname, params string[] fnames)
-		{
-			string rootDir = this.Solve();
-			string path = SIO.Path.Combine(rootDir, fname);
-			return this.SolveFull(createDirs, path, fnames);
-		}
-
-		internal static string CalculateRoot()
+		internal static string CalculateTypeRoot()
 		{
 			LocalCache<string>.Dictionary c = CACHE[typeof(T)];
-			return c.ContainsKey(".") ? c["."] : (c["."] = calculateRoot());
+			return c.ContainsKey(".") ? c["."] : (c["."] = calculateTypeRoot());
 		}
 
-		private static string CalculateRoot(Hierarchy<T> hierarchy)
-		{
-			LocalCache<string>.Dictionary c = CACHE[typeof(T)];
-			return c.ContainsKey(hierarchy.dirName) ? c[hierarchy.dirName] : (c[hierarchy.dirName] = SIO.Path.Combine(calculateRoot(), hierarchy.dirName));
-		}
-
-		private static string calculateRoot()
+		private static string calculateTypeRoot()
 		{
 			string typeRootDir = typeof(T).Namespace;
 			{

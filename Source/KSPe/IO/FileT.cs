@@ -48,7 +48,7 @@ namespace KSPe.IO
 			string fn = SIO.Path.GetTempPath();
 			fn = SIO.Path.Combine(fn, "ksp");
 			fn = SIO.Path.Combine(fn, RANDOM_TEMP_DIR);
-			fn = SIO.Path.Combine(fn, Hierarchy<T>.CalculateRoot());
+			fn = SIO.Path.Combine(fn, Hierarchy<T>.CalculateTypeRoot());
 			fn = SIO.Path.Combine(fn, SIO.Path.GetFileName(filename));
 			{
 				string d = SIO.Path.GetDirectoryName(fn);
@@ -83,13 +83,13 @@ namespace KSPe.IO
 					}
 				}
 
-				throw new IsolatedStorageException(String.Format("Assembly {0} doesn't resolved to a KSPe Asset location!", typeof(T).Assembly.FullName));
+				throw new IsolatedStorageException(String.Format("Assembly {0} didn't resolved to a KSPe Asset location!", typeof(T).Assembly.FullName));
 			}
 
 			internal static string SolveRoot()
 			{
 				LocalCache<string>.Dictionary c = Hierarchy<T>.CACHE[typeof(T)];
-				return c.ContainsKey(Hierarchy.GAMEDATA.dirName) ? c[Hierarchy.GAMEDATA.dirName] : (c[Hierarchy.GAMEDATA.dirName] = solveRoot());
+				return c.ContainsKey(Hierarchy.GAMEDATA.ToString()) ? c[Hierarchy.GAMEDATA.ToString()] : (c[Hierarchy.GAMEDATA.ToString()] = solveRoot());
 			}
 
 			private static string FullPathName(string partialPathname)
@@ -634,13 +634,13 @@ namespace KSPe.IO
 			public static string Solve(string fn)
 			{
 				string r = Hierarchy<T>.LOCALDATA.SolveFull(false, fn);
-				return r.Substring(r.IndexOf(Hierarchy.GAMEDATA.dirName+SIO.Path.DirectorySeparatorChar, StringComparison.Ordinal) + 9);
+				return r.Substring(r.IndexOf(Hierarchy.GAMEDATA.relativePathName + SIO.Path.DirectorySeparatorChar, StringComparison.Ordinal) + 1 + Hierarchy.GAMEDATA.relativePathName.Length);
 			}
 
 			public static string Solve(string fn, params string[] fns)
 			{
 				string r = Hierarchy<T>.LOCALDATA.SolveFull(false, fn);
-				return r.Substring(r.IndexOf(Hierarchy.GAMEDATA.dirName+SIO.Path.DirectorySeparatorChar, StringComparison.Ordinal) + 9);
+				return r.Substring(r.IndexOf(Hierarchy.GAMEDATA.relativePathName + SIO.Path.DirectorySeparatorChar, StringComparison.Ordinal) + 1 + Hierarchy.GAMEDATA.relativePathName.Length);
 			}
 
 			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)
