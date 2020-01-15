@@ -68,5 +68,256 @@ namespace KSPe.IO
 
 			return files;
 		}
+
+		public static string[] List(Hierarchy hierarchy, string mask = "*", bool include_subdirs = false, string subdir = null)
+		{
+			return List(hierarchy.SolveFull(false, subdir ?? "."), mask, include_subdirs);
+		}
+
+		public static string[] List(Hierarchy hierarchy, string mask = "*", bool include_subdirs = false, string fn = null, params string[] fns)
+		{
+			return List(hierarchy.SolveFull(false, fn ?? ".", fns), mask, include_subdirs);
+		}
+
+		public static void AppendAllText(Hierarchy hierarchy, string path, string contents) { throw new NotImplementedException("KSPe.IO.File.AppendAllText"); }
+		public static void AppendAllText(Hierarchy hierarchy, string contents, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.AppendAllText"); }
+		public static void AppendAllText(Hierarchy hierarchy, string path, string contents, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.AppendAllText"); }
+		public static void AppendAllText(Hierarchy hierarchy, string contents, System.Text.Encoding encoding, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.AppendAllText"); }
+
+		public static SIO.StreamWriter AppendText(Hierarchy hierarchy, string path) { throw new NotImplementedException("KSPe.IO.File.AppendText"); }
+		public static SIO.StreamWriter AppendText(Hierarchy hierarchy, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.AppendText"); }
+
+		public static void Copy(Hierarchy sourceHierarchy, string sourceFileName, string destFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Copy"); }
+		public static void Copy(Hierarchy SourceHierarchy, string sourceFileName, Hierarchy destHierarchy, string destLocalFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.CopyToLocal"); }
+
+		public static SIO.FileStream Create(Hierarchy hierarchy, string path) { throw new NotImplementedException("KSPe.IO.File.Create"); }
+		public static SIO.FileStream Create(Hierarchy hierarchy, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Create"); }
+		public static SIO.FileStream Create(Hierarchy hierarchy, string path, int bufferSize) { throw new NotImplementedException("KSPe.IO.File.Create"); }
+		public static SIO.FileStream Create(Hierarchy hierarchy, int bufferSize, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Create"); }
+		public static SIO.FileStream Create(Hierarchy hierarchy, string path, int bufferSize, SIO.FileOptions options) { throw new NotImplementedException("KSPe.IO.File.Create"); }
+		public static SIO.FileStream Create(Hierarchy hierarchy, int bufferSize, SIO.FileOptions options, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Create"); }
+		public static SIO.FileStream Create(Hierarchy hierarchy, string path, int bufferSize, SIO.FileOptions options, System.Security.AccessControl.FileSecurity fileSecurity) { throw new NotImplementedException("KSPe.IO.File.Create"); }
+		public static SIO.FileStream Create(Hierarchy hierarchy, int bufferSize, SIO.FileOptions options, System.Security.AccessControl.FileSecurity fileSecurity, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Create"); }
+
+		public static SIO.StreamWriter CreateText(Hierarchy hierarchy, string path)
+		{
+			path = hierarchy.SolveFull(true, path);
+			var t = SIO.File.CreateText(path);          // Does the magic
+			t.Close();                                  // TODO: Get rid of this stunt.             
+			return new SIO.StreamWriter(path);			// Reopens the stream as our own type.
+		}
+
+		public static SIO.StreamWriter CreateText(Hierarchy hierarchy, string fn, params string[] fns)
+		{
+			string path = hierarchy.SolveFull(true, fn, fns);
+			var t = SIO.File.CreateText(path);          // Does the magic
+			t.Close();                                  // TODO: Get rid of this stunt.             
+			return new SIO.StreamWriter(path);			// Reopens the stream as our own type.
+		}
+
+		public static void Decrypt(Hierarchy hierarchy, string path) { throw new NotImplementedException("KSPe.IO.File.Decrypt"); }
+		public static void Decrypt(Hierarchy hierarchy, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Decrypt"); }
+
+		public static void Delete(Hierarchy hierarchy, string path)
+		{
+			path = hierarchy.SolveFull(false, path);
+			SIO.File.Delete(path);
+		}
+
+		public static void Delete(Hierarchy hierarchy, string fn, params string[] fns)
+		{
+			string path = hierarchy.SolveFull(false, fn, fns);
+			SIO.File.Delete(path);
+		}
+
+		public static void Encrypt(Hierarchy hierarchy, string path) { throw new NotImplementedException("KSPe.IO.File.Encrypt"); }
+		public static void Encrypt(Hierarchy hierarchy, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Encrypt"); }
+
+		public static bool Exists(Hierarchy hierarchy, string path)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.Exists(path);
+		}
+
+		public static bool Exists(Hierarchy hierarchy, string fn, params string[] fns)
+		{
+			string path = hierarchy.SolveFull(false, fn, fns);
+			return SIO.File.Exists(path);
+		}
+
+		public static System.Security.AccessControl.FileSecurity GetAccessControl(Hierarchy hierarchy, string path)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.GetAccessControl(path);
+		}
+
+		public static System.Security.AccessControl.FileSecurity GetAccessControl(Hierarchy hierarchy, string fn, params string[] fns)
+		{
+			string path = hierarchy.SolveFull(false, fn, fns);
+			return SIO.File.GetAccessControl(path);
+		}
+
+		public static System.Security.AccessControl.FileSecurity GetAccessControl(Hierarchy hierarchy, string path, System.Security.AccessControl.AccessControlSections includeSections)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.GetAccessControl(path, includeSections);
+		}
+
+		public static SIO.FileAttributes GetAttributes(Hierarchy hierarchy, string path)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.GetAttributes(path);
+		}
+
+		public static DateTime GetCreationTime(Hierarchy hierarchy, string path)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.GetCreationTime(path);
+		}
+
+		public static DateTime GetCreationTimeUtc(Hierarchy hierarchy, string path)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.GetCreationTimeUtc(path);
+		}
+
+		public static DateTime GetLastAccessTime(Hierarchy hierarchy, string path)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.GetLastAccessTime(path);
+		}
+
+		public static DateTime GetLastAccessTimeUtc(Hierarchy hierarchy, string path)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.GetLastAccessTimeUtc(path);
+		}
+
+		public static DateTime GetLastWriteTime(Hierarchy hierarchy, string path)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.GetLastWriteTime(path);
+		}
+
+		public static DateTime GetLastWriteTimeUtc(Hierarchy hierarchy, string path)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.GetLastWriteTimeUtc(path);
+		}
+
+		public static void Move(Hierarchy hierarchy, string sourceFileName, string destFileName) { throw new NotImplementedException("KSPe.IO.File.Move"); }
+		public static void Movel(Hierarchy sourceHierarchy, string sourceFileName, Hierarchy destHierarchy, string destFileName) { throw new NotImplementedException("KSPe.IO.File.Move"); }
+		public static void Replace(Hierarchy hierarchy, string sourceFileName, string destinationFileName, string destinationBackupFileName) { throw new NotImplementedException("KSPe.IO.File.Replace"); }
+		public static void Replace(Hierarchy hierarchy, string sourceFileName, Hierarchy destHierarchy, string destinationFileName, string destinationBackupFileName) { throw new NotImplementedException("KSPe.IO.File.Replace"); }
+		public static void Replace(Hierarchy hierarchy, string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors) { throw new NotImplementedException("KSPe.IO.File.Replace"); }
+		public static void Replace(Hierarchy hierarchy, string sourceFileName, Hierarchy destHierarchy, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors) { throw new NotImplementedException("KSPe.IO.File.Replace"); }
+
+		public static SIO.FileStream Open(Hierarchy hierarchy, string path, SIO.FileMode mode) { throw new NotImplementedException("KSPe.IO.File.Open"); }
+		public static SIO.FileStream Open(Hierarchy hierarchy, SIO.FileMode mode, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Open"); }
+		public static SIO.FileStream Open(Hierarchy hierarchy, string path, SIO.FileMode mode, SIO.FileAccess access) { throw new NotImplementedException("KSPe.IO.File.Open"); }
+		public static SIO.FileStream Open(Hierarchy hierarchy, SIO.FileMode mode, SIO.FileAccess access, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Open"); }
+		public static SIO.FileStream Open(Hierarchy hierarchy, string path, SIO.FileMode mode, SIO.FileAccess access, SIO.FileShare share) { throw new NotImplementedException("KSPe.IO.File.Open"); }
+		public static SIO.FileStream Open(Hierarchy hierarchy, SIO.FileMode mode, SIO.FileAccess access, SIO.FileShare share, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Open"); }
+		public static SIO.FileStream OpenRead(Hierarchy hierarchy, string path) { throw new NotImplementedException("KSPe.IO.File.OpenRead"); }
+		public static SIO.FileStream OpenRead(Hierarchy hierarchy, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.OpenRead"); }
+		public static SIO.StreamReader OpenText(Hierarchy hierarchy, string path) { throw new NotImplementedException("KSPe.IO.File.OpenText"); }
+		public static SIO.StreamReader OpenText(Hierarchy hierarchy, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.OpenText"); }
+		public static SIO.FileStream OpenWrite(Hierarchy hierarchy, string path) { throw new NotImplementedException("KSPe.IO.File.OpenWrite"); }
+		public static SIO.FileStream OpenWrite(Hierarchy hierarchy, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.OpenWrite"); }
+
+		public static byte[] ReadAllBytes(Hierarchy hierarchy, string path)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.ReadAllBytes(path);
+		}
+
+		public static byte[] ReadAllBytes(Hierarchy hierarchy, string fn, params string[] fns)
+		{
+			string path = hierarchy.SolveFull(false, fn, fns);
+			return SIO.File.ReadAllBytes(path);
+		}
+
+		public static string[] ReadAllLines(Hierarchy hierarchy, string path)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.ReadAllLines(path);
+		}
+
+		public static string[] ReadAllLines(Hierarchy hierarchy, string fn, params string[] fns)
+		{
+			string path = hierarchy.SolveFull(false, fn, fns);
+			return SIO.File.ReadAllLines(path);
+		}
+
+		public static string[] ReadAllLines(Hierarchy hierarchy, string path, System.Text.Encoding encoding)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.ReadAllLines(path, encoding);
+		}
+
+		public static string[] ReadAllLines(Hierarchy hierarchy, System.Text.Encoding encoding, string fn, params string[] fns)
+		{
+			string path = hierarchy.SolveFull(false, fn, fns);
+			return SIO.File.ReadAllLines(path, encoding);
+		}
+
+		public static string ReadAllText(Hierarchy hierarchy, string path)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.ReadAllText(path);
+		}
+
+		public static string ReadAllText(Hierarchy hierarchy, string fn, params string[] fns)
+		{
+			string path = hierarchy.SolveFull(false, fn, fns);
+			return SIO.File.ReadAllText(path);
+		}
+
+		public static string ReadAllText(Hierarchy hierarchy, string path, System.Text.Encoding encoding)
+		{
+			path = hierarchy.SolveFull(false, path);
+			return SIO.File.ReadAllText(path, encoding);
+		}
+
+		public static string ReadAllText(Hierarchy hierarchy, System.Text.Encoding encoding, string fn, params string[] fns)
+		{
+			string path = hierarchy.SolveFull(false, fn, fns);
+			return SIO.File.ReadAllText(path, encoding);
+		}
+
+		public static void SetAccessControl(Hierarchy hierarchy, string path, System.Security.AccessControl.FileSecurity fileSecurity) { throw new NotImplementedException("KSPe.IO.File.SetAttributes"); }
+		public static void SetAccessControl(Hierarchy hierarchy, System.Security.AccessControl.FileSecurity fileSecurity, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.SetAttributes"); }
+
+		public static void SetAttributes(Hierarchy hierarchy, string path, SIO.FileAttributes fileAttributes) { throw new NotImplementedException("KSPe.IO.File.SetAttributes"); }
+		public static void SetAttributes(Hierarchy hierarchy, SIO.FileAttributes fileAttributes, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.SetAttributes"); }
+
+		public static void SetCreationTime(Hierarchy hierarchy, string path, DateTime creationTime) { throw new NotImplementedException("KSPe.IO.File.SetCreationTime"); }
+		public static void SetCreationTime(Hierarchy hierarchy, DateTime creationTime, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.SetCreationTime"); }
+		public static void SetCreationTimeUtc(Hierarchy hierarchy, string path, DateTime creationTimeUtc) { throw new NotImplementedException("KSPe.IO.File.SetCreationTimeUtc"); }
+		public static void SetCreationTimeUtc(Hierarchy hierarchy, DateTime creationTimeUtc, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.SetCreationTimeUtc"); }
+
+		public static void SetLastAccessTime(Hierarchy hierarchy, string path, DateTime lastAccessTime) { throw new NotImplementedException("KSPe.IO.File.SetLastAccessTime"); }
+		public static void SetLastAccessTime(Hierarchy hierarchy, DateTime lastAccessTime, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.SetLastAccessTime"); }
+		public static void SetLastAccessTimeUtc(Hierarchy hierarchy, string path, DateTime lastAccessTimeUtc) { throw new NotImplementedException("KSPe.IO.File.SetLastAccessTimeUtc"); }
+		public static void SetLastAccessTimeUtc(Hierarchy hierarchy, DateTime lastAccessTimeUtc, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.SetLastAccessTimeUtc"); }
+
+		public static void SetLastWriteTime(Hierarchy hierarchy, string path, DateTime lastWriteTime) { throw new NotImplementedException("KSPe.IO.File.SetLastWriteTime"); }
+		public static void SetLastWriteTime(Hierarchy hierarchy, DateTime lastWriteTime, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.SetLastWriteTime"); }
+		public static void SetLastWriteTimeUtc(Hierarchy hierarchy, string path, DateTime lastWriteTimeUtc) { throw new NotImplementedException("KSPe.IO.File.SetLastWriteTimeUtc"); }
+		public static void SetLastWriteTimeUtc(Hierarchy hierarchy, DateTime lastWriteTimeUtc, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.SetLastWriteTimeUtc"); }
+
+		public static void WriteAllBytes(Hierarchy hierarchy, string path, byte[] bytes) { throw new NotImplementedException("KSPe.IO.File.WriteAllBytes"); }
+		public static void WriteAllBytes(Hierarchy hierarchy, byte[] bytes, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.WriteAllBytes"); }
+
+		public static void WriteAllLines(Hierarchy hierarchy, string path, string[] contents) { throw new NotImplementedException("KSPe.IO.File.WriteAllLines"); }
+		public static void WriteAllLines(Hierarchy hierarchy, string[] contents, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.WriteAllLines"); }
+		public static void WriteAllLines(Hierarchy hierarchy, string[] contents, System.Text.Encoding encoding, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.WriteAllLines"); }
+		public static void WriteAllLines(Hierarchy hierarchy, string path, string[] contents, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.WriteAllLines"); }
+
+		public static void WriteAllText(Hierarchy hierarchy, string path, string contents) { throw new NotImplementedException("KSPe.IO.File.WriteAllText"); }
+		public static void WriteAllText(Hierarchy hierarchy, string contents, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.WriteAllText"); }
+		public static void WriteAllText(Hierarchy hierarchy, string path, string contents, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.WriteAllText"); }
+		public static void WriteAllText(Hierarchy hierarchy, string contents, System.Text.Encoding encoding, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.WriteAllText"); }
+
 	}
 }
