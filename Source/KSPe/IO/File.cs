@@ -31,95 +31,26 @@ namespace KSPe.IO
 {
 	public static class File
 	{
-		internal static readonly string KSP_ROOTPATH = SIO.Path.GetFullPath(KSPUtil.ApplicationRootPath);
+		// TODO: Get rid of deprecated artifacts on the next major release.
+		[System.Obsolete("KSPe.IO.File.GAMEDATA is deprecated, please use KSPe.IO.Hierarchy.GAMEDATA instead.")]
 		public const string GAMEDATA = "GameData";
+		[System.Obsolete("KSPe.IO.File.GAMEDATA is deprecated, please use KSPe.IO.Hierarchy.PLUGINDATA instead.")]
 		public const string PLUGINDATA = "PluginData";                                // Writeable data on <KSP_ROOT>/PluginData/<plugin_name>/
+		[System.Obsolete("KSPe.IO.File.GAMEDATA is deprecated, please use KSPe.IO.Hierarchy.LOCALDATA instead.")]
 		public static string LOCALDATA => SIO.Path.Combine(GAMEDATA, "__LOCAL");      // Custom runtime generated parts on <KSP_ROO>/GameData/__LOCAL/<plugin_name> (specially made for UbioWeldingLtd)
-		public const string SCREENSHOT = "Screenshots";                               // Well... Screenshots! :)
 
+		[System.Obsolete("KSPe.IO.File.CalculateKspPath is deprecated, please use KSPe.IO.Hierarchy.ROOT.Solve instead.")]
 		public static string CalculateKspPath(string fname, params string[] fnames)
 		{
-			string partialPathname = fname;
-			foreach (string s in fnames)
-				partialPathname = SIO.Path.Combine(partialPathname, s);
-
-			if (SIO.Path.IsPathRooted(partialPathname))
-				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
-
-			string fn = SIO.Path.GetFullPath(SIO.Path.Combine(KSP_ROOTPATH, partialPathname));
-
-			if (!fn.StartsWith(KSP_ROOTPATH, StringComparison.Ordinal))
-				throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the KSP file system! [{0}]", partialPathname));
-
-			return fn;
+			return Hierarchy.ROOT.Solve(fname, fnames);
 		}
 
+		[System.Obsolete("KSPe.IO.File.CalculateRelativePath is deprecated. There shuold be no need for this anymore.")]
 		public static string CalculateRelativePath(string fullDestinationPath)
 		{
-			return CalculateRelativePath(fullDestinationPath, SIO.Path.GetDirectoryName(Assembly.GetCallingAssembly().Location));
+			return Hierarchy.CalculateRelativePath(fullDestinationPath, SIO.Path.GetDirectoryName(Assembly.GetCallingAssembly().Location)); //FIXME: This only works when KSPe is on the GameData/ !!
 		}
 
-		internal static string CalculateRelativePath(string fullDestinationPath, string rootPath)
-		{
-#if DEBUG
-			UnityEngine.Debug.Log(fullDestinationPath);
-			UnityEngine.Debug.Log(rootPath);
-#endif
-			// from https://social.msdn.microsoft.com/Forums/vstudio/en-US/954346c8-cbe8-448c-80d0-d3fc27796e9c - Wednesday, May 20, 2009 3:37 PM
-			string[] startPathParts = SIO.Path.GetFullPath(rootPath).Trim(SIO.Path.DirectorySeparatorChar).Split(SIO.Path.DirectorySeparatorChar);
-			string[] destinationPathParts = SIO.Path.GetFullPath(fullDestinationPath).Trim(SIO.Path.DirectorySeparatorChar).Split(SIO.Path.DirectorySeparatorChar);
-
-			int i = 0; // Finds the first difference on both paths (if any)
-			int max = Math.Min(startPathParts.Length, destinationPathParts.Length);
-			while ((i < max) && startPathParts[i].Equals(destinationPathParts[i], StringComparison.Ordinal))
-				++i;
-
-			if (0 == i) return fullDestinationPath;
-
-			System.Text.StringBuilder relativePath = new System.Text.StringBuilder();
-
-			if (i >= startPathParts.Length)
-				relativePath.Append(".").Append(SIO.Path.DirectorySeparatorChar); // Just for the LULZ.
-			else
-				for (int j = i;j < startPathParts.Length;j++) // Adds how many ".." as necessary
-					relativePath.Append("..").Append(SIO.Path.DirectorySeparatorChar);
-
-			for (int j = i;j < destinationPathParts.Length;j++) // And now feeds the remaning directories
-				relativePath.Append(destinationPathParts[j]).Append(SIO.Path.DirectorySeparatorChar);
-
-			relativePath.Length--; // Gets rid of the trailig "/" that is always appended
-
-#if DEBUG
-			UnityEngine.Debug.Log(relativePath.ToString());
-#endif
-			return relativePath.ToString();
-		}
-
-		internal static string FullPathName(string rootDir, string hierarchy, bool createDirs, string fname, params string[] fnames)
-		{
-			string partialPathname = fname;
-			foreach (string s in fnames)
-				partialPathname = SIO.Path.Combine(partialPathname, s);
-
-			if (SIO.Path.IsPathRooted(partialPathname))
-				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
-
-			string fn = SIO.Path.Combine(KSP_ROOTPATH, hierarchy);
-			rootDir = SIO.Path.GetFullPath(SIO.Path.Combine(fn, rootDir));
-			fn = SIO.Path.GetFullPath(SIO.Path.Combine(rootDir, partialPathname));
-
-			if (!fn.StartsWith(rootDir, StringComparison.Ordinal))
-				throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the designed file hierarchy! [{0}]", partialPathname));
-
-			if (createDirs)
-			{
-				string d = System.IO.Path.GetDirectoryName(fn);
-				if (!System.IO.Directory.Exists(d))
-					System.IO.Directory.CreateDirectory(d);
-			}
-			return fn;
-		}
-		
 		internal static string[] List(string rawdir, string mask = "*", bool include_subdirs = false)
 		{
 			if (!SIO.Directory.Exists(rawdir))
@@ -142,14 +73,13 @@ namespace KSPe.IO
 
 	public static class File<T>
 	{
-#pragma warning disable RECS0108 // Warns about static fields in generic types
 		public static readonly string[] ASSET = { "PluginData", "Assets" };     // ReadOnly data on <KSP_ROOT>/GameData/<plugin_name>/Plugin/{PluginData|Assets|null}/ or whatever the DLL is.
 		private static readonly string RANDOM_TEMP_DIR = SIO.Path.GetRandomFileName();
-#pragma warning restore RECS0108 // Warns about static fields in generic types
 
+		[System.Obsolete("KSPe.IO.File<T>.CalculateRelativePath is deprecated. There shuold be no need for this anymore.")]
 		public static string CalculateRelativePath(string fullDestinationPath)
 		{
-			return File.CalculateRelativePath(fullDestinationPath, SIO.Path.GetDirectoryName(typeof(T).Assembly.Location));
+			return Hierarchy<T>.CalculateRelativePath(fullDestinationPath, SIO.Path.GetDirectoryName(Assembly.GetCallingAssembly().Location)); //FIXME: This only works when KSPe is on the GameData/ !!
 		}
 
 		internal static string TempPathName(string filename = null)
@@ -161,7 +91,7 @@ namespace KSPe.IO
 			string fn = SIO.Path.GetTempPath();
 			fn = SIO.Path.Combine(fn, "ksp");
 			fn = SIO.Path.Combine(fn, RANDOM_TEMP_DIR);
-			fn = SIO.Path.Combine(fn, CalculateRoot());
+			fn = SIO.Path.Combine(fn, Hierarchy<T>.CalculateRoot());
 			fn = SIO.Path.Combine(fn, SIO.Path.GetFileName(filename));
 			{
 				string d = SIO.Path.GetDirectoryName(fn);
@@ -169,51 +99,6 @@ namespace KSPe.IO
 					SIO.Directory.CreateDirectory(d);
 			}
 			return SIO.Path.GetFullPath(fn);
-		}
-
-		private static readonly LocalCache<string> HIERARCHY_CACHE = new LocalCache<string>();
-		private static string calculateRoot()
-		{
-			string rootDir = typeof(T).Namespace;
-			{
-				Type t = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
-						  from tt in assembly.GetTypes()
-						  where tt.Namespace == typeof(T).Namespace && tt.Name == "Version" && tt.GetMembers().Any(m => m.Name == "Namespace")
-						  select tt).FirstOrDefault();
-
-				rootDir = (null == t)
-					? rootDir
-					: t.GetField("Namespace").GetValue(null).ToString();
-			}
-			{
-				Type t = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
-						  from tt in assembly.GetTypes()
-						  where tt.Namespace == typeof(T).Namespace && tt.Name == "Version" && tt.GetMembers().Any(m => m.Name == "Vendor")
-						  select tt).FirstOrDefault();
-
-				rootDir = (null == t)
-					? rootDir
-					: SIO.Path.Combine(t.GetField("Vendor").GetValue(null).ToString(), rootDir);
-			}
-			return rootDir;
-		}
-
-		internal static string CalculateRoot()
-		{
-			LocalCache<string>.Dictionary c = HIERARCHY_CACHE[typeof(T)];
-			return c.ContainsKey(".") ? c["."] : (c["."] = calculateRoot());
-		}
-
-		internal static string FullPathName(string hierarchy, bool createDirs, string partialPathname)
-		{
-			string rootDir = CalculateRoot();
-			return File.FullPathName(rootDir, hierarchy, createDirs, partialPathname);
-		}
-
-		internal static string FullPathName(string hierarchy, bool createDirs, string fname, params string[] fnames)
-		{
-			string rootDir = CalculateRoot();
-			return File.FullPathName(rootDir, hierarchy, createDirs, fname, fnames);
 		}
 
 		public static class Asset
@@ -232,10 +117,10 @@ namespace KSPe.IO
 					}
 				}
 
-				{   // Just now we sarch for them on the KSPe cannonical hierarchy.
+				{   // Just now we search for them on the KSPe cannonical hierarchy.
 					for (int i = ASSET.Length;--i >= 0;)
 					{
-						string t = File<T>.FullPathName(File.GAMEDATA, false, ASSET[i]);
+						string t = Hierarchy<T>.GAMEDATA.Solve(false, ASSET[i]);
 						if (SIO.Directory.Exists(t))
 							return t;
 					}
@@ -246,20 +131,11 @@ namespace KSPe.IO
 
 			internal static string SolveRoot()
 			{
-				LocalCache<string>.Dictionary c = HIERARCHY_CACHE[typeof(T)];
-				return c.ContainsKey(File.GAMEDATA) ? c[File.GAMEDATA] : (c[File.GAMEDATA] = solveRoot());
+				LocalCache<string>.Dictionary c = Hierarchy<T>.CACHE[typeof(T)];
+				return c.ContainsKey(Hierarchy.GAMEDATA.dirName) ? c[Hierarchy.GAMEDATA.dirName] : (c[Hierarchy.GAMEDATA.dirName] = solveRoot());
 			}
 
-#pragma warning disable RECS0146 // Member hides static member from outer class
-			internal static string FullPathName(string fn, params string[] fns)
-			{
-				string path = fn;
-				foreach (string s in fns)
-					path = SIO.Path.Combine(fn, s);
-
-				return FullPathName(path);
-			}
-			internal static string FullPathName(string partialPathname)
+			private static string FullPathName(string partialPathname)
 			{
 				if (SIO.Path.IsPathRooted(partialPathname))
 					throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
@@ -268,16 +144,24 @@ namespace KSPe.IO
 				fn = SIO.Path.GetFullPath(fn);
 				return fn;
 			}
-#pragma warning restore RECS0146 // Member hides static member from outer class
+
+			internal static string FullPathName(string fn, params string[] fns)
+			{
+				string path = fn;
+				foreach (string s in fns)
+					path = SIO.Path.Combine(fn, s);
+
+				return FullPathName(path);
+			}
 
 			public static string Solve(string fn)
 			{
-				return FullPathName(fn).Replace(File.KSP_ROOTPATH, "");
+				return FullPathName(fn).Replace(Hierarchy.ROOTPATH, "");
 			}
 
 			public static string Solve(string fn, params string[] fns)
 			{
-				return FullPathName(fn, fns).Replace(File.KSP_ROOTPATH, "");
+				return FullPathName(fn, fns).Replace(Hierarchy.ROOTPATH, "");
 			}
 
 			public static string Solve(LocalCache<string> cache, string fn)
@@ -515,29 +399,19 @@ namespace KSPe.IO
 
 		public static class Data
 		{
-#pragma warning disable RECS0146 // Member hides static member from outer class
-			internal static string FullPathName(bool createDirs, string path)
-			{
-				return File<T>.FullPathName(File.PLUGINDATA, createDirs, path);
-			}
-
 			internal static string FullPathName(bool createDirs, string fn, params string[] fns)
 			{
-				string path = fn;
-				foreach (string s in fns)
-					path = SIO.Path.Combine(path, s);
-				return File<T>.FullPathName(File.PLUGINDATA, createDirs, path);
+				return Hierarchy<T>.PLUGINDATA.SolveFull(createDirs, fn, fns);
 			}
-#pragma warning restore RECS0146 // Member hides static member from outer class
 
 			public static string Solve(string fn)
 			{
-				return FullPathName(false, fn).Replace(File.KSP_ROOTPATH, "");
+				return Hierarchy<T>.PLUGINDATA.Solve(false, fn);
 			}
 
 			public static string Solve(string fn, params string[] fns)
 			{
-				return FullPathName(false, fn, fns).Replace(File.KSP_ROOTPATH, "");
+				return Hierarchy<T>.PLUGINDATA.Solve(false, fn, fns);
 			}
 
 			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)
@@ -795,31 +669,21 @@ namespace KSPe.IO
 
 		public static class Local
 		{
-#pragma warning disable RECS0146 // Member hides static member from outer class
-			internal static string FullPathName(bool createDirs, string path)
-			{
-				return File<T>.FullPathName(File.LOCALDATA, createDirs, path);
-			}
-
 			internal static string FullPathName(bool createDirs, string fn, params string[] fns)
 			{
-				string path = fn;
-				foreach (string s in fns)
-					path = SIO.Path.Combine(path, s);
-				return File<T>.FullPathName(File.LOCALDATA, createDirs, path);
+				return Hierarchy<T>.LOCALDATA.SolveFull(createDirs, fn, fns);
 			}
-#pragma warning restore RECS0146 // Member hides static member from outer class
 
 			public static string Solve(string fn)
 			{
-				string r = FullPathName(false, fn).Replace(File.KSP_ROOTPATH, "");
-				return r.Substring(r.IndexOf(File.GAMEDATA+SIO.Path.DirectorySeparatorChar, StringComparison.Ordinal) + 9);
+				string r = Hierarchy<T>.LOCALDATA.SolveFull(false, fn);
+				return r.Substring(r.IndexOf(Hierarchy.GAMEDATA.dirName+SIO.Path.DirectorySeparatorChar, StringComparison.Ordinal) + 9);
 			}
 
 			public static string Solve(string fn, params string[] fns)
 			{
-				string r = FullPathName(false, fn, fns).Replace(File.KSP_ROOTPATH, "");
-				return r.Substring(r.IndexOf(File.GAMEDATA+SIO.Path.DirectorySeparatorChar, StringComparison.Ordinal) + 9);
+				string r = Hierarchy<T>.LOCALDATA.SolveFull(false, fn);
+				return r.Substring(r.IndexOf(Hierarchy.GAMEDATA.dirName+SIO.Path.DirectorySeparatorChar, StringComparison.Ordinal) + 9);
 			}
 
 			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)

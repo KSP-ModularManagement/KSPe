@@ -46,13 +46,13 @@ namespace KSPe.IO
 
 		protected static string GeneratePathname(string filename)
 		{
-			string path = File.FullPathName(".", ".", false, filename);
+			string path = Hierarchy.ROOT.SolveFull(false, filename);
 			return path;
 		}
 
 		protected static string GeneratePathname(string fn, params string[] fns)
 		{
-			string path = File.FullPathName(".", ".", false, fn, fns);
+			string path = Hierarchy.ROOT.SolveFull(false, fn, fns);
 			return path;
 		}
 

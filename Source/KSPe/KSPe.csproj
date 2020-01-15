@@ -90,6 +90,8 @@
     <Compile Include="IO\Data\Texture2D.cs" />
     <Compile Include="IO\Local\Texture2D.cs" />
     <Compile Include="IO\Temp\Texture2D.cs" />
+    <Compile Include="IO\Hierarchy.cs" />
+    <Compile Include="IO\HierarchyT.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
