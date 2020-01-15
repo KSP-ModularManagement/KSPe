@@ -35,6 +35,22 @@ namespace KSPe.IO
 		public const string GAMEDATA = "GameData";
 		public const string PLUGINDATA = "PluginData";                                // Writeable data on <KSP_ROOT>/PluginData/<plugin_name>/
 		public static string LOCALDATA => SIO.Path.Combine(GAMEDATA, "__LOCAL");      // Custom runtime generated parts on <KSP_ROO>/GameData/__LOCAL/<plugin_name> (specially made for UbioWeldingLtd)
+		public static string CalculateKspPath(string fname, params string[] fnames)
+		{
+			string partialPathname = fname;
+			foreach (string s in fnames)
+				partialPathname = SIO.Path.Combine(partialPathname, s);
+
+			if (SIO.Path.IsPathRooted(partialPathname))
+				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
+
+			string fn = SIO.Path.GetFullPath(SIO.Path.Combine(KSP_ROOTPATH, partialPathname));
+
+			if (!fn.StartsWith(KSP_ROOTPATH, StringComparison.Ordinal))
+				throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the KSP file system! [{0}]", partialPathname));
+
+			return fn;
+		}
 
 		public static string CalculateRelativePath(string fullDestinationPath)
 		{
