@@ -35,6 +35,8 @@ namespace KSPe.IO
 		public const string GAMEDATA = "GameData";
 		public const string PLUGINDATA = "PluginData";                                // Writeable data on <KSP_ROOT>/PluginData/<plugin_name>/
 		public static string LOCALDATA => SIO.Path.Combine(GAMEDATA, "__LOCAL");      // Custom runtime generated parts on <KSP_ROO>/GameData/__LOCAL/<plugin_name> (specially made for UbioWeldingLtd)
+		public const string SCREENSHOT = "Screenshots";                               // Well... Screenshots! :)
+
 		public static string CalculateKspPath(string fname, params string[] fnames)
 		{
 			string partialPathname = fname;
