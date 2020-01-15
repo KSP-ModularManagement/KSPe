@@ -42,7 +42,7 @@
     <Compile Include="Properties\Version.cs">
       <DependentUpon>Version.tt</DependentUpon>
     </Compile>
-    <Compile Include="IO\File.cs" />
+    <Compile Include="IO\FileT.cs" />
     <Compile Include="IO\FileMode.cs" />
     <Compile Include="IO\Asset\FileStream.cs" />
     <Compile Include="IO\Asset\PluginConfiguration.cs" />
@@ -92,6 +92,7 @@
     <Compile Include="IO\Temp\Texture2D.cs" />
     <Compile Include="IO\Hierarchy.cs" />
     <Compile Include="IO\HierarchyT.cs" />
+    <Compile Include="IO\File.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
