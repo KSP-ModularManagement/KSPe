@@ -64,7 +64,7 @@ namespace KSPe.IO
 			{
 				// Better coping with the current way of things
 
-				{   // First, let's try the PluginData que should be in the same dir level that the DLL.
+				{   // First, let's try the PluginData that should be in the same dir level that the DLL.
 					string fn = SIO.Path.GetDirectoryName(typeof(T).Assembly.Location);
 					for (int i = ASSET.Length;--i >= 0;)
 					{
@@ -82,8 +82,7 @@ namespace KSPe.IO
 							return t;
 					}
 				}
-
-				throw new IsolatedStorageException(String.Format("Assembly {0} didn't resolved to a KSPe Asset location!", typeof(T).Assembly.FullName));
+				throw new IsolatedStorageException(String.Format("Assembly {0} didn't resolved to a KSPe Asset location!", typeof(T).Assembly.GetName()));
 			}
 
 			internal static string SolveRoot()

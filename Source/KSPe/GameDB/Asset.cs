@@ -37,10 +37,6 @@ namespace KSPe.GameDB
 				r = (i < 0) ? r : r.Substring(i + 9);
 			}
 
-			{
-				r = r.Replace("PluginData/","");
-			}
-
 			return r.Replace("\\", "/"); // GameDatabase uses "/" on the naming.
 			// FIXME: I need to do furher transformations (underscores, dots, etc)
 		}
@@ -50,7 +46,13 @@ namespace KSPe.GameDB
 			LocalCache<string>.Dictionary c = CACHE[typeof(T)];
 			if (c.ContainsKey(fn)) return c[fn];
 
-			string r = KSPe.IO.File<T>.Asset.Solve(fn);
+			string r = IO.Hierarchy<T>.GAMEDATA.SolveFull(false, "Assets"); // Hack dos infernos. :( Perhaps this Assets stunt isn't a good idea after all. :/
+			if (SIO.File.Exists(r))
+				r = IO.Hierarchy<T>.GAMEDATA.SolveFull(false, "Assets", fn);
+			else
+				r = IO.Hierarchy<T>.GAMEDATA.SolveFull(false, fn);
+			
+
 			r =  hackPath(r);
 			return c[fn] = r;
 		}
