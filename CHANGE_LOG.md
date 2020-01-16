@@ -1,5 +1,10 @@
 # KSP API Extensions/L :: Change Log
 
+* 2020-0116: 2.1.1.3 (Lisias) for KSP >= 1.2
+	+ New helpers to allow clients to find their way on the abstract file system without being hard tied to the default hierarchies.
+		- Nothing to be heavily used, but it can helps on some specific, niche situations.
+		- A not so abstract mechanism so allow some abstraction without relying on the unrealiable C# Reflection
+	+ A heavy refactoring was applied on critical sections to allow proper implementation of the present and futue features.
 * 2020-0107: 2.1.1.2 (Lisias) for KSP >= 1.2
 	+ Fixing yet another stupid mistake on handling resource names from GameDB on Windows Machines.
 	+ New Features
