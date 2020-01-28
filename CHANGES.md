@@ -1,5 +1,7 @@
 # KSP API Extensions/L :: Changes
 
+* 2020-0128: 2.1.1.4 (Lisias) for KSP >= 1.2
+	+ Regression on solving Assets path fixed.
 * 2020-0116: 2.1.1.3 (Lisias) for KSP >= 1.2
 	+ New helpers to allow clients to find their way on the abstract file system without being hard tied to the default hierarchies.
 		- Nothing to be heavily used, but it can helps on some specific, niche situations.
