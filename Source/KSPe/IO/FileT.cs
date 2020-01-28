@@ -82,6 +82,18 @@ namespace KSPe.IO
 							return t;
 					}
 				}
+
+				{
+					// If we got here, there's no recognized Asset folder on the standard locations.
+					// So we try the Add'On's folder, as some Add'Ons share textures between gamedata and toolbar (or any other
+					// widget where mipmap is undesirable).
+					// An example is AirPark that shares the toolbar icon to the Agency's flag.
+
+					string t = Hierarchy<T>.GAMEDATA.Solve(false, ".");
+					if (SIO.Directory.Exists(t))
+						return t;
+				}
+
 				throw new IsolatedStorageException(String.Format("Assembly {0} didn't resolved to a KSPe Asset location!", typeof(T).Assembly.GetName()));
 			}
 

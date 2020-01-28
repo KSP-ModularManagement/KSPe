@@ -61,7 +61,7 @@ namespace KSPe.IO
 									include_subdirs ? SIO.SearchOption.AllDirectories : SIO.SearchOption.TopDirectoryOnly
 								);
 			files = files.OrderBy(x => x).ToArray();            // This will sort 1, 2, 10, 12 
-																//			Array.Sort(files, StringComparer.CurrentCulture);   // This will sort 1, 10, 12, 2
+//			Array.Sort(files, StringComparer.CurrentCulture);   // This will sort 1, 10, 12, 2
 
 			for (int i = files.Length; --i >= 0;)
 				files[i] = files[i].Substring(files[i].IndexOf(rawdir, StringComparison.Ordinal) + rawdir.Length + 1); // +1 to get rid of the trailling "/"
