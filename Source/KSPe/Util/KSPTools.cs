@@ -122,6 +122,15 @@ namespace KSPe.Util
 
 			public readonly int UNITY_VERSION;
 
+			internal Version(int MAJOR, int MINOR, int PATCH)
+			{
+				this.MAJOR = MAJOR;
+				this.MINOR = MINOR;
+				this.PATCH = PATCH;
+				this.RELEASED_AT = DateTime.Now;	// Fake a release date as being today
+				this.UNITY_VERSION = 2019;			// Hope we are using 2019, as this is probably a newer KSP version still unknown.
+			}
+
 			internal Version(int MAJOR, int MINOR, int PATCH, string releasedAt, int unityVersion)
 			{
 				this.MAJOR = MAJOR;
@@ -136,6 +145,62 @@ namespace KSPe.Util
 				return string.Format("{0}.{1}.{2}", this.MAJOR, this.MINOR, this.PATCH);
 			}
 
+			public override bool Equals(object other)
+			{
+				bool r = base.Equals(other);
+				if (other is Version)
+				{
+					Version o = other as Version;
+					r = r || (this.MAJOR == o.MAJOR && this.MINOR == o.MINOR && this.PATCH == o.PATCH);
+				}
+				return r;
+			}
+
+			public bool Equals(int major, int minor, int patch)
+			{
+				return this.MAJOR == major && this.MINOR == minor && this.PATCH == patch;
+			}
+
+			public bool Equals(int major, int minor)
+			{
+				return this.MAJOR == major && this.MINOR == minor;
+			}
+
+			public bool Equals(int major)
+			{
+				return this.MAJOR == major;
+			}
+
+			public static bool operator <(Version one, Version other)
+			{
+				bool r =  (one.MAJOR < other.MAJOR);
+				r = r || (one.MAJOR == other.MAJOR && one.MINOR < other.MINOR);
+				r = r || (one.MAJOR == other.MAJOR && one.MINOR == other.MINOR && one.PATCH < other.PATCH);
+				return r;
+			}
+
+			public static bool operator >(Version one, Version other)
+			{
+				bool r = (one.MAJOR > other.MAJOR);
+				r = r || (one.MAJOR == other.MAJOR && one.MINOR > other.MINOR);
+				r = r || (one.MAJOR == other.MAJOR && one.MINOR == other.MINOR && one.PATCH > other.PATCH);
+				return r;
+			}
+
+			public static bool operator <=(Version one, Version other)
+			{
+				bool r = (one == other);
+				r = r || (one < other);
+				return r;
+			}
+
+			public static bool operator >=(Version one, Version other)
+			{
+				bool r = (one == other);
+				r = r || (one > other);
+				return r;
+			}
+
 			internal static List<Version> FindByUnity(int desiredUnityVersion)
 			{
 				List<Version> r = new List<Version>();
@@ -143,6 +208,30 @@ namespace KSPe.Util
 					if (v.UNITY_VERSION == desiredUnityVersion)
 						r.Add(v);
 				return r;
+			}
+
+			public static Version FindByVersion(int major, int minor, int patch)
+			{
+				foreach (Version v in PUBLISHED_VERSIONS)
+					if (v.MAJOR == major && v.MINOR == minor && v.PATCH == patch)
+						return v;
+				throw new ArgumentOutOfRangeException(String.Format("{0}.{1}.{2}", major, minor, patch));
+			}
+
+			private static Version CURRENT = null;
+			public static Version Current { 
+				get {
+					if (null == CURRENT)
+						try
+						{
+							CURRENT = FindByVersion(Versioning.version_major, Versioning.version_minor, Versioning.Revision);
+						}
+						catch (ArgumentOutOfRangeException)
+						{
+							CURRENT = new Version(Versioning.version_major, Versioning.version_minor, Versioning.Revision);
+						}
+					return CURRENT;
+				}
 			}
 		}
 	}
