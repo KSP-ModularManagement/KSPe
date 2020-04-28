@@ -1,5 +1,8 @@
 # KSP API Extensions/L :: Change Log
 
+* 2020-0428: 2.1.1.5 (Lisias) for KSP >= 1.2
+	+ Updated KSP Version "database" to 1.9.0 and 1.9.1
+	+ Added KSP Version facilites. 
 * 2020-0128: 2.1.1.4 (Lisias) for KSP >= 1.2
 	+ Regression on solving Assets path fixed.
 * 2020-0116: 2.1.1.3 (Lisias) for KSP >= 1.2
