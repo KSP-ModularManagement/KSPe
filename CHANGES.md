@@ -1,5 +1,9 @@
 # KSP API Extensions/L :: Changes
 
+* 2020-0531: 2.1.1.6 (Lisias) for KSP >= 1.2
+	+ Refactoring the Log Subsystem:
+		- Storming the castle and taking over the whole Unity Logging to KSPe itself
+		- See Issue [#4](https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/4)  
 * 2020-0428: 2.1.1.5 (Lisias) for KSP >= 1.2
 	+ Updated KSP Version "database" to 1.9.0 and 1.9.1
 	+ Added KSP Version facilites. 
