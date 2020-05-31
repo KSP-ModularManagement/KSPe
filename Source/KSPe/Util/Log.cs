@@ -22,6 +22,7 @@
 */
 using System;
 using System.Diagnostics;
+using UnityEngine;
 
 namespace KSPe.Util.Log {
 
@@ -184,73 +185,6 @@ namespace KSPe.Util.Log {
 		private string FormatMessage(string message, params object[] @params)
 		{
 			return ((@params != null) && (@params.Length > 0)) ? string.Format(message, @params) : message;
-		}
-	}
-
-	public class UnityLogger : Logger
-	{
-		private static readonly object MUTEX = new object();
-		
-		public UnityLogger(string forceThisNamespace) : base(forceThisNamespace) { }
-		public UnityLogger(string forceThisNamespace, string forceThisClassName) : base(forceThisNamespace, forceThisClassName) { }
-
-		protected override LogMethod select()
-		{
-			switch (this._level)
-			{
-				case Level.OFF:
-					return dummy;
-					
-				case Level.TRACE:
-					goto case Level.INFO;
-				case Level.DETAIL:
-					goto case Level.INFO;
-				case Level.INFO:
-					return this.log;
-
-				case Level.WARNING:
-					return this.logWarning;
-
-				case Level.ERROR:
-					return this.logError;
-
-				default:
-					throw new ArgumentException("unknown log level: " + level);
-			}
-		}
-
-		protected void dummy(string message) {}
-
-		protected override void log(string message)
-		{
-			lock (MUTEX) { 
-				UnityEngine.Debug.Log(message);
-			}
-		}
-
-		protected void logWarning(string message)
-		{
-			lock (MUTEX) { 
-				UnityEngine.Debug.Log(message);
-			}
-		}
-
-		protected void logError(string message)
-		{
-			lock (MUTEX) {
-				UnityEngine.Debug.Log(message);
-			}
-		}
-
-		protected override void logException(string message, Exception e)
-		{
-			lock (MUTEX) {
-				UnityEngine.Debug.LogError(message);
-				if (e != null)
-				{
-					UnityEngine.Debug.LogException(e);
-				}
-			}
 		}
 	}
 }

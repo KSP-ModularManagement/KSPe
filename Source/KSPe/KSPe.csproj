@@ -93,6 +93,7 @@
     <Compile Include="IO\Hierarchy.cs" />
     <Compile Include="IO\HierarchyT.cs" />
     <Compile Include="IO\File.cs" />
+    <Compile Include="Util\log\Unity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
@@ -107,6 +108,7 @@
     <Folder Include="IO\Temp\" />
     <Folder Include="Util\" />
     <Folder Include="GameDB\" />
+    <Folder Include="Util\log\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

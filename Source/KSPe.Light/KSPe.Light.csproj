@@ -85,10 +85,12 @@
     <Compile Include="..\KSPe\Util\Installment.cs">
       <Link>Util\Installment.cs</Link>
     </Compile>
+    <Compile Include="Util\log\Unity.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />
     <Folder Include="Util\" />
+    <Folder Include="Util\log\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
