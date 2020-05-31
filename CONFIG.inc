@@ -10,7 +10,7 @@ GD_DLLS="KSPe"
 GD_PRIORITY="000"
 
 PROJECT_BRANCH=`git branch | grep \* | cut -d ' ' -f2`
-if [ "$PROJECT_BRANCH" == "master" ] ; then
+if [ "$PROJECT_BRANCH" == "mestre" ] ; then
 	# Release mode
 	PROJECT_STATE=""
 else
