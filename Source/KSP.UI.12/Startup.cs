@@ -21,24 +21,19 @@
 
 */
 using UnityEngine;
-namespace KSPe
+namespace KSPe.KSP12.UI
 {
-	[KSPAddon(KSPAddon.Startup.Instantly, true)]
-	public class Startup:MonoBehaviour
+	public class Startup
 	{
 		private void Start()
 		{
 			// Nope, we should not use the Log Facilities ourselves. Ironic, uh? :)
-			UnityEngine.Debug.LogFormat("[KSPe] Version {0}", Version.Text);
+			UnityEngine.Debug.LogFormat("[KSPe.KSP12.UI] Version {0}", Version.Text);
 		}
 
 		private void Awake()
 		{
-
-			#if DEBUG
-				UnityEngine.Debug.LogFormat("Trying to load KSPe.UI...");
-			#endif
-			KSPe.Util.SystemTools.Assembly.LoadFromFileAndStartup("GameData/000_KSPAPIExtensions/Plugins/KSPe.UI.dll");
+			// Nothing to do for while.
 		}
 	}
 }

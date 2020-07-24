@@ -29,16 +29,16 @@ namespace KSPe
 		private void Start()
 		{
 			// Nope, we should not use the Log Facilities ourselves. Ironic, uh? :)
-			UnityEngine.Debug.LogFormat("[KSPe] Version {0}", Version.Text);
+			UnityEngine.Debug.LogFormat("[KSPe.UI] Version {0}", Version.Text);
 		}
 
 		private void Awake()
 		{
-
-			#if DEBUG
-				UnityEngine.Debug.LogFormat("Trying to load KSPe.UI...");
-			#endif
-			KSPe.Util.SystemTools.Assembly.LoadFromFileAndStartup("GameData/000_KSPAPIExtensions/Plugins/KSPe.UI.dll");
+			// There can be only one! #highlanderFeelings
+			if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.FindByVersion(1,4,0))
+				Util.SystemTools.Assembly.LoadFromFileAndStartup("GameData/000_KSPAPIExtensions/Plugins/PluginData/KSP.UI.14.dll");
+			else if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.FindByVersion(1,2,0))
+				Util.SystemTools.Assembly.LoadFromFileAndStartup("GameData/000_KSPAPIExtensions/Plugins/PluginData/KSP.UI.12.dll");
 		}
 	}
 }

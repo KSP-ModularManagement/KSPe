@@ -94,6 +94,7 @@
     <Compile Include="IO\HierarchyT.cs" />
     <Compile Include="IO\File.cs" />
     <Compile Include="Util\log\Unity.cs" />
+    <Compile Include="Util\SystemTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">

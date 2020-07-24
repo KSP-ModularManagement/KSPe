@@ -4,13 +4,13 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("KSPe.UI")]
-[assembly: AssemblyDescription("User Interface Extensions for KSPe.")]
+[assembly: AssemblyTitle("KSPe.KSP12.UI")]
+[assembly: AssemblyDescription("KSP 1.2 specialized support for KSPe.UI")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("L Aerospace KSP Division")]
-[assembly: AssemblyProduct("KSP API Extensions/L")]
+[assembly: AssemblyProduct("KSP Extensions")]
 [assembly: AssemblyCopyright("©2018-20 Lisias")]
-[assembly: AssemblyTrademark("KSPe.UI")]
+[assembly: AssemblyTrademark("KSPe")]
 [assembly: AssemblyCulture("")]
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
@@ -19,11 +19,10 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyVersion(KSPe.Version.Number)]
 [assembly: AssemblyFileVersion(KSPe.Version.Number)]
-[assembly: KSPAssembly("KSPe.UI", KSPe.Version.major, KSPe.Version.minor)]
+[assembly: KSPAssembly("KSPe.KSP12.UI", KSPe.Version.major, KSPe.Version.minor)]
 
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.
 
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
-[assembly: KSPAssemblyDependency("KSPe", KSPe.Version.major, KSPe.Version.minor)]
