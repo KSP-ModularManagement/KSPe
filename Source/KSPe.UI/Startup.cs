@@ -36,9 +36,9 @@ namespace KSPe
 		{
 			// There can be only one! #highlanderFeelings
 			if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.FindByVersion(1,4,0))
-				Util.SystemTools.Assembly.LoadFromFileAndStartup("GameData/000_KSPAPIExtensions/Plugins/PluginData/KSP.UI.14.dll");
+				Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.14");
 			else if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.FindByVersion(1,2,0))
-				Util.SystemTools.Assembly.LoadFromFileAndStartup("GameData/000_KSPAPIExtensions/Plugins/PluginData/KSP.UI.12.dll");
+				Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.12");
 		}
 	}
 }

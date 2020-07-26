@@ -34,19 +34,20 @@ namespace KSPe
 
 		private void Awake()
 		{
+			KSPe.Util.SystemTools.Assembly.AddSearchPath("GameData/000_KSPAPIExtensions/Plugins/PluginData");
 			for (int i = 10; i > 0; --i)
 				if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.FindByVersion(1,i,0))
 				{
 					#if DEBUG
 						UnityEngine.Debug.LogFormat("Trying to load KSPe.KSP.1{0}...", i);
 					#endif
-					Util.SystemTools.Assembly.LoadFromFileAndStartup(string.Format("GameData/000_KSPAPIExtensions/Plugins/PluginData/KSP.1{0}.dll",i));
+					Util.SystemTools.Assembly.LoadAndStartup(string.Format("KSPe.KSP.1{0}",i));
 				}
 
 			#if DEBUG
 				UnityEngine.Debug.LogFormat("Trying to load KSPe.UI...");
 			#endif
-			KSPe.Util.SystemTools.Assembly.LoadFromFileAndStartup("GameData/000_KSPAPIExtensions/Plugins/KSPe.UI.dll");
+			KSPe.Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI");
 		}
 	}
 }

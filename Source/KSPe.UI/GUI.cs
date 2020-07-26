@@ -231,14 +231,33 @@ namespace KSPe.UI
 		private static readonly Interface INSTANCE;
 		private static Interface GetInstance()
 		{
+		#if DEBUG
+			UnityEngine.Debug.LogFormat("[KSP.UI] Looking for {0}", typeof(Interface).Name);
+		#endif
 			foreach(System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 				foreach(System.Type type in assembly.GetTypes())
 					foreach(System.Type ifc in type.GetInterfaces() )
 					{
-						if (ifc.GetType() == typeof(Interface))
-						return (Interface)System.Activator.CreateInstance(type);
+						#if DEBUG
+							UnityEngine.Debug.LogFormat("[KSP.UI] Checking {0} {1} {2}", assembly, type, ifc);
+						#endif
+						/*
+						 * This caught me with my pants down!
+						 * (typeof(Interface).Equals(ifc.GetType())) and (typeof(Interface) == ifc.GetType()) does not work!
+						 */
+						if ("KSPe.UI.GUI+Interface" == ifc.ToString()) // Don't ask. This works...
+						{
+						#if DEBUG
+							UnityEngine.Debug.LogFormat("[KSP.UI] Found it! {0}", ifc);
+						#endif
+							object r = System.Activator.CreateInstance(type);
+						#if DEBUG
+							UnityEngine.Debug.LogFormat("[KSP.UI] Type of result {0}", r.GetType());
+						#endif
+							return (Interface)r;
+						}
 					}
-			throw new System.NotImplementedException("No realisation for GUILayout found!");
+			throw new System.NotImplementedException("No realisation for GUI found!");
 		}
 		static GUI()
 		{
