@@ -94,7 +94,7 @@ namespace KSPe.IO
 						return t;
 				}
 
-				throw new IsolatedStorageException(String.Format("Assembly {0} didn't resolved to a KSPe Asset location!", typeof(T).Assembly.GetName()));
+				throw new SIO.FileNotFoundException(String.Format("Assembly {0} didn't resolved to a KSPe Asset location!", typeof(T).Assembly.GetName()));
 			}
 
 			internal static string SolveRoot()
