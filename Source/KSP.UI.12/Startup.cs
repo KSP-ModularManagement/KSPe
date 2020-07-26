@@ -28,7 +28,7 @@ namespace KSPe.KSP12.UI
 		private void Start()
 		{
 			// Nope, we should not use the Log Facilities ourselves. Ironic, uh? :)
-			UnityEngine.Debug.LogFormat("[KSPe.KSP12.UI] Version {0}", Version.Text);
+			Debug.LogFormat("[KSPe.KSP12.UI] Version {0}", Version.Text);
 		}
 
 		private void Awake()

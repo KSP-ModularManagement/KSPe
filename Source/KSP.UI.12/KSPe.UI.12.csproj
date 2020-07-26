@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{47F86C6A-ED17-4DD8-84F3-3F16940FDFEB}</ProjectGuid>
+    <ProjectGuid>{210B4435-1D58-4714-A67F-2FC531C4BC16}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>KSP</RootNamespace>
-    <AssemblyName>KSP.110</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <RootNamespace>KSP.UI</RootNamespace>
+    <AssemblyName>KSPe.UI.12</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>..\..\obj\KSPe</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -29,31 +29,30 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.10.0\Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.10.0\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.10.0\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.10.0\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.10.0\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GUI.cs" />
+    <Compile Include="GUILayout.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ModuleManagerSupport.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KSPe\KSPe.csproj">
       <Project>{1DCC1744-4EEF-49DF-961C-A73F3ADCC6C5}</Project>
       <Name>KSPe</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KSPe.UI\KSPe.UI.csproj">
+      <Project>{93F4C3CA-722B-47C2-80D8-B5F7204E1EC8}</Project>
+      <Name>KSPe.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

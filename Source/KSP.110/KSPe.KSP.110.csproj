@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1D822199-D765-446B-8380-802492612B4E}</ProjectGuid>
+    <ProjectGuid>{47F86C6A-ED17-4DD8-84F3-3F16940FDFEB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>KSP</RootNamespace>
-    <AssemblyName>KSP.19</AssemblyName>
+    <AssemblyName>KSPe.KSP.110</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>..\..\obj\KSPe</BaseIntermediateOutputPath>
   </PropertyGroup>
@@ -29,20 +29,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.10.0\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.9.1\Assembly-CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="KSPAssets">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.9.1\KSPAssets.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.9.1\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.10.0\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.9.1\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.10.0\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.10.0\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.9.1\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.10.0\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

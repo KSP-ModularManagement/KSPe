@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("KSPe.KSP18")]
+[assembly: AssemblyTitle("KSPe.KSP.18")]
 [assembly: AssemblyDescription("KSP 1.8 specialized support for KSPe")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("L Aerospace KSP Division")]
@@ -19,7 +19,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyVersion(KSPe.Version.Number)]
 [assembly: AssemblyFileVersion(KSPe.Version.Number)]
-[assembly: KSPAssembly("KSPe.KSP18", KSPe.Version.major, KSPe.Version.minor)]
+[assembly: KSPAssembly("KSPe.KSP.18", KSPe.Version.major, KSPe.Version.minor)]
 
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.
