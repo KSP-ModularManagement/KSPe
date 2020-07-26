@@ -26,3 +26,4 @@ using System.Runtime.CompilerServices;
 
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
+[assembly: KSPAssemblyDependency("ClickThroughBlocker", 1, 6)]
