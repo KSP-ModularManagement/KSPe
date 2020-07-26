@@ -34,7 +34,8 @@ namespace KSPe.KSP14.UI
 		private void Awake()
 		{
 			// TODO: Check if this stunt would not break something later!
-			Util.SystemTools.Assembly.LoadFromFile("GameData/000_ClickThroughBlocker/Plugins/ClickThroughBlocker.dll");
+			// This is needed in the event something on the GameData root tries to use it.
+			System.AppDomain.CurrentDomain.Load("ClickThroughBlocker");
 		}
 	}
 }
