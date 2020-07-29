@@ -1,5 +1,7 @@
 # KSP API Extensions/L :: Change Log
 
+* 2020-0729: 2.2.0.2 (Lisias) for KSP >= 1.2
+	+ updating fixing the known KSP Versions 'database'
 * 2020-0725: 2.2.0.1 (Lisias) for KSP >= 1.2
 	+ updating fixing the known KSP Versions 'database'
 	+ KSP Abstraction Layer Kick Off!
