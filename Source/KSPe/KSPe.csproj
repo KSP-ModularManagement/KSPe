@@ -95,6 +95,7 @@
     <Compile Include="IO\File.cs" />
     <Compile Include="Util\log\Unity.cs" />
     <Compile Include="Util\SystemTools.cs" />
+    <Compile Include="Util\ModuleManagerTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">

@@ -84,6 +84,9 @@
     </Compile>
     <Compile Include="Util\log\Unity.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="..\KSPe\Util\ModuleManagerTools.cs">
+      <Link>Util\ModuleManagerTools.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />
