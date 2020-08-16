@@ -40,13 +40,13 @@ namespace KSPe.IO.Temp
 
 		public static ConfigNode ForType<T>(string name = null)
 		{
-			string fn = IO.File<T>.Temp.FullPathName( SIO.Path.GetRandomFileName() + ".cfg");
+			string fn = IO.File<T>.Temp.FullPathName( IO.Path.GetRandomFileName() + ".cfg");
 			return new ConfigNode(name, fn);
 		}
 
 		public static ConfigNode ForType<T>(string name, string filename = null )
 		{
-			string path = IO.File<T>.Temp.FullPathName(filename ?? SIO.Path.GetRandomFileName() + ".cfg");
+			string path = IO.File<T>.Temp.FullPathName(filename ?? IO.Path.GetRandomFileName() + ".cfg");
 			return new ConfigNode(name, path);
 		}
 

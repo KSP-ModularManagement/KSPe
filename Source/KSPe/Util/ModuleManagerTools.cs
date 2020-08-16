@@ -20,6 +20,8 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 */
 using System;
+using SIO = System.IO;
+
 namespace KSPe.Util
 {
 	public static class ModuleManagerTools
@@ -61,20 +63,20 @@ namespace KSPe.Util
 				{
 					double hours = double.MaxValue;
 					{
-						string path = System.IO.Path.Combine(KSPUtil.ApplicationRootPath, MMEXPCACHE);
-						if (System.IO.File.Exists(path))
+						string path = IO.Path.Combine(KSPUtil.ApplicationRootPath, MMEXPCACHE);
+						if (SIO.File.Exists(path))
 						{
-							System.IO.FileInfo fi = new System.IO.FileInfo(path);
+							SIO.FileInfo fi = new SIO.FileInfo(path);
 							System.DateTime lastmodified = fi.LastWriteTime;
 							double h = (System.DateTime.Now - lastmodified).TotalHours;
 							hours = Math.Min(hours, h);
 						}
 					}
 					{
-						string path = System.IO.Path.Combine(KSPUtil.ApplicationRootPath, MMCACHE);
-						if (System.IO.File.Exists(path))
+						string path = SIO.Path.Combine(KSPUtil.ApplicationRootPath, MMCACHE);
+						if (SIO.File.Exists(path))
 						{
-							System.IO.FileInfo fi = new System.IO.FileInfo(path);
+							SIO.FileInfo fi = new SIO.FileInfo(path);
 							System.DateTime lastmodified = fi.LastWriteTime;
 							double h = (System.DateTime.Now - lastmodified).TotalHours;
 							hours = Math.Min(hours, h);

@@ -20,7 +20,6 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using System;
 using SIO = System.IO;
 
 namespace KSPe.IO.Data

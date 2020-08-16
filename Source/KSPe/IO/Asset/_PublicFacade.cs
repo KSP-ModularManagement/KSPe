@@ -141,8 +141,8 @@ namespace KSPe.IO
 				string[] ffns = new string[fns.Length];
 				Array.Copy(fns, 1, ffns, 0, ffns.Length);
 				foreach (string s in ffns)
-					path = SIO.Path.Combine(path, s);
-				path = SIO.Path.Combine(path, (flight ? flight.GetName() + "." + target.Name : target.Name) + ".xml");
+					path = IO.Path.Combine(path, s);
+				path = IO.Path.Combine(path, (flight ? flight.GetName() + "." + target.Name : target.Name) + ".xml");
 				return CreateFor(path);
 			}
 

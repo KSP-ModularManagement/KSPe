@@ -22,7 +22,6 @@
 */
 
 using System;
-using System.Linq;
 using SIO = System.IO;
 
 namespace KSPe.IO

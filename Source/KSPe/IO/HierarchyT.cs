@@ -22,15 +22,13 @@
 */
 using System;
 using System.Linq;
-using SIO = System.IO;
-using System.Reflection;
 
 namespace KSPe.IO
 {
 	public class Hierarchy<T> : Hierarchy
 	{
 		internal static readonly LocalCache<string> CACHE = new LocalCache<string>();
-		private Hierarchy(Hierarchy hierarchy) : base(hierarchy.ToString(), SIO.Path.Combine(hierarchy.relativePathName, CalculateTypeRoot())) {}
+		private Hierarchy(Hierarchy hierarchy) : base(hierarchy.ToString(), Path.Combine(hierarchy.relativePathName, CalculateTypeRoot())) {}
 
 		new public static readonly Hierarchy<T> ROOT = new Hierarchy<T>(Hierarchy.ROOT);
 		new public static readonly Hierarchy<T> GAMEDATA = new Hierarchy<T>(Hierarchy.GAMEDATA);
@@ -67,7 +65,7 @@ namespace KSPe.IO
 
 				typeRootDir = (null == t)
 					? typeRootDir
-					: SIO.Path.Combine(t.GetField("Vendor").GetValue(null).ToString(), typeRootDir);
+					: Path.Combine(t.GetField("Vendor").GetValue(null).ToString(), typeRootDir);
 			}
 			return typeRootDir;
 		}

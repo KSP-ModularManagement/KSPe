@@ -37,8 +37,8 @@ namespace KSPe.IO
 			private static string CalculateRoot()
 			{
 				string r = KSPUtil.ApplicationRootPath;
-				r = SIO.Path.Combine(r, "PluginData");
-				r = SIO.Path.Combine(r,  typeof(T).Namespace);
+				r = Path.Combine(r, "PluginData");
+				r = Path.Combine(r,  typeof(T).Namespace);
 				SIO.Directory.CreateDirectory(r);
 				return r;
 			}
@@ -47,7 +47,7 @@ namespace KSPe.IO
 			{
 				LocalCache<string>.Dictionary c = CACHE[typeof(T)];
 				string root =  c.ContainsKey(".") ? c["."] : (c["."] = CalculateRoot());
-				return SIO.Path.Combine(root, fn);
+				return Path.Combine(root, fn);
 			}
 
 			public static string Name(string fn)
@@ -64,13 +64,13 @@ namespace KSPe.IO
 
 			public static string Combine(string dir, string fn)
 			{
-				fn = System.IO.Path.Combine(Directory<T>.Name(dir), File<T>.Name(fn));
+				fn = IO.Path.Combine(Directory<T>.Name(dir), File<T>.Name(fn));
 				return Solve(fn);
 			}
 
 			public static string Combine(string dir, string mask, params object[] @params)
 			{
-				string fn = System.IO.Path.Combine(Directory<T>.Name(dir), File<T>.Name(string.Format(mask, @params)));
+				string fn = IO.Path.Combine(Directory<T>.Name(dir), File<T>.Name(string.Format(mask, @params)));
 				return Solve(fn);
 			}
 
@@ -80,7 +80,7 @@ namespace KSPe.IO
 		{
 			public static string Name(string fn)
 			{
-				return string.Join("_", fn.Split(SIO.Path.GetInvalidFileNameChars())); // Strip illegal char from the filename
+				return string.Join("_", fn.Split(IO.Path.GetInvalidFileNameChars())); // Strip illegal char from the filename
 			}
 
 			public static bool Exists(string fn)

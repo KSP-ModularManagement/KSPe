@@ -31,31 +31,31 @@ namespace KSPe.IO
 	public static class File<T>
 	{
 		public static readonly string[] ASSET = { "PluginData", "Assets" };     // ReadOnly data on <KSP_ROOT>/GameData/<plugin_name>/Plugin/{PluginData|Assets|null}/ or whatever the DLL is.
-		private static readonly string RANDOM_TEMP_DIR = SIO.Path.GetRandomFileName();
+		private static readonly string RANDOM_TEMP_DIR = Path.GetRandomFileName();
 
 		[System.Obsolete("KSPe.IO.File<T>.CalculateRelativePath is deprecated. There shuold be no need for this anymore.")]
 		public static string CalculateRelativePath(string fullDestinationPath)
 		{
-			return Hierarchy<T>.CalculateRelativePath(fullDestinationPath, SIO.Path.GetDirectoryName(Assembly.GetCallingAssembly().Location)); //FIXME: This only works when KSPe is on the GameData/ !!
+			return Hierarchy<T>.CalculateRelativePath(fullDestinationPath, Path.GetDirectoryName(Assembly.GetCallingAssembly().Location)); //FIXME: This only works when KSPe is on the GameData/ !!
 		}
 
 		internal static string TempPathName(string filename = null)
 		{
-			filename = filename ?? SIO.Path.GetRandomFileName();
-			if (!string.IsNullOrEmpty(SIO.Path.GetDirectoryName(filename)))
+			filename = filename ?? Path.GetRandomFileName();
+			if (!string.IsNullOrEmpty(Path.GetDirectoryName(filename)))
 				throw new IsolatedStorageException(String.Format("filename cannot have subdirectories! [{0}]", filename));
 
-			string fn = SIO.Path.GetTempPath();
-			fn = SIO.Path.Combine(fn, "ksp");
-			fn = SIO.Path.Combine(fn, RANDOM_TEMP_DIR);
-			fn = SIO.Path.Combine(fn, Hierarchy<T>.CalculateTypeRoot());
-			fn = SIO.Path.Combine(fn, SIO.Path.GetFileName(filename));
+			string fn = Path.GetTempPath();
+			fn = Path.Combine(fn, "ksp");
+			fn = Path.Combine(fn, RANDOM_TEMP_DIR);
+			fn = Path.Combine(fn, Hierarchy<T>.CalculateTypeRoot());
+			fn = Path.Combine(fn, Path.GetFileName(filename));
 			{
-				string d = SIO.Path.GetDirectoryName(fn);
+				string d = Path.GetDirectoryName(fn);
 				if (!SIO.Directory.Exists(d))
 					SIO.Directory.CreateDirectory(d);
 			}
-			return SIO.Path.GetFullPath(fn);
+			return Path.GetFullPath(fn);
 		}
 
 		public static class Asset
@@ -65,10 +65,10 @@ namespace KSPe.IO
 				// Better coping with the current way of things
 
 				{   // First, let's try the PluginData that should be in the same dir level that the DLL.
-					string fn = SIO.Path.GetDirectoryName(typeof(T).Assembly.Location);
+					string fn = Path.GetDirectoryName(typeof(T).Assembly.Location);
 					for (int i = ASSET.Length;--i >= 0;)
 					{
-						string t = SIO.Path.Combine(fn, ASSET[i]);
+						string t = Path.Combine(fn, ASSET[i]);
 						if (SIO.Directory.Exists(t))
 							return t;
 					}
@@ -105,11 +105,11 @@ namespace KSPe.IO
 
 			private static string FullPathName(string partialPathname)
 			{
-				if (SIO.Path.IsPathRooted(partialPathname))
+				if (Path.IsPathRooted(partialPathname))
 					throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
 
-				string fn = SIO.Path.Combine(SolveRoot(), partialPathname);
-				fn = SIO.Path.GetFullPath(fn);
+				string fn = Path.Combine(SolveRoot(), partialPathname);
+				fn = Path.GetFullPath(fn);
 				return fn;
 			}
 
@@ -117,7 +117,7 @@ namespace KSPe.IO
 			{
 				string path = fn;
 				foreach (string s in fns)
-					path = SIO.Path.Combine(fn, s);
+					path = Path.Combine(fn, s);
 
 				return FullPathName(path);
 			}
@@ -143,7 +143,7 @@ namespace KSPe.IO
 				LocalCache<string>.Dictionary c = cache[typeof(T)];
 				string path = fn;
 				foreach (string s in fns)
-					path = SIO.Path.Combine(path, s);
+					path = Path.Combine(path, s);
 				return c.ContainsKey(path) ? c[path] : (c[path] = Solve(path));
 			}
 
@@ -155,7 +155,7 @@ namespace KSPe.IO
 
 			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)
 			{
-				return File.List(SIO.Path.Combine(SolveRoot(), subdir ?? "."), mask, include_subdirs);
+				return File.List(Path.Combine(SolveRoot(), subdir ?? "."), mask, include_subdirs);
 			}
 
 			public static string[] List(string mask = "*", bool include_subdirs = false, string fn = null, params string[] fns)
@@ -384,7 +384,7 @@ namespace KSPe.IO
 
 			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)
 			{
-				return File.List(SIO.Path.Combine(FullPathName(false, "."), subdir??"."), mask, include_subdirs);
+				return File.List(Path.Combine(FullPathName(false, "."), subdir??"."), mask, include_subdirs);
 			}
 
 			public static string[] List(string mask = "*", bool include_subdirs = false, string fn = null, params string[] fns)
@@ -645,18 +645,18 @@ namespace KSPe.IO
 			public static string Solve(string fn)
 			{
 				string r = Hierarchy<T>.LOCALDATA.SolveFull(false, fn);
-				return r.Substring(r.IndexOf(Hierarchy.GAMEDATA.relativePathName + SIO.Path.DirectorySeparatorChar, StringComparison.Ordinal) + 1 + Hierarchy.GAMEDATA.relativePathName.Length);
+				return r.Substring(r.IndexOf(Hierarchy.GAMEDATA.relativePathName + Path.DirectorySeparatorChar, StringComparison.Ordinal) + 1 + Hierarchy.GAMEDATA.relativePathName.Length);
 			}
 
 			public static string Solve(string fn, params string[] fns)
 			{
 				string r = Hierarchy<T>.LOCALDATA.SolveFull(false, fn);
-				return r.Substring(r.IndexOf(Hierarchy.GAMEDATA.relativePathName + SIO.Path.DirectorySeparatorChar, StringComparison.Ordinal) + 1 + Hierarchy.GAMEDATA.relativePathName.Length);
+				return r.Substring(r.IndexOf(Hierarchy.GAMEDATA.relativePathName + Path.DirectorySeparatorChar, StringComparison.Ordinal) + 1 + Hierarchy.GAMEDATA.relativePathName.Length);
 			}
 
 			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)
 			{
-				return File.List(SIO.Path.Combine(FullPathName(false, "."), subdir ?? "."), mask, include_subdirs);
+				return File.List(Path.Combine(FullPathName(false, "."), subdir ?? "."), mask, include_subdirs);
 			}
 
 			public static string[] List(string mask = "*", bool include_subdirs = false, string fn = null, params string[] fns)
@@ -916,7 +916,7 @@ namespace KSPe.IO
 
 			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)
 			{
-				return File.List(SIO.Path.Combine(FullPathName("."), subdir??"."), mask, include_subdirs);
+				return File.List(Path.Combine(FullPathName("."), subdir??"."), mask, include_subdirs);
 			}
 
 			public static void AppendAllText(string path, string contents) { throw new NotImplementedException("KSPe.IO.File.Temp.AppendAllText"); }	

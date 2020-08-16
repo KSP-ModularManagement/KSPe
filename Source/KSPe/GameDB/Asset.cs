@@ -61,7 +61,7 @@ namespace KSPe.GameDB
 		{
 			string path = fn;
 			foreach (string s in fns)
-				path = SIO.Path.Combine(path, s);
+				path = IO.Path.Combine(path, s);
 			return Solve(path);
 		}
 

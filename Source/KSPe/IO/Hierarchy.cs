@@ -23,18 +23,16 @@
 using System;
 using System.IO.IsolatedStorage;
 
-using SIO = System.IO;
-
 namespace KSPe.IO
 {
 	public class Hierarchy
 	{
-		internal static readonly string ROOTPATH = SIO.Path.GetFullPath(KSPUtil.ApplicationRootPath);
+		internal static readonly string ROOTPATH = Path.Origin();
 
 		public static readonly Hierarchy ROOT = new Hierarchy("ROOT");
 		public static readonly Hierarchy GAMEDATA = new Hierarchy("GAMEDATA", "GameData");
 		public static readonly Hierarchy PLUGINDATA = new Hierarchy("PLUGINDATA", "PluginData");
-		public static readonly Hierarchy LOCALDATA = new Hierarchy("LOCALDATA", SIO.Path.Combine(GAMEDATA.relativePathName, "__LOCAL"));
+		public static readonly Hierarchy LOCALDATA = new Hierarchy("LOCALDATA", Path.Combine(GAMEDATA.relativePathName, "__LOCAL"));
 		public static readonly Hierarchy SCREENSHOT = new Hierarchy("SCREENSHOT", "Screenshots");
 		public static readonly Hierarchy SAVE = new Hierarchy("SAVE", "saves");
 		public static readonly Hierarchy THUMB = new Hierarchy("THUMB", "thumbs");
@@ -46,12 +44,12 @@ namespace KSPe.IO
 		{
 			this.name = name;
 			this.relativePathName = ".";
-			this.fullPathName = SIO.Path.GetFullPath(SIO.Path.Combine(ROOTPATH, relativePathName)); // Ensures any path shenanigans are resolved.
+			this.fullPathName = Path.GetFullPath(Path.Combine(ROOTPATH, relativePathName)); // Ensures any path shenanigans are resolved.
 		}
 		protected Hierarchy(string name, string dirName)
 		{
 			this.name = name;
-			this.fullPathName = SIO.Path.GetFullPath(SIO.Path.Combine(ROOTPATH, dirName)); // Ensures any path shenanigans are resolved.
+			this.fullPathName = Path.GetFullPath(Path.Combine(ROOTPATH, dirName)); // Ensures any path shenanigans are resolved.
 			this.relativePathName = this.fullPathName.Replace(ROOTPATH, "");
 		}
 
@@ -71,7 +69,7 @@ namespace KSPe.IO
 		{
 			string combinedFnames = fname;
 			foreach (string s in fnames)
-				combinedFnames = SIO.Path.Combine(combinedFnames, s);
+				combinedFnames = Path.Combine(combinedFnames, s);
 
 			string resultRelativePathName,resultFullPathName;
 
@@ -84,7 +82,7 @@ namespace KSPe.IO
 		{
 			string combinedFnames = fname;
 			foreach (string s in fnames)
-				combinedFnames = SIO.Path.Combine(combinedFnames, s);
+				combinedFnames = Path.Combine(combinedFnames, s);
 
 			string resultRelativePathName, resultFullPathName;
 
@@ -95,13 +93,13 @@ namespace KSPe.IO
 
 		private void Calculate(bool createDirs, string fname, out string partialPathname, out string fullPathname)
 		{
-			partialPathname = SIO.Path.Combine(this.relativePathName, fname);
+			partialPathname = Path.Combine(this.relativePathName, fname);
 
-			if (SIO.Path.IsPathRooted(partialPathname))
+			if (Path.IsPathRooted(partialPathname))
 				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
 
-			string fn = SIO.Path.Combine(this.fullPathName, fname);
-			fullPathname = SIO.Path.GetFullPath(fn); // Checks against a series of ".." trying to escape the intended sandbox
+			string fn = Path.Combine(this.fullPathName, fname);
+			fullPathname = Path.GetFullPath(fn); // Checks against a series of ".." trying to escape the intended sandbox
 
 			if (!fullPathname.StartsWith(this.fullPathName, StringComparison.Ordinal))
 				throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the sandboxed file system! [{0}]", partialPathname));
@@ -121,8 +119,8 @@ namespace KSPe.IO
 			UnityEngine.Debug.Log(rootPath);
 #endif
 			// from https://social.msdn.microsoft.com/Forums/vstudio/en-US/954346c8-cbe8-448c-80d0-d3fc27796e9c - Wednesday, May 20, 2009 3:37 PM
-			string[] startPathParts = SIO.Path.GetFullPath(rootPath).Trim(SIO.Path.DirectorySeparatorChar).Split(SIO.Path.DirectorySeparatorChar);
-			string[] destinationPathParts = SIO.Path.GetFullPath(fullDestinationPath).Trim(SIO.Path.DirectorySeparatorChar).Split(SIO.Path.DirectorySeparatorChar);
+			string[] startPathParts = Path.GetFullPath(rootPath).Trim(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar);
+			string[] destinationPathParts = Path.GetFullPath(fullDestinationPath).Trim(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar);
 
 			int i = 0; // Finds the first difference on both paths (if any)
 			int max = Math.Min(startPathParts.Length, destinationPathParts.Length);
@@ -134,13 +132,13 @@ namespace KSPe.IO
 			System.Text.StringBuilder relativePath = new System.Text.StringBuilder();
 
 			if (i >= startPathParts.Length)
-				relativePath.Append(".").Append(SIO.Path.DirectorySeparatorChar); // Just for the LULZ.
+				relativePath.Append(".").Append(Path.DirectorySeparatorChar); // Just for the LULZ.
 			else
 				for (int j = i; j < startPathParts.Length; j++) // Adds how many ".." as necessary
-					relativePath.Append("..").Append(SIO.Path.DirectorySeparatorChar);
+					relativePath.Append("..").Append(Path.DirectorySeparatorChar);
 
 			for (int j = i; j < destinationPathParts.Length; j++) // And now feeds the remaning directories
-				relativePath.Append(destinationPathParts[j]).Append(SIO.Path.DirectorySeparatorChar);
+				relativePath.Append(destinationPathParts[j]).Append(Path.DirectorySeparatorChar);
 
 			relativePath.Length--; // Gets rid of the trailig "/" that is always appended
 

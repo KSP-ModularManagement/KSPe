@@ -23,7 +23,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SIO = System.IO;
+
+using IO = KSPe.IO;
 
 namespace KSPe.Util
 {
@@ -106,15 +107,13 @@ It should be installed on {1} but it's currently installed on {2} ! Delete the l
 
 		private static void CheckForWrongDirectoy(Type type, string name, string vendor)
 		{
-			string kspRoot = SIO.Path.GetFullPath(KSPUtil.ApplicationRootPath);
+			string intendedPath = IO.Path.Combine(IO.Path.Origin(), "GameData");
+			if (null != vendor)	intendedPath = IO.Path.Combine(intendedPath, vendor);
+			intendedPath = IO.Path.GetFullPath(intendedPath) + IO.Path.DirectorySeparatorChar;
 
-			string intendedPath = SIO.Path.Combine(kspRoot, "GameData");
-			if (null != vendor)	intendedPath = SIO.Path.Combine(intendedPath, vendor);
-			intendedPath = SIO.Path.Combine(intendedPath, name) + SIO.Path.DirectorySeparatorChar;
-
-			string installedDllPath =  SIO.Path.GetDirectoryName(SIO.Path.GetFullPath(type.Assembly.Location)).Replace("Plugins","").Replace("Plugin","");
-			if (installedDllPath[installedDllPath.Length-1] != SIO.Path.DirectorySeparatorChar)
-				installedDllPath += SIO.Path.DirectorySeparatorChar;
+			string installedDllPath = IO.Path.GetDirectoryName(IO.Path.GetFullPath(type.Assembly.Location.Replace("Plugins",".").Replace("Plugin",".")));
+			if (installedDllPath[installedDllPath.Length-1] != IO.Path.DirectorySeparatorChar)
+				installedDllPath += IO.Path.DirectorySeparatorChar;
 
 			if (installedDllPath.StartsWith(intendedPath)) return;
 

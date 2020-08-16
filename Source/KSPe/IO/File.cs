@@ -36,7 +36,7 @@ namespace KSPe.IO
 		[System.Obsolete("KSPe.IO.File.GAMEDATA is deprecated, please use KSPe.IO.Hierarchy.PLUGINDATA instead.")]
 		public const string PLUGINDATA = "PluginData";                                // Writeable data on <KSP_ROOT>/PluginData/<plugin_name>/
 		[System.Obsolete("KSPe.IO.File.GAMEDATA is deprecated, please use KSPe.IO.Hierarchy.LOCALDATA instead.")]
-		public static string LOCALDATA => SIO.Path.Combine(GAMEDATA, "__LOCAL");      // Custom runtime generated parts on <KSP_ROO>/GameData/__LOCAL/<plugin_name> (specially made for UbioWeldingLtd)
+		public static string LOCALDATA => Path.Combine(GAMEDATA, "__LOCAL");      // Custom runtime generated parts on <KSP_ROO>/GameData/__LOCAL/<plugin_name> (specially made for UbioWeldingLtd)
 
 		[System.Obsolete("KSPe.IO.File.CalculateKspPath is deprecated, please use KSPe.IO.Hierarchy.ROOT.Solve instead.")]
 		public static string CalculateKspPath(string fname, params string[] fnames)
@@ -47,7 +47,7 @@ namespace KSPe.IO
 		[System.Obsolete("KSPe.IO.File.CalculateRelativePath is deprecated. There shuold be no need for this anymore.")]
 		public static string CalculateRelativePath(string fullDestinationPath)
 		{
-			return Hierarchy.CalculateRelativePath(fullDestinationPath, SIO.Path.GetDirectoryName(Assembly.GetCallingAssembly().Location)); //FIXME: This only works when KSPe is on the GameData/ !!
+			return Hierarchy.CalculateRelativePath(fullDestinationPath, Path.GetDirectoryName(Assembly.GetCallingAssembly().Location)); //FIXME: This only works when KSPe is on the GameData/ !!
 		}
 
 		internal static string[] List(string rawdir, string mask = "*", bool include_subdirs = false)
