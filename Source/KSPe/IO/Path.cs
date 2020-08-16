@@ -1,0 +1,126 @@
+﻿/*
+   This file is part of KSPe, a component for KSP API Extensions/L
+   (C) 2018-20 Lisias T : http://lisias.net <support@lisias.net>
+
+   KSPe API Extensions/L is double licensed, as follows:
+
+   * SKL 1.0 : https://ksp.lisias.net/SKL-1_0.txt
+   * GPL 2.0 : https://www.gnu.org/licenses/gpl-2.0.txt
+
+   And you are allowed to choose the License that better suit your needs.
+
+   KSPe API Extensions/L is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+   You should have received a copy of the SKL Standard License 1.0
+   along with KSPe API Extensions/L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.
+
+   You should have received a copy of the GNU General Public License 2.0
+   along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
+
+*/
+using System.Collections.Generic;
+using System.Linq;
+using SIO = System.IO;
+
+namespace KSPe.IO
+{
+	// So Microsoft, in their infinite Wisdom, choose to resolve symlinks on the GetFullPath, rendering
+	// symlinks useless on building virtual game instalments.
+	// See https://forum.kerbalspaceprogram.com/index.php?/topic/192048-ksp-18-ksp-recall-0040-2020-0815/&do=findComment&comment=3838913
+	//
+	// So, why keeping the suffering? If it's brokem, rewrite it.
+	// I will reimplement the whole fucking System if needed. :/
+	public static class Path
+	{
+		public static readonly char AltDirectorySeparatorChar = SIO.Path.AltDirectorySeparatorChar;
+		public static readonly char DirectorySeparatorChar = SIO.Path.DirectorySeparatorChar;
+
+		[System.Obsolete ("see GetInvalidPathChars and GetInvalidFileNameChars methods.")]
+		public static readonly char[] InvalidPathChars = SIO.Path.InvalidPathChars;
+
+		public static readonly char PathSeparator = SIO.Path.PathSeparator;
+		public static readonly char VolumeSeparatorChar = SIO.Path.VolumeSeparatorChar;
+
+		public static string ChangeExtension(string path, string extension) { return SIO.Path.ChangeExtension(path, extension); }
+
+		public static string Combine(string path1, string path2)			{ return SIO.Path.Combine(path1, path2); }
+		public static string Combine(string path, params string[] paths) // Since we are here, why not backport some niceties from 4.x?
+		{
+			string r = path;
+			foreach (string p in paths) r = Combine(r, p);
+			return r;
+		}
+
+		public static string GetDirectoryName(string path)				{ return SIO.Path.GetDirectoryName(path); }
+		public static string GetExtension(string path)					{ return SIO.Path.GetExtension(path); }
+		public static string GetFileName(string path)					{ return SIO.Path.GetFileName(path); }
+		public static string GetFileNameWithoutExtension(string path)	{ return SIO.Path.GetFileNameWithoutExtension(path); }
+
+		public static string GetFullPath(string path)
+		{
+			if (!SIO.Path.IsPathRooted(path)) return GetFullPath(Combine(SIO.Directory.GetCurrentDirectory(), path));
+			string r = new System.Uri(path).LocalPath;
+			foreach (string k in UNREPARSE.Keys.OrderByDescending( x => x.Length))
+			{
+				if (r.StartsWith(k))
+				{
+					r = r.Replace(k, UNREPARSE[k]);
+					break;
+				}
+			}
+			return r;
+		}
+
+		public static string GetAbsolutePath(string path)
+		{
+			return SIO.Path.GetFullPath(path);
+		}
+
+		public static char[] GetInvalidFileNameChars()					{ return SIO.Path.GetInvalidFileNameChars(); }
+		public static char[] GetInvalidPathChars()						{ return SIO.Path.GetInvalidPathChars(); }
+		public static string GetPathRoot(string path)					{ return SIO.Path.GetPathRoot(path); }
+		public static string GetRandomFileName()						{ return SIO.Path.GetRandomFileName(); }
+
+		[System.Security.Permissions.FileIOPermission(System.Security.Permissions.SecurityAction.Assert, Unrestricted = true)]
+		public static string GetTempFileName()							{ return SIO.Path.GetTempFileName(); }
+
+		[System.Security.Permissions.EnvironmentPermission(System.Security.Permissions.SecurityAction.Demand, Unrestricted = true)]
+		public static string GetTempPath ()								{ return SIO.Path.GetTempPath(); }
+
+		public static bool HasExtension (string path)					{ return SIO.Path.HasExtension(path); }
+		public static bool IsPathRooted (string path)					{ return SIO.Path.IsPathRooted(path); }
+
+		private static string root = null;
+		private static readonly Dictionary<string,string> UNREPARSE = new Dictionary<string, string>();
+		internal static string Origin()
+		{
+			if (null != root) return root;	// Preventing accidents. No reentrant.
+
+			string path = typeof(KSPUtil).Assembly.Location
+				.Replace("KSP_x64_Data",".")						// Win64 versions
+				.Replace("KSP_Data",".")							// Linux and Win32 versions
+				.Replace("KSP.app/Contents/Resources/Data", ".")	// Mac
+				.Replace("Managed", ".")							// Everybody
+				;
+			path = Path.GetDirectoryName(IO.Path.GetAbsolutePath(path));
+
+			foreach(string dir in SIO.Directory.GetDirectories(path, "*", SIO.SearchOption.AllDirectories))
+			{
+				SIO.FileInfo pathInfo = new SIO.FileInfo(dir);
+				if (0 != (pathInfo.Attributes & SIO.FileAttributes.ReparsePoint))
+				{
+					string reparsed = Multiplatform.FileSystem.ReparsePath(Combine(path,dir));
+					if (reparsed[reparsed.Length-1] != DirectorySeparatorChar) reparsed += DirectorySeparatorChar;
+					UNREPARSE.Add(reparsed, dir[dir.Length-1] == DirectorySeparatorChar ? dir : dir + AltDirectorySeparatorChar);
+#if DEBUG
+					UnityEngine.Debug.LogFormat("[KSPe.IO.Path] UNREPARSE {0} -> {1}", reparsed, UNREPARSE[reparsed]);
+#endif
+				}
+			}
+
+			return root = path + Path.DirectorySeparatorChar; // Note: it should end with a DSC because I do fast string manipulations everywhere, and they depends on it.
+		}
+	}
+}

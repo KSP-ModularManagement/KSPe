@@ -96,6 +96,9 @@
     <Compile Include="Util\log\Unity.cs" />
     <Compile Include="Util\SystemTools.cs" />
     <Compile Include="Util\ModuleManagerTools.cs" />
+    <Compile Include="IO\Path.cs" />
+    <Compile Include="Multiplatform\Shell.cs" />
+    <Compile Include="Multiplatform\FileSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
@@ -111,6 +114,7 @@
     <Folder Include="Util\" />
     <Folder Include="GameDB\" />
     <Folder Include="Util\log\" />
+    <Folder Include="Multiplatform\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

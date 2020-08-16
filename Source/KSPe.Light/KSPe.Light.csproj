@@ -87,11 +87,21 @@
     <Compile Include="..\KSPe\Util\ModuleManagerTools.cs">
       <Link>Util\ModuleManagerTools.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe\IO\Path.cs">
+      <Link>IO\Path.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\Multiplatform\FileSystem.cs">
+      <Link>Multiplatform\FileSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\Multiplatform\Shell.cs">
+      <Link>Multiplatform\Shell.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />
     <Folder Include="Util\" />
     <Folder Include="Util\log\" />
+    <Folder Include="IO\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
