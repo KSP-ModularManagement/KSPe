@@ -48,21 +48,28 @@ namespace KSPe.Multiplatform
 			}
 		}
 
-		private static string Reparse(string path)
+		private static string Reparse_readlink(string path)
 		{
-			string cmd = realpath??readlink??null;
-			if (null == cmd) return path;
 			try
 			{
-				string r = Shell.command(cmd, "-n " + path);
+				string r = Shell.command(readlink, "-n " + path);
 				return r;
 			}
 			catch (Shell.Exception e)
 			{
-				UnityEngine.Debug.LogWarningFormat("Failed to reparse {0}.", path);
-				UnityEngine.Debug.LogError(e);
+				if (1 != e.exitCode)
+				{
+					UnityEngine.Debug.LogWarningFormat("Failed to reparse {0}.", path);
+					UnityEngine.Debug.LogError(e);
+				}
 				return path;
 			}
+		}
+
+		private static string Reparse(string path)
+		{
+			if (null != readlink) return Reparse_readlink(path);
+			return path;
 		}
 
 		public static string ReparsePath(string path)
