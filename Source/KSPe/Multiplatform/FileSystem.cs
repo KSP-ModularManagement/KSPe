@@ -20,6 +20,7 @@
    along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
+using System.Collections.Generic;
 using SIO = System.IO;
 
 namespace KSPe.Multiplatform
@@ -34,53 +35,62 @@ namespace KSPe.Multiplatform
 			foreach (string path in posix_paths)
 			{
 				if (!SIO.Directory.Exists(path)) continue;
-				foreach (string p in SIO.Directory.GetFiles(path, "realpath"))
+				if (null == realpath) foreach (string p in SIO.Directory.GetFiles(path, "realpath"))
 				{
 					realpath = p;
 					break;
 				}
-				foreach (string p in SIO.Directory.GetFiles(path, "readlink"))
+				if (null == readlink) foreach (string p in SIO.Directory.GetFiles(path, "readlink"))
 				{
-					realpath = p;
+					readlink = p;
 					break;
 				}
-				if (null != realpath || null != readlink) break;
+				if (null != realpath && null != readlink) break;
 			}
 		}
 
 		private static string Reparse_readlink(string path)
 		{
-			try
-			{
-				string r = Shell.command(readlink, "-n " + path);
-				return r;
-			}
-			catch (Shell.Exception e)
-			{
-				if (1 != e.exitCode)
+			List<string> parcels = new List<string>();
+
+			do {
+				try
 				{
-					UnityEngine.Debug.LogWarningFormat("Failed to reparse {0}.", path);
-					UnityEngine.Debug.LogError(e);
+					string rl = Shell.command(readlink, "-n " + path);
+					parcels.Add(rl);
 				}
-				return path;
-			}
+				catch (Shell.Exception e)
+				{
+					if (1 != e.exitCode)
+					{
+						UnityEngine.Debug.LogWarningFormat("Failed to reparse {0}.", path);
+						UnityEngine.Debug.LogError(e);
+						return path;	// May God help the caller. :)
+					}
+					parcels.Add(SIO.Path.GetFileName(path));
+				}
+				finally
+				{
+					path = SIO.Path.GetDirectoryName(path);
+				}
+			} while (null != path);
+
+			parcels.Reverse();
+			string r = ""+SIO.Path.DirectorySeparatorChar;
+			foreach (string p in parcels) r = System.IO.Path.Combine(r, p);
+			return SIO.Path.GetFullPath(r);
 		}
 
-		private static string Reparse(string path)
+		public static string ReparsePath(string path)
 		{
 			if (null != readlink) return Reparse_readlink(path);
 			return path;
 		}
 
-		public static string ReparsePath(string path)
+		public static bool IsReparsePoint(string path)
 		{
-			string r = path;
-			do {
-				r = Reparse(r);
-				if (SIO.Path.IsPathRooted(r)) break;
-				r = SIO.Path.GetFullPath(SIO.Path.Combine(SIO.Path.GetDirectoryName(path),r));
-			} while(true);
-			return r;
+			SIO.FileInfo pathInfo = new SIO.FileInfo(path);
+			return 0 != (pathInfo.Attributes & SIO.FileAttributes.ReparsePoint);
 		}
 	}
 }
