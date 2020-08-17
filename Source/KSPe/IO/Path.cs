@@ -106,21 +106,27 @@ namespace KSPe.IO
 				;
 			path = Path.GetDirectoryName(IO.Path.GetAbsolutePath(path));
 
-			foreach(string dir in SIO.Directory.GetDirectories(path, "*", SIO.SearchOption.AllDirectories))
-			{
-				SIO.FileInfo pathInfo = new SIO.FileInfo(dir);
-				if (0 != (pathInfo.Attributes & SIO.FileAttributes.ReparsePoint))
-				{
-					string reparsed = Multiplatform.FileSystem.ReparsePath(Combine(path,dir));
-					if (reparsed[reparsed.Length-1] != DirectorySeparatorChar) reparsed += DirectorySeparatorChar;
-					UNREPARSE.Add(reparsed, dir[dir.Length-1] == DirectorySeparatorChar ? dir : dir + AltDirectorySeparatorChar);
-#if DEBUG
-					UnityEngine.Debug.LogFormat("[KSPe.IO.Path] UNREPARSE {0} -> {1}", reparsed, UNREPARSE[reparsed]);
-#endif
-				}
-			}
+			string gd = SIO.Path.Combine(path, "GameData");
+			process_dir(path, gd);
+
+			foreach(string dir in SIO.Directory.GetDirectories(gd, "*", SIO.SearchOption.AllDirectories))
+				process_dir(gd, dir);
 
 			return root = path + Path.DirectorySeparatorChar; // Note: it should end with a DSC because I do fast string manipulations everywhere, and they depends on it.
+		}
+
+		private static void process_dir(string path, string dir)
+		{
+			if (Multiplatform.FileSystem.IsReparsePoint(dir))
+			{
+				string reparsed = Multiplatform.FileSystem.ReparsePath(Combine(path, dir));
+				if (reparsed[reparsed.Length-1] != DirectorySeparatorChar) reparsed += DirectorySeparatorChar;
+				UNREPARSE[reparsed] = dir[dir.Length-1] == DirectorySeparatorChar ? dir : dir + AltDirectorySeparatorChar;
+
+				#if DEBUG
+					UnityEngine.Debug.LogFormat("[KSPe.IO.Path] UNREPARSE {0} <- {1}", reparsed, UNREPARSE[reparsed]);
+				#endif
+			}
 		}
 	}
 }
