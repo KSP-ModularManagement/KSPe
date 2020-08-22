@@ -23,12 +23,12 @@ deploy() {
 	if [ -f "./bin/Release/$DLL" ] ; then
 		cp "./bin/Release/$DLL" "./GameData/$TARGETBINDIR/"
 		if [ -d "${KSP_DEV}/GameData/$TARGETBINDIR/" ] ; then
-			cp "./bin/Release/$DLL" "${KSP_DEV/}GameData/$TARGETBINDIR/"
+			cp "./bin/Release/$DLL" "${KSP_DEV}/GameData/$TARGETBINDIR/"
 		fi
 	fi
 	if [ -f "./bin/Debug/$DLL" ] ; then
 		if [ -d "${KSP_DEV}/GameData/$TARGETBINDIR/" ] ; then
-			cp "./bin/Debug/$DLL" "${KSP_DEV}GameData/$TARGETBINDIR/"
+			cp "./bin/Debug/$DLL" "${KSP_DEV}/GameData/$TARGETBINDIR/"
 		fi
 	fi
 }
@@ -40,12 +40,12 @@ deploy_gamedata() {
 	if [ -f "./bin/Release/$DLL" ] ; then
 		cp "./bin/Release/$DLL" "./GameData/000_$DLL"
 		if [ -d "${KSP_DEV}/GameData/" ] ; then
-			cp "./bin/Release/$DLL" "${KSP_DEV/}GameData/${PLACE}_$DLL"
+			cp "./bin/Release/$DLL" "${KSP_DEV/}/GameData/${PLACE}_$DLL"
 		fi
 	fi
 	if [ -f "./bin/Debug/$DLL" ] ; then
 		if [ -d "${KSP_DEV}/GameData/" ] ; then
-			cp "./bin/Debug/$DLL" "${KSP_DEV}GameData/${PLACE}_$DLL"
+			cp "./bin/Debug/$DLL" "${KSP_DEV}/GameData/${PLACE}_$DLL"
 		fi
 	fi
 }
@@ -56,12 +56,12 @@ deploy_plugindata() {
 	if [ -f "./bin/Release/$DLL" ] ; then
 		cp "./bin/Release/$DLL" "./GameData/$TARGETBINDIR/PluginData"
 		if [ -d "${KSP_DEV}/GameData/$TARGETBINDIR/PluginData" ] ; then
-			cp "./bin/Release/$DLL" "${KSP_DEV/}GameData/$TARGETBINDIR/PluginData"
+			cp "./bin/Release/$DLL" "${KSP_DEV}/GameData/$TARGETBINDIR/PluginData"
 		fi
 	fi
 	if [ -f "./bin/Debug/$DLL" ] ; then
 		if [ -d "${KSP_DEV}/GameData/$TARGETBINDIR/PluginData" ] ; then
-			cp "./bin/Debug/$DLL" "${KSP_DEV/}GameData/$TARGETBINDIR/PluginData"
+			cp "./bin/Debug/$DLL" "${KSP_DEV}/GameData/$TARGETBINDIR/PluginData"
 		fi
 	fi
 }
