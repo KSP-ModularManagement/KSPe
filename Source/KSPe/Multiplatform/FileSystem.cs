@@ -101,10 +101,10 @@ namespace KSPe.Multiplatform
 
 		public static string ReparsePath(string path)
 		{
-			try
-			{
-				if (null != realpath) return Reparse_realpath(path);
-			} catch (System.Exception) { } // If anything goes wrong, just try readlink.
+			//try
+			//{
+			//	if (null != realpath) return Reparse_realpath(path);
+			//} catch (System.Exception) { } // If anything goes wrong, just try readlink.
 			if (null != readlink) return Reparse_readlink(path);
 			return path;
 		}
