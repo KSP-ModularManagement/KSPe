@@ -10,3 +10,4 @@ GameData/**/CHANGES.md
 GameData/**/*.version
 Source/*/Properties/Version.cs
 Source/*/*.user
+Archive
