@@ -39,8 +39,8 @@ namespace KSPe.Util.Log {
 	{
 		// TODO: Remove on Version 3
 		[Obsolete("This call is deprecated. Use CreateForType<T>(bool useClassNameToo = false, bool threadSafe = true) instead.")]
-		public static Logger CreateForType<T>(bool useClassNameToo = false) { return CreateForType<T>( useClassNameToo, false); } // Compatibility call
-		public static Logger CreateForType<T>(bool useClassNameToo = false, bool threadSafe = false)
+		public static Logger CreateForType<T>(bool useClassNameToo = false) { return CreateForType<T>( useClassNameToo, true); } // Compatibility call
+		public static Logger CreateForType<T>(bool useClassNameToo = false, bool threadSafe = true)
 		{
 			if (threadSafe)
 				return useClassNameToo
@@ -56,8 +56,8 @@ namespace KSPe.Util.Log {
 
 		// TODO: Remove on Version 3
 		[Obsolete("This call is deprecated. Use CreateForType<T>(string forceThisNamespace, bool useClassNameToo = false, bool threadSafe = true) instead.")]
-		public static Logger CreateForType<T>(string forceThisNamespace, bool useClassNameToo = false) { return CreateForType<T>(forceThisNamespace, useClassNameToo, false); } // Compatibility call
-		public static Logger CreateForType<T>(string forceThisNamespace, bool useClassNameToo = false, bool threadSafe = false)
+		public static Logger CreateForType<T>(string forceThisNamespace, bool useClassNameToo = true) { return CreateForType<T>(forceThisNamespace, useClassNameToo, true); } // Compatibility call
+		public static Logger CreateForType<T>(string forceThisNamespace, bool useClassNameToo = false, bool threadSafe = true)
 		{
 			if (threadSafe)
 				return useClassNameToo
@@ -73,8 +73,8 @@ namespace KSPe.Util.Log {
 
 		// TODO: Remove on Version 3
 		[Obsolete("This call is deprecated. Use CreateForType<T>(string forceThisNamespace, string forceThisClassName, bool threadSafe = true) instead.")]
-		public static Logger CreateForType<T>(string forceThisNamespace, string forceThisClassName) { return CreateForType<T>(forceThisNamespace, forceThisClassName, false); } // Compatibility call
-		public static Logger CreateForType<T>(string forceThisNamespace, string forceThisClassName, bool threadSafe = false)
+		public static Logger CreateForType<T>(string forceThisNamespace, string forceThisClassName) { return CreateForType<T>(forceThisNamespace, forceThisClassName, true); } // Compatibility call
+		public static Logger CreateForType<T>(string forceThisNamespace, string forceThisClassName, bool threadSafe = true)
 		{
 			if (threadSafe)
 				return new UnityThreadSafeLogger(forceThisNamespace, forceThisClassName);

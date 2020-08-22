@@ -50,7 +50,7 @@ namespace KSPe.Util.Log {
 			{
 				case Level.OFF:
 					return dummy;
-					
+
 				case Level.TRACE:
 					goto case Level.INFO;
 				case Level.DETAIL:
@@ -101,7 +101,11 @@ namespace KSPe.Util.Log {
 		internal static UnityThreadSafeLogDecorator instance;
 		internal static UnityThreadSafeLogDecorator INSTANCE {
 			get {
-				if (null == instance) instance = new UnityThreadSafeLogDecorator();
+				if (null == instance){
+					UnityEngine.GameObject obj = new UnityEngine.GameObject();
+					obj.AddComponent<UnityThreadSafeLogDecorator>();
+					instance = obj.GetComponent<UnityThreadSafeLogDecorator>();
+				}
 				return instance;
 			}
 		}
@@ -179,10 +183,13 @@ namespace KSPe.Util.Log {
 
 		internal void LateUpdate()
 		{
-			if (0 == this.logQueue.Count) return; // Fast bail out if there's nothing on the quere. False negatives will be handled on the next frame.
+			if (0 == this.logQueue.Count) return; // Fast bail out if there's nothing on the queue. False negatives will be handled on the next frame.
 			lock (MUTEX) // Ugly doing it on every frame, but there's no other safe way.
 			{
-				if (0 == this.logQueue.Count) return; // This one is safe, we are inside the critical region. No false negatives possible.
+				if (0 == this.logQueue.Count) return; // This one is safe, we are inside the critical section. No false negatives possible.
+				if (this.logQueue.Count > 128)				// If we have so many messages since the last frame, boy we have a problem here...
+					while (this.logQueue.Count > 1)			// The frame rate is the least of the user's worries by now, flush the buffer to prevent exploding the heap.
+						this.logQueue.Dequeue().execute();	// as well to prevent losing any message that could help on the diagnosing.
 				this.logQueue.Dequeue().execute();
 			}
 		}
