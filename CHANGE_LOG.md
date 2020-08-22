@@ -1,5 +1,15 @@
 # KSP API Extensions/L :: Change Log
 
+* 2020-0822: 2.2.0.3 (Lisias) for KSP >= 1.2
+	+ New ModuleManager Tools is now available
+	+ On MacOS and Linux, symlinks are now useable inside GameData
+		- KSPe "undoes" the nasty symlinks resolving imposed by the Mono runtime. **Transparently**.
+		- Not available on Windows.
+	+ Thread Safe Unity Logging
+		- On by default for every `KSPe.Util.Log` client
+			- It will delay the message on the KSP.log for at least one frame.
+			- Refer to the source code about how to disable it for your add'on if this is not desirable.
+		+ Does not interfere with normal `UnityEngine.Debug` Logging.
 * 2020-0729: 2.2.0.2 (Lisias) for KSP >= 1.2
 	+ updating fixing the known KSP Versions 'database'
 * 2020-0725: 2.2.0.1 (Lisias) for KSP >= 1.2
