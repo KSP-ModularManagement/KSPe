@@ -29,7 +29,10 @@ namespace KSPe.Multiplatform
 	{
 		private static string realpath = null;
 		private static string readlink = null;
-		private static readonly string[] posix_paths = {"/opt/local/bin", "/opt/bin", "/usr/local/bin", "/usr/bin", "/bin"};
+		private static readonly string[] posix_paths = {
+			"/opt/local/libexec/gnubin", // Used on my rig (MacOS with MacPorts).
+			"/opt/local/bin", "/opt/bin", "/usr/local/bin", "/usr/bin", "/bin"
+		};
 		static FileSystem()
 		{
 			foreach (string path in posix_paths)
@@ -46,6 +49,21 @@ namespace KSPe.Multiplatform
 					break;
 				}
 				if (null != realpath && null != readlink) break;
+			}
+		}
+
+		private static string Reparse_realpath(string path)
+		{
+			try
+			{
+				string rl = Shell.command(realpath, "-eLz " + path);
+				return rl;
+			}
+			catch (System.Exception e)
+			{
+				UnityEngine.Debug.LogWarningFormat("Failed to reparse {0}.", path);
+				UnityEngine.Debug.LogError(e);
+				throw e;
 			}
 		}
 
@@ -83,6 +101,10 @@ namespace KSPe.Multiplatform
 
 		public static string ReparsePath(string path)
 		{
+			try
+			{
+				if (null != realpath) return Reparse_realpath(path);
+			} catch (System.Exception) { } // If anything goes wrong, just try readlink.
 			if (null != readlink) return Reparse_readlink(path);
 			return path;
 		}
