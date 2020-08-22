@@ -21,14 +21,13 @@
 
 */
 using System;
-using UnityEngine;
 
 namespace KSPe.Util.Log {
 
-	public class UnityLogger : Logger
+	public class UnityThreadSafeLogger : Logger
 	{
-		public UnityLogger(string forceThisNamespace) : base(forceThisNamespace) { }
-		public UnityLogger(string forceThisNamespace, string forceThisClassName) : base(forceThisNamespace, forceThisClassName) { }
+		public UnityThreadSafeLogger(string forceThisNamespace) : base(forceThisNamespace) { }
+		public UnityThreadSafeLogger(string forceThisNamespace, string forceThisClassName) : base(forceThisNamespace, forceThisClassName) { }
 
 		protected override LogMethod select()
 		{

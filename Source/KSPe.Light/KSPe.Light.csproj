@@ -82,7 +82,7 @@
     <Compile Include="..\KSPe\Util\Installment.cs">
       <Link>Util\Installment.cs</Link>
     </Compile>
-    <Compile Include="Util\log\Unity.cs" />
+    <Compile Include="Util\log\UnityStub.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="..\KSPe\Util\ModuleManagerTools.cs">
       <Link>Util\ModuleManagerTools.cs</Link>
@@ -96,6 +96,7 @@
     <Compile Include="..\KSPe\Multiplatform\Shell.cs">
       <Link>Multiplatform\Shell.cs</Link>
     </Compile>
+    <Compile Include="Util\log\UnityThreadSafeStub.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />

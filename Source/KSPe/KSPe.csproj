@@ -99,6 +99,7 @@
     <Compile Include="IO\Path.cs" />
     <Compile Include="Multiplatform\Shell.cs" />
     <Compile Include="Multiplatform\FileSystem.cs" />
+    <Compile Include="Util\log\UnityThreadSafe.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
