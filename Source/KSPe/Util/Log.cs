@@ -37,48 +37,45 @@ namespace KSPe.Util.Log {
 
 	public abstract class Logger
 	{
-		// TODO: Remove on Version 3
-		[Obsolete("This call is deprecated. Use CreateForType<T>(bool useClassNameToo = false, bool threadSafe = true) instead.")]
-		public static Logger CreateForType<T>(bool useClassNameToo = false) { return CreateForType<T>( useClassNameToo, true); } // Compatibility call
-		public static Logger CreateForType<T>(bool useClassNameToo = false, bool threadSafe = true)
+		public static Logger CreateForType<T>(bool useClassNameToo = false)
 		{
-			if (threadSafe)
-				return useClassNameToo
-						? new UnityThreadSafeLogger(typeof(T).Namespace, typeof(T).FullName)
-						: new UnityThreadSafeLogger(typeof(T).Namespace)
-						;
+			return useClassNameToo
+					? new UnityThreadSafeLogger(typeof(T).Namespace, typeof(T).FullName)
+					: new UnityThreadSafeLogger(typeof(T).Namespace)
+				;
+		}
 
+		public static Logger CreateThreadUnsafeForType<T>(bool useClassNameToo = false)
+		{
 			return useClassNameToo
 					? new UnityLogger(typeof(T).Namespace, typeof(T).FullName)
 					: new UnityLogger(typeof(T).Namespace)
-					;
+				;
 		}
 
-		// TODO: Remove on Version 3
-		[Obsolete("This call is deprecated. Use CreateForType<T>(string forceThisNamespace, bool useClassNameToo = false, bool threadSafe = true) instead.")]
-		public static Logger CreateForType<T>(string forceThisNamespace, bool useClassNameToo = true) { return CreateForType<T>(forceThisNamespace, useClassNameToo, true); } // Compatibility call
-		public static Logger CreateForType<T>(string forceThisNamespace, bool useClassNameToo = false, bool threadSafe = true)
+		public static Logger CreateForType<T>(string forceThisNamespace, bool useClassNameToo = true)
 		{
-			if (threadSafe)
-				return useClassNameToo
-						? new UnityThreadSafeLogger(forceThisNamespace, typeof(T).FullName)
-						: new UnityThreadSafeLogger(forceThisNamespace)
-						;
+			return useClassNameToo
+					? new UnityThreadSafeLogger(forceThisNamespace, typeof(T).FullName)
+					: new UnityThreadSafeLogger(forceThisNamespace)
+				;
+		}
 
+		public static Logger CreateThreadUnsafeForType<T>(string forceThisNamespace, bool useClassNameToo = false)
+		{
 			return useClassNameToo
 					? new UnityLogger(forceThisNamespace, typeof(T).FullName)
 					: new UnityLogger(forceThisNamespace)
-					;
+				;
 		}
 
-		// TODO: Remove on Version 3
-		[Obsolete("This call is deprecated. Use CreateForType<T>(string forceThisNamespace, string forceThisClassName, bool threadSafe = true) instead.")]
-		public static Logger CreateForType<T>(string forceThisNamespace, string forceThisClassName) { return CreateForType<T>(forceThisNamespace, forceThisClassName, true); } // Compatibility call
-		public static Logger CreateForType<T>(string forceThisNamespace, string forceThisClassName, bool threadSafe = true)
+		public static Logger CreateForType<T>(string forceThisNamespace, string forceThisClassName)
 		{
-			if (threadSafe)
-				return new UnityThreadSafeLogger(forceThisNamespace, forceThisClassName);
+			return new UnityThreadSafeLogger(forceThisNamespace, forceThisClassName);
+		}
 
+		public static Logger CreateThreadUnsafeForType<T>(string forceThisNamespace, string forceThisClassName)
+		{
 			return new UnityLogger(forceThisNamespace, forceThisClassName);
 		}
 
