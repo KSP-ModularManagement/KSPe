@@ -7,6 +7,7 @@ check() {
 		rm -f "./GameData/$TARGETBINDIR/"
 		mkdir -p "./GameData/$TARGETBINDIR/"
 	fi
+	rm -f ./GameData/$TARGETBINDIR/KSPe.Light.*
 }
 
 deploy_dev() {
