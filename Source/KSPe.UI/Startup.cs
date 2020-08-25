@@ -36,7 +36,15 @@ namespace KSPe
 		{
 			// There can be only one! #highlanderFeelings
 			if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.FindByVersion(1,4,0))
-				Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.14");
+			{
+				if (System.IO.File.Exists("./000_ClickThroughBlocker/Plugins/ClickThroughBlocker.dll"))
+					Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.14");
+				else
+				{
+					UnityEngine.Debug.LogWarning("[KSPe.UI] ClickThroughBlocker, dependency on KSP >= 1.4, was not found! Falling back to KSP.UI.12 instead!");
+					Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.12");
+				}
+			}
 			else if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.FindByVersion(1,2,0))
 				Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.12");
 		}
