@@ -26,14 +26,20 @@ namespace KSPe.Util.Log {
 
 	public class UnityThreadSafeLogger : Logger
 	{
-		public UnityThreadSafeLogger(string forceThisNamespace) : base(forceThisNamespace)
+		public UnityThreadSafeLogger(Type type) : base(type)
+		{
+#if DEBUG
+			UnityEngine.Debug.LogFormat("Instantiating *THREAD SAFE* Unity Logger for {0}", type);
+#endif
+		}
+		public UnityThreadSafeLogger(Type type, string forceThisNamespace) : base(type, forceThisNamespace)
 		{
 #if DEBUG
 			UnityEngine.Debug.LogFormat("Instantiating *THREAD SAFE* Unity Logger for {0}", forceThisNamespace);
 #endif
 		}
 
-		public UnityThreadSafeLogger(string forceThisNamespace, string forceThisClassName) : base(forceThisNamespace, forceThisClassName)
+		public UnityThreadSafeLogger(Type type, string forceThisNamespace, string forceThisClassName) : base(type, forceThisNamespace, forceThisClassName)
 		{
 #if DEBUG
 			UnityEngine.Debug.LogFormat("Instantiating *THREAD SAFE* Unity Logger for {0}-{1}", forceThisNamespace, forceThisClassName);

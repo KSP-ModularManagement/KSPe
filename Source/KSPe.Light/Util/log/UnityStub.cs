@@ -26,8 +26,9 @@ namespace KSPe.Util.Log {
 
 	public class UnityLogger : Logger
 	{
-		public UnityLogger(string forceThisNamespace) : base(forceThisNamespace) { }
-		public UnityLogger(string forceThisNamespace, string forceThisClassName) : base(forceThisNamespace, forceThisClassName) { }
+		public UnityLogger(Type type) : base(type) { }
+		public UnityLogger(Type type, string forceThisNamespace) : base(type, forceThisNamespace) { }
+		public UnityLogger(Type type, string forceThisNamespace, string forceThisClassName) : base(type, forceThisNamespace, forceThisClassName) { }
 
 		protected override LogMethod select()
 		{

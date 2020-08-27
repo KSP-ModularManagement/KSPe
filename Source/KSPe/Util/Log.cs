@@ -39,54 +39,54 @@ namespace KSPe.Util.Log {
 	{
 		public static Logger CreateForType<T>(bool useClassNameToo = false)
 		{
-			return useClassNameToo
-					? new UnityThreadSafeLogger(typeof(T).Namespace, typeof(T).FullName)
-					: new UnityThreadSafeLogger(typeof(T).Namespace)
-				;
+			if (Globals<T>.Log.ThreadSafe)
+				return useClassNameToo
+						? new UnityThreadSafeLogger(typeof(T), typeof(T).Namespace, typeof(T).FullName)
+						: new UnityThreadSafeLogger(typeof(T), typeof(T).Namespace)
+					;
+			return CreateThreadUnsafeForType<T>(useClassNameToo);
 		}
 
 		public static Logger CreateThreadUnsafeForType<T>(bool useClassNameToo = false)
 		{
 			return useClassNameToo
-					? new UnityLogger(typeof(T).Namespace, typeof(T).FullName)
-					: new UnityLogger(typeof(T).Namespace)
+					? new UnityLogger(typeof(T), typeof(T).Namespace, typeof(T).FullName)
+					: new UnityLogger(typeof(T), typeof(T).Namespace)
 				;
 		}
 
 		public static Logger CreateForType<T>(string forceThisNamespace, bool useClassNameToo = true)
 		{
-			return useClassNameToo
-					? new UnityThreadSafeLogger(forceThisNamespace, typeof(T).FullName)
-					: new UnityThreadSafeLogger(forceThisNamespace)
-				;
+			if (Globals<T>.Log.ThreadSafe)
+				return useClassNameToo
+						? new UnityThreadSafeLogger(typeof(T), forceThisNamespace, typeof(T).FullName)
+						: new UnityThreadSafeLogger(typeof(T), forceThisNamespace)
+					;
+			return CreateThreadUnsafeForType<T>(forceThisNamespace, useClassNameToo);
 		}
 
 		public static Logger CreateThreadUnsafeForType<T>(string forceThisNamespace, bool useClassNameToo = false)
 		{
 			return useClassNameToo
-					? new UnityLogger(forceThisNamespace, typeof(T).FullName)
-					: new UnityLogger(forceThisNamespace)
+					? new UnityLogger(typeof(T), forceThisNamespace, typeof(T).FullName)
+					: new UnityLogger(typeof(T), forceThisNamespace)
 				;
 		}
 
 		public static Logger CreateForType<T>(string forceThisNamespace, string forceThisClassName)
 		{
-			return new UnityThreadSafeLogger(forceThisNamespace, forceThisClassName);
+			if (Globals<T>.Log.ThreadSafe)
+				return new UnityThreadSafeLogger(typeof(T), forceThisNamespace, forceThisClassName);
+			return CreateThreadUnsafeForType<T>(forceThisNamespace, forceThisClassName);
 		}
 
 		public static Logger CreateThreadUnsafeForType<T>(string forceThisNamespace, string forceThisClassName)
 		{
-			return new UnityLogger(forceThisNamespace, forceThisClassName);
+			return new UnityLogger(typeof(T), forceThisNamespace, forceThisClassName);
 		}
 
 		protected delegate void LogMethod(string message);
-		protected Level _level =
-#if DEBUG
-			Level.TRACE
-#else
-			GameSettings.VERBOSE_DEBUG_LOG ? Level.DETAIL : Level.INFO
-#endif
-		;
+		protected Level _level = Level.DETAIL;
 
 		public Level level
 		{
@@ -103,16 +103,31 @@ namespace KSPe.Util.Log {
 			return level <= this._level;
 		}
 
+		internal readonly Type type;
+		internal readonly String nameSpace;
 		private readonly String prefix;
 
-		protected Logger(string forceThisNamespace)
+		protected Logger(Type type)
 		{
-			this.prefix = string.Format("[{0}]", forceThisNamespace);
+			this.type = type;
+			this.nameSpace = type.Namespace;
+			this.prefix = string.Format("[{0}]", this.nameSpace);
 		}
 
-		protected Logger(string forceThisNamespace, string forceThisClassName)
+		protected Logger(Type type, string forceThisNamespace)
 		{
+			this.type = type;
+			this.nameSpace = forceThisNamespace;
+			this.prefix = string.Format("[{0}]", forceThisNamespace);
+			this._level = Globals.Get(this.type).Log.Level;
+		}
+
+		protected Logger(Type type, string forceThisNamespace, string forceThisClassName)
+		{
+			this.type = type;
+			this.nameSpace = forceThisNamespace;
 			this.prefix = string.Format("[{0}-{1}]", forceThisNamespace, forceThisClassName);
+			this._level = Globals.Get(this.type).Log.Level;
 		}
 		
 		protected abstract LogMethod select();

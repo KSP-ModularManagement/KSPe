@@ -97,6 +97,9 @@
       <Link>Multiplatform\Shell.cs</Link>
     </Compile>
     <Compile Include="Util\log\UnityThreadSafeStub.cs" />
+    <Compile Include="..\KSPe\Globals.cs">
+      <Link>Globals.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />

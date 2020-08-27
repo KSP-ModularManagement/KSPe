@@ -26,14 +26,21 @@ namespace KSPe.Util.Log {
 
 	public class UnityLogger : Logger
 	{
-		public UnityLogger(string forceThisNamespace) : base(forceThisNamespace)
+		public UnityLogger(Type type) : base(type)
+		{
+#if DEBUG
+			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0}", type);
+#endif
+		}
+
+		public UnityLogger(Type type, string forceThisNamespace) : base(type, forceThisNamespace)
 		{
 #if DEBUG
 			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0}", forceThisNamespace);
 #endif
 		}
 
-		public UnityLogger(string forceThisNamespace, string forceThisClassName) : base(forceThisNamespace, forceThisClassName)
+		public UnityLogger(Type type, string forceThisNamespace, string forceThisClassName) : base(type, forceThisNamespace, forceThisClassName)
 		{
 #if DEBUG
 			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0}-{1}", forceThisNamespace, forceThisClassName);

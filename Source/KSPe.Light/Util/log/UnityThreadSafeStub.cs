@@ -26,8 +26,9 @@ namespace KSPe.Util.Log {
 
 	public class UnityThreadSafeLogger : Logger
 	{
-		public UnityThreadSafeLogger(string forceThisNamespace) : base(forceThisNamespace) { }
-		public UnityThreadSafeLogger(string forceThisNamespace, string forceThisClassName) : base(forceThisNamespace, forceThisClassName) { }
+		public UnityThreadSafeLogger(Type type) : base(type) { }
+		public UnityThreadSafeLogger(Type type, string forceThisNamespace) : base(type, forceThisNamespace) { }
+		public UnityThreadSafeLogger(Type type, string forceThisNamespace, string forceThisClassName) : base(type, forceThisNamespace, forceThisClassName) { }
 
 		protected override LogMethod select()
 		{
