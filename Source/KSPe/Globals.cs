@@ -94,7 +94,12 @@ namespace KSPe
 		internal static Dictionary<string, Globals> _locals = new Dictionary<string, Globals>();
 		internal static void Init()
 		{
-			try
+			if (!System.IO.File.Exists("PluginData/KSPe.cfg"))
+			{
+				UnityEngine.Debug.Log("[KSPe] KSPe.cfg does not exists. Using defaults.");
+				_default = Globals.createDefault();
+			}
+			else try
 			{
 				ConfigNode node = ConfigNode.Load("PluginData/KSPe.cfg");
 				KSPE.ConfigNodeWithSteroids sn = KSPE.ConfigNodeWithSteroids.from(node);
@@ -116,7 +121,7 @@ namespace KSPe
 			}
 			catch (Exception e)
 			{
-				UnityEngine.Debug.LogError("[KSPe] Error on reading KSPe.cfg");
+				UnityEngine.Debug.LogErrorFormat("[KSPe] Error on reading KSPe.cfg dur '{0}'. Using defaults.", e.Message);
 				UnityEngine.Debug.LogException(e);
 				_default = Globals.createDefault();
 			}
