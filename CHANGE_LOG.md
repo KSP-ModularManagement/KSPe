@@ -1,6 +1,6 @@
 # KSP API Extensions/L :: Change Log
 
-* 2020-0825: 2.2.1.2 (Lisias) for KSP >= 1.2
+* 2020-0901: 2.2.1.3 (Lisias) for KSP >= 1.2
 	+ New Global/Local configuration support for KSPe features.
 		- Read the [Documentation](https://github.com/net-lisias-ksp/KSPAPIExtensions/blob/mestre/Docs/KSPe.md) for more information. 
 * 2020-0825: 2.2.1.1 (Lisias) for KSP >= 1.2
