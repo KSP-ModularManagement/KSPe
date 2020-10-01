@@ -48,7 +48,7 @@ namespace KSPe
 			{
 				int defaultLevel = GameSettings.VERBOSE_DEBUG_LOG ? (int)Util.Log.Level.DETAIL : (int)Util.Log.Level.INFO;
 				int level = node.GetValue<int>("LogLevel", defaultLevel);
-				level = Math.Min(0, Math.Max(5, level));
+				level = Math.Max(0, Math.Min(5, level));
 				return new LogConfig(
 					(Util.Log.Level)level,
 					node.GetValue<bool>("ThreadSafe", false)
