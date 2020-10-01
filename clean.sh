@@ -21,6 +21,8 @@ rm -f "./GameData/$TARGETDIR/$VERSIONFILE"
 rm -f "./GameData/$TARGETDIR/CHANGE_LOG.md"
 rm -f "./GameData/$TARGETDIR/README.md"
 rm -f "./GameData/$TARGETDIR/LICENSE*"
+find "./GameData/$TARGETBINDIR" -name "KSPe.Light.*.dll" -delete
 for dll in $DLLS 000_KSPe ; do
     clean $dll
 done
+
