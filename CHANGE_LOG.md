@@ -1,5 +1,10 @@
 # KSP API Extensions/L :: Change Log
 
+* 2020-1001: 2.2.1.4 (Lisias) for KSP >= 1.2
+	+ Some pretty lame mistakes fixed.
+	+ **IMPORTANT**
+		- Completely remove the folder `000_KSPAPIExtensions`
+		- A rogue DLL leaked on the last release, and **IT MUST BE REMOVED** 
 * 2020-0901: 2.2.1.3 (Lisias) for KSP >= 1.2
 	+ New Global/Local configuration support for KSPe features.
 		- Read the [Documentation](https://github.com/net-lisias-ksp/KSPAPIExtensions/blob/mestre/Docs/KSPe.md) for more information. 
