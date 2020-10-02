@@ -22,6 +22,7 @@
 */
 
 using System;
+using KSPe.Util;
 using SIO = System.IO;
 
 namespace KSPe.IO
@@ -31,12 +32,11 @@ namespace KSPe.IO
 		public string Path { get; protected set; }
 		public bool IsLoadable => SIO.File.Exists(this.Path) && (0 == (SIO.FileAttributes.Directory & SIO.File.GetAttributes(this.Path)));
 
-		private ConfigNode _Node;
-		public ConfigNode Node {
+		protected ConfigNode _Node; // Staging Node - preventing unwanted or accidental changes. See Invalidate below, and Commit & Rollback on Writable descendants
+		public virtual ConfigNode Node {
 			get {
-				if (null == this._Node)
-					this._Node = (null != this.name ? this.RawNode.GetNode(this.name) : this.RawNode);
-				return this._Node;
+				if (null != this._Node) return this._Node;
+				return this._Node = ((null != this.name ? this.RawNode.GetNode(this.name) : this.RawNode));
 			}
 		}
 		public ConfigNodeWithSteroids NodeWithSteroids => ConfigNodeWithSteroids.from(this.Node);
@@ -65,12 +65,18 @@ namespace KSPe.IO
 			if (null != this.name && this.name != n.GetNodes()[0].name)
 				throw new FormatException(string.Format("Incompatible Node '{1}' for Config '{0}' on {2}.", this.name, n.GetNodes()[0].name, this.Path));
 			this.RawNode = n;
+			this.Invalidate();
 			return this;
+		}
+
+		public void Invalidate()
+		{
+			this._Node = null;
 		}
 
 		public void Clear()
 		{
-			this._Node = null;
+			this.Invalidate();
 			ConfigNode n = null == this.name ? new ConfigNode() : new ConfigNode(this.name);
 			this.RawNode = new ConfigNode();
 			if (null != this.name)
@@ -87,6 +93,13 @@ namespace KSPe.IO
 	{
 		protected WritableConfigNode(string name) : base(name){}
 
+		public override ConfigNode Node {
+			get {
+				if (null != this._Node) return this._Node;
+				return this._Node = ((null != this.name ? this.RawNode.GetNode(this.name) : this.RawNode)).CreateCopy();
+			}
+		}
+
 		public void Save()
 		{
 			this.Save((string)null);
@@ -94,10 +107,12 @@ namespace KSPe.IO
 
 		public void Save(string header)
 		{
+			this.Commit();
 			if (null != header)
 				this.RawNode.Save(this.Path, header);
 			else
 				this.RawNode.Save(this.Path);
+			this.Invalidate();
 		}
 
 		public void Save(ConfigNode node)
@@ -121,8 +136,28 @@ namespace KSPe.IO
 					this.RawNode = n[0];
 				else
 					throw new FormatException(string.Format("Incompatible Node '{1}' for Config '{0}' on {2}.", this.name, node.name, this.Path));
-			}	
+			}
+			this.Invalidate();	// Prevent the StagingNode to overwritte the new RawNode
 			this.Save(header);
+		}
+
+		public void Commit()
+		{
+			if (null == this._Node) return;
+
+			ConfigNode n = (null == this.name ? this.RawNode : this.RawNode.GetNode(this.name));
+			if (null != this.name && !this.name.Equals(n.name))
+				throw new FormatException(string.Format("Incompatible Node '{1}' for Config '{0}' on {2}. How you managed to do that?", this.name, this.RawNode.name, this.Path));
+
+			n.ClearData();
+			n.name = this.name;	// Just to be extra sure.
+			n.AddData(this._Node);
+			this.Invalidate();
+		}
+
+		public void Rollback()	// Semantic sugar
+		{
+			this.Invalidate();
 		}
 
 		public void Destroy()
