@@ -28,22 +28,23 @@ namespace KSPe.GameDB
 	public static class Asset<T>
 	{
        internal static readonly KSPe.LocalCache<string> CACHE = new KSPe.LocalCache<string>();
+       internal static readonly KSPe.LocalCache<string> CACHE_BASE = new KSPe.LocalCache<string>();
 
 		// Hell of a hack, but it works for now! :)
-		private static string hackPath(string r)
+		private static string hackPath(string r, bool ommitGamedata = true)
 		{
 			{ 
 				int i = r.IndexOf("GameData/", StringComparison.Ordinal);
-				r = (i < 0) ? r : r.Substring(i + 9);
+				r = (i < 0) ? r : r.Substring(i + (ommitGamedata ? 9 : 0));
 			}
 
 			return r.Replace("\\", "/"); // GameDatabase uses "/" on the naming.
 			// FIXME: I need to do furher transformations (underscores, dots, etc)
 		}
 
-		public static string Solve(string fn)
+		public static string SourceDir(string fn)
 		{
-			LocalCache<string>.Dictionary c = CACHE[typeof(T)];
+			LocalCache<string>.Dictionary c = CACHE_BASE[typeof(T)];
 			if (c.ContainsKey(fn)) return c[fn];
 
 			string r = IO.Hierarchy<T>.GAMEDATA.SolveFull(false, "Assets"); // Hack dos infernos. :( Perhaps this Assets stunt isn't a good idea after all. :/
@@ -51,10 +52,28 @@ namespace KSPe.GameDB
 				r = IO.Hierarchy<T>.GAMEDATA.SolveFull(false, "Assets", fn);
 			else
 				r = IO.Hierarchy<T>.GAMEDATA.SolveFull(false, fn);
-			
 
-			r =  hackPath(r);
+			r = hackPath(r, false);
+
 			return c[fn] = r;
+		}
+
+		public static string Solve(string fn)
+		{
+			LocalCache<string>.Dictionary c = CACHE[typeof(T)];
+			if (c.ContainsKey(fn)) return c[fn];
+
+			string r = SourceDir(fn);
+			r = hackPath(r);
+			return c[fn] = r;
+		}
+
+		public static string SourceDir(string fn, params string[] fns)
+		{
+			string path = fn;
+			foreach (string s in fns)
+				path = IO.Path.Combine(path, s);
+			return SourceDir(path);
 		}
 
 		public static string Solve(string fn, params string[] fns)
@@ -64,6 +83,5 @@ namespace KSPe.GameDB
 				path = IO.Path.Combine(path, s);
 			return Solve(path);
 		}
-
 	}
 }
