@@ -96,7 +96,7 @@ namespace KSPe.IO
 		public override ConfigNode Node {
 			get {
 				if (null != this._Node) return this._Node;
-				return this._Node = ((null != this.name ? this.RawNode.GetNode(this.name) : this.RawNode)).CreateCopy();
+				return this._Node = ((null != this.name ? this.RawNode.GetNode(this.name) : KSPe.Util.ConfigNode.CreateDeepCopy(this.RawNode)));
 			}
 		}
 
@@ -145,13 +145,16 @@ namespace KSPe.IO
 		{
 			if (null == this._Node) return;
 
-			ConfigNode n = (null == this.name ? this.RawNode : this.RawNode.GetNode(this.name));
-			if (null != this.name && !this.name.Equals(n.name))
-				throw new FormatException(string.Format("Incompatible Node '{1}' for Config '{0}' on {2}. How you managed to do that?", this.name, this.RawNode.name, this.Path));
+			if (null == this.name)
+				this.RawNode = this._Node;
+			else
+			{
+				if (!this.name.Equals(this._Node.name))
+					throw new FormatException(string.Format("Incompatible Node '{1}' for Config '{0}' on {2}. How you managed to do that?", this.name, this._Node.name, this.Path));
+				if (this.RawNode.HasNode(this.name)) this.RawNode.RemoveNodes(this.name);
+				this.RawNode.AddNode(this._Node);
+			}
 
-			n.ClearData();
-			n.name = this.name;	// Just to be extra sure.
-			n.AddData(this._Node);
 			this.Invalidate();
 		}
 
