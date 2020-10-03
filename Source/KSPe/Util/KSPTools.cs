@@ -241,4 +241,104 @@ namespace KSPe.Util
 			}
 		}
 	}
+
+	// Since I don't now for sure if ConfigNode.CreateCopy is deep or shallow, I decided to reimplement the thing
+	// and gain control about it.
+	public static class ConfigNode
+	{
+		/// <summary>
+		/// Creates a Deep Copy of the ConfigNode `source`.
+		/// Everything is duplicated from the root to the leaves.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <returns></returns>
+		public static global::ConfigNode CreateDeepCopy(global::ConfigNode source)
+		{
+			global::ConfigNode r = new global::ConfigNode
+			{
+				id = source.id,
+				name = source.name,
+				comment = source.comment
+			};
+			{
+				for (int i = 0; i < source.values.Count; ++i)
+				{
+					global::ConfigNode.Value ov = source.values[i];
+					global::ConfigNode.Value nv = new global::ConfigNode.Value(ov.name, ov.value, ov.comment);
+					r.values.Add(nv);
+				}
+
+				for (int i = 0; i < source.nodes.Count; ++i)
+				{
+					global::ConfigNode o = source.nodes[i];
+					global::ConfigNode n = CreateDeepCopy(o);
+					r.nodes.Add(n);
+				}
+			}
+			return r;
+		}
+
+		/// <summary>
+		/// Creates a Shallow Copy of the ConfigNode `source`.
+		/// Only the values are duplicated, any nodes are just relinked into the new copy.
+		/// Any changes to values will preserve the origin from changes, but any change on the subnodes will affect the originals.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <returns></returns>
+		public static global::ConfigNode CreateShallowCopy(global::ConfigNode source)
+		{
+			global::ConfigNode r = new global::ConfigNode
+			{
+				id = source.id,
+				name = source.name,
+				comment = source.comment
+			};
+			{
+				for (int i = 0; i < source.values.Count; ++i)
+				{
+					global::ConfigNode.Value ov = source.values[i];
+					global::ConfigNode.Value nv = new global::ConfigNode.Value(ov.name, ov.value, ov.comment);
+					r.values.Add(nv);
+				}
+
+				for (int i = 0; i < source.nodes.Count; ++i)
+				{
+					global::ConfigNode o = source.nodes[i];
+					r.nodes.Add(o);
+				}
+			}
+			return r;
+		}
+
+		/// <summary>
+		/// Creates a Flat Copy for the ConfigNode `Source`
+		/// Everything is relinked into the new ConfigNode, nothing is duplicated.
+		/// Any changes on the current contents will affect the originals, but additional values or nodes will not.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <returns></returns>
+		public static global::ConfigNode CreateFlatCopy(global::ConfigNode source)
+		{
+			global::ConfigNode r = new global::ConfigNode
+			{
+				id = source.id,
+				name = source.name,
+				comment = source.comment
+			};
+			{
+				for (int i = 0; i < source.values.Count; ++i)
+				{
+					global::ConfigNode.Value ov = source.values[i];
+					r.values.Add(ov);
+				}
+
+				for (int i = 0; i < source.nodes.Count; ++i)
+				{
+					global::ConfigNode o = source.nodes[i];
+					r.nodes.Add(o);
+				}
+			}
+			return r;
+		}
+	}
 }
