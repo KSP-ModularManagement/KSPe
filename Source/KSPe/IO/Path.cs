@@ -108,6 +108,10 @@ namespace KSPe.IO
 		{
 			if (null != root) return root;	// Preventing accidents. No reentrant.
 
+			#if DEBUG
+				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] Calculating Origin for {0}", typeof(KSPUtil).Assembly.Location);
+			#endif
+
 			string path = typeof(KSPUtil).Assembly.Location
 				.Replace("KSP_x64_Data",".")						// Win64 versions
 				.Replace("KSP_Data",".")							// Linux and Win32 versions
@@ -116,6 +120,10 @@ namespace KSPe.IO
 				;
 			path = Path.GetDirectoryName(IO.Path.GetAbsolutePath(path));
 
+			#if DEBUG
+				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] Normalized path {0}", path);
+			#endif
+
 			string gd = SIO.Path.Combine(path, "GameData");
 			process_dir(path, gd);
 
@@ -123,11 +131,22 @@ namespace KSPe.IO
 				process_dir(gd, dir);
 
 			UNREPARSE_KEYS.AddRange(UNREPARSE.Keys.OrderByDescending( x => x.Length));
+
 			return root = EnsureTrailingSeparatorOnDir(path); // Note: it should end with a DSC because I do fast string manipulations everywhere, and they depends on it.
+
+			#if DEBUG
+				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] Origin is {0}", root);
+				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] PWD    is {0}", SIO.Directory.GetCurrentDirectory());
+			#endif
+			return root;
 		}
 
 		private static void process_dir(string path, string dir)
 		{
+			#if DEBUG
+				UnityEngine.Debug.LogFormat("[KSPe.IO.Path.process_dir] path is {0}", path);
+				UnityEngine.Debug.LogFormat("[KSPe.IO.Path.process_dir] dir  is {0}", dir);
+			#endif
 			if (Multiplatform.FileSystem.IsReparsePoint(dir))
 			{
 				string reparsed = EnsureTrailingSeparatorOnDir(Multiplatform.FileSystem.ReparsePath(Combine(path, dir)));
