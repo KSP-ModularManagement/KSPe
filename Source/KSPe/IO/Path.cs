@@ -118,25 +118,30 @@ namespace KSPe.IO
 				.Replace("KSP.app/Contents/Resources/Data", ".")	// Mac
 				.Replace("Managed", ".")							// Everybody
 				;
-			path = Path.GetDirectoryName(IO.Path.GetAbsolutePath(path));
+			path = GetDirectoryName(GetAbsolutePath(path));
 
 			#if DEBUG
 				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] Normalized path {0}", path);
 			#endif
 
-			string gd = SIO.Path.Combine(path, "GameData");
-			process_dir(path, gd);
+			string currentDir = EnsureTrailingSeparatorOnDir(SIO.Directory.GetCurrentDirectory());
+			process_dir(path, currentDir);
 
-			foreach(string dir in SIO.Directory.GetDirectories(gd, "*", SIO.SearchOption.AllDirectories))
-				process_dir(gd, dir);
+			// SYMLINKS are returned as is, ie, relative symlinks returns "../../something".
+			// Realpaths returns itselves, is, /somedir/somefile
+			foreach(string dir in SIO.Directory.GetDirectories(currentDir, "*", SIO.SearchOption.AllDirectories))
+				process_dir(currentDir, dir);
+
+			root = EnsureTrailingSeparatorOnDir(path);  // Note: it should end with a DSC because I do fast string manipulations everywhere, and they depends on it.
+
+			if (!currentDir.Equals(root)) // The PWD is reparsed by mono on MacOS. On Linux, **it's not**! Damn you, Microsoft!
+				register_alias(currentDir, root);
 
 			UNREPARSE_KEYS.AddRange(UNREPARSE.Keys.OrderByDescending( x => x.Length));
 
-			return root = EnsureTrailingSeparatorOnDir(path); // Note: it should end with a DSC because I do fast string manipulations everywhere, and they depends on it.
-
 			#if DEBUG
 				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] Origin is {0}", root);
-				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] PWD    is {0}", SIO.Directory.GetCurrentDirectory());
+				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] PWD    is {0}", currentDir);
 			#endif
 			return root;
 		}
@@ -149,12 +154,23 @@ namespace KSPe.IO
 			#endif
 			if (Multiplatform.FileSystem.IsReparsePoint(dir))
 			{
-				string reparsed = EnsureTrailingSeparatorOnDir(Multiplatform.FileSystem.ReparsePath(Combine(path, dir)));
-				UNREPARSE[reparsed] = EnsureTrailingSeparatorOnDir(dir);
-				#if DEBUG
-					UnityEngine.Debug.LogFormat("[KSPe.IO.Path] UNREPARSE {0} <- {1}", reparsed, UNREPARSE[reparsed]);
-				#endif
+				string reparsed = Multiplatform.FileSystem.ReparsePath(
+					IsPathRooted(dir)
+						? dir
+						: Combine(path, dir)
+				);
+				register_alias(reparsed, dir);
 			}
+		}
+
+		private static void register_alias(string reparsed, string dir)
+		{
+			reparsed = EnsureTrailingSeparatorOnDir(reparsed);
+			dir = EnsureTrailingSeparatorOnDir(dir);
+			UNREPARSE[reparsed] = dir;
+			#if DEBUG
+				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] UNREPARSE {0} <- {1}", reparsed, UNREPARSE[reparsed]);
+			#endif
 		}
 	}
 }
