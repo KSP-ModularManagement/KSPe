@@ -62,7 +62,7 @@ namespace KSPe.IO
 		{
 			if (!SIO.Path.IsPathRooted(path)) return GetFullPath(Combine(SIO.Directory.GetCurrentDirectory(), path));
 			string r = new System.Uri(path).LocalPath;
-			foreach (string k in UNREPARSE.Keys.OrderByDescending( x => x.Length))
+			foreach (string k in UNREPARSE_KEYS)
 			{
 				if (r.StartsWith(k))
 				{
@@ -94,6 +94,7 @@ namespace KSPe.IO
 
 		private static string root = null;
 		private static readonly Dictionary<string,string> UNREPARSE = new Dictionary<string, string>();
+		private static readonly List<string> UNREPARSE_KEYS = new List<string>();
 		internal static string Origin()
 		{
 			if (null != root) return root;	// Preventing accidents. No reentrant.
@@ -122,7 +123,7 @@ namespace KSPe.IO
 				string reparsed = Multiplatform.FileSystem.ReparsePath(Combine(path, dir));
 				if (reparsed[reparsed.Length-1] != DirectorySeparatorChar) reparsed += DirectorySeparatorChar;
 				UNREPARSE[reparsed] = dir[dir.Length-1] == DirectorySeparatorChar ? dir : dir + AltDirectorySeparatorChar;
-
+				UNREPARSE_KEYS.AddRange(UNREPARSE.Keys.OrderByDescending( x => x.Length));
 				#if DEBUG
 					UnityEngine.Debug.LogFormat("[KSPe.IO.Path] UNREPARSE {0} <- {1}", reparsed, UNREPARSE[reparsed]);
 				#endif
