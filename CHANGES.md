@@ -1,5 +1,15 @@
 # KSP API Extensions/L :: Changes
 
+* 2020-1004: 2.2.1.5 (Lisias) for KSP >= 1.2
+	+ **Finally** implementing the Commit/Rollback stunt for the `WriteableConfigNode` descendants.
+		- Now you can just `configNode.Rollback()` to revert all the uncommitted changes if anything bad happen.
+		- `Save` implies `Commit` (auto commit style), but you can use `configNode.Commit()` sporadically to make sure part of the job will be persisted if it is aborted.
+	+ Some helpers to *deep*, *shallow* or *flat* copy ConfigNodes.
+	+ Some hackish helpers for linking files on GameData into the GameDatabase.
+		- Ugly as hell, but it solved the problem. 
+	+ **IMPORTANT**
+		- Completely remove the folder `000_KSPAPIExtensions` if you didn't did that recently.
+		- A rogue DLL leaked on the 2.2.1.3 release, and **IT MUST BE REMOVED** 
 * 2020-1001: 2.2.1.4 (Lisias) for KSP >= 1.2
 	+ Some pretty lame mistakes fixed.
 	+ **IMPORTANT**
