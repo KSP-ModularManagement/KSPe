@@ -85,7 +85,7 @@ namespace KSPe.Multiplatform
 						UnityEngine.Debug.LogError(e);
 						return path;	// May God help the caller. :)
 					}
-					parcels.Add(SIO.Path.GetFileName(path));
+					parcels.Add(IO.Path.GetFileName(path));
 				}
 				finally
 				{
@@ -95,7 +95,7 @@ namespace KSPe.Multiplatform
 
 			parcels.Reverse();
 			string r = ""+SIO.Path.DirectorySeparatorChar;
-			foreach (string p in parcels) r = System.IO.Path.Combine(r, p);
+			foreach (string p in parcels) r = SIO.Path.Combine(r, p);
 			return SIO.Path.GetFullPath(r);
 		}
 

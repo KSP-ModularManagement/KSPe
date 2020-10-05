@@ -37,7 +37,7 @@ namespace Tests
 				{
 					Console.WriteLine(f);
 				}
-				Console.WriteLine(System.IO.Path.GetFullPath("/Users/lisias/Applications/.././Blah/../Bleh/./"));
+				Console.WriteLine(SIO.Path.GetFullPath("/Users/lisias/Applications/.././Blah/../Bleh/./"));
 			}
 
 			if (System.IO.File.Exists("/Users/lisias/Workspaces/KSP/runtime/1.4.3/GameData/net.lisias.ksp/KramaxAutoPilot/."))
