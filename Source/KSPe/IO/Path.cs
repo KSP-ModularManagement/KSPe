@@ -148,6 +148,7 @@ namespace KSPe.IO
 
 		private static void process_dir(string path, string dir)
 		{
+			if (path.Equals(dir)) return;	// The foreach that feeds this thing gives us the "." file, normalized, too!
 			#if DEBUG
 				UnityEngine.Debug.LogFormat("[KSPe.IO.Path.process_dir] path is {0}", path);
 				UnityEngine.Debug.LogFormat("[KSPe.IO.Path.process_dir] dir  is {0}", dir);
