@@ -645,13 +645,13 @@ namespace KSPe.IO
 			public static string Solve(string fn)
 			{
 				string r = Hierarchy<T>.LOCALDATA.SolveFull(false, fn);
-				return r.Substring(r.IndexOf(Hierarchy.GAMEDATA.relativePathName + Path.DirectorySeparatorChar, StringComparison.Ordinal) + 1 + Hierarchy.GAMEDATA.relativePathName.Length);
+				return r.Substring(r.IndexOf(Hierarchy.GAMEDATA.relativePathName, StringComparison.Ordinal) + Hierarchy.GAMEDATA.relativePathName.Length);
 			}
 
 			public static string Solve(string fn, params string[] fns)
 			{
 				string r = Hierarchy<T>.LOCALDATA.SolveFull(false, fn);
-				return r.Substring(r.IndexOf(Hierarchy.GAMEDATA.relativePathName + Path.DirectorySeparatorChar, StringComparison.Ordinal) + 1 + Hierarchy.GAMEDATA.relativePathName.Length);
+				return r.Substring(r.IndexOf(Hierarchy.GAMEDATA.relativePathName, StringComparison.Ordinal) + Hierarchy.GAMEDATA.relativePathName.Length);
 			}
 
 			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)

@@ -214,7 +214,7 @@ namespace KSPe.Util.Image {
 		private static string TexPathname(string path)
 		{
 			string s = KSPUtil.ApplicationRootPath;
-			if (!path.StartsWith("GameData"+IO.Path.DirectorySeparatorChar))
+			if (!path.StartsWith(IO.Path.EnsureTrailingSeparatorOnDir("GameData", true)))
 				s = IO.Path.Combine(s, "GameData");
 			s = IO.Path.Combine(s,  path);
 			dbg("KSPe.ImageTex.TexPathname: {0} -> {1}", path, s);

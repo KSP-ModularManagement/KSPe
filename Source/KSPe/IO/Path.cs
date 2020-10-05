@@ -43,17 +43,26 @@ namespace KSPe.IO
 		public static readonly char PathSeparator = SIO.Path.PathSeparator;
 		public static readonly char VolumeSeparatorChar = SIO.Path.VolumeSeparatorChar;
 
+		public static string EnsureTrailingSeparatorOnDir(string path, bool blindlyAppend = false)
+		{
+			if (DirectorySeparatorChar == path.Last()) return path;
+			return blindlyAppend || SIO.Directory.Exists(path)
+				? path + DirectorySeparatorChar
+				: path
+				;
+		}
+
 		public static string ChangeExtension(string path, string extension) { return SIO.Path.ChangeExtension(path, extension); }
 
-		public static string Combine(string path1, string path2)			{ return SIO.Path.Combine(path1, path2); }
+		public static string Combine(string path1, string path2)			{ return EnsureTrailingSeparatorOnDir(SIO.Path.Combine(path1, path2)); }
 		public static string Combine(string path, params string[] paths) // Since we are here, why not backport some niceties from 4.x?
 		{
 			string r = path;
 			foreach (string p in paths) r = Combine(r, p);
-			return r;
+			return EnsureTrailingSeparatorOnDir(r);
 		}
 
-		public static string GetDirectoryName(string path)				{ return SIO.Path.GetDirectoryName(path); }
+		public static string GetDirectoryName(string path)				{ return EnsureTrailingSeparatorOnDir(SIO.Path.GetDirectoryName(path)); }
 		public static string GetExtension(string path)					{ return SIO.Path.GetExtension(path); }
 		public static string GetFileName(string path)					{ return SIO.Path.GetFileName(path); }
 		public static string GetFileNameWithoutExtension(string path)	{ return SIO.Path.GetFileNameWithoutExtension(path); }
@@ -61,7 +70,7 @@ namespace KSPe.IO
 		public static string GetFullPath(string path)
 		{
 			if (!SIO.Path.IsPathRooted(path)) return GetFullPath(Combine(SIO.Directory.GetCurrentDirectory(), path));
-			string r = new System.Uri(path).LocalPath;
+			string r = EnsureTrailingSeparatorOnDir(new System.Uri(path).LocalPath);
 			foreach (string k in UNREPARSE_KEYS)
 			{
 				if (r.StartsWith(k))
@@ -75,22 +84,22 @@ namespace KSPe.IO
 
 		public static string GetAbsolutePath(string path)
 		{
-			return SIO.Path.GetFullPath(path);
+			return EnsureTrailingSeparatorOnDir(SIO.Path.GetFullPath(path));
 		}
 
 		public static char[] GetInvalidFileNameChars()					{ return SIO.Path.GetInvalidFileNameChars(); }
 		public static char[] GetInvalidPathChars()						{ return SIO.Path.GetInvalidPathChars(); }
-		public static string GetPathRoot(string path)					{ return SIO.Path.GetPathRoot(path); }
+		public static string GetPathRoot(string path)					{ return EnsureTrailingSeparatorOnDir(SIO.Path.GetPathRoot(path)); }
 		public static string GetRandomFileName()						{ return SIO.Path.GetRandomFileName(); }
 
 		[System.Security.Permissions.FileIOPermission(System.Security.Permissions.SecurityAction.Assert, Unrestricted = true)]
 		public static string GetTempFileName()							{ return SIO.Path.GetTempFileName(); }
 
 		[System.Security.Permissions.EnvironmentPermission(System.Security.Permissions.SecurityAction.Demand, Unrestricted = true)]
-		public static string GetTempPath ()								{ return SIO.Path.GetTempPath(); }
+		public static string GetTempPath()								{ return EnsureTrailingSeparatorOnDir(SIO.Path.GetTempPath()); }
 
-		public static bool HasExtension (string path)					{ return SIO.Path.HasExtension(path); }
-		public static bool IsPathRooted (string path)					{ return SIO.Path.IsPathRooted(path); }
+		public static bool HasExtension(string path)					{ return SIO.Path.HasExtension(path); }
+		public static bool IsPathRooted(string path)					{ return SIO.Path.IsPathRooted(path); }
 
 		private static string root = null;
 		private static readonly Dictionary<string,string> UNREPARSE = new Dictionary<string, string>();

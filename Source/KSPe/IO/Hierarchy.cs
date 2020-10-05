@@ -43,14 +43,20 @@ namespace KSPe.IO
 		protected Hierarchy(string name)
 		{
 			this.name = name;
-			this.relativePathName = ".";
-			this.fullPathName = Path.GetFullPath(Path.Combine(ROOTPATH, relativePathName)); // Ensures any path shenanigans are resolved.
+			this.relativePathName = Path.EnsureTrailingSeparatorOnDir(".", true);
+			this.fullPathName = Path.EnsureTrailingSeparatorOnDir(
+				Path.GetFullPath(Path.Combine(ROOTPATH, relativePathName)) // Ensures any path shenanigans are resolved.
+				, true);
 		}
 		protected Hierarchy(string name, string dirName)
 		{
 			this.name = name;
-			this.fullPathName = Path.GetFullPath(Path.Combine(ROOTPATH, dirName)); // Ensures any path shenanigans are resolved.
-			this.relativePathName = this.fullPathName.Replace(ROOTPATH, "");
+			this.fullPathName = Path.EnsureTrailingSeparatorOnDir(
+				Path.GetFullPath(Path.Combine(ROOTPATH, dirName)) // Ensures any path shenanigans are resolved.
+				, true);
+			this.relativePathName = Path.EnsureTrailingSeparatorOnDir(
+				this.fullPathName.Replace(ROOTPATH, "")
+				, true);
 		}
 
 		new public String ToString() { return this.name; }
