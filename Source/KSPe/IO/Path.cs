@@ -122,6 +122,7 @@ namespace KSPe.IO
 			foreach(string dir in SIO.Directory.GetDirectories(gd, "*", SIO.SearchOption.AllDirectories))
 				process_dir(gd, dir);
 
+			UNREPARSE_KEYS.AddRange(UNREPARSE.Keys.OrderByDescending( x => x.Length));
 			return root = path + Path.DirectorySeparatorChar; // Note: it should end with a DSC because I do fast string manipulations everywhere, and they depends on it.
 		}
 
@@ -132,7 +133,6 @@ namespace KSPe.IO
 				string reparsed = Multiplatform.FileSystem.ReparsePath(Combine(path, dir));
 				if (reparsed[reparsed.Length-1] != DirectorySeparatorChar) reparsed += DirectorySeparatorChar;
 				UNREPARSE[reparsed] = dir[dir.Length-1] == DirectorySeparatorChar ? dir : dir + AltDirectorySeparatorChar;
-				UNREPARSE_KEYS.AddRange(UNREPARSE.Keys.OrderByDescending( x => x.Length));
 				#if DEBUG
 					UnityEngine.Debug.LogFormat("[KSPe.IO.Path] UNREPARSE {0} <- {1}", reparsed, UNREPARSE[reparsed]);
 				#endif
