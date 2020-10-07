@@ -72,12 +72,56 @@ Your KSP is running on [{3}]."
 			}
 		}
 
+		public class DuplicityInstallationException : Exception
+		{
+			public readonly string assemblyName;
+			public readonly string[] paths;
+
+			private static readonly string message = @"{0} is installed on multiple places on this installment!
+
+{1}
+(On KSP 1.8 and newer, this list is not accurate and you must find the copies manually)
+
+Your KSP is running on [{3}]. Check {0}'s INSTALL instructions."
+			;
+
+			private static readonly string shortMessage = "There are {1} instances of the Add'On {0}. Only one must exist.";
+
+			public DuplicityInstallationException(List<AssemblyLoader.LoadedAssembly> loaded): base(shortMessage, loaded[0].name, loaded.Count)
+			{
+				this.assemblyName = loaded[0].name;
+				List<string> paths = new List<string>();
+				foreach (AssemblyLoader.LoadedAssembly l in loaded) paths.Add(l.path);
+				this.paths = paths.ToArray();
+			}
+
+			public override string ToLongMessage()
+			{
+				List<string> paths = new List<string>();
+				foreach(string path in this.paths) paths.Add(string.Format("* {0}\n", IO.Hierarchy.CalculateRelativePath(path, IO.Hierarchy.ROOTPATH)));
+				return string.Format(message, this.assemblyName, string.Join("", paths.ToArray()));
+			}
+		}
+
+		public static void Check<T>(string name, bool unique = true)
+		{
+			Check<T>(name, null, unique);
+		}
 		public static void Check<T>(string name, string vendor = null)
 		{
+			Check<T>(name, vendor, true);
+		}
+		public static void Check<T>(string name, string vendor = null, bool unique = true)
+		{
+			if (unique) CheckForDuplicity(name);
 			CheckForWrongDirectoy(typeof(T), name, vendor);
 		}
 
 		public static void Check<T>(System.Type versionClass)
+		{
+			Check<T>(versionClass, true);
+		}
+		public static void Check<T>(System.Type versionClass, bool unique = true)
 		{
 			string name = typeof(T).Namespace;
 			try
@@ -101,16 +145,20 @@ Your KSP is running on [{3}]."
 			catch (ArgumentException) { }
 			catch (NullReferenceException) { }
 
-			Check<T>(name, vendor);
+			Check<T>(name, vendor, unique);
 		}
 
 		public static void Check<T>()
+		{
+			Check<T>(true);
+		}
+		public static void Check<T>(bool unique = true)
 		{
 			Type versionClass = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
 					from tt in assembly.GetTypes()
 					where tt.Namespace == typeof(T).Namespace && tt.Name == "Version"
 					select tt).FirstOrDefault();
-			Check<T>(versionClass);
+			Check<T>(versionClass, unique);
 		}
 
 		private static void CheckForWrongDirectoy(Type type, string name, string vendor)
@@ -124,6 +172,18 @@ Your KSP is running on [{3}]."
 			if (installedDllPath.StartsWith(intendedPath)) return;
 
 			throw new WrongDirectoryInstallationException(name, intendedPath, installedDllPath);
+		}
+
+		private static void CheckForDuplicity(string name)
+		{
+			IEnumerable<AssemblyLoader.LoadedAssembly> loaded =
+				from a in AssemblyLoader.loadedAssemblies
+					let ass = a.assembly
+					where name == ass.GetName().Name
+					orderby a.path ascending
+					select a;
+
+			if (1 != loaded.Count()) throw new DuplicityInstallationException(loaded.ToList());
 		}
 	}
 
