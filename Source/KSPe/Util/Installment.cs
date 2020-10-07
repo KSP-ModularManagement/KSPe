@@ -42,9 +42,13 @@ namespace KSPe.Util
 
 		public class WrongDirectoryInstallationException : Exception
 		{
-			private static readonly string message = @"Unfortunately {0} is installed on the wrong Directory!
+			private static readonly string message = @"{0} is installed on the wrong Directory!
 
-It should be installed on {1} but it's currently installed on {2} ! Delete the latter and be sure to install {0} on the former.";
+It should be installed on [{1}] but it's currently installed on [{2}] ! Delete the latter and be sure to install {0} on the former.
+
+Your KSP is running on [{3}]."
+			;
+
 			private static readonly string shortMessage = "{0} should be installed on [{1}], not on [{2}].";
 
 			public readonly string name;
@@ -60,7 +64,11 @@ It should be installed on {1} but it's currently installed on {2} ! Delete the l
 
 			public override string ToLongMessage()
 			{
-				return string.Format(message, this.name, this.intendedPath, this.installedDllPath);
+				return string.Format(message, this.name
+					, IO.Hierarchy.CalculateRelativePath(this.intendedPath, IO.Hierarchy.ROOTPATH)
+					, IO.Hierarchy.CalculateRelativePath(this.installedDllPath, IO.Hierarchy.ROOTPATH)
+					, IO.Hierarchy.ROOTPATH
+				);
 			}
 		}
 
