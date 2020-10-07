@@ -28,6 +28,9 @@ using SIO = System.IO;
 
 namespace KSPe.IO
 {
+	// TODO: Make the whole thing **Internal** as soon as possible.
+	// NOTE: Ignore the Obsolete Warning inside this project until there.
+	[System.Obsolete("KSPe.IO.File is deprecated, please use KSPe.IO.File<T> instead.")]
 	public static class File
 	{
 		// TODO: Get rid of deprecated artifacts on the next major release.

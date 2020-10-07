@@ -12,6 +12,8 @@ namespace Tests
 			Console.WriteLine(Environment.GetCommandLineArgs()[0]);
 			Console.WriteLine(System.IO.Directory.GetCurrentDirectory());
 			Console.WriteLine(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
+			Console.WriteLine(System.IO.Path.Combine("/a/b/c/d/", "e"));
+			Console.WriteLine(System.IO.Path.Combine("/a/b/c/d//", "e"));
 		}
 	}
 }

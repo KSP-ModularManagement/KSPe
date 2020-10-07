@@ -108,7 +108,8 @@ It should be installed on {1} but it's currently installed on {2} ! Delete the l
 		private static void CheckForWrongDirectoy(Type type, string name, string vendor)
 		{
 			string intendedPath = IO.Path.Combine(IO.Path.Origin(), "GameData");
-			if (null != vendor)	intendedPath = IO.Path.Combine(intendedPath, vendor);
+			if (null != vendor) intendedPath = IO.Path.Combine(intendedPath, vendor);
+			intendedPath = IO.Path.Combine(intendedPath, name);
 			intendedPath = IO.Path.GetFullPath(intendedPath);
 
 			string installedDllPath = IO.Path.GetDirectoryName(IO.Path.GetFullPath(type.Assembly.Location.Replace("Plugins",".").Replace("Plugin",".")));
