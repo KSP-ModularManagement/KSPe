@@ -67,7 +67,7 @@ namespace KSPe.IO
 //			Array.Sort(files, StringComparer.CurrentCulture);   // This will sort 1, 10, 12, 2
 
 			for (int i = files.Length; --i >= 0;)
-				files[i] = files[i].Substring(files[i].IndexOf(rawdir, StringComparison.Ordinal) + rawdir.Length + 1); // +1 to get rid of the trailling "/"
+				files[i] = files[i].Substring(files[i].IndexOf(rawdir, StringComparison.Ordinal) + rawdir.Length);
 
 			return files;
 		}
