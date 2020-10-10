@@ -127,18 +127,24 @@ namespace KSPe.IO
 
 			if (null == this.name)
 				this.RawNode = node;
-			else if (this.name == node.name)
-				this.RawNode = node;
+			else if (this.name.Equals(node.name))
+				this.update(node);
 			else
 			{
 				ConfigNode[] n = node.GetNodes(this.name);
 				if (0 != n.Length)
-					this.RawNode = n[0];
+					this.update(n[0]);
 				else
 					throw new FormatException(string.Format("Incompatible Node '{1}' for Config '{0}' on {2}.", this.name, node.name, this.Path));
 			}
 			this.Invalidate();	// Prevent the StagingNode to overwritte the new RawNode
 			this.Save(header);
+		}
+
+		protected void update(ConfigNode node)
+		{
+			this.RawNode = new ConfigNode();
+			this.RawNode.SetNode(this.name, node, true);
 		}
 
 		public void Commit()
