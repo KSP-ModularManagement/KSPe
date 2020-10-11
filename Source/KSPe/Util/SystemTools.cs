@@ -147,7 +147,7 @@ namespace KSPe.Util
 
 			foreach (string path in CUSTOM_SEARCH_PATHS)
 			{
-				if (verbose) UnityEngine.Debug.LogFormat("[KSPe Binder] Looking for {0} into {1}...", filename, path);
+				if (verbose) UnityEngine.Debug.LogFormat("[KSPe Binder] Looking for {0} on {1}...", filename, path);
 				string asmFile = IO.Path.Combine(path,filename);
 				if (System.IO.File.Exists(asmFile)) return asmFile;
 			}

@@ -232,7 +232,7 @@ namespace KSPe.UI
 		private static Interface GetInstance()
 		{
 		#if DEBUG
-			UnityEngine.Debug.LogFormat("[KSP.UI] Looking for {0}", typeof(Interface).Name);
+			UnityEngine.Debug.LogFormat("[KSP.UI] Looking for {0}", typeof(Interface).FullName);
 		#endif
 			foreach(System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 				foreach(System.Type type in assembly.GetTypes())
