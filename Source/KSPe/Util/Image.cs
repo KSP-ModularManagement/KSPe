@@ -147,4 +147,75 @@ namespace KSPe.Util.Image {
 			UnityEngine.Debug.LogException(ex);
 		}
 	}
+
+	public static class Screenshot
+	{
+		public interface Interface
+		{
+			void Capture(string pathname);
+			void Capture(string pathname, int superSampleValue);
+		}
+
+		private class Fallback : Interface
+		{
+			void Interface.Capture(string pathname)
+			{
+				Capture(pathname, 1);
+			}
+
+			void Interface.Capture(string pathname, int superSampleValue)
+			{
+				ScreenMessages.PostScreenMessage ("No KSPe Screenshot support installed.");
+				UnityEngine.Debug.LogWarningFormat("[KSPe.Util.Image.Screenshot] Screenshot support not properly initialized! Screenshot {0} not taken!", pathname);
+			}
+		}
+
+		#region Abstracted Calls
+
+		public static void Capture(string pathname)								{ INSTANCE.Capture(pathname); }
+		public static void Capture(string pathname, int superSampleValue)		{ INSTANCE.Capture(pathname, superSampleValue); }
+
+		#endregion
+
+		private static readonly Interface INSTANCE;
+		private static Interface GetInstance()
+		{
+			string targetKsp = Util.KSP.Version.Current > Util.KSP.Version.FindByVersion(1,10,1)
+				? "KSP110."
+				: string.Format("KSP{0}{1}.", Util.KSP.Version.Current.MAJOR, Util.KSP.Version.Current.MINOR)
+				;
+		#if DEBUG
+			UnityEngine.Debug.LogFormat("[KSP.UI] Looking for {0}, target {1}", typeof(Interface).FullName, targetKsp);
+		#endif
+			foreach(System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+				foreach(System.Type type in assembly.GetTypes())
+					foreach(System.Type ifc in type.GetInterfaces() )
+					{
+						#if DEBUG
+							UnityEngine.Debug.LogFormat("[KSP.UI] Checking {0} {1} {2}", assembly, type, ifc);
+						#endif
+						if ("KSPe.Util.Image.Screenshot+Interface" == ifc.ToString())
+						{
+						#if DEBUG
+							UnityEngine.Debug.LogFormat("[KSPe.Util.Image] Found one! {0}", ifc);
+						#endif
+							if (type.FullName.Contains(targetKsp))
+							{
+								object r = System.Activator.CreateInstance(type);
+								#if DEBUG
+									UnityEngine.Debug.LogFormat("[KSPe.Util.Image] Type of result {0}", r.GetType());
+								#endif
+								return (Interface)r;
+							}
+						}
+					}
+			UnityEngine.Debug.LogWarning("[KSPe.Util.Image.Screenshot] No realisation for the abstract Interface found! Using a fallback one!");
+			return (Interface) new Fallback();
+		}
+		static Screenshot()
+		{
+			INSTANCE = GetInstance();
+		}
+	}
+
 }

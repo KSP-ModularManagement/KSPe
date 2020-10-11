@@ -38,23 +38,27 @@
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\LIB\managed\1.10.0\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.10.0\UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\..\..\LIB\managed\1.10.0\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.10.0\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ModuleManagerSupport.cs" />
+    <Compile Include="Util\Image.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KSPe\KSPe.csproj">
       <Project>{1DCC1744-4EEF-49DF-961C-A73F3ADCC6C5}</Project>
       <Name>KSPe</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Util\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
