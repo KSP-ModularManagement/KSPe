@@ -70,7 +70,7 @@ namespace KSPe.IO
 		public static string GetFullPath(string path)
 		{
 			if (!SIO.Path.IsPathRooted(path)) return GetFullPath(Combine(SIO.Directory.GetCurrentDirectory(), path));
-			string r = EnsureTrailingSeparatorOnDir(new System.Uri(path).LocalPath);
+			string r = GetAbsolutePath(path);
 			foreach (string k in UNREPARSE_KEYS)
 			{
 				if (r.StartsWith(k))
