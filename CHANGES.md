@@ -1,5 +1,12 @@
 # KSP API Extensions/L :: Changes
 
+* 2020-1011: 2.2.1.6 (Lisias) for KSP >= 1.2
+	+ Abstracts the Unity's Screen Capture feature.
+		- You call KSPe.Util.Image.Capture and you will have your screenshot not matter the Unity version you are running! #hurray! :)
+	+ Implements a check against duplicated DLLs on the Instalment Checks facilities. 
+	+ Closes [Issue #6 The Sandboxed File System is borking on symlinks](https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/6)
+		- Some heavy refactoring involved.
+	+ Fixes an old bug still lingering on the ConfigNode facilities.
 * 2020-1004: 2.2.1.5 (Lisias) for KSP >= 1.2
 	+ **Finally** implementing the Commit/Rollback stunt for the `WriteableConfigNode` descendants.
 		- Now you can just `configNode.Rollback()` to revert all the uncommitted changes if anything bad happen.
