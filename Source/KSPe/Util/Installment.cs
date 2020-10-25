@@ -67,6 +67,30 @@ Your KSP is running on [{3}]."
 			}
 		}
 
+		public class MissingDependencyInstallationException : InstallmentException
+		{
+			public readonly string assemblyName;
+
+			private static readonly string message = @"{0} was not found on this installment!
+
+You need to install it.
+
+Your KSP is running in [{1}]. Check {0}'s INSTALL instructions."
+			;
+
+			private static readonly string shortMessage = "There is no instance of the Add'On {0}. You need to install it.";
+
+			internal MissingDependencyInstallationException(string assemblyName): base(shortMessage, assemblyName)
+			{
+				this.assemblyName = assemblyName;
+			}
+
+			public override string ToLongMessage()
+			{
+				return string.Format(message, this.assemblyName, IO.Hierarchy.ROOTPATH);
+			}
+		}
+
 		public class DuplicityInstallationException : InstallmentException
 		{
 			public readonly string assemblyName;
@@ -178,6 +202,7 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 					orderby a.path ascending
 					select a;
 
+			if (0 == loaded.Count()) throw new MissingDependencyInstallationException(name);
 			if (1 != loaded.Count()) throw new DuplicityInstallationException(loaded.ToList());
 		}
 	}
