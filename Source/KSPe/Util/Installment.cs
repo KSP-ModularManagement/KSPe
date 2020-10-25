@@ -77,12 +77,12 @@ Your KSP is running on [{3}]."
 {1}
 (On KSP 1.8 and newer, this list is not accurate and you must find the copies manually)
 
-Your KSP is running on [{3}]. Check {0}'s INSTALL instructions."
+Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 			;
 
 			private static readonly string shortMessage = "There are {1} instances of the Add'On {0}. Only one must exist.";
 
-			public DuplicityInstallationException(List<AssemblyLoader.LoadedAssembly> loaded): base(shortMessage, loaded[0].name, loaded.Count)
+			internal DuplicityInstallationException(List<AssemblyLoader.LoadedAssembly> loaded): base(shortMessage, loaded[0].name, loaded.Count)
 			{
 				this.assemblyName = loaded[0].name;
 				List<string> paths = new List<string>();
@@ -94,7 +94,7 @@ Your KSP is running on [{3}]. Check {0}'s INSTALL instructions."
 			{
 				List<string> paths = new List<string>();
 				foreach(string path in this.paths) paths.Add(string.Format("* {0}\n", IO.Hierarchy.CalculateRelativePath(path, IO.Hierarchy.ROOTPATH)));
-				return string.Format(message, this.assemblyName, string.Join("", paths.ToArray()));
+				return string.Format(message, this.assemblyName, string.Join("", paths.ToArray()), IO.Hierarchy.ROOTPATH);
 			}
 		}
 
