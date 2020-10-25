@@ -1,5 +1,7 @@
 # KSP API Extensions/L :: Change Log
 
+* 2020-1025: 2.2.1.7 (Lisias) for KSP >= 1.2
+	+ Lame mishap on handling Installment Check Exceptions was detected and fixed.
 * 2020-1011: 2.2.1.6 (Lisias) for KSP >= 1.2
 	+ Abstracts the Unity's Screen Capture feature.
 		- You call KSPe.Util.Image.Capture and you will have your screenshot not matter the Unity version you are running! #hurray! :)
