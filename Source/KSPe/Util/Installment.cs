@@ -35,12 +35,7 @@ namespace KSPe.Util
 
 	public static class Installation
 	{
-		public class Exception : InstallmentException
-		{
-			internal Exception(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
-		}
-
-		public class WrongDirectoryInstallationException : Exception
+		public class WrongDirectoryInstallationException : InstallmentException
 		{
 			private static readonly string message = @"{0} is installed on the wrong Directory!
 
@@ -72,7 +67,7 @@ Your KSP is running on [{3}]."
 			}
 		}
 
-		public class DuplicityInstallationException : Exception
+		public class DuplicityInstallationException : InstallmentException
 		{
 			public readonly string assemblyName;
 			public readonly string[] paths;
