@@ -25,18 +25,18 @@ using UnityEngine;
 using KSPe.Util.Image;
 
 
-namespace KSPe.KSP15.Util.Image
+namespace KSPe.Unity4.Util.Image
 {
 	public class Screenshooter : KSPe.Util.Image.Screenshot.Interface
 	{
 		void Screenshot.Interface.Capture(string pathname)
 		{
-			ScreenCapture.CaptureScreenshot(pathname);
+			Application.CaptureScreenshot(pathname);
 		}
 
 		void Screenshot.Interface.Capture(string pathname, int superSampleValue)
 		{
-			ScreenCapture.CaptureScreenshot(pathname, superSampleValue);
+			Application.CaptureScreenshot(pathname, superSampleValue);
 		}
 	}
 }

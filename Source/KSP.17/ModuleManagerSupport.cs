@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace KSP
+namespace KSP.KSP17
 {
 	public static class ModuleManagerSupport
 	{

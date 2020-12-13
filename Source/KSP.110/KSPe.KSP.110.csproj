@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{47F86C6A-ED17-4DD8-84F3-3F16940FDFEB}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>KSP</RootNamespace>
+    <RootNamespace>KSP.KSP110</RootNamespace>
     <AssemblyName>KSPe.KSP.110</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>..\..\obj\KSPe</BaseIntermediateOutputPath>

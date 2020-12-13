@@ -21,22 +21,14 @@
 
 */
 using UnityEngine;
-
-using KSPe.Util.Image;
-
-
-namespace KSPe.KSP13.Util.Image
+namespace KSPe.Unity5
 {
-	public class Screenshooter : KSPe.Util.Image.Screenshot.Interface
+	public class Startup
 	{
-		void Screenshot.Interface.Capture(string pathname)
+		private void Start()
 		{
-			Application.CaptureScreenshot(pathname);
-		}
-
-		void Screenshot.Interface.Capture(string pathname, int superSampleValue)
-		{
-			Application.CaptureScreenshot(pathname, superSampleValue);
+			// Nope, we should not use the Log Facilities ourselves. Ironic, uh? :)
+			UnityEngine.Debug.LogFormat("[KSPe.Unity5] Version {0}", Version.Text);
 		}
 	}
 }

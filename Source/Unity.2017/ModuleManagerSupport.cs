@@ -23,13 +23,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace KSP.KSP12
+namespace KSP.Unity2017
 {
 	public static class ModuleManagerSupport
 	{
 		public static IEnumerable<string> ModuleManagerAddToModList()
 		{
-			string[] r = {"KSP-1.2"};
+			string[] r = {"Unity-2017"};
 			return r;
 		}
 	}
