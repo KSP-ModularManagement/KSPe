@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.2017", "Source\Unity.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.2019", "Source\Unity.2019\Unity.2019.csproj", "{AF70E3F1-3E4B-45EF-9CF1-E08ED86C7C76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpEmulator", "Source\CSharpEmulator\CSharpEmulator.csproj", "{C62322BD-85FF-4E67-A525-524C69EF36DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,6 +140,10 @@ Global
 		{AF70E3F1-3E4B-45EF-9CF1-E08ED86C7C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF70E3F1-3E4B-45EF-9CF1-E08ED86C7C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF70E3F1-3E4B-45EF-9CF1-E08ED86C7C76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C62322BD-85FF-4E67-A525-524C69EF36DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C62322BD-85FF-4E67-A525-524C69EF36DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C62322BD-85FF-4E67-A525-524C69EF36DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C62322BD-85FF-4E67-A525-524C69EF36DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
