@@ -6,7 +6,7 @@
     <ProjectGuid>{0287C4CE-69A5-49B8-9C11-C5C7A36E4086}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>KSP.Unity2017</RootNamespace>
-    <AssemblyName>Unity.2017</AssemblyName>
+    <AssemblyName>KSPe.Unity.2017</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>..\..\obj\Unity.2017</BaseIntermediateOutputPath>
   </PropertyGroup>

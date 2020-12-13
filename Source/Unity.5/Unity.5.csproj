@@ -6,7 +6,7 @@
     <ProjectGuid>{A0D5F2FD-19FB-470E-8F88-D84E718E18DF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Unity5</RootNamespace>
-    <AssemblyName>Unity.5</AssemblyName>
+    <AssemblyName>KSPe.Unity.5</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>..\..\obj\Unity.5</BaseIntermediateOutputPath>
   </PropertyGroup>

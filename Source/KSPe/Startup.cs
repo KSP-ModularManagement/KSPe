@@ -36,27 +36,11 @@ namespace KSPe
 		{
 			KSPe.Util.SystemTools.Assembly.AddSearchPath("GameData/000_KSPAPIExtensions/Plugins/PluginData");
 
-			if (KSPe.Util.KSP.Version.Current < KSPe.Util.KSP.Version.FindByVersion(1,8,0))
-			{
-				#if DEBUG
-					UnityEngine.Debug.Log("Trying to load KSPe.MonoEmulator35...");
-				#endif
-				Util.SystemTools.Assembly.LoadAndStartup("KSPe.MonoEmulator35");
-			}
-			else
-			{
-				#if DEBUG
-					UnityEngine.Debug.Log("Trying to load KSPe.MonoEmulator4...");
-				#endif
-				Util.SystemTools.Assembly.LoadAndStartup("KSPe.MonoEmulator4");
-			}
-
-
 			{
 				#if DEBUG
 					UnityEngine.Debug.LogFormat("Trying to load KSPe.Unity.{0}...", KSPe.Util.UnityTools.UnityVersion);
 				#endif
-				Util.SystemTools.Assembly.LoadAndStartup(string.Format("KSPe.KSP.1{0}", KSPe.Util.UnityTools.UnityVersion));
+				Util.SystemTools.Assembly.LoadAndStartup(string.Format("KSPe.Unity.{0}", KSPe.Util.UnityTools.UnityVersion));
 			}
 
 			for (int i = 10; i > 0; --i)
