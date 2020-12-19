@@ -7,10 +7,10 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("KSPe.KSP14.UI")]
 [assembly: AssemblyDescription("KSP 1.4 specialized support for KSPe.UI")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("L Aerospace KSP Division")]
-[assembly: AssemblyProduct("KSP Extensions")]
-[assembly: AssemblyCopyright("©2018-20 Lisias")]
-[assembly: AssemblyTrademark("KSPe")]
+[assembly: AssemblyCompany(KSPe.LegalMamboJambo.Company)]
+[assembly: AssemblyProduct(KSPe.LegalMamboJambo.Product)]
+[assembly: AssemblyCopyright(KSPe.LegalMamboJambo.Copyright)]
+[assembly: AssemblyTrademark(KSPe.LegalMamboJambo.Trademark)]
 [assembly: AssemblyCulture("")]
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".

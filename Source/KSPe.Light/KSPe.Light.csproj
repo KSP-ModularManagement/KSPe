@@ -103,6 +103,9 @@
     <Compile Include="..\KSPe\IO\Hierarchy.cs">
       <Link>IO\Hierarchy.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe\Properties\LegalMamboJambo.cs">
+      <Link>Properties\LegalMamboJambo.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />

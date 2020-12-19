@@ -7,10 +7,10 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("KSPe.Light")]
 [assembly: AssemblyDescription("Light, embeddadble subset from KSPe.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("L Aerospace KSP Division")]
-[assembly: AssemblyProduct("KSP Extensions Light")]
-[assembly: AssemblyCopyright("©2018-20 Lisias")]
-[assembly: AssemblyTrademark("KSPe.Light")]
+[assembly: AssemblyCompany(KSPe.LegalMamboJambo.Company)]
+[assembly: AssemblyProduct(KSPe.LegalMamboJambo.Product)]
+[assembly: AssemblyCopyright(KSPe.LegalMamboJambo.Copyright)]
+[assembly: AssemblyTrademark(KSPe.LegalMamboJambo.Trademark)]
 [assembly: AssemblyCulture("")]
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
