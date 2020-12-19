@@ -43,7 +43,7 @@ namespace KSPe
 				Util.SystemTools.Assembly.LoadAndStartup(string.Format("KSPe.Unity.{0}", KSPe.Util.UnityTools.UnityVersion));
 			}
 
-			for (int i = 10; i > 0; --i)
+			for (int i = 11; i > 0; --i)
 				if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.FindByVersion(1,i,0))
 				{
 					#if DEBUG
