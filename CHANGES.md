@@ -1,5 +1,11 @@
 # KSP API Extensions/L :: Changes
 
+* 2020-1219: 2.2.2.0 (Lisias) for KSP >= 1.2
+	+ Adding formal support for KSP 1.11.0
+	+ Adding specialised support for Unity versions (5, 2017 & 2019 at this time)
+		- This removes a lot of duplicated code from the KSP's specialised support 
+	+ Incepting a new helper, `C# Emulator`, to backport to Mono 3.5 classes and helpers from 4.x, easing backporting for Add'Ons. 
+		- Minimalistic at this time, but this will grow with time. 
 * 2020-1025: 2.2.1.7 (Lisias) for KSP >= 1.2
 	+ Lame mishap on handling Installment Check Exceptions was detected and fixed.
 * 2020-1011: 2.2.1.6 (Lisias) for KSP >= 1.2
