@@ -124,16 +124,20 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 
 		public static void Check<T>(string name, bool unique = true)
 		{
-			Check<T>(name, null, unique);
+			Check<T>(name, name, null, unique);
 		}
-		public static void Check<T>(string name, string vendor = null)
+		public static void Check<T>(string name, string vendor)
 		{
-			Check<T>(name, vendor, true);
+			Check<T>(name, name, vendor, true);
 		}
-		public static void Check<T>(string name, string vendor = null, bool unique = true)
+		public static void Check<T>(string name, string folder, string vendor)
+		{
+			Check<T>(name, folder, vendor, true);
+		}
+		public static void Check<T>(string name, string folder, string vendor, bool unique)
 		{
 			if (unique) CheckForDuplicity(name);
-			CheckForWrongDirectoy(typeof(T), name, vendor);
+			CheckForWrongDirectoy(typeof(T), name, folder, vendor);
 		}
 
 		public static void Check<T>(System.Type versionClass)
@@ -164,14 +168,14 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 			catch (ArgumentException) { }
 			catch (NullReferenceException) { }
 
-			Check<T>(name, vendor, unique);
+			Check<T>(name, name, vendor, unique);
 		}
 
 		public static void Check<T>()
 		{
 			Check<T>(true);
 		}
-		public static void Check<T>(bool unique = true)
+		public static void Check<T>(bool unique)
 		{
 			Type versionClass = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
 					from tt in assembly.GetTypes()
@@ -180,11 +184,11 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 			Check<T>(versionClass, unique);
 		}
 
-		private static void CheckForWrongDirectoy(Type type, string name, string vendor)
+		private static void CheckForWrongDirectoy(Type type, string name, string folder, string vendor)
 		{
 			string intendedPath = IO.Path.Combine(IO.Path.Origin(), "GameData");
 			if (null != vendor) intendedPath = IO.Path.Combine(intendedPath, vendor);
-			intendedPath = IO.Path.Combine(intendedPath, name);
+			intendedPath = IO.Path.Combine(intendedPath, folder);
 			intendedPath = IO.Path.GetFullPath(intendedPath);
 
 			string installedDllPath = IO.Path.GetDirectoryName(IO.Path.GetFullPath(type.Assembly.Location.Replace("Plugins",".").Replace("Plugin",".")));
