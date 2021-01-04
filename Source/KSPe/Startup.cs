@@ -44,7 +44,7 @@ namespace KSPe
 			}
 
 			for (int i = 11; i > 0; --i)
-				if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.FindByVersion(1,i,0))
+				if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,i,0))
 				{
 					#if DEBUG
 						UnityEngine.Debug.LogFormat("Trying to load KSPe.KSP.1{0}...", i);

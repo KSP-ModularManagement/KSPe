@@ -30,6 +30,7 @@ namespace KSPe.Util
 	{
 		// Source : https://wiki.kerbalspaceprogram.com/wiki/Version_history
 		public static readonly Version[] PUBLISHED_VERSIONS = {
+			new Version(0,0,0,  "2010-0401", 4, 35), // Synthetic version, to prevent errors on FindByVersion. Using the date in which Monkey Squad hired HarvesteR
 			new Version(0,7,3,  "2011-0624", 4, 35),
 			new Version(0,8,0,  "2011-0711", 4, 35),
 			new Version(0,8,1,  "2011-0713", 4, 35),
@@ -137,6 +138,16 @@ namespace KSPe.Util
 				this.CSHARP_VERSION = 47;			// Ditto
 			}
 
+			internal Version(int MAJOR, int MINOR, int PATCH, Version v)
+			{
+				this.MAJOR = MAJOR;
+				this.MINOR = MINOR;
+				this.PATCH = PATCH;
+				this.RELEASED_AT = v.RELEASED_AT.AddDays(1);	// Fake a release date as being one day later the reference
+				this.UNITY_VERSION = v.UNITY_VERSION;
+				this.CSHARP_VERSION = v.CSHARP_VERSION;
+			}
+
 			internal Version(int MAJOR, int MINOR, int PATCH, string releasedAt, int unityVersion, int csharpVersion)
 			{
 				this.MAJOR = MAJOR;
@@ -150,6 +161,11 @@ namespace KSPe.Util
 			public override string ToString()
 			{
 				return string.Format("{0}.{1}.{2}", this.MAJOR, this.MINOR, this.PATCH);
+			}
+
+			public string ToStringExtended()
+			{
+				return string.Format("{0}.{1}.{2} from {3} using Unity {4} and C# {5}", this.MAJOR, this.MINOR, this.PATCH, this.RELEASED_AT.ToString(), this.UNITY_VERSION, this.CSHARP_VERSION);
 			}
 
 			public override bool Equals(object other)
@@ -217,12 +233,47 @@ namespace KSPe.Util
 				return r;
 			}
 
-			public static Version FindByVersion(int major, int minor, int patch)
+			/// <summary>
+			/// </summary>
+			/// <param name="major"></param>
+			/// <param name="minor"></param>
+			/// <param name="patch"></param>
+			/// <returns>An existent KSP version, or ArgumentOutOfRangeException</returns>
+			public static Version GetVersion(int major, int minor, int patch)
 			{
 				foreach (Version v in PUBLISHED_VERSIONS)
 					if (v.MAJOR == major && v.MINOR == minor && v.PATCH == patch)
 						return v;
 				throw new ArgumentOutOfRangeException(String.Format("{0}.{1}.{2}", major, minor, patch));
+			}
+
+			/// <summary>
+			/// </summary>
+			/// <param name="major"></param>
+			/// <param name="minor"></param>
+			/// <param name="patch"></param>
+			/// <returns>A existent KSP version, or a reasonably synthetic one using the provided information</returns>
+			public static Version FindByVersion(int major, int minor, int patch)
+			{
+				try
+				{
+					return GetVersion(major, minor, patch);
+				}
+				catch (ArgumentOutOfRangeException)
+				{
+					Version r = null;
+					for (int i = 0; i < PUBLISHED_VERSIONS.Length; ++i)
+					{
+						Version v = PUBLISHED_VERSIONS[i];
+						if (v.MAJOR < major) continue;
+						if (v.MAJOR == major && v.MINOR < minor) continue;
+						if (v.MAJOR == major && v.MINOR == minor && v.PATCH < patch) continue;
+						r = new Version(major, minor, patch, PUBLISHED_VERSIONS[i-1]);
+					}
+					r = r ?? new Version(major, minor, patch);
+					UnityEngine.Debug.LogWarningFormat("[KSPe] KSP Version {0}.{1}.{2} not localized. Returning synthetic one.", major, minor, patch);
+					return r;
+				}
 			}
 
 			private static Version CURRENT = null;
@@ -231,7 +282,7 @@ namespace KSPe.Util
 					if (null == CURRENT)
 						try
 						{
-							CURRENT = FindByVersion(Versioning.version_major, Versioning.version_minor, Versioning.Revision);
+							CURRENT = GetVersion(Versioning.version_major, Versioning.version_minor, Versioning.Revision);
 						}
 						catch (ArgumentOutOfRangeException)
 						{

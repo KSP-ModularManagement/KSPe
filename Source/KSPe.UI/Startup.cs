@@ -35,7 +35,7 @@ namespace KSPe
 		private void Awake()
 		{
 			// There can be only one! #highlanderFeelings
-			if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.FindByVersion(1,4,0))
+			if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,4,0))
 			{
 				if (System.IO.File.Exists("./000_ClickThroughBlocker/Plugins/ClickThroughBlocker.dll"))
 					Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.14");
@@ -45,7 +45,7 @@ namespace KSPe
 					Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.12");
 				}
 			}
-			else if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.FindByVersion(1,2,0))
+			else if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,2,0))
 				Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.12");
 		}
 	}
