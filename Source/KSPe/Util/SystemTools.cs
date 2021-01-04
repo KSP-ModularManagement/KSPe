@@ -1,6 +1,6 @@
 ﻿/*
  	This file is part of KSPe, a component for KSP API Extensions/L
- 	(C) 2018-20 Lisias T : http://lisias.net <support@lisias.net>
+ 	(C) 2018-21 Lisias T : http://lisias.net <support@lisias.net>
 
  	KSPe API Extensions/L is double licensed, as follows:
 
