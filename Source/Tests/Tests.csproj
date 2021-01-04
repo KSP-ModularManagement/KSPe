@@ -32,9 +32,6 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\LIB\managed\1.4.1\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="PhysicsRangeExtender">
-      <HintPath>..\..\..\..\..\..\runtime\1.6.0\GameData\PhysicsRangeExtender\PhysicsRangeExtender.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\LIB\managed\1.4.1\UnityEngine.dll</HintPath>
     </Reference>
