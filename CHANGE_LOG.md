@@ -1,5 +1,7 @@
 # KSP API Extensions/L :: Change Log
 
+* 2021-0104: 2.2.2.2 (Lisias) for KSP >= 1.2
+	+ Nicer tools to handle KSP versions
 * 2020-1220: 2.2.2.1 (Lisias) for KSP >= 1.2
 	+ Adding formal support for KSP 1.11.0
 	+ Adding specialised support for Unity versions (5, 2017 & 2019 at this time)
