@@ -180,8 +180,8 @@ namespace KSPe.Util.Image {
 		private static readonly Interface INSTANCE;
 		private static Interface GetInstance()
 		{
-			string targetKsp = Util.KSP.Version.Current > Util.KSP.Version.FindByVersion(1,10,1)
-				? "KSP110."
+			string targetKsp = Util.KSP.Version.Current > Util.KSP.Version.FindByVersion(1,11,99)
+				? "KSP111."
 				: string.Format("KSP{0}{1}.", Util.KSP.Version.Current.MAJOR, Util.KSP.Version.Current.MINOR)
 				;
 		#if DEBUG
