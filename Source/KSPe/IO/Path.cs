@@ -79,7 +79,7 @@ namespace KSPe.IO
 					break;
 				}
 			}
-			return r;
+			return EnsureTrailingSeparatorOnDir(r);
 		}
 
 		public static string GetAbsolutePath(string path)
