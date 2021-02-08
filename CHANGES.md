@@ -1,5 +1,9 @@
 # KSP API Extensions/L :: Changes
 
+* 2021-0208: 2.2.2.3 (Lisias) for KSP >= 1.2
+	+ Some pretty stupid omission fixed on handling the installment checks
+	+ Closes (again):
+		- [#6](https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/6) The Sandboxed File System is borking on symlinks
 * 2021-0104: 2.2.2.2 (Lisias) for KSP >= 1.2
 	+ Nicer tools to handle KSP versions
 * 2020-1220: 2.2.2.1 (Lisias) for KSP >= 1.2
