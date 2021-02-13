@@ -50,6 +50,10 @@ namespace KSPe.Multiplatform
 				}
 				if (null != realpath && null != readlink) break;
 			}
+#if DEBUG
+			UnityEngine.Debug.LogFormat("[KSPe.Multiplatform.FileSystem] realpath found on {0}", realpath??"NOT FOUND!");
+			UnityEngine.Debug.LogFormat("[KSPe.Multiplatform.FileSystem] readlink found on {0}", readlink??"NOT FOUND!");
+#endif
 		}
 
 		private static string Reparse_realpath(string path)
