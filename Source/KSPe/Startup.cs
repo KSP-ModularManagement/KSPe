@@ -37,19 +37,21 @@ namespace KSPe
 			KSPe.Util.SystemTools.Assembly.AddSearchPath("GameData/000_KSPAPIExtensions/Plugins/PluginData");
 
 			{
+				int target = KSPe.Util.UnityTools.UnityVersion;
+				target = (0 == target) ? 2019 : target;
 				#if DEBUG
-					UnityEngine.Debug.LogFormat("Trying to load KSPe.Unity.{0}...", KSPe.Util.UnityTools.UnityVersion);
+					UnityEngine.Debug.LogFormat("Trying to load KSPe.Unity.{0}...", target);
 				#endif
-				Util.SystemTools.Assembly.LoadAndStartup(string.Format("KSPe.Unity.{0}", KSPe.Util.UnityTools.UnityVersion));
+				Util.SystemTools.Assembly.LoadAndStartup(string.Format("KSPe.Unity.{0}", target));
 			}
 
-			for (int i = 11; i > 0; --i)
+			for (int i = KSPe.Util.KSP.Version.Current.MINOR; i > 0; --i)
 				if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,i,0))
 				{
 					#if DEBUG
 						UnityEngine.Debug.LogFormat("Trying to load KSPe.KSP.1{0}...", i);
 					#endif
-					Util.SystemTools.Assembly.LoadAndStartup(string.Format("KSPe.KSP.1{0}",i));
+					if ( null != Util.SystemTools.Assembly.LoadAndStartup(string.Format("KSPe.KSP.1{0}",i)) ) break;
 				}
 
 			#if DEBUG
