@@ -29,8 +29,11 @@ namespace KSP.KSP19
 	{
 		public static IEnumerable<string> ModuleManagerAddToModList()
 		{
-			string[] r = {"KSP-1.9"};
-			return r;
+			List<string> r = new List<String>();
+			if (1 == KSPe.Util.KSP.Version.Current.MAJOR)
+				for (int i = KSPe.Util.KSP.Version.Current.MINOR; i >= 0; --i)
+					r.Add(string.Format("KSP-1.{0}", i));
+			return r.ToArray();
 		}
 	}
 }

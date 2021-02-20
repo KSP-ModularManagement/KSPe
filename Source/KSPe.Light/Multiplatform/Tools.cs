@@ -20,23 +20,15 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using UnityEngine;
-
-using KSPe.Util.Image;
-
-
-namespace KSPe.KSP19.Util.Image
+using System;
+namespace KSPe.Multiplatform
 {
-	public class Screenshooter : KSPe.Util.Image.Screenshot.Interface
+	internal static class Tools
 	{
-		void Screenshot.Interface.Capture(string pathname)
+		internal static object CreateInstanceByInterface(string ifcName)
 		{
-			ScreenCapture.CaptureScreenshot(pathname);
-		}
-
-		void Screenshot.Interface.Capture(string pathname, int superSampleValue)
-		{
-			ScreenCapture.CaptureScreenshot(pathname, superSampleValue);
+			if ("KSPe.Util.Image.Screenshot+Interface" == ifcName) return new KSPe.Light.Util.Image.Screenshooter();
+			return null;
 		}
 	}
 }

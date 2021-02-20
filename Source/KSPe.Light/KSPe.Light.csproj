@@ -106,12 +106,16 @@
     <Compile Include="..\KSPe\Properties\LegalMamboJambo.cs">
       <Link>Properties\LegalMamboJambo.cs</Link>
     </Compile>
+    <Compile Include="Util\log\Unity.cs" />
+    <Compile Include="Multiplatform\stubs\ImageStub.cs" />
+    <Compile Include="Multiplatform\Tools.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />
     <Folder Include="Util\" />
     <Folder Include="Util\log\" />
     <Folder Include="IO\" />
+    <Folder Include="Multiplatform\stubs\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

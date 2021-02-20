@@ -25,7 +25,7 @@ using UnityEngine;
 using KSPe.Util.Image;
 
 
-namespace KSPe.Unity4.Util.Image
+namespace KSPe.Unity5.Util.Image
 {
 	public class Screenshooter : KSPe.Util.Image.Screenshot.Interface
 	{

@@ -20,14 +20,13 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
+using System;
 using UnityEngine;
-
 using KSPe.Util.Image;
 
-
-namespace KSPe.Unity2019.Util.Image
+namespace KSPe.Light.Util.Image
 {
-	public class Screenshooter : KSPe.Util.Image.Screenshot.Interface
+	public class Screenshooter : Screenshot.Interface
 	{
 		void Screenshot.Interface.Capture(string pathname)
 		{
