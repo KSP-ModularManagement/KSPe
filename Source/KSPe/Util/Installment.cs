@@ -189,7 +189,7 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 			string intendedPath = IO.Path.Combine(IO.Path.Origin(), "GameData");
 			if (null != vendor) intendedPath = IO.Path.Combine(intendedPath, vendor);
 			intendedPath = IO.Path.Combine(intendedPath, folder);
-			intendedPath = IO.Path.GetFullPath(intendedPath);
+			intendedPath = IO.Path.GetFullPath(intendedPath, true);
 
 			string installedDllPath = IO.Path.GetDirectoryName(IO.Path.GetFullPath(type.Assembly.Location.Replace("Plugins",".").Replace("Plugin",".")));
 			if (installedDllPath.StartsWith(intendedPath)) return;

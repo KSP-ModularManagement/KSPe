@@ -62,14 +62,19 @@ namespace KSPe.IO
 			return EnsureTrailingSeparatorOnDir(r);
 		}
 
-		public static string GetDirectoryName(string path)				{ return EnsureTrailingSeparatorOnDir(SIO.Path.GetDirectoryName(path)); }
+		public static string GetDirectoryName(string path)				{ return EnsureTrailingSeparatorOnDir(SIO.Path.GetDirectoryName(path), true); }
 		public static string GetExtension(string path)					{ return SIO.Path.GetExtension(path); }
 		public static string GetFileName(string path)					{ return SIO.Path.GetFileName(path); }
 		public static string GetFileNameWithoutExtension(string path)	{ return SIO.Path.GetFileNameWithoutExtension(path); }
 
 		public static string GetFullPath(string path)
 		{
-			if (!SIO.Path.IsPathRooted(path)) return GetFullPath(Combine(SIO.Directory.GetCurrentDirectory(), path));
+			return GetFullPath(path, false);
+		}
+
+		public static string GetFullPath(string path, bool iKnowItsDir)
+		{
+			if (!SIO.Path.IsPathRooted(path)) return GetFullPath(Combine(SIO.Directory.GetCurrentDirectory(), path), iKnowItsDir);
 			string r = GetAbsolutePath(path);
 			foreach (string k in UNREPARSE_KEYS)
 			{
@@ -79,12 +84,17 @@ namespace KSPe.IO
 					break;
 				}
 			}
-			return EnsureTrailingSeparatorOnDir(r);
+			return EnsureTrailingSeparatorOnDir(r, iKnowItsDir);
 		}
 
 		public static string GetAbsolutePath(string path)
 		{
-			return EnsureTrailingSeparatorOnDir(SIO.Path.GetFullPath(path));
+			return GetAbsolutePath(path, false);
+		}
+
+		public static string GetAbsolutePath(string path, bool iKnowItsDir)
+		{
+			return EnsureTrailingSeparatorOnDir(SIO.Path.GetFullPath(path), iKnowItsDir);
 		}
 
 		public static char[] GetInvalidFileNameChars()					{ return SIO.Path.GetInvalidFileNameChars(); }
