@@ -8,7 +8,7 @@
     <RootNamespace>KSP.Unity2017</RootNamespace>
     <AssemblyName>KSPe.Unity.2017</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <BaseIntermediateOutputPath>..\..\obj\Unity.2017</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\..\obj\$(AssemblyName)</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
