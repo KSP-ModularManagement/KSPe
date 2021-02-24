@@ -21,64 +21,20 @@
 
 */
 using System;
+using UnityEngine;
 
 namespace KSPe.Util.Log {
 
-	public class UnityThreadSafeLogger : Logger
+	internal class UnityThreadSafeLogDecorator : UnityEngine.ILogHandler
 	{
-		public UnityThreadSafeLogger(Type type) : base(type) { }
-		public UnityThreadSafeLogger(Type type, string forceThisNamespace) : base(type, forceThisNamespace) { }
-		public UnityThreadSafeLogger(Type type, string forceThisNamespace, string forceThisClassName) : base(type, forceThisNamespace, forceThisClassName) { }
-
-		protected override LogMethod select()
-		{
-			switch (this._level)
-			{
-				case Level.OFF:
-					return dummy;
-					
-				case Level.TRACE:
-					goto case Level.INFO;
-				case Level.DETAIL:
-					goto case Level.INFO;
-				case Level.INFO:
-					return this.log;
-
-				case Level.WARNING:
-					return this.logWarning;
-
-				case Level.ERROR:
-					return this.logError;
-
-				default:
-					throw new ArgumentException("unknown log level: " + level);
+		internal static UnityEngine.ILogHandler INSTANCE {
+			get {
+				return UnityLogDecorator.ORIGINAL_LOGGER;
 			}
 		}
 
-		protected void dummy(string message) {}
+		void ILogHandler.LogException(Exception exception, UnityEngine.Object context) {}
 
-		protected override void log(string message)
-		{
-			UnityEngine.Debug.Log(message);
-		}
-
-		protected void logWarning(string message)
-		{
-			UnityEngine.Debug.Log(message);
-		}
-
-		protected void logError(string message)
-		{
-			UnityEngine.Debug.Log(message);
-		}
-
-		protected override void logException(string message, Exception e)
-		{
-			UnityEngine.Debug.LogError(message);
-			if (e != null)
-			{
-				UnityEngine.Debug.LogException(e);
-			}
-		}
+		void ILogHandler.LogFormat(LogType logType, UnityEngine.Object context, string format, params object[] args) {}
 	}
 }

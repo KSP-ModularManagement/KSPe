@@ -1,6 +1,6 @@
 ﻿/*
 	This file is part of KSPe, a component for KSP API Extensions/L
-	(C) 2018-21 Lisias T : http://lisias.net <support@lisias.net>
+	(C) 2018-20 Lisias T : http://lisias.net <support@lisias.net>
 
 	KSPe API Extensions/L is double licensed, as follows:
 
@@ -21,22 +21,46 @@
 
 */
 using System;
-using UnityEngine;
-
-namespace KSPe.Util.Log {
-
+namespace KSPe.Util.Log
+{
 	internal class UnityLogDecorator : UnityEngine.ILogHandler
 	{
 		internal static readonly UnityEngine.ILogHandler ORIGINAL_LOGGER =  UnityEngine.Debug.logger.logHandler;
 
+		internal static UnityEngine.ILogHandler instance;
 		internal static UnityEngine.ILogHandler INSTANCE {
 			get {
-				return ORIGINAL_LOGGER;
+				if (null != instance) return instance;
+				instance = (UnityTools.UnityVersion >= 2019)
+						? ORIGINAL_LOGGER
+						: new UnityLogDecorator();
+				return instance;
 			}
 		}
 
-		void ILogHandler.LogException(Exception exception, UnityEngine.Object context) {}
+		private readonly UnityEngine.ILogHandler upstream;
+		private static readonly object MUTEX = new object();
 
-		void ILogHandler.LogFormat(LogType logType, UnityEngine.Object context, string format, params object[] args) {}
+		private UnityLogDecorator()
+		{
+			this.upstream = UnityEngine.Debug.logger.logHandler;
+			UnityEngine.Debug.logger.logHandler = this;
+		}
+
+		void UnityEngine.ILogHandler.LogException(Exception exception, UnityEngine.Object context)
+		{
+			lock (MUTEX)
+			{
+				this.upstream.LogException(exception, context);
+			}
+		}
+
+		void UnityEngine.ILogHandler.LogFormat(UnityEngine.LogType logType, UnityEngine.Object context, string format, params object[] args)
+		{
+			lock (MUTEX)
+			{
+				this.upstream.LogFormat(logType, context, format, args);
+			}
+		}
 	}
 }

@@ -26,30 +26,31 @@ namespace KSPe.Util.Log {
 
 	public class UnityLogger : Logger
 	{
-		public UnityLogger(Type type) : base(type)
+		internal UnityLogger(Type type, UnityEngine.ILogHandler logHandler = null) : base(type)
 		{
+			this.unityLog = logHandler ?? UnityLogDecorator.INSTANCE;
 #if DEBUG
-			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0}", type);
+			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0} with {1}", type, logHandler.GetType().Name);
 #endif
 		}
 
-		public UnityLogger(Type type, string forceThisNamespace) : base(type, forceThisNamespace)
+		internal UnityLogger(Type type, string forceThisNamespace, UnityEngine.ILogHandler logHandler = null) : base(type, forceThisNamespace)
 		{
+			this.unityLog = logHandler ?? UnityLogDecorator.INSTANCE;
 #if DEBUG
-			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0}", forceThisNamespace);
+			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0} with {1}", forceThisNamespace, logHandler.GetType().Name);
 #endif
 		}
 
-		public UnityLogger(Type type, string forceThisNamespace, string forceThisClassName) : base(type, forceThisNamespace, forceThisClassName)
+		internal UnityLogger(Type type, string forceThisNamespace, string forceThisClassName, UnityEngine.ILogHandler logHandler = null) : base(type, forceThisNamespace, forceThisClassName)
 		{
+			this.unityLog = logHandler ?? UnityLogDecorator.INSTANCE;
 #if DEBUG
-			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0}-{1}", forceThisNamespace, forceThisClassName);
+			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0}-{1} with {1}", forceThisNamespace, forceThisClassName, logHandler.GetType().Name);
 #endif
 		}
 
-#pragma warning disable IDE0052 // Remove unread private members
-		private readonly UnityLogDecorator unityLog = UnityLogDecorator.INSTANCE; // Just to instantiate the damned thing.
-#pragma warning restore IDE0052 // Remove unread private members
+		private readonly UnityEngine.ILogHandler unityLog;
 
 		protected override LogMethod select()
 		{
@@ -99,42 +100,6 @@ namespace KSPe.Util.Log {
 			if (e != null)
 			{
 				UnityEngine.Debug.LogException(e);
-			}
-		}
-	}
-
-	internal class UnityLogDecorator : UnityEngine.ILogHandler
-	{
-		internal static UnityLogDecorator instance;
-		internal static UnityLogDecorator INSTANCE {
-			get {
-				if (null == instance) instance = new UnityLogDecorator();
-				return instance;
-			}
-		}
-
-		private readonly UnityEngine.ILogHandler upstream;
-		private static readonly object MUTEX = new object();
-
-		internal UnityLogDecorator()
-		{
-			this.upstream = UnityEngine.Debug.logger.logHandler;
-			UnityEngine.Debug.logger.logHandler = this;
-		}
-
-		void UnityEngine.ILogHandler.LogException(Exception exception, UnityEngine.Object context)
-		{
-			lock (MUTEX)
-			{
-				this.upstream.LogException(exception, context);
-			}
-		}
-
-		void UnityEngine.ILogHandler.LogFormat(UnityEngine.LogType logType, UnityEngine.Object context, string format, params object[] args)
-		{
-			lock (MUTEX)
-			{
-				this.upstream.LogFormat(logType, context, format, args);
 			}
 		}
 	}

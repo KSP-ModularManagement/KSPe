@@ -24,84 +24,6 @@ using System;
 
 namespace KSPe.Util.Log {
 
-	public class UnityThreadSafeLogger : Logger
-	{
-		public UnityThreadSafeLogger(Type type) : base(type)
-		{
-#if DEBUG
-			UnityEngine.Debug.LogFormat("Instantiating *THREAD SAFE* Unity Logger for {0}", type);
-#endif
-		}
-		public UnityThreadSafeLogger(Type type, string forceThisNamespace) : base(type, forceThisNamespace)
-		{
-#if DEBUG
-			UnityEngine.Debug.LogFormat("Instantiating *THREAD SAFE* Unity Logger for {0}", forceThisNamespace);
-#endif
-		}
-
-		public UnityThreadSafeLogger(Type type, string forceThisNamespace, string forceThisClassName) : base(type, forceThisNamespace, forceThisClassName)
-		{
-#if DEBUG
-			UnityEngine.Debug.LogFormat("Instantiating *THREAD SAFE* Unity Logger for {0}-{1}", forceThisNamespace, forceThisClassName);
-#endif
-		}
-
-#pragma warning disable IDE0052 // Remove unread private members
-		private readonly UnityThreadSafeLogDecorator unityLog = UnityThreadSafeLogDecorator.INSTANCE; // Just to instantiate the damned thing.
-#pragma warning restore IDE0052 // Remove unread private members
-
-		protected override LogMethod select()
-		{
-			switch (this._level)
-			{
-				case Level.OFF:
-					return dummy;
-
-				case Level.TRACE:
-					goto case Level.INFO;
-				case Level.DETAIL:
-					goto case Level.INFO;
-				case Level.INFO:
-					return this.log;
-
-				case Level.WARNING:
-					return this.logWarning;
-
-				case Level.ERROR:
-					return this.logError;
-
-				default:
-					throw new ArgumentException("unknown log level: " + level);
-			}
-		}
-
-		protected void dummy(string message) {}
-
-		protected override void log(string message)
-		{
-			UnityEngine.Debug.Log(message);
-		}
-
-		protected void logWarning(string message)
-		{
-			UnityEngine.Debug.Log(message);
-		}
-
-		protected void logError(string message)
-		{
-			UnityEngine.Debug.Log(message);
-		}
-
-		protected override void logException(string message, Exception e)
-		{
-			UnityEngine.Debug.LogError(message);
-			if (e != null)
-			{
-				UnityEngine.Debug.LogException(e);
-			}
-		}
-	}
-
 	internal class UnityThreadSafeLogDecorator : UnityEngine.MonoBehaviour, UnityEngine.ILogHandler
 	{
 		internal static UnityThreadSafeLogDecorator instance;
@@ -166,7 +88,6 @@ namespace KSPe.Util.Log {
 		internal UnityThreadSafeLogDecorator()
 		{
 			this.upstream = UnityEngine.Debug.logger.logHandler;
-			UnityEngine.Debug.logger.logHandler = this;
 		}
 
 		void UnityEngine.ILogHandler.LogException(Exception exception, UnityEngine.Object context)
@@ -174,7 +95,7 @@ namespace KSPe.Util.Log {
 			lock (MUTEX)
 			{
 				this.logQueue.Enqueue(new LogExceptionMsg(exception, context));
-				this.enabled = true; // Preventing some idiot from bleowing up the heap by shutting us down.
+				this.enabled = true; // Preventing some idiot from blowing up the heap by shutting us down.
 			}
 		}
 
@@ -183,7 +104,7 @@ namespace KSPe.Util.Log {
 			lock (MUTEX)
 			{
 				this.logQueue.Enqueue(new LogFormatMsg(logType, context, format, formatArgs));
-				this.enabled = true; // Preventing some idiot from bleowing up the heap by shutting us down.
+				this.enabled = true; // Preventing some idiot from blowing up the heap by shutting us down.
 			}
 		}
 

@@ -102,6 +102,7 @@
       <DependentUpon>Version.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\LegalMamboJambo.cs" />
+    <Compile Include="Util\log\UnityLogDecorator.cs" />
     <Compile Include="Multiplatform\Tools.cs" />
     <Compile Include="ModuleManagerSupport.cs" />
   </ItemGroup>

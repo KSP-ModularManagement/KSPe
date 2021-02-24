@@ -39,12 +39,18 @@ namespace KSPe.Util.Log {
 	{
 		public static Logger CreateForType<T>(bool useClassNameToo = false)
 		{
-			if (Globals<T>.Log.ThreadSafe)
-				return useClassNameToo
-						? new UnityThreadSafeLogger(typeof(T), typeof(T).Namespace, typeof(T).FullName)
-						: new UnityThreadSafeLogger(typeof(T), typeof(T).Namespace)
-					;
-			return CreateThreadUnsafeForType<T>(useClassNameToo);
+			return (Globals<T>.Log.ThreadSafe)
+					? CreateThreadSafeForType<T>(useClassNameToo)
+					: CreateThreadUnsafeForType<T>(useClassNameToo)
+				;
+		}
+
+		public static Logger CreateThreadSafeForType<T>(bool useClassNameToo = false)
+		{
+			return useClassNameToo
+					? new UnityLogger(typeof(T), typeof(T).Namespace, typeof(T).FullName, UnityThreadSafeLogDecorator.INSTANCE)
+					: new UnityLogger(typeof(T), typeof(T).Namespace, UnityThreadSafeLogDecorator.INSTANCE)
+				;
 		}
 
 		public static Logger CreateThreadUnsafeForType<T>(bool useClassNameToo = false)
@@ -57,12 +63,18 @@ namespace KSPe.Util.Log {
 
 		public static Logger CreateForType<T>(string forceThisNamespace, bool useClassNameToo = true)
 		{
-			if (Globals<T>.Log.ThreadSafe)
-				return useClassNameToo
-						? new UnityThreadSafeLogger(typeof(T), forceThisNamespace, typeof(T).FullName)
-						: new UnityThreadSafeLogger(typeof(T), forceThisNamespace)
-					;
-			return CreateThreadUnsafeForType<T>(forceThisNamespace, useClassNameToo);
+			return (Globals<T>.Log.ThreadSafe)
+					? CreateThreadSafeForType<T>(forceThisNamespace, useClassNameToo)
+					: CreateThreadUnsafeForType<T>(forceThisNamespace, useClassNameToo)
+				;
+		}
+
+		public static Logger CreateThreadSafeForType<T>(string forceThisNamespace, bool useClassNameToo = false)
+		{
+			return useClassNameToo
+					? new UnityLogger(typeof(T), forceThisNamespace, typeof(T).FullName, UnityThreadSafeLogDecorator.INSTANCE)
+					: new UnityLogger(typeof(T), forceThisNamespace, UnityThreadSafeLogDecorator.INSTANCE)
+				;
 		}
 
 		public static Logger CreateThreadUnsafeForType<T>(string forceThisNamespace, bool useClassNameToo = false)
@@ -75,9 +87,15 @@ namespace KSPe.Util.Log {
 
 		public static Logger CreateForType<T>(string forceThisNamespace, string forceThisClassName)
 		{
-			if (Globals<T>.Log.ThreadSafe)
-				return new UnityThreadSafeLogger(typeof(T), forceThisNamespace, forceThisClassName);
-			return CreateThreadUnsafeForType<T>(forceThisNamespace, forceThisClassName);
+			return (Globals<T>.Log.ThreadSafe)
+					? CreateThreadSafeForType<T>(forceThisNamespace, forceThisClassName)
+					: CreateThreadUnsafeForType<T>(forceThisNamespace, forceThisClassName)
+				;
+		}
+
+		public static Logger CreateThreadSafeForType<T>(string forceThisNamespace, string forceThisClassName)
+		{
+			return new UnityLogger(typeof(T), forceThisNamespace, forceThisClassName, UnityThreadSafeLogDecorator.INSTANCE);
 		}
 
 		public static Logger CreateThreadUnsafeForType<T>(string forceThisNamespace, string forceThisClassName)
