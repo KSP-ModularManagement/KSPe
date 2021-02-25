@@ -36,6 +36,8 @@ namespace KSPe.IO
 	{
 		public static readonly char AltDirectorySeparatorChar = SIO.Path.AltDirectorySeparatorChar;
 		public static readonly char DirectorySeparatorChar = SIO.Path.DirectorySeparatorChar;
+		public static readonly string AltDirectorySeparatorStr = ""+SIO.Path.AltDirectorySeparatorChar;
+		public static readonly string DirectorySeparatorStr = ""+SIO.Path.DirectorySeparatorChar;
 
 		[System.Obsolete ("see GetInvalidPathChars and GetInvalidFileNameChars methods.")]
 		public static readonly char[] InvalidPathChars = SIO.Path.InvalidPathChars;
@@ -45,7 +47,7 @@ namespace KSPe.IO
 
 		public static string EnsureTrailingSeparatorOnDir(string path, bool blindlyAppend = false)
 		{
-			if (DirectorySeparatorChar == path.Last()) return path;
+			if (path.EndsWith(DirectorySeparatorStr)) return path;
 			return blindlyAppend || SIO.Directory.Exists(path)
 				? path + DirectorySeparatorChar
 				: path
