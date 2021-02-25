@@ -135,6 +135,7 @@ namespace KSPe.IO
 
 			if (0 == i) return fullDestinationPath;
 
+			Boolean imSureItsDir = fullDestinationPath.EndsWith(IO.Path.DirectorySeparatorStr);
 			System.Text.StringBuilder relativePath = new System.Text.StringBuilder();
 
 			if (i >= startPathParts.Length)
@@ -152,7 +153,7 @@ namespace KSPe.IO
 			UnityEngine.Debug.Log(relativePath.ToString());
 #endif
 			//From now on, we **want** the trailling "/" on every pathname that it's a directory.
-			return Path.EnsureTrailingSeparatorOnDir(relativePath.ToString());
+			return Path.EnsureTrailingSeparatorOnDir(relativePath.ToString(), imSureItsDir);
 		}
 	}
 
