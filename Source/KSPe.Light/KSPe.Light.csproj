@@ -8,7 +8,7 @@
     <RootNamespace>KSPe.Light</RootNamespace>
     <AssemblyName>KSPe.Light</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <BaseIntermediateOutputPath>..\..\obj\$(AssemblyName)</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\..\obj\KSPeLight</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -96,7 +96,6 @@
     <Compile Include="..\KSPe\Multiplatform\Shell.cs">
       <Link>Multiplatform\Shell.cs</Link>
     </Compile>
-    <Compile Include="Util\log\UnityThreadSafeStub.cs" />
     <Compile Include="..\KSPe\Globals.cs">
       <Link>Globals.cs</Link>
     </Compile>
@@ -109,6 +108,7 @@
     <Compile Include="Util\log\Unity.cs" />
     <Compile Include="Multiplatform\stubs\ImageStub.cs" />
     <Compile Include="Multiplatform\Tools.cs" />
+    <Compile Include="Util\log\UnityUiThreadSafeStub.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />

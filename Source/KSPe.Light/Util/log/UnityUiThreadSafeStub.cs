@@ -25,7 +25,7 @@ using UnityEngine;
 
 namespace KSPe.Util.Log {
 
-	internal class UnityThreadSafeLogDecorator : UnityEngine.ILogHandler
+	internal class UnityUiThreadSafeLogDecorator : UnityEngine.ILogHandler
 	{
 		internal static UnityEngine.ILogHandler INSTANCE {
 			get {

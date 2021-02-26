@@ -96,7 +96,6 @@
     <Compile Include="IO\Path.cs" />
     <Compile Include="Multiplatform\Shell.cs" />
     <Compile Include="Multiplatform\FileSystem.cs" />
-    <Compile Include="Util\log\UnityThreadSafe.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Properties\Version.cs">
       <DependentUpon>Version.tt</DependentUpon>
@@ -105,6 +104,8 @@
     <Compile Include="Util\log\UnityLogDecorator.cs" />
     <Compile Include="Multiplatform\Tools.cs" />
     <Compile Include="ModuleManagerSupport.cs" />
+    <Compile Include="Util\log\FileChainUnityLogger.cs" />
+    <Compile Include="Util\log\UnityUiThreadSafe.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">

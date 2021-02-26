@@ -48,8 +48,8 @@ namespace KSPe.Util.Log {
 		public static Logger CreateThreadSafeForType<T>(bool useClassNameToo = false)
 		{
 			return useClassNameToo
-					? new UnityLogger(typeof(T), typeof(T).Namespace, typeof(T).FullName, UnityThreadSafeLogDecorator.INSTANCE)
-					: new UnityLogger(typeof(T), typeof(T).Namespace, UnityThreadSafeLogDecorator.INSTANCE)
+					? new UnityLogger(typeof(T), typeof(T).Namespace, typeof(T).FullName, UnityUiThreadSafeLogDecorator.INSTANCE)
+					: new UnityLogger(typeof(T), typeof(T).Namespace, UnityUiThreadSafeLogDecorator.INSTANCE)
 				;
 		}
 
@@ -61,7 +61,7 @@ namespace KSPe.Util.Log {
 				;
 		}
 
-		public static Logger CreateForType<T>(string forceThisNamespace, bool useClassNameToo = true)
+		public static Logger CreateForType<T>(string forceThisNamespace, bool useClassNameToo = false)
 		{
 			return (Globals<T>.Log.ThreadSafe)
 					? CreateThreadSafeForType<T>(forceThisNamespace, useClassNameToo)
@@ -72,8 +72,8 @@ namespace KSPe.Util.Log {
 		public static Logger CreateThreadSafeForType<T>(string forceThisNamespace, bool useClassNameToo = false)
 		{
 			return useClassNameToo
-					? new UnityLogger(typeof(T), forceThisNamespace, typeof(T).FullName, UnityThreadSafeLogDecorator.INSTANCE)
-					: new UnityLogger(typeof(T), forceThisNamespace, UnityThreadSafeLogDecorator.INSTANCE)
+					? new UnityLogger(typeof(T), forceThisNamespace, typeof(T).FullName, UnityUiThreadSafeLogDecorator.INSTANCE)
+					: new UnityLogger(typeof(T), forceThisNamespace, UnityUiThreadSafeLogDecorator.INSTANCE)
 				;
 		}
 
@@ -95,7 +95,7 @@ namespace KSPe.Util.Log {
 
 		public static Logger CreateThreadSafeForType<T>(string forceThisNamespace, string forceThisClassName)
 		{
-			return new UnityLogger(typeof(T), forceThisNamespace, forceThisClassName, UnityThreadSafeLogDecorator.INSTANCE);
+			return new UnityLogger(typeof(T), forceThisNamespace, forceThisClassName, UnityUiThreadSafeLogDecorator.INSTANCE);
 		}
 
 		public static Logger CreateThreadUnsafeForType<T>(string forceThisNamespace, string forceThisClassName)
@@ -111,8 +111,8 @@ namespace KSPe.Util.Log {
 			get => this._level;
 			set
 			{
-				if (this._level != value)
-					this.force("Log is set to level {0}.", value);
+				if (this._level == value) return;
+				this.force("Log is set to level {0}.", value);
 				this._level = value;
 			}
 		}
@@ -130,6 +130,7 @@ namespace KSPe.Util.Log {
 			this.type = type;
 			this.nameSpace = type.Namespace;
 			this.prefix = string.Format("[{0}]", this.nameSpace);
+			this._level = Globals.Get(this.type).Log.Level;
 		}
 
 		protected Logger(Type type, string forceThisNamespace)
@@ -147,7 +148,9 @@ namespace KSPe.Util.Log {
 			this.prefix = string.Format("[{0}-{1}]", forceThisNamespace, forceThisClassName);
 			this._level = Globals.Get(this.type).Log.Level;
 		}
-		
+
+		public virtual void Close() { }
+
 		protected abstract LogMethod select();
 		protected abstract void log(string message);
 		protected abstract void logException(string message, Exception e);

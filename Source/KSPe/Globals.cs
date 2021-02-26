@@ -146,6 +146,9 @@ namespace KSPe
 
 		public static Globals.LogConfig Log { get {
 			if (null == Globals._default) Globals.Init();
+#if DEBUG
+			UnityEngine.Debug.LogFormat("Loading Global's value for {0}", typeof(T).Namespace);
+#endif
 			return (Globals._locals.ContainsKey(typeof(T).Namespace) ? Globals._locals[typeof(T).Namespace] : Globals._default).Log;
 		} }
 

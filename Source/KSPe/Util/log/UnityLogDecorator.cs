@@ -31,9 +31,15 @@ namespace KSPe.Util.Log
 		internal static UnityEngine.ILogHandler INSTANCE {
 			get {
 				if (null != instance) return instance;
+#if false
+				// I was wrong on thinking Unity had a problem on concurrency on logging.
+				// The source of the problem is KSP and, at least up to KSP 1.11.1, the problem persists.
 				instance = (UnityTools.UnityVersion >= 2019)
 						? ORIGINAL_LOGGER
 						: new UnityLogDecorator();
+#else
+				instance = new UnityLogDecorator();
+#endif
 				return instance;
 			}
 		}

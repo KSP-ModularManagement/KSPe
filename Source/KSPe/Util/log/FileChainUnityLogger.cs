@@ -21,36 +21,27 @@
 
 */
 using System;
+using System.Text;
+using SIO = System.IO;
 
 namespace KSPe.Util.Log {
 
-	public class UnityLogger : Logger
+	public class FileChainUnityLogger<T> : Logger
 	{
-		internal UnityLogger(Type type, UnityEngine.ILogHandler logHandler = null) : base(type)
+		private static readonly Encoding ENCODING = new UTF8Encoding(false);
+		private readonly SIO.FileStream fs;
+
+		public FileChainUnityLogger(string logname) : base(typeof(T))
 		{
-			this.unityLog = logHandler ?? UnityLogDecorator.INSTANCE;
-#if DEBUG
-			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0} with {1}", type, this.unityLog.GetType().Name);
-#endif
+			string fullpathname = IO.Path.Combine(KSPe.IO.File<T>.Data.Solve(logname + ".log"));
+			this.fs = SIO.File.OpenWrite(fullpathname);
 		}
 
-		internal UnityLogger(Type type, string forceThisNamespace, UnityEngine.ILogHandler logHandler = null) : base(type, forceThisNamespace)
+		public override void Close()
 		{
-			this.unityLog = logHandler ?? UnityLogDecorator.INSTANCE;
-#if DEBUG
-			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0} with {1}", forceThisNamespace, this.unityLog.GetType().Name);
-#endif
+			base.Close();
+			this.fs.Close();
 		}
-
-		internal UnityLogger(Type type, string forceThisNamespace, string forceThisClassName, UnityEngine.ILogHandler logHandler = null) : base(type, forceThisNamespace, forceThisClassName)
-		{
-			this.unityLog = logHandler ?? UnityLogDecorator.INSTANCE;
-#if DEBUG
-			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0}-{1} with {1}", forceThisNamespace, forceThisClassName, this.unityLog.GetType().Name);
-#endif
-		}
-
-		private readonly UnityEngine.ILogHandler unityLog;
 
 		protected override LogMethod select()
 		{
@@ -82,25 +73,37 @@ namespace KSPe.Util.Log {
 		protected override void log(string message)
 		{
 			UnityEngine.Debug.Log(message);
+			this.write(message);
 		}
 
 		protected void logWarning(string message)
 		{
 			UnityEngine.Debug.Log(message);
+			this.write(message);
 		}
 
 		protected void logError(string message)
 		{
 			UnityEngine.Debug.Log(message);
+			this.write(message);
 		}
 
 		protected override void logException(string message, Exception e)
 		{
 			UnityEngine.Debug.LogError(message);
+			this.write(message);
 			if (e != null)
 			{
 				UnityEngine.Debug.LogException(e);
+				this.write(e.Message);
+				this.write(e.StackTrace);
 			}
+		}
+
+		private void write(string message)
+		{
+			Byte[] bytes = ENCODING.GetBytes(message + "\n");
+			this.fs.Write(bytes, 0, bytes.Length);
 		}
 	}
 }

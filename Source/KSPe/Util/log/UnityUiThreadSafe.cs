@@ -24,15 +24,15 @@ using System;
 
 namespace KSPe.Util.Log {
 
-	internal class UnityThreadSafeLogDecorator : UnityEngine.MonoBehaviour, UnityEngine.ILogHandler
+	internal class UnityUiThreadSafeLogDecorator : UnityEngine.MonoBehaviour, UnityEngine.ILogHandler
 	{
-		internal static UnityThreadSafeLogDecorator instance;
-		internal static UnityThreadSafeLogDecorator INSTANCE {
+		internal static UnityUiThreadSafeLogDecorator instance;
+		internal static UnityUiThreadSafeLogDecorator INSTANCE {
 			get {
 				if (null == instance){
 					UnityEngine.GameObject obj = new UnityEngine.GameObject();
-					obj.AddComponent<UnityThreadSafeLogDecorator>();
-					instance = obj.GetComponent<UnityThreadSafeLogDecorator>();
+					obj.AddComponent<UnityUiThreadSafeLogDecorator>();
+					instance = obj.GetComponent<UnityUiThreadSafeLogDecorator>();
 				}
 				return instance;
 			}
@@ -56,7 +56,7 @@ namespace KSPe.Util.Log {
 
 			void AbstractLogMsg.execute()
 			{
-				UnityThreadSafeLogDecorator.INSTANCE.upstream.LogException(this.exception, this.context);
+				UnityUiThreadSafeLogDecorator.INSTANCE.upstream.LogException(this.exception, this.context);
 			}
 		}
 
@@ -77,7 +77,7 @@ namespace KSPe.Util.Log {
 
 			void AbstractLogMsg.execute()
 			{
-				UnityThreadSafeLogDecorator.INSTANCE.upstream.LogFormat(this.logType, this.context, this.format, this.formatArgs);
+				UnityUiThreadSafeLogDecorator.INSTANCE.upstream.LogFormat(this.logType, this.context, this.format, this.formatArgs);
 			}
 		}
 
@@ -85,7 +85,7 @@ namespace KSPe.Util.Log {
 		private readonly UnityEngine.ILogHandler upstream;
 		private static readonly object MUTEX = new object();
 
-		internal UnityThreadSafeLogDecorator()
+		internal UnityUiThreadSafeLogDecorator()
 		{
 			this.upstream = UnityEngine.Debug.logger.logHandler;
 		}
@@ -113,12 +113,23 @@ namespace KSPe.Util.Log {
 			if (0 == this.logQueue.Count) return; // Fast bail out if there's nothing on the queue. False negatives will be handled on the next frame.
 			lock (MUTEX) // Ugly doing it on every frame, but there's no other safe way.
 			{
-				if (0 == this.logQueue.Count) return; // This one is safe, we are inside the critical section. No false negatives possible.
-				if (this.logQueue.Count > 128)				// If we have so many messages since the last frame, boy we have a problem here...
+				if (0 == this.logQueue.Count)			// This one is safe, we are inside the critical section. No false negatives possible.
+				{
+					this.enabled = false;				// Being that idiot I mentioned above and saving some CPU cycles by deactivating this and,
+					return;								// so, preventingn the LateUpdate from being called when we know for sure there's nothing to be logged.
+				}
+				if (this.logQueue.Count > 128)				// If we have so many messages since the last frame, boy, we have a problem here...
 					while (this.logQueue.Count > 1)			// The frame rate is the least of the user's worries by now, flush the buffer to prevent exploding the heap.
 						this.logQueue.Dequeue().execute();	// as well to prevent losing any message that could help on the diagnosing.
 				this.logQueue.Dequeue().execute();
 			}
+		}
+
+		internal void OnDestroy()
+		{
+			this.enabled = false;
+			while (this.logQueue.Count > 0)
+				this.logQueue.Dequeue().execute();
 		}
 	}
 }
