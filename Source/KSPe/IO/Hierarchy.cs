@@ -22,6 +22,7 @@
 */
 using System;
 using System.IO.IsolatedStorage;
+using System.Text.RegularExpressions;
 
 namespace KSPe.IO
 {
@@ -99,15 +100,33 @@ namespace KSPe.IO
 
 		private void Calculate(bool createDirs, string fname, out string partialPathname, out string fullPathname)
 		{
+			if ("SAVE" == this.name && null == HighLogic.CurrentGame)
+				throw new IsolatedStorageException(String.Format("Savegames can only be solved after loading or creating a game!!"));
+
 			partialPathname = Path.Combine(this.relativePathName, fname);
+			if ("SAVE" == this.name) // Tremenda gambiarra dos infernos... Caracas... :P
+					partialPathname = Regex.Replace(
+						partialPathname
+						, "^saves" + Path.DirectorySeparatorChar
+						, "saves" + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE)", "") + Path.DirectorySeparatorChar 
+					)
+				;
 
 			if (Path.IsPathRooted(partialPathname))
 				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
 
-			string fn = Path.Combine(this.fullPathName, fname);
+			string this_fullPathNameMangled = this.fullPathName;
+			if ("SAVE" == this.name) // Gambiarras, gambiarras, gambiarras everywhere!! :P (using the voice of Hermes from Disney's Hercules
+				this_fullPathNameMangled = Regex.Replace( 
+							this.fullPathName
+							, Path.DirectorySeparatorChar + "saves" + Path.DirectorySeparatorChar
+							, Path.DirectorySeparatorChar + "saves" + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE)", "") + Path.DirectorySeparatorChar 
+						);
+
+			string fn = Path.Combine(this_fullPathNameMangled, fname);
 			fullPathname = Path.GetFullPath(fn); // Checks against a series of ".." trying to escape the intended sandbox
 
-			if (!fullPathname.StartsWith(this.fullPathName, StringComparison.Ordinal))
+			if (!fullPathname.StartsWith(this_fullPathNameMangled, StringComparison.Ordinal))
 				throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the sandboxed file system! [{0}]", partialPathname));
 
 			if (createDirs)
@@ -116,6 +135,10 @@ namespace KSPe.IO
 				if (!System.IO.Directory.Exists(d))
 					System.IO.Directory.CreateDirectory(d);
 			}
+		#if DEBUG
+			UnityEngine.Debug.LogFormat("[KSPe] Hierarchy Calculate {0} {1} {2}", this.name, partialPathname, fullPathname);
+			UnityEngine.Debug.LogFormat("[KSPe] {0}", null == HighLogic.CurrentGame ? "NULL" : HighLogic.CurrentGame.linkURL);
+		#endif
 		}
 
 		internal static string CalculateRelativePath(string fullDestinationPath, string rootPath)

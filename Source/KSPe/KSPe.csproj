@@ -106,6 +106,13 @@
     <Compile Include="ModuleManagerSupport.cs" />
     <Compile Include="Util\log\FileChainUnityLogger.cs" />
     <Compile Include="Util\log\UnityUiThreadSafe.cs" />
+    <Compile Include="IO\Save\_PublicFacade.cs" />
+    <Compile Include="IO\Save\ConfigNode.cs" />
+    <Compile Include="IO\Save\FileStream.cs" />
+    <Compile Include="IO\Save\PluginConfiguration.cs" />
+    <Compile Include="IO\Save\StreamReader.cs" />
+    <Compile Include="IO\Save\StreamWriter.cs" />
+    <Compile Include="IO\Save\Texture2D.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
@@ -122,6 +129,7 @@
     <Folder Include="GameDB\" />
     <Folder Include="Util\log\" />
     <Folder Include="Multiplatform\" />
+    <Folder Include="IO\Save\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

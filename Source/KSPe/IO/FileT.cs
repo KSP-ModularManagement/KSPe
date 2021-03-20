@@ -1063,5 +1063,276 @@ namespace KSPe.IO
 			public static void WriteAllText(string path, string contents) { throw new NotImplementedException("KSPe.IO.File.Temp.WriteAllText"); }
 			public static void WriteAllText(string path, string contents, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Temp.WriteAllText"); }
 		}
+
+		public static class Save
+		{
+			internal static string FullPathName(bool createDirs, string fn, params string[] fns)
+			{
+				return Hierarchy<T>.SAVE.SolveFull(createDirs, fn, fns);
+			}
+
+			public static string Solve(string fn)
+			{
+				return Hierarchy<T>.SAVE.Solve(false, fn);
+			}
+
+			public static string Solve(string fn, params string[] fns)
+			{
+				return Hierarchy<T>.SAVE.Solve(false, fn, fns);
+			}
+
+			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)
+			{
+				return File.List(Path.Combine(FullPathName(false, "."), subdir??"."), mask, include_subdirs);
+			}
+
+			public static string[] List(string mask = "*", bool include_subdirs = false, string fn = null, params string[] fns)
+			{
+				if (null == fn) return List(mask, include_subdirs);
+
+				string subdir = Solve(fn, fns);
+				return File.List(subdir, mask, include_subdirs);
+			}
+
+			public static void AppendAllText(string path, string contents) { throw new NotImplementedException("KSPe.IO.File.Save.AppendAllText"); }
+			public static void AppendAllText(string contents, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.AppendAllText"); }
+			public static void AppendAllText(string path, string contents, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Save.AppendAllText"); }
+			public static void AppendAllText(string contents, System.Text.Encoding encoding, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.AppendAllText"); }
+
+			public static IO.Save<T>.StreamWriter AppendText(string path) { throw new NotImplementedException("KSPe.IO.File.Save.AppendText"); }
+			public static IO.Save<T>.StreamWriter AppendText(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.AppendText"); }
+
+			public static void Copy(string sourceFileName, string destFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Save.Copy"); }
+			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Save.CopyToLocal"); }
+			public static void CopyToTemp(string sourceFileName, string destTempFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Save.CopyToTemp"); }
+
+			public static IO.Save<T>.FileStream Create(string path) { throw new NotImplementedException("KSPe.IO.File.Save.Create"); }
+			public static IO.Save<T>.FileStream Create(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.Create"); }
+			public static IO.Save<T>.FileStream Create(string path, int bufferSize) { throw new NotImplementedException("KSPe.IO.File.Save.Create"); }
+			public static IO.Save<T>.FileStream Create(int bufferSize, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.Create"); }
+			public static IO.Save<T>.FileStream Create(string path, int bufferSize, SIO.FileOptions options) { throw new NotImplementedException("KSPe.IO.File.Save.Create"); }
+			public static IO.Save<T>.FileStream Create(int bufferSize, SIO.FileOptions options, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.Create"); }
+			public static IO.Save<T>.FileStream Create(string path, int bufferSize, SIO.FileOptions options, System.Security.AccessControl.FileSecurity fileSecurity) { throw new NotImplementedException("KSPe.IO.File.Save.Create"); }
+			public static IO.Save<T>.FileStream Create(int bufferSize, SIO.FileOptions options, System.Security.AccessControl.FileSecurity fileSecurity, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.Create"); }
+
+			public static IO.Save<T>.StreamWriter CreateText(string path)
+			{
+				path = FullPathName(true, path);
+				var t = SIO.File.CreateText(path);			// Does the magic
+				t.Close();									// TODO: Get rid of this stunt.             
+				return new IO.Save<T>.StreamWriter(path);	// Reopens the stream as our own type.
+			}
+
+			public static IO.Save<T>.StreamWriter CreateText(string fn, params string[] fns)
+			{
+				string path = FullPathName(true, fn, fns);
+				var t = SIO.File.CreateText(path);			// Does the magic
+				t.Close();									// TODO: Get rid of this stunt.             
+				return new IO.Save<T>.StreamWriter(path);	// Reopens the stream as our own type.
+			}
+
+			public static void Decrypt(string path) { throw new NotImplementedException("KSPe.IO.File.Save.Decrypt"); }
+			public static void Decrypt(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.Decrypt"); }
+
+			public static void Delete(string path)
+			{
+				path = FullPathName(false, path);
+				SIO.File.Delete(path);
+			}
+
+			public static void Delete(string fn, params string[] fns)
+			{
+				string path = FullPathName(false, fn, fns);
+				SIO.File.Delete(path);
+			}
+
+			public static void Encrypt(string path)  { throw new NotImplementedException("KSPe.IO.File.Save.Encrypt"); }
+			public static void Encrypt(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.Encrypt"); }
+
+			public static bool Exists(string path)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.Exists(path);
+			}
+
+			public static bool Exists(string fn, params string[] fns)
+			{
+				string path = FullPathName(false, fn, fns);
+				return SIO.File.Exists(path);
+			}
+
+			public static System.Security.AccessControl.FileSecurity GetAccessControl(string path)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.GetAccessControl(path);
+			}
+
+			public static System.Security.AccessControl.FileSecurity GetAccessControl(string fn, params string[] fns)
+			{
+				string path = FullPathName(false, fn, fns);
+				return SIO.File.GetAccessControl(path);
+			}
+
+			public static System.Security.AccessControl.FileSecurity GetAccessControl(string path, System.Security.AccessControl.AccessControlSections includeSections)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.GetAccessControl(path, includeSections);
+			}
+
+			public static SIO.FileAttributes GetAttributes(string path)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.GetAttributes(path);
+			}
+
+			public static DateTime GetCreationTime(string path)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.GetCreationTime(path);
+			}
+
+			public static DateTime GetCreationTimeUtc(string path)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.GetCreationTimeUtc(path);
+			}
+
+			public static DateTime GetLastAccessTime(string path)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.GetLastAccessTime(path);
+			}
+
+			public static DateTime GetLastAccessTimeUtc(string path)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.GetLastAccessTimeUtc(path);
+			}
+
+			public static DateTime GetLastWriteTime(string path)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.GetLastWriteTime(path);
+			}
+
+			public static DateTime GetLastWriteTimeUtc(string path)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.GetLastWriteTimeUtc(path);
+			}
+
+			public static void Move(string sourceFileName, string destFileName) { throw new NotImplementedException("KSPe.IO.File.Save.Move"); }
+			public static void MoveToLocal(string sourceFileName, string destFileName) { throw new NotImplementedException("KSPe.IO.File.Save.Move"); }
+			public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName) { throw new NotImplementedException("KSPe.IO.File.Save.Replace"); }
+			public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors) { throw new NotImplementedException("KSPe.IO.File.Save.Replace"); }
+
+			public static IO.Save<T>.FileStream Open(string path, SIO.FileMode mode) { throw new NotImplementedException("KSPe.IO.File.Save.Open"); }
+			public static IO.Save<T>.FileStream Open(SIO.FileMode mode, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.Open"); }
+			public static IO.Save<T>.FileStream Open(string path, SIO.FileMode mode, SIO.FileAccess access) { throw new NotImplementedException("KSPe.IO.File.Save.Open"); }
+			public static IO.Save<T>.FileStream Open(SIO.FileMode mode, SIO.FileAccess access, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.Open"); }
+			public static IO.Save<T>.FileStream Open(string path, SIO.FileMode mode, SIO.FileAccess access, SIO.FileShare share) { throw new NotImplementedException("KSPe.IO.File.Save.Open"); }
+			public static IO.Save<T>.FileStream Open(SIO.FileMode mode, SIO.FileAccess access, SIO.FileShare share, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.Open"); }
+			public static IO.Save<T>.FileStream OpenRead(string path) { throw new NotImplementedException("KSPe.IO.File.Save.OpenRead"); }
+			public static IO.Save<T>.FileStream OpenRead(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.OpenRead"); }
+			public static IO.Save<T>.StreamReader OpenText(string path) { throw new NotImplementedException("KSPe.IO.File.Save.OpenText"); }
+			public static IO.Save<T>.StreamReader OpenText(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.OpenText"); }
+			public static IO.Save<T>.FileStream OpenWrite(string path) { throw new NotImplementedException("KSPe.IO.File.Save.OpenWrite"); }
+			public static IO.Save<T>.FileStream OpenWrite(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.OpenWrite"); }
+
+			public static byte[] ReadAllBytes(string path)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.ReadAllBytes(path);
+			}
+
+			public static byte[] ReadAllBytes(string fn, params string[] fns)
+			{
+				string path = FullPathName(false, fn, fns);
+				return SIO.File.ReadAllBytes(path);
+			}
+
+			public static string[] ReadAllLines(string path)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.ReadAllLines(path);
+			}
+
+			public static string[] ReadAllLines(string fn, params string[] fns)
+			{
+				string path = FullPathName(false, fn, fns);
+				return SIO.File.ReadAllLines(path);
+			}
+
+			public static string[] ReadAllLines(string path, System.Text.Encoding encoding)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.ReadAllLines(path, encoding);
+			}
+
+			public static string[] ReadAllLines(System.Text.Encoding encoding, string fn, params string[] fns)
+			{
+				string path = FullPathName(false, fn, fns);
+				return SIO.File.ReadAllLines(path, encoding);
+			}
+
+			public static string ReadAllText(string path)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.ReadAllText(path);
+			}
+
+			public static string ReadAllText(string fn, params string[] fns)
+			{
+				string path = FullPathName(false, fn, fns);
+				return SIO.File.ReadAllText(path);
+			}
+
+			public static string ReadAllText(string path, System.Text.Encoding encoding)
+			{
+				path = FullPathName(false, path);
+				return SIO.File.ReadAllText(path, encoding);
+			}
+
+			public static string ReadAllText(System.Text.Encoding encoding, string fn, params string[] fns)
+			{
+				string path = FullPathName(false, fn, fns);
+				return SIO.File.ReadAllText(path, encoding);
+			}
+
+			public static void SetAccessControl(string path, System.Security.AccessControl.FileSecurity fileSecurity) { throw new NotImplementedException("KSPe.IO.File.Save.SetAttributes"); }
+			public static void SetAccessControl(System.Security.AccessControl.FileSecurity fileSecurity, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.SetAttributes"); }
+
+			public static void SetAttributes(string path, SIO.FileAttributes fileAttributes) { throw new NotImplementedException("KSPe.IO.File.Save.SetAttributes"); }
+			public static void SetAttributes(SIO.FileAttributes fileAttributes, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.SetAttributes"); }
+
+			public static void SetCreationTime(string path, DateTime creationTime) { throw new NotImplementedException("KSPe.IO.File.Save.SetCreationTime"); }
+			public static void SetCreationTime(DateTime creationTime, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.SetCreationTime"); }
+			public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc) { throw new NotImplementedException("KSPe.IO.File.Save.SetCreationTimeUtc"); }
+			public static void SetCreationTimeUtc(DateTime creationTimeUtc, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.SetCreationTimeUtc"); }
+
+			public static void SetLastAccessTime(string path, DateTime lastAccessTime) { throw new NotImplementedException("KSPe.IO.File.Save.SetLastAccessTime"); }
+			public static void SetLastAccessTime(DateTime lastAccessTime, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.SetLastAccessTime"); }
+			public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc) { throw new NotImplementedException("KSPe.IO.File.Save.SetLastAccessTimeUtc"); }
+			public static void SetLastAccessTimeUtc(DateTime lastAccessTimeUtc, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.SetLastAccessTimeUtc"); }
+
+			public static void SetLastWriteTime(string path, DateTime lastWriteTime) { throw new NotImplementedException("KSPe.IO.File.Save.SetLastWriteTime"); }
+			public static void SetLastWriteTime(DateTime lastWriteTime, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.SetLastWriteTime"); }
+			public static void SetLastWriteTimeUtc(string path, DateTime lastWriteTimeUtc) { throw new NotImplementedException("KSPe.IO.File.Save.SetLastWriteTimeUtc"); }
+			public static void SetLastWriteTimeUtc(DateTime lastWriteTimeUtc, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.SetLastWriteTimeUtc"); }
+
+			public static void WriteAllBytes(string path, byte[] bytes) { throw new NotImplementedException("KSPe.IO.File.Save.WriteAllBytes"); }
+			public static void WriteAllBytes(byte[] bytes, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.WriteAllBytes"); }
+
+			public static void WriteAllLines(string path, string[] contents) { throw new NotImplementedException("KSPe.IO.File.Save.WriteAllLines"); }
+			public static void WriteAllLines(string[] contents, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.WriteAllLines"); }
+			public static void WriteAllLines(string[] contents, System.Text.Encoding encoding, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.WriteAllLines"); }
+			public static void WriteAllLines(string path, string[] contents, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Save.WriteAllLines"); }
+
+			public static void WriteAllText(string path, string contents) { throw new NotImplementedException("KSPe.IO.File.Save.WriteAllText"); }
+			public static void WriteAllText(string contents, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.WriteAllText"); }
+			public static void WriteAllText(string path, string contents, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Save.WriteAllText"); }
+			public static void WriteAllText(string contents, System.Text.Encoding encoding, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.WriteAllText"); }
+		}
 	}
+
 }
