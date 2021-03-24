@@ -1,5 +1,8 @@
 # KSP API Extensions/L :: Changes
 
+* 2021-0323: 2.2.3.1 (Lisias) for KSP >= 1.2
+	+ Extending the Abstracted File System for Savegames
+	+ Added KSP 1.11.2 to the "Database"
 * 2021-0227: 2.2.3.0 (Lisias) for KSP >= 1.2
 	+ New Logging on file support
 		- `FileChainUnityLogger<T>`
