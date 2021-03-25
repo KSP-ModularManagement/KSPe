@@ -88,6 +88,7 @@ KSPe use, embed or reference previous works by:
 * Maik Schreiber
 	* Some code in [Source/KSPe/Util/Image.cs](./Source/KSPe/Util) 
 
+
 ## UPSTREAM
 
 * [swamp_ig](https://forum.kerbalspaceprogram.com/index.php?/profile/85299-pellinor/): ROOT
