@@ -85,6 +85,8 @@ KSPe use, embed or reference previous works by:
 	+ [XInputDotNet](https://github.com/speps/XInputDotNet)
 * Microsoft
 	+ [XInput Programming Guide](https://docs.microsoft.com/en-us/windows/win32/xinput/programming-guide)
+* Maik Schreiber
+	* Some code in [Source/KSPe/Util/Image.cs](./Source/KSPe/Util) 
 
 ## UPSTREAM
 
