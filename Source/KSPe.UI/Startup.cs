@@ -21,7 +21,7 @@
 
 */
 using UnityEngine;
-namespace KSPe
+namespace KSPe.UI
 {
 	[KSPAddon(KSPAddon.Startup.Instantly, true)]
 	public class Startup:MonoBehaviour
