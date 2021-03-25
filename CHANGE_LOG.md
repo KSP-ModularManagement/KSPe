@@ -1,8 +1,11 @@
 # KSP API Extensions/L :: Change Log
 
-* 2021-0323: 2.2.3.1 (Lisias) for KSP >= 1.2
+* 2021-0325: 2.3.0.0 (Lisias) for KSP >= 1.2 PRE-RELEASE
 	+ Extending the Abstracted File System for Savegames
+	+ Added a XInput Abstraction Layer (currently short circuited to dryrun)
 	+ Added KSP 1.11.2 to the "Database"
+* 2021-0323: 2.2.3.1 (Lisias) for KSP >= 1.2
+	+ ***Withdrawn*** due a faulty implementation on a new feature.
 * 2021-0227: 2.2.3.0 (Lisias) for KSP >= 1.2
 	+ New Logging on file support
 		- `FileChainUnityLogger<T>`
