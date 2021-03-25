@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{490051BB-CB2E-407F-A12B-03F0708CDFC7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>KSPe.HMI</RootNamespace>
+    <AssemblyName>KSPe.HMI</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <BaseIntermediateOutputPath>..\..\obj\$(AssemblyName)</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="Multiplatform\XInput\dlls\CIL.cs" />
+    <Compile Include="Multiplatform\XInput\dlls\X86.cs" />
+    <Compile Include="Multiplatform\XInput\dlls\X86_64.cs" />
+    <Compile Include="Multiplatform\XInput\GamePad\ButtonState.cs" />
+    <Compile Include="Multiplatform\XInput\GamePad\Buttons.cs" />
+    <Compile Include="Multiplatform\XInput\GamePad\DeadZone.cs" />
+    <Compile Include="Multiplatform\XInput\GamePad\DPad.cs" />
+    <Compile Include="Multiplatform\XInput\GamePad\State.cs" />
+    <Compile Include="Multiplatform\XInput\GamePad\ThumbSticks.cs" />
+    <Compile Include="Multiplatform\XInput\GamePad\Triggers.cs" />
+    <Compile Include="Multiplatform\XInput\dlls\Ifc.cs" />
+    <Compile Include="Multiplatform\XInput\dlls\NULL.cs" />
+    <Compile Include="Multiplatform\XInput\GamePad\_Controller.cs" />
+    <Compile Include="Multiplatform\XInput\GamePad\utils.cs" />
+    <Compile Include="Multiplatform\XInput\PlayerIndex.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KSPe\KSPe.csproj">
+      <Project>{1DCC1744-4EEF-49DF-961C-A73F3ADCC6C5}</Project>
+      <Name>KSPe</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Multiplatform\" />
+    <Folder Include="Multiplatform\XInput\" />
+    <Folder Include="Multiplatform\XInput\dlls\" />
+    <Folder Include="Multiplatform\XInput\GamePad\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

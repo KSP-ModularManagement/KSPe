@@ -77,6 +77,15 @@ Detailed installation instructions are now on its own file (see the [In a Hurry]
 Please note the copyrights and trademarks in [NOTICE](./NOTICE).
 
 
+## References
+
+KSPe use, embed or reference previous works by:
+
+* [Rémi Gillig](https://github.com/speps)
+	+ [XInputDotNet](https://github.com/speps/XInputDotNet)
+* Microsoft
+	+ [XInput Programming Guide](https://docs.microsoft.com/en-us/windows/win32/xinput/programming-guide)
+
 ## UPSTREAM
 
 * [swamp_ig](https://forum.kerbalspaceprogram.com/index.php?/profile/85299-pellinor/): ROOT
