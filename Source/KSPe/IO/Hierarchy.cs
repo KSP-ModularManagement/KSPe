@@ -108,7 +108,7 @@ namespace KSPe.IO
 					partialPathname = Regex.Replace(
 						partialPathname
 						, "^saves" + Path.DirectorySeparatorChar
-						, "saves" + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE)", "") + Path.DirectorySeparatorChar 
+						, "saves" + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE_SANDBOX)", "") + Path.DirectorySeparatorChar 
 					)
 				;
 
