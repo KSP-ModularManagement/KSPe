@@ -41,6 +41,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyVersion(KSPe.Version.Number)]
 [assembly: AssemblyFileVersion(KSPe.Version.Number)]
+[assembly: KSPAssembly("KSPe.System", KSPe.Version.major, KSPe.Version.minor)]
 
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.

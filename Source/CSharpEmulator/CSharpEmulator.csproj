@@ -6,7 +6,7 @@
     <ProjectGuid>{C62322BD-85FF-4E67-A525-524C69EF36DC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>CSharpEmulator</RootNamespace>
-    <AssemblyName>CSharpEmulator</AssemblyName>
+    <AssemblyName>KSPe.System</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>..\..\obj\$(AssemblyName)</BaseIntermediateOutputPath>
   </PropertyGroup>
@@ -29,10 +29,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.0\Assembly-CSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\Generics\Queue.cs" />
+    <Compile Include="System\EnumT.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KSPe\KSPe.csproj">
