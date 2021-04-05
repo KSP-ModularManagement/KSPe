@@ -113,6 +113,7 @@
     <Compile Include="IO\Save\StreamReader.cs" />
     <Compile Include="IO\Save\StreamWriter.cs" />
     <Compile Include="IO\Save\Texture2D.cs" />
+    <Compile Include="Multiplatform\Tools\WindowsTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
@@ -130,6 +131,7 @@
     <Folder Include="Util\log\" />
     <Folder Include="Multiplatform\" />
     <Folder Include="IO\Save\" />
+    <Folder Include="Multiplatform\Tools\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

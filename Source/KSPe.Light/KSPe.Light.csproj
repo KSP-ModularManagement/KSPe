@@ -109,6 +109,9 @@
     <Compile Include="Multiplatform\stubs\ImageStub.cs" />
     <Compile Include="Multiplatform\Tools.cs" />
     <Compile Include="Util\log\UnityUiThreadSafeStub.cs" />
+    <Compile Include="..\KSPe\Multiplatform\Tools\WindowsTools.cs">
+      <Link>Multiplatform\Tools\WindowsTools.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />
@@ -116,6 +119,7 @@
     <Folder Include="Util\log\" />
     <Folder Include="IO\" />
     <Folder Include="Multiplatform\stubs\" />
+    <Folder Include="Multiplatform\Tools\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

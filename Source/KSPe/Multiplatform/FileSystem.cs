@@ -103,14 +103,26 @@ namespace KSPe.Multiplatform
 			return SIO.Path.GetFullPath(r);
 		}
 
+		private static string Reparse_windows(string path)
+		{
+			string r = LowLevelTools.Windows32.GetFinalPathName(path);
+			return SIO.Path.GetFullPath(r);
+		}
+
 		public static string ReparsePath(string path)
 		{
 			//try
 			//{
 			//	if (null != realpath) return Reparse_realpath(path);
 			//} catch (System.Exception) { } // If anything goes wrong, just try readlink.
+
 			if (null != readlink) return Reparse_readlink(path);
-			return path;
+
+			if ((int)System.Environment.OSVersion.Platform < 4) return Reparse_windows(path);
+
+			// If everything else fails, oh well...
+			return IO.Path.EnsureTrailingSeparatorOnDir(path);	// This is a public interface. It needs to follow the expected behaviour
+																// of ensuring a trailing Directory Separator on directories.
 		}
 
 		public static bool IsReparsePoint(string path)
