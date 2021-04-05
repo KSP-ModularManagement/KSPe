@@ -29,25 +29,25 @@ namespace KSPe.Testing
 	[KSPAddon(KSPAddon.Startup.MainMenu, true)]
 	public class MainMenu : MonoBehaviour
 	{
-        private Rect window;
+		private Rect window;
 
-        public void Awake()
-        {
-			this.window = new Rect(400,300, 320,200);
-        }
-        
-        public void OnGUI()
-        {
+		public void Awake()
+		{
+			this.window = new Rect(400, 300, 320, 200);
+		}
+
+		public void OnGUI()
+		{
 			this.window = GUI.Window(0, this.window, OnMainWindow, "It's me, Mario!!");
-        }
-        
-        private void OnMainWindow(int windowID)
-        {
+		}
+
+		private void OnMainWindow(int windowID)
+		{
 			GUIStyle style = new GUIStyle(GUI.skin.toggle);
 			GUILayout.BeginVertical();
-                GUILayout.TextArea("Hello World!", GUILayout.ExpandHeight(true), GUILayout.MaxHeight(100));
-            GUILayout.EndVertical();
+			GUILayout.TextArea("Hello World!", GUILayout.ExpandHeight(true), GUILayout.MaxHeight(100));
+			GUILayout.EndVertical();
 			GUI.DragWindow();
-        }
-    }
+		}
+	}
 }
