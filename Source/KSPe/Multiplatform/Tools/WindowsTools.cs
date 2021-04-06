@@ -28,9 +28,14 @@ using System.Text;
 
 namespace KSPe.Multiplatform.LowLevelTools {
 
-// Source : https://stackoverflow.com/a/33487494
-public static class Windows32	
-{
+	public static class Windows
+	{
+		public static bool IsThisWindows => ((int)System.Environment.OSVersion.Platform < 4);
+	}
+
+	// Source : https://stackoverflow.com/a/33487494
+	public static class Windows32	
+	{
 		private static readonly IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
 
 		private const uint FILE_READ_EA = 0x0008;
@@ -62,6 +67,7 @@ public static class Windows32
 				FileMode.Open,
 				FILE_FLAG_BACKUP_SEMANTICS,
 				IntPtr.Zero);
+
 			if (h == INVALID_HANDLE_VALUE)
 				throw new Win32Exception();
 

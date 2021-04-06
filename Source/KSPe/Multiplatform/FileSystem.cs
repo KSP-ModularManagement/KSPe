@@ -118,7 +118,7 @@ namespace KSPe.Multiplatform
 
 			if (null != readlink) return Reparse_readlink(path);
 
-			if ((int)System.Environment.OSVersion.Platform < 4) return Reparse_windows(path);
+			if (LowLevelTools.Windows.IsThisWindows) return Reparse_windows(path);
 
 			// If everything else fails, oh well...
 			return IO.Path.EnsureTrailingSeparatorOnDir(path);	// This is a public interface. It needs to follow the expected behaviour
