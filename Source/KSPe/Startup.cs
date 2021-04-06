@@ -59,5 +59,30 @@ namespace KSPe
 			#endif
 			KSPe.Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI");
 		}
+
+		private void OnDestroy()
+		{
+			if (!quitOnDestroy) return;
+
+			// Someone, probably a FatalError, told us to quit the game.
+			UnityEngine.Debug.Log("[KSPe] Quitting KSP due an unrecoverable error.");
+			UnityEngine.Application.Quit();
+		}
+
+		// Be *REALLY* cautious with this one!
+		// This is used as a fallback in the case the user don't click on the FatalError MsgBox
+		private static bool quitOnDestroy = false;
+		public static bool QuitOnDestroy
+		{
+			set
+			{
+				if (value)
+				{
+					System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
+					UnityEngine.Debug.LogWarningFormat("[KSPe] was told to quit the game. Stackdump of the caller: {0}", t);
+					quitOnDestroy = value;
+				}
+			}
+		}
 	}
 }

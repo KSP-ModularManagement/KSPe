@@ -21,6 +21,128 @@
 
 */
 using System;
+using UnityEngine;
+
 namespace KSPe { namespace FatalErrors 
 {
+	// Copy & Paste from KSPe.UI.
+	// KSPe must be autonomous without any dependency, as the source of the problem can be one of them!
+	internal class FatalErrorMsgBox : MonoBehaviour
+	{
+		private const string TITTLE = "KSPe Fatal Error";
+		private const string MSG = @"This is a **FATAL ERROR** from KSPe!
+
+{0}
+
+This is a *installment error*, not a bug on KSP, KSPe or any other Add'On. KSPe just can't proceed, KSP cannot be executed as is.
+
+A page where you can ask for Support will be called. Read the instructions on that page, we will try to help fixing your problem.
+
+KSP will close now, and an Internet Site where you can ask for help will be shown.";
+		private string msg;
+		private Action action;
+		private int window_id;
+		private Rect windowRect;
+		private GUIStyle win;
+		private GUIStyle text;
+
+		public void Show(string msg)
+		{
+			Show(msg, null);
+		}
+
+		// MessageBox("SNAFU", "Situation Normal... All F* Up!", () => { Application.Quit() });
+		public void Show(string msg, Action action)
+		{
+			this.msg = string.Format(MSG, msg);
+			this.action = action;
+			this.window_id = (int)-1;
+
+			this.windowRect = this.calculateWindow();
+			Texture2D textTex = new Texture2D(1, 1);
+			{
+				textTex.SetPixel(0, 0, new Color(0f, 0f, 0f, 0.80f));
+				textTex.Apply();
+			}
+
+			this.win = new GUIStyle("Window")
+			{
+				fontSize = 26,
+				fontStyle = FontStyle.Bold,
+				alignment = TextAnchor.UpperCenter,
+				wordWrap = false
+			};
+			this.win.normal.textColor = Color.red;
+			this.win.border.top = 0;
+			this.win.padding.top = -5;
+			this.win.active.background =
+				this.win.focused.background =
+				this.win.normal.background = textTex;
+
+			this.text = new GUIStyle("Label")
+			{
+				fontSize = 18,
+				fontStyle = FontStyle.Normal,
+				alignment = TextAnchor.MiddleLeft,
+				wordWrap = true
+			};
+			this.text.normal.textColor = Color.white;
+			this.text.padding.top = 8;
+			this.text.padding.bottom = text.padding.top;
+			this.text.padding.left = text.padding.top;
+			this.text.padding.right = text.padding.top;
+			this.text.active.background =
+				this.text.focused.background =
+				this.text.normal.background = textTex;
+		}
+
+		private Rect calculateWindow()
+		{
+			const int maxWidth = 640;
+			const int maxHeight = 480;
+
+			int width = Mathf.Min(maxWidth, Screen.width - 20);
+			int height = Mathf.Min(maxHeight, Screen.height - 20);
+			
+			return new Rect(
+				(Screen.width - width) / 2, (Screen.height - height) / 2,
+				width, height
+			);
+
+		}
+
+		private void OnGUI()
+		{
+			this.windowRect = GUI.ModalWindow(this.window_id, this.windowRect, WindowFunc, TITTLE, this.win);
+		}
+
+		private void WindowFunc(int windowID)
+		{
+			const int border = 10;
+			const int width = 100;
+			const int height = 25;
+			const int spacing = 10;
+
+			Rect l = new Rect(
+					border, border + spacing,
+					this.windowRect.width - border * 2, this.windowRect.height - border * 2 - height - spacing
+				);
+
+			GUI.Label(l, this.msg, this.text);
+			Rect b = new Rect(
+				this.windowRect.width - width - border,
+				this.windowRect.height - height - border,
+				width,
+				height);
+
+			if (this.action is null)
+			{
+				if (GUI.Button(b, "Close KSP")) Destroy(this.gameObject);
+			}
+			else
+			{
+				if (GUI.Button(b, "Close KSP")) { this.action(); Destroy(this.gameObject); }
+			}
+		}
+	}
 } }
