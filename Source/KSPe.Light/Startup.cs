@@ -31,5 +31,30 @@ namespace KSPe
 			// Nope, we should not use the Log Facilities ourselves. Ironic, uh? :)
 			UnityEngine.Debug.LogFormat("[KSPe.Light] Version {0}", Version.Text);
 		}
+
+		private void OnDestroy()
+		{
+			// Someone, probably a FatalError, told us to quit the game.
+			if (!quitOnDestroy) return;
+
+			UnityEngine.Debug.Log("[KSPe] Quitting KSP due an unrecoreable error.");
+			UnityEngine.Application.Quit();
+		}
+
+		// Be *REALLY* cautious with this one!
+		// This is used as a fallback in the case the user don't click on the FatalError MsgBox
+		private static bool quitOnDestroy = false;
+		internal static bool QuitOnDestroy
+		{
+			set
+			{
+				if (value)
+				{
+					System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
+					UnityEngine.Debug.LogWarningFormat("[KSPe] was told to quit the game. Stackdump of the caller: {0}", t);
+				}
+				quitOnDestroy = value;
+			}
+		}
 	}
 }

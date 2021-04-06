@@ -112,6 +112,9 @@
     <Compile Include="..\KSPe\Multiplatform\Tools\WindowsTools.cs">
       <Link>Multiplatform\Tools\WindowsTools.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe\FatalErrors.cs">
+      <Link>FatalErrors.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />

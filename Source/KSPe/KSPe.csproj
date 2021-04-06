@@ -114,6 +114,7 @@
     <Compile Include="IO\Save\StreamWriter.cs" />
     <Compile Include="IO\Save\Texture2D.cs" />
     <Compile Include="Multiplatform\Tools\WindowsTools.cs" />
+    <Compile Include="FatalErrors.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">

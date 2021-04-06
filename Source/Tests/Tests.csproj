@@ -50,6 +50,7 @@
       <Link>KSPe.Artefacts\IO\Path.cs</Link>
     </Compile>
     <Compile Include="Mockups\KSP\KSPUtil.cs" />
+    <Compile Include="Mockups\KSPe\FatalErrors.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="KSPe.Artefacts\" />
@@ -59,6 +60,7 @@
     <Folder Include="Mockups\UnityEngine\" />
     <Folder Include="KSPe.Artefacts\IO\" />
     <Folder Include="Mockups\KSP\" />
+    <Folder Include="Mockups\KSPe\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
