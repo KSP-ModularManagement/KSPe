@@ -105,7 +105,7 @@ namespace KSPe.Multiplatform
 
 		private static string Reparse_windows(string path)
 		{
-			string r = LowLevelTools.Windows32.GetFinalPathName(path);
+			string r = LowLevelTools.Windows32.GetFinalPathName(path).Replace("\\\\?\\","").Replace("\\\\.\\",""); // Gets rid of the UNC stunt. Why, Microsoft? Why?
 			return SIO.Path.GetFullPath(r);
 		}
 

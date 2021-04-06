@@ -17,12 +17,27 @@ namespace Tests
 		{
 			foreach (string d in System.IO.Directory.GetDirectories(root_dir))
 			{
+				Console.WriteLine(string.Format("Trying {0} ...", d));
 				if (!KSPe.Multiplatform.FileSystem.IsReparsePoint(d))
 					Console.WriteLine(string.Format("Directory {0} is not a ReparsePoint.", d));
 				else
 				{
+					Console.WriteLine(string.Format("LowLevelTools.Windows32.GetFinalPathName({0}) = {1}", d, KSPe.Multiplatform.LowLevelTools.Windows32.GetFinalPathName(d)));
 					string urd = KSPe.Multiplatform.FileSystem.ReparsePath(d);
 					Console.WriteLine(string.Format("Directory {0} is unreparsed to {1}", d, urd));
+				}
+			}
+
+			if (!KSPe.Multiplatform.LowLevelTools.Windows.IsThisWindows) return;
+
+			foreach (string d in System.IO.Directory.GetFiles(root_dir, "*", System.IO.SearchOption.AllDirectories))
+			{
+				if (!KSPe.Multiplatform.FileSystem.IsReparsePoint(d))
+					Console.WriteLine(string.Format("File {0} is not a ReparsePoint.", d));
+				else
+				{
+					string urd = KSPe.Multiplatform.FileSystem.ReparsePath(d);
+					Console.WriteLine(string.Format("File {0} is unreparsed to {1}", d, urd));
 				}
 			}
 		}
