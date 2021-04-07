@@ -169,8 +169,15 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 		}
 	}
 
-				MSG,
-				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/11"); Application.Quit(); }
+	internal static class PwdIsNotOrigin
+	{
+		private static readonly string MSG = @"The Current Working Directory (pwd on UNIX) doesn't matches the KSPe's origin!
+
+pwd : {0}
+origin : {1}
+
+When this happens, KSP may write files on the wrong place, and you can lost track of saves (if KSP manages to startup at all!).";
+
 		private static bool shown = false;
 		internal static void Show(string pwd, string origin)
 		{
@@ -186,7 +193,7 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 				string.Format(MSG, pwd, origin),
 				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12"); Application.Quit(); }
 			);
-			Debug.Log("[KSPe] Fatal Error PwdIsNotOrigin was shown. Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12");
+			Debug.LogFormat("[KSPe] Fatal Error PwdIsNotOrigin was shown. pwd = {0} ; origin = {1} . Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12", pwd, origin);
 		}
 	}
 } }

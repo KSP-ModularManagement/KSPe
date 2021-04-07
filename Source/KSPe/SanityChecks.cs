@@ -27,6 +27,15 @@ namespace KSPe
 	{
 		internal static void DoIt()
 		{
+			CheckForPwd();
+		}
+
+		private static void CheckForPwd()
+		{
+			string pwd = KSPe.IO.Path.EnsureTrailingSeparatorOnDir(System.IO.Directory.GetCurrentDirectory(), true);
+			string origin = KSPe.IO.Path.Origin();
+
+			if (!pwd.Equals(origin)) FatalErrors.PwdIsNotOrigin.Show(pwd, origin);
 		}
 	}
 }
