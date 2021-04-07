@@ -30,6 +30,7 @@ namespace KSPe
 		{
 			// Nope, we should not use the Log Facilities ourselves. Ironic, uh? :)
 			UnityEngine.Debug.LogFormat("[KSPe] Version {0}", Version.Text);
+			SanityChecks.DoIt();
 		}
 
 		private void Awake()
