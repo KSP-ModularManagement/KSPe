@@ -145,4 +145,48 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 			}
 		}
 	}
+
+	internal static class NoGameDataFound
+	{
+		private static readonly string MSG = @"KSPe could not find a GameData folder from where you fired up your KSP game.";
+
+		private static bool shown = false;
+		internal static void Show()
+		{
+			if (shown) return;
+
+			Startup.QuitOnDestroy = shown = true;
+			if (null != GameObject.Find("KSPe.FatalError.NoGameDataFound")) return; // Already being shown.
+
+			GameObject go = new GameObject("KSPe.FatalError.NoGameDataFound");
+			FatalErrorMsgBox dlg = go.AddComponent<FatalErrorMsgBox>();
+
+			dlg.Show(
+				MSG,
+				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/11"); Application.Quit(); }
+			);
+			Debug.Log("[KSPe] Fatal Error NoGameDataFound was shown. Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/11");
+		}
+	}
+
+				MSG,
+				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/11"); Application.Quit(); }
+		private static bool shown = false;
+		internal static void Show(string pwd, string origin)
+		{
+			if (shown) return;
+
+			Startup.QuitOnDestroy = shown = true;
+			if (null != GameObject.Find("KSPe.FatalError.PwdIsNotOrigin")) return; // Already being shown.
+
+			GameObject go = new GameObject("KSPe.FatalError.PwdIsNotOrigin");
+			FatalErrorMsgBox dlg = go.AddComponent<FatalErrorMsgBox>();
+
+			dlg.Show(
+				string.Format(MSG, pwd, origin),
+				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12"); Application.Quit(); }
+			);
+			Debug.Log("[KSPe] Fatal Error PwdIsNotOrigin was shown. Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12");
+		}
+	}
 } }

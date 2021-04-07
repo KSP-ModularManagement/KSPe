@@ -124,13 +124,44 @@ namespace KSPe.IO
 				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] Calculating Origin for {0}", typeof(KSPUtil).Assembly.Location);
 			#endif
 
-			string path = typeof(KSPUtil).Assembly.Location
-				.Replace("KSP_x64_Data",".")						// Win64 versions
-				.Replace("KSP_Data",".")							// Linux and Win32 versions
-				.Replace("KSP.app/Contents/Resources/Data", ".")	// Mac
-				.Replace("Managed", ".")							// Everybody
+			// Look for the GameData folder. This is our root.
+
+			// this one doesn't works, Mono reparse the damned thing and we lose the original pathname the user used to launch the thing!
+			//string path = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+
+			string assemblypath = typeof(KSPUtil).Assembly.Location;
+			assemblypath = SIO.Path.GetDirectoryName(assemblypath);
+			string path = null;
+
+			{	// Let's try the quick & dirty way first!
+				path = SIO.Path.GetDirectoryName(assemblypath)
+					.Replace("KSP_x64_Data", ".")						// Win64 versions
+					.Replace("KSP_Data", ".")							// Linux and Win32 versions
+					.Replace("KSP.app/Contents/Resources/Data", ".")	// Mac
+					.Replace("Managed", ".")							// Everybody
 				;
-			path = GetDirectoryName(GetAbsolutePath(path));
+				path = GetDirectoryName(GetAbsolutePath(path));
+				if (!SIO.Directory.Exists(SIO.Path.Combine(path, "GameData"))) path = null;
+			}
+
+			if (null == path)
+			{	// Oukey, not a standard rig, perhaps a debug/development one?
+				#if DEBUG
+					UnityEngine.Debug.LogFormat("[KSPe.IO.Path] GameData not found the easy way. Trying the harder path. #TumDumTsss");
+				#endif
+				path = SIO.Path.GetDirectoryName(assemblypath);
+				while (path.Length > 4) // The smaller relevant path for us is C:\ on Windows. Less than it, we are toasted, no GameData found!
+				{
+					#if DEBUG
+						UnityEngine.Debug.LogFormat("[KSPe.IO.Path] Trying {0}", path);
+					#endif
+					if (SIO.Directory.Exists(SIO.Path.Combine(path, "GameData"))) break;
+					path = SIO.Path.GetDirectoryName(path);
+				}
+				path = (path.Length < 4) ? null : GetAbsolutePath(path);
+			}
+
+			if (null == path) KSPe.FatalErrors.NoGameDataFound.Show();
 
 			#if DEBUG
 				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] Normalized path {0}", path);
