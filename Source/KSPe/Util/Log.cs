@@ -37,6 +37,8 @@ namespace KSPe.Util.Log {
 
 	public abstract class Logger
 	{
+		private const string NO_NAMESPACE = "<no namespace>";
+
 		public static Logger CreateForType<T>(bool useClassNameToo = false)
 		{
 			return (Globals<T>.Log.ThreadSafe)
@@ -128,7 +130,7 @@ namespace KSPe.Util.Log {
 		protected Logger(Type type)
 		{
 			this.type = type;
-			this.nameSpace = type.Namespace;
+			this.nameSpace = type.Namespace ?? NO_NAMESPACE;
 			this.prefix = string.Format("[{0}]", this.nameSpace);
 			this._level = Globals.Get(this.type).Log.Level;
 		}
@@ -136,16 +138,16 @@ namespace KSPe.Util.Log {
 		protected Logger(Type type, string forceThisNamespace)
 		{
 			this.type = type;
-			this.nameSpace = forceThisNamespace;
-			this.prefix = string.Format("[{0}]", forceThisNamespace);
+			this.nameSpace = forceThisNamespace ?? NO_NAMESPACE;
+			this.prefix = string.Format("[{0}]", this.nameSpace);
 			this._level = Globals.Get(this.type).Log.Level;
 		}
 
 		protected Logger(Type type, string forceThisNamespace, string forceThisClassName)
 		{
 			this.type = type;
-			this.nameSpace = forceThisNamespace;
-			this.prefix = string.Format("[{0}-{1}]", forceThisNamespace, forceThisClassName);
+			this.nameSpace = forceThisNamespace ?? NO_NAMESPACE;
+			this.prefix = string.Format("[{0}-{1}]", this.nameSpace, forceThisClassName);
 			this._level = Globals.Get(this.type).Log.Level;
 		}
 
