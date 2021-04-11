@@ -21,6 +21,7 @@
 
 */
 using System;
+
 namespace KSPe
 {
 	internal static class SanityChecks
@@ -35,7 +36,17 @@ namespace KSPe
 			string pwd = KSPe.IO.Path.EnsureTrailingSeparatorOnDir(System.IO.Directory.GetCurrentDirectory(), true);
 			string origin = KSPe.IO.Path.Origin();
 
-			if (!pwd.Equals(origin)) FatalErrors.PwdIsNotOrigin.Show(pwd, origin);
+			// Naivelly comparing the paths is borking on Windows, as this thingy uses case insensity pathnames by default.
+			// if (!pwd.Equals(origin)) FatalErrors.PwdIsNotOrigin.Show(pwd, origin);
+
+			// So we need a mechanism that would solve this on Windows without breaking Linux and MacOS, ideally without creating
+			// system specific support code. The solution for this is using URIs.
+			// Let the runtime do the dirty work for us.
+			{
+				Uri uri_pwd = new Uri(System.IO.Path.Combine(pwd, "dummy.txt"));
+				Uri uri_origin = new Uri(System.IO.Path.Combine(origin, "dummy.txt"));
+				if (uri_pwd != uri_origin) FatalErrors.PwdIsNotOrigin.Show(pwd, origin);
+			}
 		}
 	}
 }
