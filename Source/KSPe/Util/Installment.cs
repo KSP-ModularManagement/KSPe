@@ -184,6 +184,10 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 			Check<T>(versionClass, unique);
 		}
 
+		private static readonly String CheckForWrongDirectoy_PLUGINS = string.Format("{0}Plugins{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
+		private static readonly String CheckForWrongDirectoy_PLUGIN = string.Format("{0}Plugins{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
+		private static readonly String CheckForWrongDirectoy_DOT = string.Format("{0}.{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
+		private static readonly String CheckForWrongDirectoy_GAMEDATA = string.Format("{0}GameData{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
 		private static void CheckForWrongDirectoy(Type type, string name, string folder, string vendor)
 		{
 			string intendedPath = IO.Path.Combine(IO.Path.Origin(), "GameData");
@@ -191,7 +195,21 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 			intendedPath = IO.Path.Combine(intendedPath, folder);
 			intendedPath = IO.Path.GetFullPath(intendedPath, true);
 
-			string installedDllPath = IO.Path.GetDirectoryName(IO.Path.GetFullPath(type.Assembly.Location.Replace("Plugins",".").Replace("Plugin",".")));
+			string installedDllPath = IO.Path.GetDirectoryName(IO.Path.GetFullPath(type.Assembly.Location));
+
+			{
+				// get rid of any Plugins or Plugin subdirs, but only inside the GameData
+				int pos;
+				if ((pos = installedDllPath.IndexOf(CheckForWrongDirectoy_GAMEDATA)) < 0)
+					throw new WrongDirectoryInstallationException(name, intendedPath, type.Assembly.Location);
+				pos += CheckForWrongDirectoy_GAMEDATA.Length;
+
+				string baseIntendedPath = installedDllPath.Substring(0, pos);
+				string postfixIntendedPath = installedDllPath.Substring(pos);
+				postfixIntendedPath = postfixIntendedPath.Replace(CheckForWrongDirectoy_PLUGINS,CheckForWrongDirectoy_DOT).Replace(CheckForWrongDirectoy_PLUGIN,CheckForWrongDirectoy_DOT);
+				installedDllPath = IO.Path.Combine(baseIntendedPath, postfixIntendedPath);
+			}
+
 			if (installedDllPath.StartsWith(intendedPath)) return;
 
 			throw new WrongDirectoryInstallationException(name, intendedPath, installedDllPath);

@@ -42,10 +42,41 @@ namespace Tests
 			}
 		}
 
+		private static readonly String CheckForWrongDirectoy_PLUGINS = "/Plugins/";
+		private static readonly String CheckForWrongDirectoy_PLUGIN = "/Plugins/";
+		private static readonly String CheckForWrongDirectoy_DOT = "/./";
+		private static readonly String CheckForWrongDirectoy_GAMEDATA = "/GameData/";
+		private static void TestCase_InstallPath()
+		{
+			string intendedPath = System.IO.Path.Combine("/Users/lisias/Workspaces/KSP/runtime/1.12.0 with Plugins", "GameData");
+			intendedPath = System.IO.Path.Combine(intendedPath, "TweakScale");
+			intendedPath += "/";
+
+			string installedDllPath = System.IO.Path.GetDirectoryName("/Users/lisias/Workspaces/KSP/runtime/1.12.0 with Plugins/GameData/TweakScale/Plugins/Scale.dll");
+			installedDllPath += "/";
+
+			{
+				// get rid of any Plugins or Plugin subdirs, but only inside the GameData
+				int pos;
+				if ((pos = installedDllPath.IndexOf(CheckForWrongDirectoy_GAMEDATA)) < 0)
+					return;
+				pos += CheckForWrongDirectoy_GAMEDATA.Length;
+
+				string baseIntendedPath = installedDllPath.Substring(0, pos);
+				string postfixIntendedPath = installedDllPath.Substring(pos);
+				postfixIntendedPath = postfixIntendedPath.Replace(CheckForWrongDirectoy_PLUGINS,CheckForWrongDirectoy_DOT).Replace(CheckForWrongDirectoy_PLUGIN,CheckForWrongDirectoy_DOT);
+				installedDllPath = System.IO.Path.Combine(baseIntendedPath, postfixIntendedPath);
+			}
+
+			Console.WriteLine((installedDllPath.StartsWith(intendedPath)));
+		}
+
 		public static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");
 			Console.WriteLine(Environment.GetCommandLineArgs()[0]);
+
+			TestCase_InstallPath();
 
 			TestCase_MiscPaths();
 			TestCase_Raparsing(Environment.GetCommandLineArgs()[1]);
