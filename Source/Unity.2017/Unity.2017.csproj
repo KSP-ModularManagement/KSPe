@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0287C4CE-69A5-49B8-9C11-C5C7A36E4086}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>KSP.Unity2017</RootNamespace>
+    <RootNamespace>KSPe.Unity2017</RootNamespace>
     <AssemblyName>KSPe.Unity.2017</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>..\..\obj\$(AssemblyName)</BaseIntermediateOutputPath>
