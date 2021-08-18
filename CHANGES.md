@@ -1,5 +1,7 @@
 # KSP API Extensions/L :: Changes
 
+* 2021-0818: 2.3.0.4 (Lisias) for KSP >= 1.2
+	+ Adding KSP 1.12.1 and 1.12.2 to the "Database"
 * 2021-0626: 2.3.0.3 (Lisias) for KSP >= 1.2
 	+ Add KSP 1.12.0 to the "Database"
 	+ Promotes to RELEASE
