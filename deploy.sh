@@ -3,6 +3,7 @@
 source ./CONFIG.inc
 
 check() {
+	mkdir -p "./GameData/$TARGETDIR/Plugins/PluginData"
 	if [ ! -d "./GameData/$TARGETBINDIR/" ] ; then
 		rm -f "./GameData/$TARGETBINDIR/"
 		mkdir -p "./GameData/$TARGETBINDIR/"
@@ -41,7 +42,7 @@ deploy_gamedata() {
 	if [ -f "./bin/Release/$DLL" ] ; then
 		cp "./bin/Release/$DLL" "./GameData/000_$DLL"
 		if [ -d "${KSP_DEV}/GameData/" ] ; then
-			cp "./bin/Release/$DLL" "${KSP_DEV/}/GameData/${PLACE}_$DLL"
+			cp "./bin/Release/$DLL" "${KSP_DEV}/GameData/${PLACE}_$DLL"
 		fi
 	fi
 	if [ -f "./bin/Debug/$DLL" ] ; then
