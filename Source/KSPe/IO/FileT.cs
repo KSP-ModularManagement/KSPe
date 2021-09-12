@@ -77,7 +77,7 @@ namespace KSPe.IO
 				{   // Just now we search for them on the KSPe cannonical hierarchy.
 					for (int i = ASSET.Length;--i >= 0;)
 					{
-						string t = Hierarchy<T>.GAMEDATA.Solve(false, ASSET[i]);
+						string t = Hierarchy<T>.GAMEDATA.SolveFull(false, ASSET[i]);
 						if (SIO.Directory.Exists(t))
 							return t;
 					}
@@ -89,7 +89,7 @@ namespace KSPe.IO
 					// widget where mipmap is undesirable).
 					// An example is AirPark that shares the toolbar icon to the Agency's flag.
 
-					string t = Hierarchy<T>.GAMEDATA.Solve(false, ".");
+					string t = Hierarchy<T>.GAMEDATA.SolveFull(false, ".");
 					if (SIO.Directory.Exists(t))
 						return t;
 				}

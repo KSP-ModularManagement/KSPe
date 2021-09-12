@@ -82,7 +82,7 @@ namespace KSPe.IO
 
 			this.Calculate(createDirs, combinedFnames, out resultRelativePathName, out resultFullPathName);
 
-			return resultFullPathName;
+			return resultRelativePathName;
 		}
 
 		internal string SolveFull(bool createDirs, string fname, params string[] fnames)
