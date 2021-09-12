@@ -22,13 +22,79 @@
 namespace KSPe.Util
 {
 	using System;
-	using Reflection = System.Reflection;
+	using System.Collections.Generic;
+    using System.Threading;
+    using Reflection = System.Reflection;
 	using Type = System.Type;
 
 	public static class SystemTools
 	{
+		public static class TypeFinder
+		{
+			private static readonly Dictionary<string, Type> TYPES = new Dictionary<string, Type>();
+			public static Type FindByQualifiedName(string qn)
+			{
+				lock(TYPES)
+				{ 
+					if (TYPES.ContainsKey(qn)) return TYPES[qn];
+					foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+						foreach (System.Type type in assembly.GetTypes()) if (qn.Equals(string.Format("{0}.{1}", type.Namespace, type.Name)))
+						{
+							TYPES.Add(qn, type);
+							return type;
+						}
+				}
+				throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing type : " + qn);
+			}
+		}
+
+		public class Assembly<T> : IDisposable
+		{
+			private static readonly object MUTEX = new object();
+			private readonly Type type;
+			private readonly string searchPath;
+			public Assembly(params string[] subdirs)
+			{
+				List<string> parms = new List<string>(subdirs);
+				parms.Insert(0, "PluginData");
+				string[] sd = parms.ToArray();
+				this.type = typeof(T);
+				this.searchPath = this.TryPath("Plugins", sd)
+									?? this.TryPath("Plugin", sd)
+									?? throw new DllNotFoundException(
+										string.Format("{0}'s DLL search path does not exists!", this.type.Namespace)
+									)
+						;
+				Monitor.Enter(MUTEX);
+				Assembly.AddSearchPath(this.searchPath);
+			}
+
+			private string TryPath(string path, params string[] subdirs)
+			{
+				// Tremendo furo, eu deveria ter implementado o KSPe.IO.Directory<T> jah...
+				string p = KSPe.IO.Hierarchy<T>.GAMEDATA.SolveFull(false, path, subdirs);
+				if (System.IO.Directory.Exists(p))
+					return KSPe.IO.Hierarchy<T>.GAMEDATA.Solve(false, path, subdirs);
+				return null;
+			}
+
+			void IDisposable.Dispose()
+			{
+				Assembly.RemoveSearchPath(this.searchPath);
+				Monitor.Exit(MUTEX);
+			}
+
+			public Reflection.Assembly LoadAndStartup(string assemblyName)
+			{
+				return Assembly.LoadAndStartup(assemblyName);
+			}
+		}
+
+		[Obsolete("ATTENTION: This class will be turned into internal on 2.4.0.0!!")]
 		public static class Assembly
 		{
+			private static readonly object MUTEX = new object();
+
 			// Obrigatory reading:
 			//	https://flylib.com/books/en/4.331.1.56/1/
 			//	https://weblog.west-wind.com/posts/2016/dec/12/loading-net-assemblies-out-of-seperate-folders
@@ -46,8 +112,16 @@ namespace KSPe.Util
 				if (!System.IO.Directory.Exists(fullpath))
 					throw new System.IO.FileNotFoundException(string.Format("The path {0} doesn't resolve to a valid DLL search path!", path));
 
-				if (!CUSTOM_SEARCH_PATHS.Contains(path))
-					CUSTOM_SEARCH_PATHS.Add(path);
+				lock(MUTEX)
+					if (!CUSTOM_SEARCH_PATHS.Contains(path))
+						CUSTOM_SEARCH_PATHS.Add(path);
+			}
+
+			public static void RemoveSearchPath(string path)
+			{
+				lock(MUTEX)
+					if (CUSTOM_SEARCH_PATHS.Contains(path))
+						CUSTOM_SEARCH_PATHS.Remove(path);
 			}
 
 			public static Reflection.Assembly LoadAndStartup(string assemblyName)
