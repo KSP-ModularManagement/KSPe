@@ -1,5 +1,8 @@
 # KSP API Extensions/L :: Change Log
 
+* 2021-0912: 2.3.1.0 (Lisias) for KSP >= 1.2
+	+ Fixing a long standing pretty stupid mistake on calculating "abstracted" paths...
+	+ Adding "local" DLL loading facilities.
 * 2021-0818: 2.3.0.4 (Lisias) for KSP >= 1.2
 	+ Adding KSP 1.12.1 and 1.12.2 to the "Database"
 * 2021-0626: 2.3.0.3 (Lisias) for KSP >= 1.2
