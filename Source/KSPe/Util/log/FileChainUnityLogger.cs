@@ -31,7 +31,15 @@ namespace KSPe.Util.Log {
 		private static readonly Encoding ENCODING = new UTF8Encoding(false);
 		private readonly SIO.FileStream fs;
 
-		public FileChainUnityLogger(string logname) : base(typeof(T))
+		// TODO: Remove this on Version 2.4
+		[Obsolete("This method is deprecated. Use FileChainUnityLogger(loogname, skipStackLevels) instead.")]
+		public FileChainUnityLogger(string logname) : base(typeof(T), 0)
+		{
+			string fullpathname = IO.Path.Combine(KSPe.IO.File<T>.Data.Solve(logname + ".log"));
+			this.fs = SIO.File.OpenWrite(fullpathname);
+		}
+
+		public FileChainUnityLogger(string logname, int skipStackLevels = 0) : base(typeof(T), skipStackLevels)
 		{
 			string fullpathname = IO.Path.Combine(KSPe.IO.File<T>.Data.Solve(logname + ".log"));
 			this.fs = SIO.File.OpenWrite(fullpathname);

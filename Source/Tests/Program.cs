@@ -4,6 +4,16 @@ namespace Tests
 {
 	public static class MainClass
 	{
+		private static void TestCase_StackDump()
+		{
+			System.Diagnostics.StackTrace st = new System.Diagnostics.StackTrace();
+			foreach (System.Diagnostics.StackFrame frame in st.GetFrames())
+			{
+				string classname = frame.GetMethod().DeclaringType.Name;
+				string methodname = frame.GetMethod().ToString();
+				Console.WriteLine(classname + "::" + methodname);
+			}
+		}
 
 		private static void TestCase_MiscPaths()
 		{
@@ -75,6 +85,8 @@ namespace Tests
 		{
 			Console.WriteLine("Hello World!");
 			Console.WriteLine(Environment.GetCommandLineArgs()[0]);
+
+			TestCase_StackDump();
 
 			TestCase_InstallPath();
 

@@ -26,7 +26,7 @@ namespace KSPe.Util.Log {
 
 	public class UnityLogger : Logger
 	{
-		internal UnityLogger(Type type, UnityEngine.ILogHandler logHandler = null) : base(type)
+		internal UnityLogger(Type type, int skipStackLevels, UnityEngine.ILogHandler logHandler = null) : base(type, skipStackLevels)
 		{
 			this.unityLog = logHandler ?? UnityLogDecorator.INSTANCE;
 #if DEBUG
@@ -34,7 +34,7 @@ namespace KSPe.Util.Log {
 #endif
 		}
 
-		internal UnityLogger(Type type, string forceThisNamespace, UnityEngine.ILogHandler logHandler = null) : base(type, forceThisNamespace)
+		internal UnityLogger(Type type, string forceThisNamespace, int skipStackLevels, UnityEngine.ILogHandler logHandler = null) : base(type, forceThisNamespace, skipStackLevels)
 		{
 			this.unityLog = logHandler ?? UnityLogDecorator.INSTANCE;
 #if DEBUG
@@ -42,7 +42,7 @@ namespace KSPe.Util.Log {
 #endif
 		}
 
-		internal UnityLogger(Type type, string forceThisNamespace, string forceThisClassName, UnityEngine.ILogHandler logHandler = null) : base(type, forceThisNamespace, forceThisClassName)
+		internal UnityLogger(Type type, string forceThisNamespace, string forceThisClassName, int skipStackLevels, UnityEngine.ILogHandler logHandler = null) : base(type, forceThisNamespace, forceThisClassName, skipStackLevels)
 		{
 			this.unityLog = logHandler ?? UnityLogDecorator.INSTANCE;
 #if DEBUG
