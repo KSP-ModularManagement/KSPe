@@ -223,6 +223,14 @@ namespace KSPe.Util.Log
 			this.select()(this.BuildMessage(message, @params));
 		}
 
+		public void stack(System.Object offended, bool forced = false)
+		{
+			if (!(forced || this.IsLoggable(Level.TRACE))) return;
+			StackTrace stacktrace = new StackTrace();
+			string message = stacktrace.ToString(); // TODO: Remove this method entry on the stackdump. Respect this.skipLevels
+			this.select()(this.BuildMessage(Level.TRACE, message));
+		}
+
 		public void trace(string message, params object[] @params)
 		{
 			if (!this.IsLoggable(Level.TRACE)) return;
