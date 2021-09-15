@@ -32,6 +32,20 @@ namespace KSPe.Util
 		public static class TypeFinder
 		{
 			private static readonly Dictionary<string, Type> TYPES = new Dictionary<string, Type>();
+			public static bool ExistsByQualifiedName(string qn)
+			{
+				lock (TYPES)
+				{
+					if (TYPES.ContainsKey(qn)) return true;
+					foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+						foreach (System.Type type in assembly.GetTypes()) if (qn.Equals(string.Format("{0}.{1}", type.Namespace, type.Name)))
+							{
+								TYPES.Add(qn, type);
+								return true;
+							}
+				}
+				return false;
+			}
 			public static Type FindByQualifiedName(string qn)
 			{
 				lock(TYPES)
