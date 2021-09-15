@@ -62,52 +62,87 @@ namespace KSPe.Util
 			}
 		}
 
-		public class Assembly<T> : IDisposable
-		{
-			private static readonly object MUTEX = new object();
-			private readonly Type type;
-			private readonly string searchPath;
-			public Assembly(params string[] subdirs)
-			{
-				List<string> parms = new List<string>(subdirs);
-				parms.Insert(0, "PluginData");
-				string[] sd = parms.ToArray();
-				this.type = typeof(T);
-				this.searchPath = this.TryPath("Plugins", sd)
-									?? this.TryPath("Plugin", sd)
-									?? throw new DllNotFoundException(
-										string.Format("{0}'s DLL search path does not exists!", this.type.Namespace)
-									)
-						;
-				Monitor.Enter(MUTEX);
-				Assembly.AddSearchPath(this.searchPath);
-			}
-
-			private string TryPath(string path, params string[] subdirs)
-			{
-				// Tremendo furo, eu deveria ter implementado o KSPe.IO.Directory<T> jah...
-				string p = KSPe.IO.Hierarchy<T>.GAMEDATA.SolveFull(false, path, subdirs);
-				if (System.IO.Directory.Exists(p))
-					return KSPe.IO.Hierarchy<T>.GAMEDATA.Solve(false, path, subdirs);
-				return null;
-			}
-
-			void IDisposable.Dispose()
-			{
-				Assembly.RemoveSearchPath(this.searchPath);
-				Monitor.Exit(MUTEX);
-			}
-
-			public Reflection.Assembly LoadAndStartup(string assemblyName)
-			{
-				return Assembly.LoadAndStartup(assemblyName);
-			}
-		}
-
-		[Obsolete("ATTENTION: This class will be turned into internal on 2.4.0.0!!")]
 		public static class Assembly
-		{
-			private static readonly object MUTEX = new object();
+		{ 
+			public class Loader : IDisposable
+			{
+				protected static readonly object MUTEX = new object();
+				private readonly string namespaceOverride;
+				protected string searchPath;
+
+				protected Loader() { this.namespaceOverride = null; }
+				public Loader(string namespaceOverride, params string[] subdirs)
+				{
+					this.namespaceOverride = namespaceOverride;
+					List<string> parms = new List<string>(subdirs);
+					parms.Insert(0, "PluginData");
+					string[] sd = parms.ToArray();
+					this.searchPath = this.TryPath("Plugins", sd)
+										?? this.TryPath("Plugin", sd)
+										?? throw new DllNotFoundException(
+											string.Format("{0}'s DLL search path does not exists!", this.namespaceOverride)
+										)
+							;
+					this.EnterCritical();
+				}
+
+				private string TryPath(string path, params string[] subdirs)
+				{
+					string t = System.IO.Path.Combine(this.namespaceOverride, path);
+					string p = KSPe.IO.Hierarchy.GAMEDATA.SolveFull(false, t, subdirs);
+					if (System.IO.Directory.Exists(p))
+						return KSPe.IO.Hierarchy.GAMEDATA.Solve(false, t, subdirs);
+
+					return null;
+				}
+
+				protected void EnterCritical()
+				{
+					Monitor.Enter(MUTEX);
+					Assembly.AddSearchPath(this.searchPath);
+
+				}
+
+				void IDisposable.Dispose()
+				{
+					Assembly.RemoveSearchPath(this.searchPath);
+					Monitor.Exit(MUTEX);
+				}
+
+				public Reflection.Assembly LoadAndStartup(string assemblyName)
+				{
+					return Assembly.LoadAndStartup(assemblyName);
+				}
+			}
+
+			public class Loader<T> : Loader
+			{
+				private readonly Type type;
+
+				public Loader(params string[] subdirs) : base()
+				{
+					this.type = typeof(T);
+					List<string> parms = new List<string>(subdirs);
+					parms.Insert(0, "PluginData");
+					string[] sd = parms.ToArray();
+					this.searchPath = this.TryPath("Plugins", sd)
+										?? this.TryPath("Plugin", sd)
+										?? throw new DllNotFoundException(
+											string.Format("{0}'s DLL search path does not exists!", this.type.Namespace)
+										)
+							;
+					this.EnterCritical();
+				}
+
+				private string TryPath(string path, params string[] subdirs)
+				{
+					string p = KSPe.IO.Hierarchy<T>.GAMEDATA.SolveFull(false, path, subdirs);
+					// Tremendo furo, eu deveria ter implementado o KSPe.IO.Directory<T> jah...
+					if (System.IO.Directory.Exists(p))
+						return KSPe.IO.Hierarchy<T>.GAMEDATA.Solve(false, path, subdirs);
+					return null;
+				}
+			}
 
 			// Obrigatory reading:
 			//	https://flylib.com/books/en/4.331.1.56/1/
@@ -119,6 +154,7 @@ namespace KSPe.Util
 			//	from https://weblog.west-wind.com/posts/2016/dec/12/loading-net-assemblies-out-of-seperate-folders
 			//	see also https://docs.microsoft.com/en-us/dotnet/standard/assembly/resolve-loads?redirectedfrom=MSDN
 
+			[Obsolete("Assembly.AddSearchPath(string) will be made internal on Release 2.5")]
 			public static void AddSearchPath(string path)
 			{
 				string fullpath = KSPe.IO.Hierarchy.ROOT.Solve(path);
@@ -126,18 +162,20 @@ namespace KSPe.Util
 				if (!System.IO.Directory.Exists(fullpath))
 					throw new System.IO.FileNotFoundException(string.Format("The path {0} doesn't resolve to a valid DLL search path!", path));
 
-				lock(MUTEX)
+				lock(CUSTOM_SEARCH_PATHS)
 					if (!CUSTOM_SEARCH_PATHS.Contains(path))
 						CUSTOM_SEARCH_PATHS.Add(path);
 			}
 
+			[Obsolete("Assembly.RemoveSearchPath(string) will be made internal on Release 2.5")]
 			public static void RemoveSearchPath(string path)
 			{
-				lock(MUTEX)
+				lock(CUSTOM_SEARCH_PATHS)
 					if (CUSTOM_SEARCH_PATHS.Contains(path))
 						CUSTOM_SEARCH_PATHS.Remove(path);
 			}
 
+			[Obsolete("Assembly.LoadAndStartup(string) will be made internal on Release 2.5")]
 			public static Reflection.Assembly LoadAndStartup(string assemblyName)
 			{
 				Reflection.Assembly assembly = System.AppDomain.CurrentDomain.Load(assemblyName);
@@ -233,12 +271,13 @@ namespace KSPe.Util
 			// and append the base path of the original assembly (ie. look in the same dir)
 			string filename = assemblyName.Split(',')[0] + ".dll";
 
-			foreach (string path in CUSTOM_SEARCH_PATHS)
-			{
-				if (verbose) UnityEngine.Debug.LogFormat("[KSPe Binder] Looking for {0} on {1}...", filename, path);
-				string asmFile = IO.Path.Combine(path,filename);
-				if (System.IO.File.Exists(asmFile)) return asmFile;
-			}
+			lock(CUSTOM_SEARCH_PATHS)
+				foreach (string path in CUSTOM_SEARCH_PATHS)
+				{
+					if (verbose) UnityEngine.Debug.LogFormat("[KSPe Binder] Looking for {0} on {1}...", filename, path);
+					string asmFile = IO.Path.Combine(path,filename);
+					if (System.IO.File.Exists(asmFile)) return asmFile;
+				}
 			return null;
 		}
 
