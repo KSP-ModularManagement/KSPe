@@ -183,6 +183,15 @@ namespace KSPe.Util
 				return string.Format("{0}.{1}.{2} from {3} using Unity {4} and C# {5}", this.MAJOR, this.MINOR, this.PATCH, this.RELEASED_AT.ToString(), this.UNITY_VERSION, this.CSHARP_VERSION);
 			}
 
+			public override int GetHashCode()
+			{
+				int hash = 7;
+				hash = 31 * hash + this.MAJOR;
+				hash = 31 * hash + this.MINOR;
+				hash = 31 * hash + this.PATCH;
+				return hash;
+			}
+
 			public override bool Equals(object other)
 			{
 				bool r = base.Equals(other);
