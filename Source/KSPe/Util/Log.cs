@@ -207,7 +207,7 @@ namespace KSPe.Util.Log
 		{
 			this.type = type;
 			this.nameSpace = forceThisNamespace ?? NO_NAMESPACE;
-			this.prefix = string.Format("[{0}-{1}]", this.nameSpace, forceThisClassName);
+			this.prefix = string.Format("[{0}.{1}]", this.nameSpace, forceThisClassName);
 			this._level = Globals.Get(this.type).Log.Level;
 			this.skipLevels = skipLevels;
 		}
