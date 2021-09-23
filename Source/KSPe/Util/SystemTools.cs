@@ -127,6 +127,7 @@ namespace KSPe.Util
 					string[] sd = parms.ToArray();
 					this.searchPath = this.TryPath("Plugins", sd)
 										?? this.TryPath("Plugin", sd)
+										?? this.TryPath(".", sd)
 										?? throw new DllNotFoundException(
 											string.Format("{0}'s DLL search path does not exists!", this.type.Namespace)
 										)
