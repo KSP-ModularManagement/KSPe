@@ -40,19 +40,12 @@ namespace KSPe.Util.Log
 	{
 		private const string NO_NAMESPACE = "<no namespace>";
 
-		public static Logger CreateForType<T>(bool useClassNameToo = false)
+		public static Logger CreateForType<T>(bool useClassNameToo = false, int skipStackLevels = 0)
 		{
 			return (Globals<T>.Log.ThreadSafe)
-					? CreateThreadSafeForType<T>(useClassNameToo, 0)
-					: CreateThreadUnsafeForType<T>(useClassNameToo, 0)
+					? CreateThreadSafeForType<T>(useClassNameToo, skipStackLevels)
+					: CreateThreadUnsafeForType<T>(useClassNameToo, skipStackLevels)
 				;
-		}
-
-		// TODO: Remove this on Version 2.4
-		[Obsolete("This method is deprecated. Use CreateThreadSafeForType<T>(useClassNameToo, skipStackLevels) instead.")]
-		public static Logger CreateThreadSafeForType<T>(bool useClassNameToo = false)
-		{
-			return CreateThreadSafeForType<T>(useClassNameToo, 0);
 		}
 
 		public static Logger CreateThreadSafeForType<T>(bool useClassNameToo = false, int skipStackLevels = 0)
@@ -63,26 +56,12 @@ namespace KSPe.Util.Log
 				;
 		}
 
-		// TODO: Remove this on Version 2.4
-		[Obsolete("This method is deprecated. Use CreateThreadUnsafeForType<T>(useClassNameToo, skipStackLevels) instead.")]
-		public static Logger CreateThreadUnsafeForType<T>(bool useClassNameToo = false)
-		{
-			return CreateThreadUnsafeForType<T>(useClassNameToo, 0);
-		}
-
 		public static Logger CreateThreadUnsafeForType<T>(bool useClassNameToo = false, int skipStackLevels = 0)
 		{
 			return useClassNameToo
 					? new UnityLogger(typeof(T), typeof(T).Namespace, typeof(T).FullName, skipStackLevels)
 					: new UnityLogger(typeof(T), typeof(T).Namespace, skipStackLevels)
 				;
-		}
-
-		// TODO: Remove this on Version 2.4
-		[Obsolete("This method is deprecated. Use CreateForType<T>(forceThisNamespace, useClassNameToo, skipStackLevels) instead.")]
-		public static Logger CreateForType<T>(string forceThisNamespace, bool useClassNameToo = false)
-		{
-			return CreateForType<T>(forceThisNamespace, useClassNameToo, 0);
 		}
 
 		public static Logger CreateForType<T>(string forceThisNamespace, bool useClassNameToo = false, int skipStackLevels = 0)
@@ -93,26 +72,12 @@ namespace KSPe.Util.Log
 				;
 		}
 
-		// TODO: Remove this on Version 2.4
-		[Obsolete("This method is deprecated. Use CreateThreadSafeForType<T>(forceThisNamespace, useClassNameToo, skipStackLevels) instead.")]
-		public static Logger CreateThreadSafeForType<T>(string forceThisNamespace, bool useClassNameToo = false)
-		{
-			return CreateThreadSafeForType<T>(forceThisNamespace, useClassNameToo, 0);
-		}
-
 		public static Logger CreateThreadSafeForType<T>(string forceThisNamespace, bool useClassNameToo = false, int skipStackLevels = 0)
 		{
 			return useClassNameToo
 					? new UnityLogger(typeof(T), forceThisNamespace, typeof(T).FullName, skipStackLevels, UnityUiThreadSafeLogDecorator.INSTANCE)
 					: new UnityLogger(typeof(T), forceThisNamespace, skipStackLevels, UnityUiThreadSafeLogDecorator.INSTANCE)
 				;
-		}
-
-		// TODO: Remove this on Version 2.4
-		[Obsolete("This method is deprecated. Use CreateThreadUnsafeForType<T>(forceThisNamespace, useClassNameToo, skipStackLevels) instead.")]
-		public static Logger CreateThreadUnsafeForType<T>(string forceThisNamespace, bool useClassNameToo = false)
-		{
-			return CreateThreadUnsafeForType<T>(forceThisNamespace, useClassNameToo, 0);
 		}
 
 		public static Logger CreateThreadUnsafeForType<T>(string forceThisNamespace, bool useClassNameToo = false, int skipStackLevels = 0)
@@ -123,13 +88,6 @@ namespace KSPe.Util.Log
 				;
 		}
 
-		// TODO: Remove this on Version 2.4
-		[Obsolete("This method is deprecated. Use CreateForType<T>(forceThisNamespace, forceThisClassName, skipStackLevels) instead.")]
-		public static Logger CreateForType<T>(string forceThisNamespace, string forceThisClassName)
-		{
-			return CreateForType<T>(forceThisNamespace, forceThisClassName, 0);
-		}
-
 		public static Logger CreateForType<T>(string forceThisNamespace, string forceThisClassName, int skipStackLevels = 0)
 		{
 			return (Globals<T>.Log.ThreadSafe)
@@ -138,23 +96,9 @@ namespace KSPe.Util.Log
 				;
 		}
 
-		// TODO: Remove this on Version 2.4
-		[Obsolete("This method is deprecated. Use CreateThreadSafeForType<T>(forceThisNamespace, forceThisClassName, skipStackLevels) instead.")]
-		public static Logger CreateThreadSafeForType<T>(string forceThisNamespace, string forceThisClassName)
-		{
-			return new UnityLogger(typeof(T), forceThisNamespace, forceThisClassName, 0, UnityUiThreadSafeLogDecorator.INSTANCE);
-		}
-
 		public static Logger CreateThreadSafeForType<T>(string forceThisNamespace, string forceThisClassName, int skipStackLevels = 0)
 		{
 			return new UnityLogger(typeof(T), forceThisNamespace, forceThisClassName, skipStackLevels, UnityUiThreadSafeLogDecorator.INSTANCE);
-		}
-
-		// TODO: Remove this on Version 2.4
-		[Obsolete("This method is deprecated. Use CreateThreadUnsafeForType<T>(forceThisNamespace, forceThisClassName, skipStackLevels) instead.")]
-		public static Logger CreateThreadUnsafeForType<T>(string forceThisNamespace, string forceThisClassName)
-		{
-			return new UnityLogger(typeof(T), forceThisNamespace, forceThisClassName, 0);
 		}
 
 		public static Logger CreateThreadUnsafeForType<T>(string forceThisNamespace, string forceThisClassName, int skipStackLevels = 0)
@@ -207,7 +151,7 @@ namespace KSPe.Util.Log
 		{
 			this.type = type;
 			this.nameSpace = forceThisNamespace ?? NO_NAMESPACE;
-			this.prefix = string.Format("[{0}-{1}]", this.nameSpace, forceThisClassName);
+			this.prefix = string.Format("[{0}.{1}]", this.nameSpace, forceThisClassName);
 			this._level = Globals.Get(this.type).Log.Level;
 			this.skipLevels = skipLevels;
 		}
@@ -247,6 +191,12 @@ namespace KSPe.Util.Log
 		{
 			if (!this.IsLoggable(Level.DETAIL)) return;
 			this.select()(this.BuildMessage(Level.TRACE, message, @params));
+		}
+
+		[Conditional("DEBUG")]
+		internal void debug(string message, params object[] @params)
+		{
+			this.dbg(message, @params);
 		}
 
 		public void info(string message, params object[] @params)

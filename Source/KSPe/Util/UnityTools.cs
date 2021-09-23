@@ -34,7 +34,7 @@ namespace KSPe.Util
 			{
 				if (_unityVersion < 0)
 				{
-					dbg("KSPe.Util.UnityTools: {0}", UnityEngine.Application.unityVersion);
+					dbg(" {0}", UnityEngine.Application.unityVersion);
 					_unityVersion =
 						(UnityEngine.Application.unityVersion.StartsWith("5.")) // 5.4.0p4
 							? 5
