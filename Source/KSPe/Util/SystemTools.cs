@@ -83,12 +83,14 @@ namespace KSPe.Util
 											string.Format("{0}'s DLL search path does not exists!", this.namespaceOverride)
 										)
 							;
+					LOG.debug("Assembly searchPath: {0}", this.searchPath);
 					this.EnterCritical();
 				}
 
 				private string TryPath(string path, params string[] subdirs)
 				{
 					string t = System.IO.Path.Combine(this.namespaceOverride, path);
+					LOG.debug("Assembly TryPath: {0}", t);
 					string p = KSPe.IO.Hierarchy.GAMEDATA.SolveFull(false, t, subdirs);
 					if (System.IO.Directory.Exists(p))
 						return KSPe.IO.Hierarchy.GAMEDATA.Solve(false, t, subdirs);
@@ -132,12 +134,14 @@ namespace KSPe.Util
 											string.Format("{0}'s DLL search path does not exists!", this.type.Namespace)
 										)
 							;
+					LOG.debug("Assembly searchPath: {0}", this.searchPath);
 					this.EnterCritical();
 				}
 
 				private string TryPath(string path, params string[] subdirs)
 				{
 					string p = KSPe.IO.Hierarchy<T>.GAMEDATA.SolveFull(false, path, subdirs);
+					LOG.debug("Assembly TryPath: {0}", p);
 					// Tremendo furo, eu deveria ter implementado o KSPe.IO.Directory<T> jah...
 					if (System.IO.Directory.Exists(p))
 						return KSPe.IO.Hierarchy<T>.GAMEDATA.Solve(false, path, subdirs);
@@ -158,22 +162,26 @@ namespace KSPe.Util
 			[Obsolete("Assembly.AddSearchPath(string) will be made internal on Release 2.5")]
 			public static void AddSearchPath(string path)
 			{
-				string fullpath = KSPe.IO.Hierarchy.ROOT.Solve(path);
+				string fullpath = KSPe.IO.Hierarchy.ROOT.SolveFull(false, path);
 
 				if (!System.IO.Directory.Exists(fullpath))
 					throw new System.IO.FileNotFoundException(string.Format("The path {0} doesn't resolve to a valid DLL search path!", path));
 
+				LOG.debug("AddSearchPath {0}", path);
 				lock(CUSTOM_SEARCH_PATHS)
 					if (!CUSTOM_SEARCH_PATHS.Contains(path))
 						CUSTOM_SEARCH_PATHS.Add(path);
+				LOG.debug("CUSTOM_SEARCH_PATHS : {0}", string.Join(":", CUSTOM_SEARCH_PATHS.ToArray()));
 			}
 
 			[Obsolete("Assembly.RemoveSearchPath(string) will be made internal on Release 2.5")]
 			public static void RemoveSearchPath(string path)
 			{
+				LOG.debug("RemoveSearchPath {0}", path);
 				lock(CUSTOM_SEARCH_PATHS)
 					if (CUSTOM_SEARCH_PATHS.Contains(path))
 						CUSTOM_SEARCH_PATHS.Remove(path);
+				LOG.debug("CUSTOM_SEARCH_PATHS : {0}", string.Join(":", CUSTOM_SEARCH_PATHS.ToArray()));
 			}
 
 			[Obsolete("Assembly.LoadAndStartup(string) will be made internal on Release 2.5")]
@@ -231,61 +239,63 @@ namespace KSPe.Util
 				if (null != method)	return method.Invoke(o, null);
 				return null;
 			}
-		}
 
-		private static readonly System.Collections.Generic.List<string> CUSTOM_SEARCH_PATHS = new System.Collections.Generic.List<string>();
-		private static System.Reflection.Assembly AssemblyResolve(object sender, System.ResolveEventArgs args)
-		{
-			// Ignore missing resources
-			if (args.Name.Contains(".resources")) return null;
-
-			// check for assemblies already loaded
-			foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
-				if (assembly.GetName().Name == args.Name)
-				{	// We had found it. Let's check for a conflict.
-					string asmFile = FindThisGuy(args.Name, false);
-					if (null != asmFile && assembly.Location != asmFile)
-						UnityEngine.Debug.LogErrorFormat("[KSPe Binder] Found a duplicated Assembly for {0} on file {1}. This is an error, there can be only one! #highlanderFeelings", args.Name, asmFile);
-					return assembly;
-				}
-
+			private static readonly System.Collections.Generic.List<string> CUSTOM_SEARCH_PATHS = new System.Collections.Generic.List<string>();
+			private static System.Reflection.Assembly AssemblyResolve(object sender, System.ResolveEventArgs args)
 			{
-				string asmFile = FindThisGuy(args.Name, true);
-				if (null != asmFile) try
+				// Ignore missing resources
+				if (args.Name.Contains(".resources")) return null;
+
+				// check for assemblies already loaded
+				foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+					if (assembly.GetName().Name == args.Name)
+					{	// We had found it. Let's check for a conflict.
+						string asmFile = FindThisGuy(args.Name, false);
+						if (null != asmFile && assembly.Location != asmFile)
+							LOG.error("Found a duplicated Assembly for {0} on file {1}. This is an error, there can be only one! #highlanderFeelings", args.Name, asmFile);
+						return assembly;
+					}
+
 				{
-					UnityEngine.Debug.LogFormat("[KSPe Binder] Found it on {0}.", asmFile);
-					return System.Reflection.Assembly.LoadFrom(asmFile);
+					string asmFile = FindThisGuy(args.Name, true);
+					if (null != asmFile) try
+					{
+						LOG.force("Found it on {0}.", asmFile);
+						return System.Reflection.Assembly.LoadFrom(asmFile);
+					}
+					catch (System.Exception ex)
+					{
+						LOG.error("Error {0} loading {1} from {2}!", ex.Message, args.Name, asmFile);
+						return null;
+					}
 				}
-				catch (System.Exception ex)
-				{
-					UnityEngine.Debug.LogErrorFormat("[KSPe Binder] Error {0} loading {1} from {2}!", ex.Message, args.Name, asmFile);
-					return null;
-				}
+
+				return null;
 			}
 
-			return null;
-		}
+			private static string FindThisGuy(string assemblyName, bool verbose)
+			{
+				// Try to load by filename - split out the filename of the full assembly name
+				// and append the base path of the original assembly (ie. look in the same dir)
+				string filename = assemblyName.Split(',')[0] + ".dll";
 
-		private static string FindThisGuy(string assemblyName, bool verbose)
-		{
-			// Try to load by filename - split out the filename of the full assembly name
-			// and append the base path of the original assembly (ie. look in the same dir)
-			string filename = assemblyName.Split(',')[0] + ".dll";
+				lock(CUSTOM_SEARCH_PATHS)
+					foreach (string path in CUSTOM_SEARCH_PATHS)
+					{
+						if (verbose) LOG.force("Looking for {0} on {1}...", filename, path);
+						string asmFile = IO.Path.Combine(path,filename);
+						if (System.IO.File.Exists(asmFile)) return asmFile;
+					}
+				return null;
+			}
 
-			lock(CUSTOM_SEARCH_PATHS)
-				foreach (string path in CUSTOM_SEARCH_PATHS)
-				{
-					if (verbose) UnityEngine.Debug.LogFormat("[KSPe Binder] Looking for {0} on {1}...", filename, path);
-					string asmFile = IO.Path.Combine(path,filename);
-					if (System.IO.File.Exists(asmFile)) return asmFile;
-				}
-			return null;
-		}
+			static Assembly()
+			{
+				System.AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
+				LOG.force("Hooked.");
+			}
 
-		static SystemTools()
-		{
-			System.AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
-			UnityEngine.Debug.Log("[KSPe Binder] Hooked.");
+			private static readonly KSPe.Util.Log.Logger LOG = KSPe.Util.Log.Logger.CreateForType<KSPe.Startup>("KSPe", "Binder", 0);
 		}
 	}
 }

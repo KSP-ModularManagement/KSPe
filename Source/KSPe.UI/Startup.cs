@@ -28,25 +28,29 @@ namespace KSPe.UI
 	{
 		private void Start()
 		{
-			// Nope, we should not use the Log Facilities ourselves. Ironic, uh? :)
-			UnityEngine.Debug.LogFormat("[KSPe.UI] Version {0}", Version.Text);
+			LOG.force("Version {0}", Version.Text);
 		}
 
 		private void Awake()
 		{
-			// There can be only one! #highlanderFeelings
-			if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,4,0))
-			{
-				if (System.IO.File.Exists("./000_ClickThroughBlocker/Plugins/ClickThroughBlocker.dll"))
-					Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.14");
-				else
+			using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader("000_KSPAPIExtensions"))
+			{ 
+				// There can be only one! #highlanderFeelings
+				if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,4,0))
 				{
-					UnityEngine.Debug.LogWarning("[KSPe.UI] ClickThroughBlocker, dependency on KSP >= 1.4, was not found! Falling back to KSP.UI.12 instead!");
-					Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.12");
+					if (System.IO.File.Exists("./000_ClickThroughBlocker/Plugins/ClickThroughBlocker.dll"))
+						a.LoadAndStartup("KSPe.UI.14");
+					else
+					{
+						LOG.warn("ClickThroughBlocker, dependency on KSP >= 1.4, was not found! Falling back to KSP.UI.12 instead!");
+						a.LoadAndStartup("KSPe.UI.12");
+					}
 				}
+				else if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,2,0))
+					a.LoadAndStartup("KSPe.UI.12");
 			}
-			else if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,2,0))
-				Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.12");
 		}
+
+		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>();
 	}
 }
