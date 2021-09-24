@@ -118,6 +118,7 @@
     <Compile Include="Multiplatform\Tools\WindowsTools.cs" />
     <Compile Include="FatalErrors.cs" />
     <Compile Include="SanityChecks.cs" />
+    <Compile Include="Log.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">

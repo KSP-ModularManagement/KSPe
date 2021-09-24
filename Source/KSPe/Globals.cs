@@ -96,7 +96,7 @@ namespace KSPe
 		{
 			if (!System.IO.File.Exists("PluginData/KSPe.cfg"))
 			{
-				UnityEngine.Debug.Log("[KSPe] KSPe.cfg does not exists. Using defaults.");
+				KSPE.Log.info("KSPe.cfg does not exists. Using defaults.");
 				_default = Globals.createDefault();
 			}
 			else try
@@ -105,24 +105,23 @@ namespace KSPe
 				KSPE.ConfigNodeWithSteroids sn = KSPE.ConfigNodeWithSteroids.from(node);
 				sn = sn.GetNode("KSPe");
 				_default = Globals.from(sn);
-				UnityEngine.Debug.LogFormat("[KSPe] Globals: Default {0} ", _default);
+				KSPE.Log.info("Globals: Default {0} ", _default);
 				if (sn.HasNode("LOCAL"))
 					foreach (ConfigNode n in sn.GetNode("LOCAL").nodes)
 						try
 						{
 							_locals.Add(n.name, Globals.from(KSPE.ConfigNodeWithSteroids.from(n)));
-							UnityEngine.Debug.LogFormat("[KSPe] Globals: {0} {1} ", n.name, _locals[n.name]);
+							KSPE.Log.info("Globals: {0} {1} ", n.name, _locals[n.name]);
 						}
 						catch (Exception e)
 						{
-							UnityEngine.Debug.LogErrorFormat("[KSPe] Error trying to read Node {0} : {1}", n.name, e);
+							KSPE.Log.error("Error trying to read Node {0} : {1}", n.name, e);
 						}
-				UnityEngine.Debug.Log("[KSPe] KSPe.cfg loaded.");
+				KSPE.Log.info("KSPe.cfg loaded.");
 			}
 			catch (Exception e)
 			{
-				UnityEngine.Debug.LogErrorFormat("[KSPe] Error on reading KSPe.cfg dur '{0}'. Using defaults.", e.Message);
-				UnityEngine.Debug.LogException(e);
+				KSPE.Log.error(e, "Error on reading KSPe.cfg dur '{0}'. Using defaults.", e.Message);
 				_default = Globals.createDefault();
 			}
 		}
@@ -146,9 +145,7 @@ namespace KSPe
 
 		public static Globals.LogConfig Log { get {
 			if (null == Globals._default) Globals.Init();
-#if DEBUG
-			UnityEngine.Debug.LogFormat("Loading Global's value for {0}", typeof(T).Namespace);
-#endif
+			KSPE.Log.debug("Loading Global's value for {0}", typeof(T).Namespace);
 			return (Globals._locals.ContainsKey(typeof(T).Namespace) ? Globals._locals[typeof(T).Namespace] : Globals._default).Log;
 		} }
 

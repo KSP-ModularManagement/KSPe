@@ -20,7 +20,7 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using UnityEngine;
+
 namespace KSPe.Unity5
 {
 	public class Startup
@@ -28,7 +28,9 @@ namespace KSPe.Unity5
 		private void Start()
 		{
 			// Nope, we should not use the Log Facilities ourselves. Ironic, uh? :)
-			UnityEngine.Debug.LogFormat("[KSPe.Unity5] Version {0}", Version.Text);
+			LOG.force("Version {0}", Version.Text);
 		}
+
+		private static readonly KSPe.Util.Log.Logger LOG = KSPe.Util.Log.Logger.CreateForType<Startup>();
 	}
 }

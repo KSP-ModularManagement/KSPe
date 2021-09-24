@@ -50,15 +50,13 @@ namespace KSPe.Util
 				}
 				catch (Exception e)
 				{
-					UnityEngine.Debug.LogErrorFormat("[KSPe] Error [{0}] while finding Object Module Manager! Going to the brute force way.", e);
+					KSPe.Log.error("Error [{0}] while finding Object Module Manager! Going to the brute force way.", e);
 				}
 				BREAK:
 
 				// Otherwise, let's go for the brute force method: check the ConfigCaches timestamps.
 
-				#if DEBUG
-					UnityEngine.Debug.LogFormat("[KSPe] Checking Module Manager's ConfigCache...");
-				#endif
+				KSPe.Log.debug("Checking Module Manager's ConfigCache...");
 				try
 				{
 					double hours = double.MaxValue;
@@ -90,7 +88,7 @@ namespace KSPe.Util
 				}
 				catch (Exception e)
 				{
-					UnityEngine.Debug.LogErrorFormat("[KSPe] Error [{0}] while checking Module Manager's cache age!", e);
+					KSPe.Log.error("Error [{0}] while checking Module Manager's cache age!", e);
 					_LoadedFromCache = false;
 				}
 			}

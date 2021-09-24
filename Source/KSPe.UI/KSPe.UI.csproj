@@ -55,6 +55,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="GUILayout.cs" />
+    <Compile Include="Log.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KSPe\KSPe.csproj">

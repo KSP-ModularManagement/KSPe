@@ -295,7 +295,7 @@ namespace KSPe.Util
 						r = new Version(major, minor, patch, PUBLISHED_VERSIONS[i-1]);
 					}
 					r = r ?? new Version(major, minor, patch);
-					UnityEngine.Debug.LogWarningFormat("[KSPe] KSP Version {0}.{1}.{2} not localized. Returning synthetic one.", major, minor, patch);
+					KSPe.Log.warn("KSP Version {0}.{1}.{2} not localized. Returning synthetic one.", major, minor, patch);
 					return r;
 				}
 			}

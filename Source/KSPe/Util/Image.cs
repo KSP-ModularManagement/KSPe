@@ -137,14 +137,13 @@ namespace KSPe.Util.Image {
 		[ConditionalAttribute("DEBUG")]
 		private static void dbg(string msg, params object[] p)
 		{
-			UnityEngine.Debug.LogFormat("KSPe.Util.Image.File: " + msg, p);
+			KSPe.Log.debug("Util.Image.File: " + msg, p);
 		}
 
 		[ConditionalAttribute("DEBUG")]
 		private static void dbg(Exception ex)
 		{
-			UnityEngine.Debug.LogError("KSPe.Util.Image.File: " + ex.ToString());
-			UnityEngine.Debug.LogException(ex);
+			KSPe.Log.error(ex, "Util.Image.File: {0}", ex);
 		}
 	}
 
@@ -166,7 +165,7 @@ namespace KSPe.Util.Image {
 			void Interface.Capture(string pathname, int superSampleValue)
 			{
 				ScreenMessages.PostScreenMessage ("No KSPe Screenshot support installed.");
-				UnityEngine.Debug.LogWarningFormat("[KSPe.Util.Image.Screenshot] Screenshot support not properly initialized! Screenshot {0} not taken!", pathname);
+				KSPe.Log.warn("Util.Image.Screenshot: Screenshot support not properly initialized! Screenshot {0} not taken!", pathname);
 			}
 		}
 
@@ -183,7 +182,7 @@ namespace KSPe.Util.Image {
 			Interface r = (Interface)Multiplatform.Tools.CreateInstanceByInterface("KSPe.Util.Image.Screenshot+Interface");
 			if (null != r) return r;
 
-			UnityEngine.Debug.LogWarning("[KSPe.Util.Image.Screenshot] No realisation for the abstract Interface found! Using a fallback one!");
+			KSPe.Log.warn("Util.Image.Screenshot: No realisation for the abstract Interface found! Using a fallback one!");
 			return (Interface) new Fallback();
 		}
 		static Screenshot()

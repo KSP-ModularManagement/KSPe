@@ -51,14 +51,13 @@ namespace KSPe.Util
 		[ConditionalAttribute("DEBUG")]
 		private static void dbg(string msg, params object[] p)
 		{
-			UnityEngine.Debug.LogFormat("KSPe.Util.UnityTools: " + msg, p);
+			KSPe.Log.debug("Util.UnityTools: " + msg, p);
 		}
 
 		[ConditionalAttribute("DEBUG")]
 		private static void dbg(Exception ex)
 		{
-			UnityEngine.Debug.LogError("KSPe.Util.UnityTools " + ex.ToString());
-			UnityEngine.Debug.LogException(ex);
+			KSPe.Log.error(ex, "Util.UnityTools " + ex.ToString());
 		}
 	}
 }

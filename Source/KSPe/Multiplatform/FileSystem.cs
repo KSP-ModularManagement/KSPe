@@ -50,10 +50,8 @@ namespace KSPe.Multiplatform
 				}
 				if (null != realpath && null != readlink) break;
 			}
-#if DEBUG
-			UnityEngine.Debug.LogFormat("[KSPe.Multiplatform.FileSystem] realpath found on {0}", realpath??"NOT FOUND!");
-			UnityEngine.Debug.LogFormat("[KSPe.Multiplatform.FileSystem] readlink found on {0}", readlink??"NOT FOUND!");
-#endif
+			Log.debug("Multiplatform.FileSystem: realpath found on {0}", realpath??"NOT FOUND!");
+			Log.debug("Multiplatform.FileSystem: readlink found on {0}", readlink??"NOT FOUND!");
 		}
 
 		private static string Reparse_realpath(string path)
@@ -65,8 +63,7 @@ namespace KSPe.Multiplatform
 			}
 			catch (System.Exception e)
 			{
-				UnityEngine.Debug.LogWarningFormat("Failed to reparse {0}.", path);
-				UnityEngine.Debug.LogError(e);
+				Log.error(e, "Failed to reparse {0}.", path);
 				throw e;
 			}
 		}
@@ -85,8 +82,7 @@ namespace KSPe.Multiplatform
 				{
 					if (1 != e.exitCode)
 					{
-						UnityEngine.Debug.LogWarningFormat("Failed to reparse {0}.", path);
-						UnityEngine.Debug.LogError(e);
+						Log.error(e, "Failed to reparse {0}.", path);
 						return path;	// May God help the caller. :)
 					}
 					parcels.Add(IO.Path.GetFileName(path));

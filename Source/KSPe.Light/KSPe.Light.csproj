@@ -117,6 +117,9 @@
     <Compile Include="..\KSPe\FatalErrors.cs">
       <Link>FatalErrors.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe\Log.cs">
+      <Link>Log.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />

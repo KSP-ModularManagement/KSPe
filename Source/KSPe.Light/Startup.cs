@@ -28,8 +28,7 @@ namespace KSPe
 	{
 		private void Start()
 		{
-			// Nope, we should not use the Log Facilities ourselves. Ironic, uh? :)
-			UnityEngine.Debug.LogFormat("[KSPe.Light] Version {0}", Version.Text);
+			LOG.force("Version {0}", Version.Text);
 		}
 
 		private void OnDestroy()
@@ -37,7 +36,7 @@ namespace KSPe
 			// Someone, probably a FatalError, told us to quit the game.
 			if (!quitOnDestroy) return;
 
-			UnityEngine.Debug.Log("[KSPe] Quitting KSP due an unrecoreable error.");
+			LOG.info("Quitting KSP due an unrecoreable error.");
 			UnityEngine.Application.Quit();
 		}
 
@@ -51,10 +50,12 @@ namespace KSPe
 				if (value)
 				{
 					System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
-					UnityEngine.Debug.LogWarningFormat("[KSPe] was told to quit the game. Stackdump of the caller: {0}", t);
+					LOG.warn("was told to quit the game. Stackdump of the caller: {0}", t);
 				}
 				quitOnDestroy = value;
 			}
 		}
+
+		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>("KSPe.Light", false, 0);
 	}
 }

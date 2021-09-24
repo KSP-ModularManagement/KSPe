@@ -135,18 +135,14 @@ namespace KSPe.IO
 				if (!System.IO.Directory.Exists(d))
 					System.IO.Directory.CreateDirectory(d);
 			}
-		#if DEBUG
-			UnityEngine.Debug.LogFormat("[KSPe] Hierarchy Calculate {0} {1} {2}", this.name, partialPathname, fullPathname);
-			UnityEngine.Debug.LogFormat("[KSPe] {0}", null == HighLogic.CurrentGame ? "NULL" : HighLogic.CurrentGame.linkURL);
-		#endif
+			Log.debug("Hierarchy Calculate {0} {1} {2}", this.name, partialPathname, fullPathname);
+			Log.debug("CurrentGame: {0}", null == HighLogic.CurrentGame ? "NULL" : HighLogic.CurrentGame.linkURL);
 		}
 
 		internal static string CalculateRelativePath(string fullDestinationPath, string rootPath)
 		{
-#if DEBUG
-			UnityEngine.Debug.Log(fullDestinationPath);
-			UnityEngine.Debug.Log(rootPath);
-#endif
+			Log.debug("CalculateRelativePath: {0} {1}", fullDestinationPath, rootPath);
+
 			// from https://social.msdn.microsoft.com/Forums/vstudio/en-US/954346c8-cbe8-448c-80d0-d3fc27796e9c - Wednesday, May 20, 2009 3:37 PM
 			string[] startPathParts = Path.GetFullPath(rootPath).Trim(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar);
 			string[] destinationPathParts = Path.GetFullPath(fullDestinationPath).Trim(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar);
@@ -172,9 +168,8 @@ namespace KSPe.IO
 
 			relativePath.Length--; // Gets rid of the trailig "/" that is always appended
 
-#if DEBUG
-			UnityEngine.Debug.Log(relativePath.ToString());
-#endif
+			Log.debug("relativePath: {0}", relativePath.ToString());
+
 			//From now on, we **want** the trailling "/" on every pathname that it's a directory.
 			return Path.EnsureTrailingSeparatorOnDir(relativePath.ToString(), imSureItsDir);
 		}

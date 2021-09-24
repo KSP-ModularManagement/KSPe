@@ -240,14 +240,13 @@ namespace KSPe.Util.Image {
 		[ConditionalAttribute("DEBUG")]
 		private static void dbg(string msg, params object[] p)
 		{
-			UnityEngine.Debug.LogFormat("KSPe.Util.Image.Texture2D: " + msg, p);
+			KSPe.Log.debug("KSPe.Util.Image.Texture2D: " + msg, p);
 		}
 
 		[ConditionalAttribute("DEBUG")]
 		private static void dbg(Exception ex)
 		{
-			UnityEngine.Debug.LogError("KSPe.Util.Image.Texture2D: " + ex.ToString());
-			UnityEngine.Debug.LogException(ex);
+			KSPe.Log.error(ex, "Util.Image.Texture2D");
 		}
 	}
 }

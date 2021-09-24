@@ -165,7 +165,7 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 				MSG,
 				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/11"); Application.Quit(); }
 			);
-			Debug.Log("[KSPe] Fatal Error NoGameDataFound was shown. Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/11");
+			Log.error("Fatal Error NoGameDataFound was shown. Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/11");
 		}
 	}
 
@@ -193,7 +193,7 @@ When this happens, KSP may write files on the wrong place, and you can lost trac
 				string.Format(MSG, pwd, origin),
 				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12"); Application.Quit(); }
 			);
-			Debug.LogFormat("[KSPe] Fatal Error PwdIsNotOrigin was shown. pwd = {0} ; origin = {1} . Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12", pwd, origin);
+			Log.error("Fatal Error PwdIsNotOrigin was shown. pwd = {0} ; origin = {1} . Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12", pwd, origin);
 		}
 	}
 } }

@@ -20,20 +20,16 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using UnityEngine;
+
 namespace KSPe.KSP12.UI
 {
 	public class Startup
 	{
 		private void Start()
 		{
-			// Nope, we should not use the Log Facilities ourselves. Ironic, uh? :)
-			Debug.LogFormat("[KSPe.KSP12.UI] Version {0}", Version.Text);
+			LOG.force("Version {0}", Version.Text);
 		}
 
-		private void Awake()
-		{
-			// Nothing to do for while.
-		}
+		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>();
 	}
 }

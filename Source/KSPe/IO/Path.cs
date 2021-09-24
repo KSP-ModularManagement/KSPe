@@ -120,9 +120,7 @@ namespace KSPe.IO
 		{
 			if (null != root) return root;	// Preventing accidents. No reentrant.
 
-			#if DEBUG
-				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] Calculating Origin for {0}", typeof(KSPUtil).Assembly.Location);
-			#endif
+			Log.debug("Calculating Origin for {0}", typeof(KSPUtil).Assembly.Location);
 
 			// Look for the GameData folder. This is our root.
 
@@ -146,15 +144,11 @@ namespace KSPe.IO
 
 			if (null == path)
 			{	// Oukey, not a standard rig, perhaps a debug/development one?
-				#if DEBUG
-					UnityEngine.Debug.LogFormat("[KSPe.IO.Path] GameData not found the easy way. Trying the harder path. #TumDumTsss");
-				#endif
+				Log.debug("GameData not found the easy way. Trying the harder path. #TumDumTsss");
 				path = SIO.Path.GetDirectoryName(assemblypath);
 				while (path.Length > 4) // The smaller relevant path for us is C:\ on Windows. Less than it, we are toasted, no GameData found!
 				{
-					#if DEBUG
-						UnityEngine.Debug.LogFormat("[KSPe.IO.Path] Trying {0}", path);
-					#endif
+					Log.debug("Trying {0}", path);
 					if (SIO.Directory.Exists(SIO.Path.Combine(path, "GameData"))) break;
 					path = SIO.Path.GetDirectoryName(path);
 				}
@@ -163,9 +157,7 @@ namespace KSPe.IO
 
 			if (null == path) KSPe.FatalErrors.NoGameDataFound.Show();
 
-			#if DEBUG
-				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] Normalized path {0}", path);
-			#endif
+			Log.debug("Normalized path {0}", path);
 
 			string currentDir = EnsureTrailingSeparatorOnDir(SIO.Directory.GetCurrentDirectory());
 			process_dir(path, currentDir);
@@ -182,20 +174,16 @@ namespace KSPe.IO
 
 			UNREPARSE_KEYS.AddRange(UNREPARSE.Keys.OrderByDescending( x => x.Length));
 
-			#if DEBUG
-				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] Origin is {0}", root);
-				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] PWD    is {0}", currentDir);
-			#endif
+			Log.debug("Origin is {0}", root);
+			Log.debug("PWD    is {0}", currentDir);
 			return root;
 		}
 
 		private static void process_dir(string path, string dir)
 		{
 			if (path.Equals(dir)) return;	// The foreach that feeds this thing gives us the "." file, normalized, too!
-			#if DEBUG
-				UnityEngine.Debug.LogFormat("[KSPe.IO.Path.process_dir] path is {0}", path);
-				UnityEngine.Debug.LogFormat("[KSPe.IO.Path.process_dir] dir  is {0}", dir);
-			#endif
+			Log.debug("process_dir: path is {0}", path);
+			Log.debug("process_dir: dir  is {0}", dir);
 			if (Multiplatform.FileSystem.IsReparsePoint(dir))
 			{
 				string reparsed = Multiplatform.FileSystem.ReparsePath(
@@ -212,9 +200,9 @@ namespace KSPe.IO
 			reparsed = EnsureTrailingSeparatorOnDir(reparsed);
 			dir = EnsureTrailingSeparatorOnDir(dir);
 			UNREPARSE[reparsed] = dir;
-			#if DEBUG
-				UnityEngine.Debug.LogFormat("[KSPe.IO.Path] UNREPARSE {0} <- {1}", reparsed, UNREPARSE[reparsed]);
-			#endif
+			Log.debug("UNREPARSE {0} <- {1}", reparsed, UNREPARSE[reparsed]);
 		}
+
+		private static readonly KSPe.Util.Log.Logger Log = KSPe.Util.Log.Logger.CreateForType<Startup>("KSPe.IO", "Path", 0);
 	}
 }

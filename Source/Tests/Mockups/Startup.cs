@@ -1,5 +1,7 @@
 ﻿/*
 	This file is part of KSPe, a component for KSP API Extensions/L
+	unless when specified otherwise below this code is:
+
 	(C) 2018-21 Lisias T : http://lisias.net <support@lisias.net>
 
 	KSPe API Extensions/L is double licensed, as follows:
@@ -14,22 +16,19 @@
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 	You should have received a copy of the SKL Standard License 1.0
-	along with KSPe API Extensions/L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.
+    along with KSPe API Extensions/L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.
 
 	You should have received a copy of the GNU General Public License 2.0
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
-
-namespace KSPe.KSP16
+using System;
+namespace KSPe
 {
 	public class Startup
 	{
-		private void Start()
+		public Startup()
 		{
-			LOG.force("Version {0}", Version.Text);
 		}
-
-		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>();
 	}
 }

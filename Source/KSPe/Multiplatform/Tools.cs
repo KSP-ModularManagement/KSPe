@@ -27,32 +27,25 @@ namespace KSPe.Multiplatform
 	{
 		internal static object CreateInstanceByInterface(string ifcName)
 		{
-		#if DEBUG
-			UnityEngine.Debug.LogFormat("[KSPe.Multiplatform.Tools] Looking for {0}", ifcName);
-		#endif
+			Log.debug("Looking for {0}", ifcName);
 			foreach(System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 				foreach(System.Type type in assembly.GetTypes())
 					foreach(System.Type ifc in type.GetInterfaces() )
 					{
-						#if DEBUG
-							UnityEngine.Debug.LogFormat("[KSPe.Multiplatform.Tools] Checking {0} {1} {2}", assembly, type, ifc);
-						#endif
+						Log.debug("Checking {0} {1} {2}", assembly, type, ifc);
 						if (ifcName == ifc.ToString())
 						{
-						#if DEBUG
-							UnityEngine.Debug.LogFormat("[KSPe.Multiplatform.Tools] Found one! {0}", ifc);
-						#endif
+						Log.debug("Found one! {0}", ifc);
 							if (type.FullName.StartsWith("KSPe.")) // Failsafe. We should not mess with anything not made for KSPe.
 							{
 								object r = System.Activator.CreateInstance(type);
-								#if DEBUG
-									UnityEngine.Debug.LogFormat("[KSPe.Multiplatform.Tools] Type of result {0}", r.GetType());
-								#endif
+								Log.debug("Type of result {0}", r.GetType());
 								return r;
 							}
 						}
 					}
 			return null;
 		}
+		private static readonly KSPe.Util.Log.Logger Log = KSPe.Util.Log.Logger.CreateForType<Startup>("KSPe.Multiplatform", "Tools", 0);
 	}
 }

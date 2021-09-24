@@ -51,6 +51,9 @@
     </Compile>
     <Compile Include="Mockups\KSP\KSPUtil.cs" />
     <Compile Include="Mockups\KSPe\FatalErrors.cs" />
+    <Compile Include="Mockups\KSPe\Util\Log.cs" />
+    <Compile Include="Mockups\Startup.cs" />
+    <Compile Include="Mockups\Log.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="KSPe.Artefacts\" />
@@ -61,6 +64,7 @@
     <Folder Include="KSPe.Artefacts\IO\" />
     <Folder Include="Mockups\KSP\" />
     <Folder Include="Mockups\KSPe\" />
+    <Folder Include="Mockups\KSPe\Util\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

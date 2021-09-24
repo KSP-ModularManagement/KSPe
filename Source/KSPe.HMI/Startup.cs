@@ -28,8 +28,9 @@ namespace KSPe.HMI
 	{
 		private void Start()
 		{
-			// Nope, we should not use the Log Facilities ourselves. Ironic, uh? :)
-			UnityEngine.Debug.LogFormat("[KSPe.HMI] Version {0}", Version.Text);
+			LOG.force("Version {0}", Version.Text);
 		}
+
+		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>();
 	}
 }

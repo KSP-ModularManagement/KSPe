@@ -20,15 +20,14 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using UnityEngine;
+
 namespace KSPe.KSP14.UI
 {
 	public class Startup
 	{
 		private void Start()
 		{
-			// Nope, we should not use the Log Facilities ourselves. Ironic, uh? :)
-			Debug.LogFormat("[KSPe.KSP14.UI] Version {0}", Version.Text);
+			LOG.force("Version {0}", Version.Text);
 		}
 
 		private void Awake()
@@ -37,5 +36,7 @@ namespace KSPe.KSP14.UI
 			// This is needed in the event something on the GameData root tries to use it.
 			System.AppDomain.CurrentDomain.Load("ClickThroughBlocker");
 		}
+
+		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>();
 	}
 }
