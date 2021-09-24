@@ -33,22 +33,23 @@ namespace KSPe.UI
 
 		private void Awake()
 		{
-			using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader("000_KSPAPIExtensions"))
-			{ 
-				// There can be only one! #highlanderFeelings
-				if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,4,0))
+			string path = "12x";
+
+			if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,4,0))
+			{
+				path = (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,8,0))
+						? "18x"
+						: "14x"
+					;
+
+				if (!System.IO.File.Exists("./000_ClickThroughBlocker/Plugins/ClickThroughBlocker.dll"))
 				{
-					if (System.IO.File.Exists("./000_ClickThroughBlocker/Plugins/ClickThroughBlocker.dll"))
-						a.LoadAndStartup("KSPe.UI.14");
-					else
-					{
-						LOG.warn("ClickThroughBlocker, dependency on KSP >= 1.4, was not found! Falling back to KSP.UI.12 instead!");
-						a.LoadAndStartup("KSPe.UI.12");
-					}
+					LOG.warn("ClickThroughBlocker, dependency on KSP >= 1.4, was not found! Falling back to KSP.UI.12 instead!");
+					path = "12x";
 				}
-				else if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,2,0))
-					a.LoadAndStartup("KSPe.UI.12");
 			}
+			using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader("000_KSPAPIExtensions", path))
+				a.LoadAndStartup("KSPe.UI");
 		}
 
 		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>();

@@ -48,18 +48,38 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GUI.cs" />
-    <Compile Include="GUILayout.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="GUI.stub.cs" />
+    <Compile Include="..\KSPe.UI\Common\Dialogs\FatalError.cs">
+      <Link>Common\Dialogs\FatalError.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\Common\Dialogs\Abstract.cs">
+      <Link>Common\Dialogs\Abstract.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\WindowUtils.cs">
+      <Link>WindowUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\TimedMessageBox.cs">
+      <Link>TimedMessageBox.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\MessageBox.cs">
+      <Link>MessageBox.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\GUILayout.partial.cs">
+      <Link>GUILayout.partial.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\GUI.partial.cs">
+      <Link>GUI.partial.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\GlobalSuppressions.cs">
+      <Link>GlobalSuppressions.cs</Link>
+    </Compile>
+    <Compile Include="GUILayout.stub.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KSPe\KSPe.csproj">
       <Project>{1DCC1744-4EEF-49DF-961C-A73F3ADCC6C5}</Project>
       <Name>KSPe</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KSPe.UI\KSPe.UI.csproj">
-      <Project>{93F4C3CA-722B-47C2-80D8-B5F7204E1EC8}</Project>
-      <Name>KSPe.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

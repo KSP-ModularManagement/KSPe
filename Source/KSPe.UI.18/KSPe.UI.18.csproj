@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{527060E4-6D3B-40B4-88D4-AAFD575414F3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>KSPe.UI</RootNamespace>
+    <AssemblyName>KSPe.UI.18</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <BaseIntermediateOutputPath>..\..\obj\$(AssemblyName)</BaseIntermediateOutputPath>
+    <TargetName>KSPe.UI.18</TargetName>
+ </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.8.0\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.8.0\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.8.0\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.8.0\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ClickThroughBlocker">
+      <HintPath>..\..\..\..\..\..\LIB\plugins\ClickThroughBlocker.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.8.0\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="..\KSPe.UI.14\GUI.stub.cs">
+      <Link>GUI.stub.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI.14\GUILayout.stub.cs">
+      <Link>GUILayout.stub.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\GlobalSuppressions.cs">
+      <Link>GlobalSuppressions.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\GUI.partial.cs">
+      <Link>GUI.partial.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\GUILayout.partial.cs">
+      <Link>GUILayout.partial.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\MessageBox.cs">
+      <Link>MessageBox.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\TimedMessageBox.cs">
+      <Link>TimedMessageBox.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\WindowUtils.cs">
+      <Link>WindowUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\Common\Dialogs\FatalError.cs">
+      <Link>Common\Dialogs\FatalError.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\Common\Dialogs\Abstract.cs">
+      <Link>Common\Dialogs\Abstract.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KSPe\KSPe.csproj">
+      <Project>{1DCC1744-4EEF-49DF-961C-A73F3ADCC6C5}</Project>
+      <Name>KSPe</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("KSPe.UI")]
-[assembly: AssemblyDescription("User Interface Extensions for KSPe.")]
+[assembly: AssemblyDescription("User Interface Extensions for KSPe. This DLL should be used at compiling time.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(KSPe.LegalMamboJambo.Company)]
 [assembly: AssemblyProduct(KSPe.LegalMamboJambo.Product)]

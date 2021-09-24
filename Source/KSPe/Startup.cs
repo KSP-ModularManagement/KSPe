@@ -29,39 +29,57 @@ namespace KSPe
 		public static readonly string KSPE_ROOT_DIR = "000_KSPAPIExtensions";
 		private void Start()
 		{
-			LOG.force("Version {0}", Version.Text);
+			Log.force("Version {0}", Version.Text);
 			SanityChecks.DoIt();
 		}
 
 		private void Awake()
 		{
-			using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader(KSPE_ROOT_DIR))
+			try
 			{ 
-				{
-					int target = KSPe.Util.UnityTools.UnityVersion;
-					target = (0 == target) ? 2019 : target;
-					#if DEBUG
-						LOG.dbg("Trying to load KSPe.Unity.{0}...", target);
-					#endif
-					a.LoadAndStartup(string.Format("KSPe.Unity.{0}", target));
-				}
-
-				for (int i = KSPe.Util.KSP.Version.Current.MINOR; i > 0; --i)
-					if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,i,0))
+				using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader(KSPE_ROOT_DIR))
+				{ 
 					{
-						#if DEBUG
-							LOG.dbg("Trying to load KSPe.KSP.1{0}...", i);
-						#endif
-						if ( null != a.LoadAndStartup(string.Format("KSPe.KSP.1{0}",i)) ) break;
+						int target = KSPe.Util.UnityTools.UnityVersion;
+						target = (0 == target) ? 2019 : target;
+						Log.dbg("Trying to load KSPe.Unity.{0}...", target);
+						a.LoadAndStartup(string.Format("KSPe.Unity.{0}", target));
 					}
 
-				#if DEBUG
-					LOG.dbg("Trying to load KSPe.UI...");
-				#endif
+					for (int i = KSPe.Util.KSP.Version.Current.MINOR; i > 0; --i)
+						if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,i,0))
+						{
+							Log.dbg("Trying to load KSPe.KSP.1{0}...", i);
+							if ( null != a.LoadAndStartup(string.Format("KSPe.KSP.1{0}",i)) ) break;
+						}
+				}
 			}
+			catch (System.Exception e)
 			{
+				Log.error(e, "Fatal Error while trying to load KSPe.KSP subsystem. KSPe can't work properly without it, and so anything using will work. The game need to be shutdown.");
+			}
+
+			try
+			{/*	That's the deal:
+			  *	
+			  *	We need to have the KSPe.UI avaiable as soon as possible, because something can blow up imediately after
+			  *	KSPe is loaded (as Module Manager), and if the KSP.UI is delayed too much, we will have a bork inside a bork
+			  *	and things will be pretty hard to diagnose. So I choose to initialise it here.
+			  *	
+			  *	Additionally, a spacialized Loader DLL was introduced to decouple the KSP.UI Logic from the KSPe main DLL, and
+			  *	avoiding the problem I created on the code above where KSP specific code loading is tied to the KSPe itself, making
+			  *	harder to deploy things later if something change. (TODO: create a Loader for it too in a near future).
+			  *	
+			  *	The 000_KSPe.dll file, being needed on GameData itself, is tricky to be updated and so it would be wiser to allow
+			  *	updating things that can change a lot from it.
+			  */ 
+				Log.debug("Trying to load KSPe.UI...");
 				using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader(KSPE_ROOT_DIR))
 					a.LoadAndStartup("KSPe.UI.Loader");
+			}
+			catch (System.Exception e)
+			{
+				Log.error(e, "Error while trying to load KSPe.UI subsystem. This will cause bad side effects later on Add'Ons that depends on it, but it's not fatal for KSPe.");
 			}
 		}
 
@@ -70,7 +88,7 @@ namespace KSPe
 			if (!quitOnDestroy) return;
 
 			// Someone, probably a FatalError, told us to quit the game.
-			LOG.dbg("Quitting KSP due an unrecoverable error.");
+			Log.force("Quitting KSP due an unrecoverable error.");
 			UnityEngine.Application.Quit();
 		}
 
@@ -83,13 +101,13 @@ namespace KSPe
 			{
 				if (value)
 				{
-					System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
-					LOG.warn("was told to quit the game. Stackdump of the caller: {0}", t);
+					Log.fatal("I was told to quit the game. Stackdump of the caller follows.");
+					Log.stack(typeof(Startup), true);
 					quitOnDestroy = value;
 				}
 			}
 		}
 
-		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>();
+		private static readonly Util.Log.Logger Log = Util.Log.Logger.CreateForType<Startup>();
 	}
 }

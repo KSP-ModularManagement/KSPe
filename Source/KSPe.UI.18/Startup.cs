@@ -21,15 +21,22 @@
 
 */
 
-namespace KSPe.KSP12.UI
+namespace KSPe.UI
 {
 	public class Startup
 	{
 		private void Start()
 		{
-			LOG.force("Version {0} for [1.2 <= KSP < 1.4]", Version.Text);
+			LOG.force("Version {0} for [1.8 <= KSP < 1.13]", Version.Text);
 		}
 
-		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>();
+		private void Awake()
+		{
+			// TODO: Check if this stunt would not break something later!
+			// This is needed in the event something on the GameData root tries to use it.
+			System.AppDomain.CurrentDomain.Load("ClickThroughBlocker");
+		}
+
+		private static readonly KSPe.Util.Log.Logger LOG = KSPe.Util.Log.Logger.CreateForType<KSPe.Startup>("KSPe", "UI", 0);
 	}
 }
