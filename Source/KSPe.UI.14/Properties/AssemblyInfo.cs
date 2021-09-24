@@ -4,8 +4,8 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("KSPe.KSP14.UI")]
-[assembly: AssemblyDescription("KSP 1.4 specialized support for KSPe.UI")]
+[assembly: AssemblyTitle("KSPe.UI.14")]
+[assembly: AssemblyDescription("User Interface Extensions for KSPe. Specialized KSPe.UI for [1.4 <= KSP < 1.8]. This DLL should be used at runtime.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(KSPe.LegalMamboJambo.Company)]
 [assembly: AssemblyProduct(KSPe.LegalMamboJambo.Product)]
@@ -19,7 +19,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyVersion(KSPe.Version.Number)]
 [assembly: AssemblyFileVersion(KSPe.Version.Number)]
-[assembly: KSPAssembly("KSPe.KSP14.UI", KSPe.Version.major, KSPe.Version.minor)]
+[assembly: KSPAssembly("KSPe.UI", KSPe.Version.major, KSPe.Version.minor)]
 
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.

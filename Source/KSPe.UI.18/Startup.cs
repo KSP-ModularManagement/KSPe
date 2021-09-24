@@ -27,7 +27,7 @@ namespace KSPe.UI
 	{
 		private void Start()
 		{
-			LOG.force("Version {0} for [1.4 <= KSP < 1.8]", Version.Text);
+			LOG.force("Version {0} for [1.8 <= KSP < 1.12.99]", Version.Text);
 		}
 
 		private void Awake()

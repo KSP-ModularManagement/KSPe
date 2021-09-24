@@ -20,33 +20,39 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using UnityEngine;
+
 namespace KSPe.UI
 {
-	[KSPAddon(KSPAddon.Startup.Instantly, true)]
-	public class Startup:MonoBehaviour
+	public class Startup
 	{
 		private void Start()
 		{
-			// Nope, we should not use the Log Facilities ourselves. Ironic, uh? :)
-			UnityEngine.Debug.LogFormat("[KSPe.UI] Version {0}", Version.Text);
+			LOG.force("Version {0}", Version.Text);
 		}
 
 		private void Awake()
 		{
+			string path = "12x";
+
 			// There can be only one! #highlanderFeelings
 			if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,4,0))
 			{
-				if (System.IO.File.Exists("./000_ClickThroughBlocker/Plugins/ClickThroughBlocker.dll"))
-					Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.14");
-				else
+				if (KSPe.Util.KSP.Version.Current < KSPe.Util.KSP.Version.GetVersion(1,8,0))
+					path = "14x";
+				else if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,8,0))
+					path = "18x";
+
+				if (!System.IO.File.Exists("./000_ClickThroughBlocker/Plugins/ClickThroughBlocker.dll"))
 				{
-					UnityEngine.Debug.LogWarning("[KSPe.UI] ClickThroughBlocker, dependency on KSP >= 1.4, was not found! Falling back to KSP.UI.12 instead!");
-					Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.12");
+					LOG.warn("ClickThroughBlocker, dependency on KSP >= 1.4, was not found! Falling back to KSPe.UI.12 instead!");
+					path = "12x";
 				}
 			}
-			else if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,2,0))
-				Util.SystemTools.Assembly.LoadAndStartup("KSPe.UI.12");
+
+			using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader("000_KSPAPIExtensions", path))
+				a.LoadAndStartup("KSPe.UI");
 		}
+
+		private static readonly KSPe.Util.Log.Logger LOG = KSPe.Util.Log.Logger.CreateForType<KSPe.Startup>("KSPe", "UI", 0);
 	}
 }

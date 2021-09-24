@@ -3,14 +3,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{210B4435-1D58-4714-A67F-2FC531C4BC16}</ProjectGuid>
+    <ProjectGuid>{527060E4-6D3B-40B4-88D4-AAFD575414F3}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>KSPe.KSP12.UI</RootNamespace>
+    <RootNamespace>KSPe.UI</RootNamespace>
     <AssemblyName>KSPe.UI</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>..\..\obj\$(AssemblyName)</BaseIntermediateOutputPath>
-    <TargetName>KSPe.UI.12x</TargetName>
-  </PropertyGroup>
+    <TargetName>KSPe.UI.18x</TargetName>
+ </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -31,28 +31,38 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.8.0\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.8.0\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\UnityEngine.UI.dll</HintPath>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.8.0\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.8.0\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ClickThroughBlocker">
+      <HintPath>..\..\..\..\..\..\LIB\plugins\ClickThroughBlocker.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.8.0\UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="GUI.stub.cs" />
-    <Compile Include="GUILayout.stub.cs" />
-    <Compile Include="..\KSPe.UI\Common\Dialogs\FatalError.cs">
-      <Link>Common\Dialogs\FatalError.cs</Link>
+    <Compile Include="..\KSPe.UI.14\GUI.stub.cs">
+      <Link>GUI.stub.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe.UI\Common\Dialogs\Abstract.cs">
-      <Link>Common\Dialogs\Abstract.cs</Link>
+    <Compile Include="..\KSPe.UI.14\GUILayout.stub.cs">
+      <Link>GUILayout.stub.cs</Link>
     </Compile>
     <Compile Include="..\KSPe.UI\GlobalSuppressions.cs">
       <Link>GlobalSuppressions.cs</Link>
@@ -71,6 +81,12 @@
     </Compile>
     <Compile Include="..\KSPe.UI\WindowUtils.cs">
       <Link>WindowUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\Common\Dialogs\FatalError.cs">
+      <Link>Common\Dialogs\FatalError.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\Common\Dialogs\Abstract.cs">
+      <Link>Common\Dialogs\Abstract.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
