@@ -40,7 +40,31 @@ namespace KSPe.Util.Log
 	{
 		private const string NO_NAMESPACE = "<no namespace>";
 
-		public static Logger CreateForType<T>(bool useClassNameToo = false, int skipStackLevels = 0)
+		public static Logger CreateForType<T>()
+		{
+			return (Globals<T>.Log.ThreadSafe)
+					? CreateThreadSafeForType<T>(false, 0)
+					: CreateThreadUnsafeForType<T>(false, 0)
+				;
+		}
+
+		public static Logger CreateForType<T>(bool useClassNameToo)
+		{
+			return (Globals<T>.Log.ThreadSafe)
+					? CreateThreadSafeForType<T>(useClassNameToo, 0)
+					: CreateThreadUnsafeForType<T>(useClassNameToo, 0)
+				;
+		}
+
+		public static Logger CreateForType<T>(int skipStackLevels)
+		{
+			return (Globals<T>.Log.ThreadSafe)
+					? CreateThreadSafeForType<T>(false, skipStackLevels)
+					: CreateThreadUnsafeForType<T>(false, skipStackLevels)
+				;
+		}
+
+		public static Logger CreateForType<T>(bool useClassNameToo, int skipStackLevels)
 		{
 			return (Globals<T>.Log.ThreadSafe)
 					? CreateThreadSafeForType<T>(useClassNameToo, skipStackLevels)
@@ -221,10 +245,7 @@ namespace KSPe.Util.Log
 		{
 			if (!this.IsLoggable(Level.ERROR)) return;
 
-			StackTrace stacktrace = new StackTrace();
-			int stackLevel = 1 + this.skipLevels;
-			string caller = stacktrace.GetFrame(stackLevel).GetMethod().Name;
-			int line = stacktrace.GetFrame(stackLevel).GetFileLineNumber();
+			this.ParseStack(out string caller, out int line);
 			message = string.Format("{0} at {1}:{2}", message, caller, line);
 			this.select()(this.BuildMessage(Level.ERROR, message, @params));
 		}
@@ -233,10 +254,7 @@ namespace KSPe.Util.Log
 		{
 			if (!this.IsLoggable(Level.ERROR)) return;
 
-			StackTrace stacktrace = new StackTrace();
-			int stackLevel = 1 + this.skipLevels;
-			string caller = stacktrace.GetFrame(stackLevel).GetMethod().Name;
-			int line = stacktrace.GetFrame(stackLevel).GetFileLineNumber();
+			this.ParseStack(out string caller, out int line);
 			message = string.Format("{0} at {1}:{2}", message, caller, line);
 			this.logException(this.BuildMessage(Level.ERROR, message, @params), e);
 		}
@@ -245,10 +263,27 @@ namespace KSPe.Util.Log
 		{
 			if (!this.IsLoggable(Level.ERROR)) return;
 
-			StackTrace stacktrace = new StackTrace();
-			int stackLevel = 1 + this.skipLevels;
-			string caller = stacktrace.GetFrame(stackLevel).GetMethod().Name;
-			int line = stacktrace.GetFrame(stackLevel).GetFileLineNumber();
+			this.ParseStack(out string caller, out int line);
+			this.logException(this.BuildMessage(Level.ERROR, "{0} raised Exception {1} at {2}:{3}", offended.GetType().FullName, e.ToString(), caller, line), e);
+		}
+
+		public void fatal(string message, params object[] @params)
+		{
+			this.ParseStack(out string caller, out int line);
+			message = string.Format("{0} at {1}:{2}", message, caller, line);
+			this.select()(this.BuildMessage(Level.ERROR, message, @params));
+		}
+
+		public void fatal(Exception e, string message, params object[] @params)
+		{
+			this.ParseStack(out string caller, out int line);
+			message = string.Format("{0} at {1}:{2}", message, caller, line);
+			this.logException(this.BuildMessage(Level.ERROR, message, @params), e);
+		}
+
+		public void fatal(System.Object offended, System.Exception e)
+		{
+			this.ParseStack(out string caller, out int line);
 			this.logException(this.BuildMessage(Level.ERROR, "{0} raised Exception {1} at {2}:{3}", offended.GetType().FullName, e.ToString(), caller, line), e);
 		}
 
@@ -265,6 +300,14 @@ namespace KSPe.Util.Log
 		private string FormatMessage(string message, params object[] @params)
 		{
 			return ((@params != null) && (@params.Length > 0)) ? string.Format(message, @params) : message;
+		}
+
+		private void ParseStack(out string caller, out int line)
+		{
+			StackTrace stacktrace = new StackTrace();
+			int stackLevel = 2 + this.skipLevels;
+			caller = stacktrace.GetFrame(stackLevel).GetMethod().Name;
+			line = stacktrace.GetFrame(stackLevel).GetFileLineNumber();
 		}
 	}
 }
