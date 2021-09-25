@@ -1,6 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-. ./CONFIG.inc
 . ./deploy.sh
 
 echo "Running ${KSP_DEV}"
