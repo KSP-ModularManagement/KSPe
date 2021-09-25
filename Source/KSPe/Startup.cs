@@ -56,7 +56,7 @@ namespace KSPe
 			}
 			catch (System.Exception e)
 			{
-				Log.error(e, "Fatal Error while trying to load KSPe.KSP subsystem. KSPe can't work properly without it, and so anything using will work. The game need to be shutdown.");
+				FatalErrors.CriticalComponentsAbsent.Show(e);
 			}
 
 			try

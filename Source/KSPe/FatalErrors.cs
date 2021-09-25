@@ -196,4 +196,29 @@ When this happens, KSP may write files on the wrong place, and you can lost trac
 			Log.error("Fatal Error PwdIsNotOrigin was shown. pwd = {0} ; origin = {1} . Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12", pwd, origin);
 		}
 	}
+
+	internal static class CriticalComponentsAbsent
+	{
+		private static readonly string MSG = @"KSPe got a Fatal Error ""{0}"" while trying to load the KSPe.KSP subsystem.
+
+KSPe can't work properly without it, and so anything using it will **NOT** work neither (what means the game is unusable right now).";
+
+		private static bool shown = false;
+		internal static void Show(Exception e)
+		{
+			if (shown) return;
+
+			Startup.QuitOnDestroy = shown = true;
+			if (null != GameObject.Find("KSPe.FatalError.CriticalComponentsAbsent")) return; // Already being shown.
+
+			GameObject go = new GameObject("KSPe.FatalError.CriticalComponentsAbsent");
+			FatalErrorMsgBox dlg = go.AddComponent<FatalErrorMsgBox>();
+
+			dlg.Show(
+				string.Format(MSG, e.Message),
+				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/17"); Application.Quit(); }
+			);
+			Log.error(e, "Fatal Error CriticalComponentsAbsent was shown. e = [{0}]. Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/17", e.Message);
+		}
+	}
 } }
