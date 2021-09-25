@@ -3,6 +3,14 @@
 New extensions and utilities for Kerbal Space Program by Lisias.
 
 
+## BRANCH HISTORY
+
+While attempting to cook a smarter way to cope with multiple KSP versions, I decided to try an approach UnityEngine style. I would distribute an "compiling time" Assembly to developers, and on runtime KSPe would select the appropriate "realised" Assembly that would fulfil the contract used to compile the add'on.
+
+Nice idea, but this branch ended up in a mess and I decided to restart from scratch - I was attempting to keep compatibility with 2.3 series, and this ended up on a holy mess.
+
+This branch was, so, deprecated and a new attempt made on `experimental/kspe-ui-overhaul-2`.
+
 ## In a Hurry
 
 * [Latest Release](https://github.com/net-lisias-ksp/KSPAPIExtensions/releases)
