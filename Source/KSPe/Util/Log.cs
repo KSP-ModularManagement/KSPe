@@ -241,6 +241,15 @@ namespace KSPe.Util.Log
 			this.logException(this.BuildMessage(Level.WARNING, message, @params), e);
 		}
 
+		public void error(int skip, string message, params object[] @params)
+		{
+			if (!this.IsLoggable(Level.ERROR)) return;
+
+			this.ParseStack(out string caller, out int line, skip);
+			message = string.Format("{0} at {1}:{2}", message, caller, line);
+			this.select()(this.BuildMessage(Level.ERROR, message, @params));
+		}
+
 		public void error(string message, params object[] @params)
 		{
 			if (!this.IsLoggable(Level.ERROR)) return;
@@ -265,6 +274,13 @@ namespace KSPe.Util.Log
 
 			this.ParseStack(out string caller, out int line);
 			this.logException(this.BuildMessage(Level.ERROR, "{0} raised Exception {1} at {2}:{3}", offended.GetType().FullName, e.ToString(), caller, line), e);
+		}
+
+		public void fatal(int skip, string message, params object[] @params)
+		{
+			this.ParseStack(out string caller, out int line, skip);
+			message = string.Format("{0} at {1}:{2}", message, caller, line);
+			this.select()(this.BuildMessage(Level.ERROR, message, @params));
 		}
 
 		public void fatal(string message, params object[] @params)
@@ -302,10 +318,10 @@ namespace KSPe.Util.Log
 			return ((@params != null) && (@params.Length > 0)) ? string.Format(message, @params) : message;
 		}
 
-		private void ParseStack(out string caller, out int line)
+		private void ParseStack(out string caller, out int line, int skip = 0)
 		{
 			StackTrace stacktrace = new StackTrace();
-			int stackLevel = 2 + this.skipLevels;
+			int stackLevel = 2 + skip + this.skipLevels;
 			caller = stacktrace.GetFrame(stackLevel).GetMethod().Name;
 			line = stacktrace.GetFrame(stackLevel).GetFileLineNumber();
 		}

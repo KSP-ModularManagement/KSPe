@@ -101,7 +101,7 @@ namespace KSPe
 			{
 				if (value)
 				{
-					Log.fatal("I was told to quit the game. Stackdump of the caller follows.");
+					Log.fatal(1, "I was told to quit the game. Stackdump of the caller follows.");
 					Log.stack(typeof(Startup), true);
 					quitOnDestroy = value;
 				}
