@@ -26,6 +26,7 @@ using KSPE = KSPe;
 
 namespace KSPe
 {
+	// CAUTION! This class CAN NOT use the KSPe Logging Facilities, as it's a dependency from it!!
 	public class Globals
 	{
 		public class LogConfig
@@ -96,7 +97,7 @@ namespace KSPe
 		{
 			if (!System.IO.File.Exists("PluginData/KSPe.cfg"))
 			{
-				KSPE.Log.info("KSPe.cfg does not exists. Using defaults.");
+				LOG.info("KSPe.cfg does not exists. Using defaults.");
 				_default = Globals.createDefault();
 			}
 			else try
@@ -105,23 +106,23 @@ namespace KSPe
 				KSPE.ConfigNodeWithSteroids sn = KSPE.ConfigNodeWithSteroids.from(node);
 				sn = sn.GetNode("KSPe");
 				_default = Globals.from(sn);
-				KSPE.Log.info("Globals: Default {0} ", _default);
+				LOG.info("Globals: Default {0} ", _default);
 				if (sn.HasNode("LOCAL"))
 					foreach (ConfigNode n in sn.GetNode("LOCAL").nodes)
 						try
 						{
 							_locals.Add(n.name, Globals.from(KSPE.ConfigNodeWithSteroids.from(n)));
-							KSPE.Log.info("Globals: {0} {1} ", n.name, _locals[n.name]);
+							LOG.info("Globals: {0} {1} ", n.name, _locals[n.name]);
 						}
 						catch (Exception e)
 						{
-							KSPE.Log.error("Error trying to read Node {0} : {1}", n.name, e);
+							LOG.error(e, "Error trying to read Node {0} : {1}", n.name);
 						}
-				KSPE.Log.info("KSPe.cfg loaded.");
+				LOG.info("KSPe.cfg loaded.");
 			}
 			catch (Exception e)
 			{
-				KSPE.Log.error(e, "Error on reading KSPe.cfg dur '{0}'. Using defaults.", e.Message);
+				LOG.error(e, "Error on reading KSPe.cfg dur '{0}'. Using defaults.", e.Message);
 				_default = Globals.createDefault();
 			}
 		}
@@ -145,10 +146,35 @@ namespace KSPe
 
 		public static Globals.LogConfig Log { get {
 			if (null == Globals._default) Globals.Init();
-			KSPE.Log.debug("Loading Global's value for {0}", typeof(T).Namespace);
+			LOG.debug("Loading Global's value for {0}", typeof(T).Namespace);
 			return (Globals._locals.ContainsKey(typeof(T).Namespace) ? Globals._locals[typeof(T).Namespace] : Globals._default).Log;
 		} }
+	}
 
+	// Internal Globals LOGging, not to be reused by anyone.
+	internal static class LOG
+	{
+		[System.Diagnostics.Conditional("DEBUG")]
+		internal static void debug(string msg, params object[] @params)
+		{
+			UnityEngine.Debug.LogFormat("[KSPe.Globals] DEBUG: " + msg, @params);
+		}
+
+		internal static void error(Exception e, string msg, params object[] @params)
+		{
+			UnityEngine.Debug.LogErrorFormat("[KSPe.Globals] ERROR: " + msg, @params);
+			UnityEngine.Debug.LogException(e);
+		}
+
+		internal static void info(string msg)
+		{
+			UnityEngine.Debug.Log("[KSPe.Globals] INFO: " + msg);
+		}
+
+		internal static void info(string msg, params object[] @params)
+		{
+			UnityEngine.Debug.LogErrorFormat("[KSPe.Globals] INFO: " + msg, @params);
+		}
 	}
 
 }
