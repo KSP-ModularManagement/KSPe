@@ -6,7 +6,7 @@
     <ProjectGuid>{210B4435-1D58-4714-A67F-2FC531C4BC16}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>KSPe.KSP12.UI</RootNamespace>
-    <AssemblyName>KSPe.UI.12</AssemblyName>
+    <AssemblyName>KSPe.UI</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>..\..\obj\$(AssemblyName)</BaseIntermediateOutputPath>
   </PropertyGroup>
