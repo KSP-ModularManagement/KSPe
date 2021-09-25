@@ -29,39 +29,34 @@ namespace KSPe
 		public static readonly string KSPE_ROOT_DIR = "000_KSPAPIExtensions";
 		private void Start()
 		{
-			LOG.force("Version {0}", Version.Text);
+			Log.force("Version {0}", Version.Text);
 			SanityChecks.DoIt();
 		}
 
 		private void Awake()
 		{
-			using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader(KSPE_ROOT_DIR))
+			try
 			{ 
-				{
-					int target = KSPe.Util.UnityTools.UnityVersion;
-					target = (0 == target) ? 2019 : target;
-					#if DEBUG
-						LOG.dbg("Trying to load KSPe.Unity.{0}...", target);
-					#endif
-					a.LoadAndStartup(string.Format("KSPe.Unity.{0}", target));
-				}
-
-				for (int i = KSPe.Util.KSP.Version.Current.MINOR; i > 0; --i)
-					if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,i,0))
+				using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader(KSPE_ROOT_DIR))
+				{ 
 					{
-						#if DEBUG
-							LOG.dbg("Trying to load KSPe.KSP.1{0}...", i);
-						#endif
-						if ( null != a.LoadAndStartup(string.Format("KSPe.KSP.1{0}",i)) ) break;
+						int target = KSPe.Util.UnityTools.UnityVersion;
+						target = (0 == target) ? 2019 : target;
+						Log.dbg("Trying to load KSPe.Unity.{0}...", target);
+						a.LoadAndStartup(string.Format("KSPe.Unity.{0}", target));
 					}
 
-				#if DEBUG
-					LOG.dbg("Trying to load KSPe.UI...");
-				#endif
+					for (int i = KSPe.Util.KSP.Version.Current.MINOR; i > 0; --i)
+						if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,i,0))
+						{
+							Log.dbg("Trying to load KSPe.KSP.1{0}...", i);
+							if ( null != a.LoadAndStartup(string.Format("KSPe.KSP.1{0}",i)) ) break;
+						}
+				}
 			}
+			catch (System.Exception e)
 			{
-				using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader(KSPE_ROOT_DIR))
-					a.LoadAndStartup("KSPe.UI.Loader");
+				FatalErrors.CriticalComponentsAbsent.Show(e);
 			}
 		}
 
@@ -70,7 +65,7 @@ namespace KSPe
 			if (!quitOnDestroy) return;
 
 			// Someone, probably a FatalError, told us to quit the game.
-			LOG.dbg("Quitting KSP due an unrecoverable error.");
+			Log.force("Quitting KSP due an unrecoverable error.");
 			UnityEngine.Application.Quit();
 		}
 
@@ -83,13 +78,13 @@ namespace KSPe
 			{
 				if (value)
 				{
-					System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
-					LOG.warn("was told to quit the game. Stackdump of the caller: {0}", t);
+					Log.fatal("I was told to quit the game. Stackdump of the caller follows.");
+					Log.stack(typeof(Startup), true);
 					quitOnDestroy = value;
 				}
 			}
 		}
 
-		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>();
+		private static readonly Util.Log.Logger Log = Util.Log.Logger.CreateForType<Startup>();
 	}
 }
