@@ -3,6 +3,34 @@
 New extensions and utilities for Kerbal Space Program by Lisias.
 
 
+## BRANCH HISTORY
+
+This branch was my 2nd attempt to overhaul the way KSPe.UI works.
+
+I fully implemented the whole shebang, it kinda worked on the test bed, but while finishing the "product" I realised that only KSP 1.12.2 would run on it - completely defeating the purpose of the refactoring!!!
+
+What happens is that, on KSP 1.12.2, the Plugin loading mechanism was split in two phases:
+
+1. Plugin Detection and Registering
+	+ Where the DLLs are registered on a data structure with dependencies *et all*, but they are not committed yet into the System Assembly Basket.
+	+ Dependencies checks are also delayed 
+2. Plugin Effectively being loaded.
+	+ Happens later, after all the DLLs on GameData were fetched by Phase 1.
+	+ Now that every possible Assembly is known, dependence checks doesn't needs anymore that such dependencies should be already loaded and "committed", as older KSP versions do.
+	+ The exact point in where the Assembly is effectively "committed" was not found, because the whole purpose of the refactoring was to allow older KSPs to accept my stunt, and I was already defeated.
+
+On older KSPs (my main target for the refactoring), the "Phase 2" happens concomitantly with "Phase 1" - and the after math is that every dependency **must be already be loaded** before loading the dependant, and this is the reason of some DLLs being named "000_something.dll" or being placed directly on `GameData` - these things must be already loaded before something else links to them later.
+
+My problem with the "traditional" KSP is that by the time KSPe is able to load DLLs itself using a custom `AssemblyResolver`, KSP was already tried to "commit" the dependents, and they are already borked.
+
+One possible way out of the mess is to cook a way in which KSPe dependants would be loaded by KSPe itself, virtually creating a secondary Plugin Loader mechanism - but by then I would mess with everybody that are relying with the current mechanism, as Module Manager.
+
+These mess can be manageable, or can be not - in a way or another, I'm not prone to dive into this level of complexity by now, I need a mechanism that **coexists** with the current *status quo*, and this solution appears to be not one of these.
+
+So this is the reason I dropped this branch too, besides all the mechanisms being implemented and theoretically working.
+
+
+
 ## In a Hurry
 
 * [Latest Release](https://github.com/net-lisias-ksp/KSPAPIExtensions/releases)
