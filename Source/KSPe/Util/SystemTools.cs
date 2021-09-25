@@ -64,6 +64,37 @@ namespace KSPe.Util
 
 		public static class Assembly
 		{ 
+			public static class Finder
+			{
+				private static readonly Dictionary<string, System.Reflection.Assembly> ASSEMBLIES = new Dictionary<string, System.Reflection.Assembly>();
+				public static bool ExistsByName(string qn)
+				{
+					lock (ASSEMBLIES)
+					{
+						if (ASSEMBLIES.ContainsKey(qn)) return true;
+						foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies()) if (assembly.GetName().Equals(qn))
+						{
+							ASSEMBLIES.Add(qn, assembly);
+							return true;
+						}
+					}
+					return false;
+				}
+				public static System.Reflection.Assembly FindByName(string qn)
+				{
+					lock(ASSEMBLIES)
+					{ 
+						if (ASSEMBLIES.ContainsKey(qn)) return ASSEMBLIES[qn];
+						foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies()) if (assembly.GetName().Equals(qn))
+						{
+							ASSEMBLIES.Add(qn, assembly);
+							return assembly;
+						}
+					}
+					throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing Assembly : " + qn);
+				}
+			}
+
 			public class Loader : IDisposable
 			{
 				protected static readonly object MUTEX = new object();
@@ -261,6 +292,7 @@ namespace KSPe.Util
 					if (null != asmFile) try
 					{
 						LOG.force("Found it on {0}.", asmFile);
+						//return LoadAssemblyByKsp(args.Name, asmFile);
 						return System.Reflection.Assembly.LoadFrom(asmFile);
 					}
 					catch (System.Exception ex)
@@ -287,6 +319,21 @@ namespace KSPe.Util
 						if (System.IO.File.Exists(asmFile)) return asmFile;
 					}
 				return null;
+			}
+
+			/* I CAN'T MAKE THIS THING TO WORK! */
+			private static readonly System.Uri BASEURI = new System.Uri(IO.Path.Origin());
+			private static System.Reflection.Assembly LoadAssemblyByKsp(string asmName, string asmFile)
+			{
+				Uri uri = new Uri(BASEURI, asmFile);
+				System.IO.FileInfo fi = new System.IO.FileInfo(uri.AbsolutePath);
+				global::ConfigNode cn = new global::ConfigNode();
+				LOG.force("fi {0} -- url {1}", fi.FullName, uri.AbsoluteUri);
+				if (!global::AssemblyLoader.LoadPlugin(fi, uri.AbsoluteUri, cn)) // If the return value of this thing working as expected?
+					throw new DllNotFoundException(string.Format("Could not load {0} from {1}!", asmName, asmFile));
+				foreach (global::AssemblyLoader.LoadedAssembly a in global::AssemblyLoader.loadedAssemblies) if (a.name.Equals(asmName))
+						a.Load();
+				return Finder.FindByName(asmName);
 			}
 
 			static Assembly()
