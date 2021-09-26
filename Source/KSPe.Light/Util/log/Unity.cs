@@ -30,7 +30,7 @@ namespace KSPe.Util.Log {
 		{
 			this.unityLog = logHandler ?? UnityLogDecorator.INSTANCE;
 #if DEBUG
-			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0} with {1}", type, logHandler.GetType().Name);
+			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0} with {1}", type, this.unityLog.GetType().Name);
 #endif
 		}
 
@@ -38,7 +38,7 @@ namespace KSPe.Util.Log {
 		{
 			this.unityLog = logHandler ?? UnityLogDecorator.INSTANCE;
 #if DEBUG
-			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0} with {1}", forceThisNamespace, logHandler.GetType().Name);
+			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0} with {1}", forceThisNamespace, this.unityLog.GetType().Name);
 #endif
 		}
 
@@ -46,7 +46,7 @@ namespace KSPe.Util.Log {
 		{
 			this.unityLog = logHandler ?? UnityLogDecorator.INSTANCE;
 #if DEBUG
-			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0}-{1} with {1}", forceThisNamespace, forceThisClassName, logHandler.GetType().Name);
+			UnityEngine.Debug.LogFormat("Instantiating Unity Logger for {0}-{1} with {1}", forceThisNamespace, forceThisClassName, this.unityLog.GetType().Name);
 #endif
 		}
 
