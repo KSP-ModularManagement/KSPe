@@ -46,6 +46,7 @@ namespace KSPe.Util
 				}
 				return false;
 			}
+
 			public static Type FindByQualifiedName(string qn)
 			{
 				lock(TYPES)
@@ -59,6 +60,22 @@ namespace KSPe.Util
 						}
 				}
 				throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing type : " + qn);
+			}
+
+			public static Type FindByInterfaceName(string qn)
+			{
+				lock(TYPES)
+				{ 
+					if (TYPES.ContainsKey(qn)) return TYPES[qn];
+					foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+						foreach (System.Type type in assembly.GetTypes())
+							foreach (System.Type ifc in type.GetInterfaces()) if (qn.Equals(string.Format("{0}.{1}", type.Namespace, type.Name)))
+							{
+								TYPES.Add(qn, type);
+								return type;
+							}
+				}
+				throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing Interface : " + qn);
 			}
 		}
 
