@@ -21,7 +21,7 @@
 
 */
 
-namespace KSPe.KSP14.UI
+namespace KSPe.KSP18.UI
 {
 	public class Startup
 	{
