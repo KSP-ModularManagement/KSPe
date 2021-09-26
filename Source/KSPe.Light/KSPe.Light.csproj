@@ -8,7 +8,7 @@
     <RootNamespace>KSPe.Light</RootNamespace>
     <AssemblyName>KSPe.Light</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <BaseIntermediateOutputPath>..\..\obj\$(AssemblyName)</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\..\obj\KSPeLight</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -119,6 +119,15 @@
     </Compile>
     <Compile Include="..\KSPe\Log.cs">
       <Link>Log.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\Util\SystemTools.cs">
+      <Link>Util\SystemTools.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\HierarchyT.cs">
+      <Link>IO\HierarchyT.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\LocalCache.cs">
+      <Link>LocalCache.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
