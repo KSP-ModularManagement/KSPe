@@ -27,11 +27,9 @@ namespace KSPe.Util.Log {
 
 	internal class UnityLogDecorator : UnityEngine.ILogHandler
 	{
-		internal static readonly UnityEngine.ILogHandler ORIGINAL_LOGGER =  UnityEngine.Debug.logger.logHandler;
-
 		internal static UnityEngine.ILogHandler INSTANCE {
 			get {
-				return ORIGINAL_LOGGER;
+				return UnityEngine.Debug.unityLogger.logHandler;
 			}
 		}
 
