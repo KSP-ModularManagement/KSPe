@@ -1,5 +1,11 @@
 # KSP API Extensions/L :: Known Issues
 
+* The new 2.4 series breaks binary compatibility with the 2.3!!
+	+ I failed on implementing the new features I needed without breaking some legacy API that were meant to be trashed on the next major release, so I trashed them now and called a day. However, this left me between a rock and a hard place: I had to decide to keep binary compatibility or source code compatibility to work around a huge screw up of mine on the Logging mechanism.
+	+ I decided to to the Right Thing™ (what ended up being somewhat painful on the short run) in order to keep things sane and avoid exporting shitty code into the MainStream (on the KSPe.Light series).
+	+ So this release breaks a lot of the KSPU add'ons - you may want to wait a week while I update them before trying this release. There's nothing really useful on it right now, unless you plan to use KSPe in your own projects - something that is only going to be really feasible from the 2.4 and newer.
+	+ TweakScale BETA also needs to be updated, but the current 2.0.0.36 release may work with this stunt - but I'm not going to test it. [I will only support the 2.0.0.37 Beta](https://github.com/net-lisias-ksp/TweakScale/releases/tag/PRERELEASE%2F2.5.0.37) and newer.
+	+ My [personal fork of Module Manager](https://github.com/net-lisias-ksp/ModuleManager/releases/) also needs to be updated, so, really, wait until I update the Add'Ons you are using before updating this one.
 * The Thread Safe Logging should be considered unreliable at this moment.
 	+ It doesn't works on all supported KSP versions. (1.5 is known to halt on it)
 	+ And it's plain useless at this moment on KSP >= 1.8
