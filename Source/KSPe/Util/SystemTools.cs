@@ -69,7 +69,7 @@ namespace KSPe.Util
 					if (TYPES.ContainsKey(qn)) return TYPES[qn];
 					foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 						foreach (System.Type type in assembly.GetTypes())
-							foreach (System.Type ifc in type.GetInterfaces()) if (qn.Equals(string.Format("{0}.{1}", type.Namespace, type.Name)))
+							foreach (System.Type ifc in type.GetInterfaces()) if (qn.Equals(string.Format("{0}.{1}", ifc.Namespace, ifc.Name)))
 							{
 								TYPES.Add(qn, type);
 								return type;
@@ -89,7 +89,7 @@ namespace KSPe.Util
 					lock (ASSEMBLIES)
 					{
 						if (ASSEMBLIES.ContainsKey(qn)) return true;
-						foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies()) if (assembly.GetName().Equals(qn))
+						foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies()) if (assembly.GetName().Name.Equals(qn))
 						{
 							ASSEMBLIES.Add(qn, assembly);
 							return true;
@@ -102,7 +102,7 @@ namespace KSPe.Util
 					lock(ASSEMBLIES)
 					{ 
 						if (ASSEMBLIES.ContainsKey(qn)) return ASSEMBLIES[qn];
-						foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies()) if (assembly.GetName().Equals(qn))
+						foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies()) if (assembly.GetName().Name.Equals(qn))
 						{
 							ASSEMBLIES.Add(qn, assembly);
 							return assembly;
