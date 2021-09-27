@@ -1,5 +1,8 @@
 # KSP API Extensions/L :: Changes
 
+* 2021-0926: 2.4.0.1 (Lisias) for KSP >= 1.2
+	+ Fixes some dumb mistakes on Log and DLL loader that passed through on the last release
+	+ Internalises the TweakScale annotations, as I intend to use them on the Companions, and so I need them on the KSPe.Light.
 * 2021-0922: 2.4.0.0 (Lisias) for KSP >= 1.2
 	+ Implementing missing Use Case on "local" DLL loading.
 	+ **Complete** Overhaull of the Assembly Loader Tools.
