@@ -119,6 +119,7 @@
     <Compile Include="FatalErrors.cs" />
     <Compile Include="SanityChecks.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="Properties\Annotations.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
