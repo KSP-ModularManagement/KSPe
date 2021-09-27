@@ -57,7 +57,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Source\Tests\Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSPe.KSP.112", "Source\KSP.112\KSPe.KSP.112.csproj", "{356A56A0-3D70-4324-BFA2-FF00EAD875C3}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "TestsKSP", "Source\Testing\TestsKSP.csproj", "{356A6382-0E0C-4EA4-AA52-624141509B4A}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "TestsKSP", "Source\Testing\TestsKSP.csproj", "{A4440D39-1719-4684-B365-E1A64680AB25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -159,9 +159,9 @@ Global
 		{356A56A0-3D70-4324-BFA2-FF00EAD875C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{356A56A0-3D70-4324-BFA2-FF00EAD875C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{356A56A0-3D70-4324-BFA2-FF00EAD875C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{356A6382-0E0C-4EA4-AA52-624141509B4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{356A6382-0E0C-4EA4-AA52-624141509B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{356A6382-0E0C-4EA4-AA52-624141509B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4440D39-1719-4684-B365-E1A64680AB25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4440D39-1719-4684-B365-E1A64680AB25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4440D39-1719-4684-B365-E1A64680AB25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -177,6 +177,14 @@ Global
 		$0.StandardHeader = $3
 		$3.Text = @/*\n\tThis file is part of KSPe, a component for KSP API Extensions/L\n\t(C) 2018-20 Lisias T : http://lisias.net <support@lisias.net>\n\n\tKSPe API Extensions/L is double licensed, as follows:\n\n\t* SKL 1.0 : https://ksp.lisias.net/SKL-1_0.txt\n\t* GPL 2.0 : https://www.gnu.org/licenses/gpl-2.0.txt\n\n\tAnd you are allowed to choose the License that better suit your needs.\n\n\tKSPe API Extensions/L is distributed in the hope that it will be useful,\n\tbut WITHOUT ANY WARRANTY; without even the implied warranty of\n\tMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n\tYou should have received a copy of the SKL Standard License 1.0\n\talong with KSPe API Extensions/L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.\n\n\tYou should have received a copy of the GNU General Public License 2.0\n\talong with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.\n\n*/
 		$0.VersionControlPolicy = $4
+		$0.TextStylePolicy = $5
+		$5.inheritsSet = null
+		$5.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $6
+		$6.SpaceAfterColonInBaseTypeDeclaration = False
+		$6.SpaceAfterSemicolonsInForStatement = False
+		$6.SpaceBeforeColonInBaseTypeDeclaration = False
+		$6.scope = text/x-csharp
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{210B4435-1D58-4714-A67F-2FC531C4BC16} = {7CE1E911-B7B5-4124-9396-E275EEC616A9}
