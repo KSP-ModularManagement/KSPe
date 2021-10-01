@@ -97,24 +97,20 @@ namespace KSPe.Util
 
 		public static class TypeSearch
 		{
-			public static List<Type> ByInterfaceName(string qn)
+			public static IEnumerable<Type> ByInterfaceName(string qn)
 			{
-				List<Type> r = new List<Type>();
 				foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 					foreach (System.Type type in assembly.GetTypes())
 						foreach (System.Type ifc in type.GetInterfaces()) if (qn.Equals(string.Format("{0}.{1}", ifc.Namespace, ifc.Name)))
-							r.Add(type);
-				return r;
+							yield return type;
 			}
 
-			public static List<Type> ByInterface(Type ifc)
+			public static IEnumerable<Type> ByInterface(Type ifc)
 			{
-				List<Type> r = new List<Type>();
 				foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 					foreach (System.Type type in assembly.GetTypes())
 						foreach (System.Type i in type.GetInterfaces()) if (i.Equals(ifc))
-							r.Add(type);
-				return r;
+							yield return type;
 			}
 		}
 
