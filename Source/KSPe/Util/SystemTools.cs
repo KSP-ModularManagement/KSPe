@@ -77,6 +77,22 @@ namespace KSPe.Util
 				}
 				throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing Interface : " + qn);
 			}
+
+			public static Type FindByInterface(Type ifc)
+			{
+				lock(TYPES)
+				{ 
+					if (TYPES.ContainsKey(ifc.FullName)) return TYPES[ifc.ToString()];
+					foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+						foreach (System.Type type in assembly.GetTypes())
+							foreach (System.Type i in type.GetInterfaces()) if (i.Equals(ifc))
+							{
+								TYPES.Add(ifc.ToString(), type);
+								return type;
+							}
+				}
+				throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing Interface : " + ifc.FullName);
+			}
 		}
 
 		public static class Assembly
