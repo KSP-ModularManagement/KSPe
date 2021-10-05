@@ -117,7 +117,7 @@ namespace KSPe.IO
 			{
 				string path = fn;
 				foreach (string s in fns)
-					path = Path.Combine(fn, s);
+					path = Path.Combine(path, s);
 
 				return FullPathName(path);
 			}
