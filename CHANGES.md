@@ -1,5 +1,7 @@
 # KSP API Extensions/L :: Changes
 
+* 2021-1005: 2.4.0.2 (Lisias) for KSP >= 1.2
+	+ And yet another pretty stupid mistake detected and fixed an handling the sandboxed filesystem.
 * 2021-0926: 2.4.0.1 (Lisias) for KSP >= 1.2
 	+ Fixes some dumb mistakes on Log and DLL loader that passed through on the last release
 	+ Internalises the TweakScale annotations, as I intend to use them on the Companions, and so I need them on the KSPe.Light.
