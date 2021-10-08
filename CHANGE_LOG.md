@@ -1,5 +1,7 @@
 # KSP API Extensions/L :: Change Log
 
+* 2021-1007: 2.4.0.3 (Lisias) for KSP >= 1.2
+	+ Following up on the stupid mistakes, this release fixes one in the latest version's deployment!
 * 2021-1005: 2.4.0.2 (Lisias) for KSP >= 1.2
 	+ And yet another pretty stupid mistake detected and fixed an handling the sandboxed filesystem.
 * 2021-0926: 2.4.0.1 (Lisias) for KSP >= 1.2
