@@ -28,14 +28,30 @@ namespace KSPe.Light.Util.Image
 {
 	public class Screenshooter : Screenshot.Interface
 	{
+		private bool oldUnity = KSPe.Util.UnityTools.UnityVersion < 2017;
+
 		void Screenshot.Interface.Capture(string pathname)
 		{
-			ScreenCapture.CaptureScreenshot(pathname);
+			if (oldUnity) CaptureOnUnity5(pathname, 0);
+			else CaptureOnUnity2017(pathname, 0);
 		}
 
 		void Screenshot.Interface.Capture(string pathname, int superSampleValue)
 		{
-			ScreenCapture.CaptureScreenshot(pathname, superSampleValue);
+			if (oldUnity) CaptureOnUnity5(pathname, superSampleValue);
+			else CaptureOnUnity2017(pathname, superSampleValue);
+		}
+
+		private static void CaptureOnUnity5(string pathname, int superSampleValue)
+		{
+			Type type = KSPe.Util.SystemTools.TypeFinder.FindByQualifiedName("UnityEngine.Application");
+			type.GetMethod("CaptureScreenshot", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).Invoke(null, new object[] { pathname, superSampleValue } );
+		}
+
+		private static void CaptureOnUnity2017(string pathname, int superSampleValue)
+		{
+			Type type = KSPe.Util.SystemTools.TypeFinder.FindByQualifiedName("UnityEngine.ScreenCapture");
+			type.GetMethod("CaptureScreenshot", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).Invoke(null, new object[] { pathname, superSampleValue } );
 		}
 	}
 }

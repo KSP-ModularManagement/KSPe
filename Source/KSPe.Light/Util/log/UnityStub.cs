@@ -29,7 +29,7 @@ namespace KSPe.Util.Log {
 	{
 		internal static UnityEngine.ILogHandler INSTANCE {
 			get {
-				return UnityEngine.Debug.unityLogger.logHandler;
+				return UnityEngine.Debug.logger.logHandler;
 			}
 		}
 
