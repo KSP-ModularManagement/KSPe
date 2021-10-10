@@ -146,7 +146,7 @@ namespace KSPe
 
 		public static Globals.LogConfig Log { get {
 			if (null == Globals._default) Globals.Init();
-			LOG.debug("Loading Global's value for {0}", typeof(T).Namespace);
+			LOG.debug("Reading Global values for {0}", typeof(T).Namespace);
 			return (Globals._locals.ContainsKey(typeof(T).Namespace) ? Globals._locals[typeof(T).Namespace] : Globals._default).Log;
 		} }
 	}
@@ -173,7 +173,7 @@ namespace KSPe
 
 		internal static void info(string msg, params object[] @params)
 		{
-			UnityEngine.Debug.LogErrorFormat("[KSPe.Globals] INFO: " + msg, @params);
+			UnityEngine.Debug.LogFormat("[KSPe.Globals] INFO: " + msg, @params);
 		}
 	}
 
