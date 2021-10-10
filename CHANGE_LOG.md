@@ -1,5 +1,7 @@
 # KSP API Extensions/L :: Change Log
 
+* 2021-1010: 2.4.0.4 (Lisias) for KSP >= 1.2
+	+ Small fixes and enhancements on the Globals subsystem.
 * 2021-1007: 2.4.0.3 (Lisias) for KSP >= 1.2
 	+ Following up on the stupid mistakes, this release fixes one in the latest version's deployment!
 * 2021-1005: 2.4.0.2 (Lisias) for KSP >= 1.2
