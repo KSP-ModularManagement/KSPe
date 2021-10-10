@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Tests
 {
@@ -81,17 +82,30 @@ namespace Tests
 			Console.WriteLine((installedDllPath.StartsWith(intendedPath)));
 		}
 
+		private static void DumbTest()
+		{
+			List<string> names = new List<string>("net.lisias.ksp.test.debug".Split('.'));
+			int i = names.Count - 1;
+			for (;i > 0;--i)
+			{
+				string subnamespace = String.Join(".", names.GetRange(0, i).ToArray());
+				Console.WriteLine("* " + subnamespace);
+			}
+		}
+
 		public static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");
 			Console.WriteLine(Environment.GetCommandLineArgs()[0]);
 
-			TestCase_StackDump();
+            TestCase_StackDump();
 
-			TestCase_InstallPath();
+            TestCase_InstallPath();
 
-			TestCase_MiscPaths();
-			TestCase_Raparsing(Environment.GetCommandLineArgs()[1]);
+            TestCase_MiscPaths();
+            TestCase_Raparsing(Environment.GetCommandLineArgs()[1]);
+
+            DumbTest();
 		}
 	}
 }

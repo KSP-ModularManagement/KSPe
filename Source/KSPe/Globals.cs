@@ -140,15 +140,26 @@ namespace KSPe
 	public class Globals<T>
 	{
 		public static bool DebugMode { get {
-			if (null == Globals._default) Globals.Init();
-			return (Globals._locals.ContainsKey(typeof(T).Namespace) ? Globals._locals[typeof(T).Namespace] : Globals._default).DebugMode;
+			return Get(typeof(T)).DebugMode;
 		} }
 
 		public static Globals.LogConfig Log { get {
-			if (null == Globals._default) Globals.Init();
-			LOG.debug("Reading Global values for {0}", typeof(T).Namespace);
-			return (Globals._locals.ContainsKey(typeof(T).Namespace) ? Globals._locals[typeof(T).Namespace] : Globals._default).Log;
+			return Get(typeof(T)).Log;
 		} }
+
+		private static Globals Get(Type type)
+		{
+			if (null == Globals._default) Globals.Init();
+			if (Globals._locals.ContainsKey(type.Namespace)) return Globals._locals[typeof(T).Namespace];
+			List<string> names = new List<string>(typeof(T).Namespace.Split('.'));
+			int i = names.Count - 1;
+			for (; i > 0 ; --i)
+			{
+				string subnamespace = String.Join(".", names.GetRange(0, i).ToArray());
+				if (Globals._locals.ContainsKey(subnamespace)) return Globals._locals[subnamespace];
+			}
+			return Globals._default;
+		}
 	}
 
 	// Internal Globals LOGging, not to be reused by anyone.
