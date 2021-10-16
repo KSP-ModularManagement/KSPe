@@ -1,5 +1,9 @@
 # KSP API Extensions/L :: Change Log
 
+* 2021-1020: 2.4.1.0 (Lisias) for KSP >= 1.2
+	+ Incepts `KSPe.UI.Toolbar`, a facade to allow the use of any Toolbar support (as long a driver is written for it on KSPe, or it supports KSPe natively).
+		- Extremely unstable. Being published for R&D on the KSPU series.
+		- Read the [Known Issues](./KNOWN_ISSUES.md) before risking your SAS with this stunt! :)
 * 2021-1010: 2.4.0.4 (Lisias) for KSP >= 1.2
 	+ Small fixes and enhancements on the Globals subsystem.
 * 2021-1007: 2.4.0.3 (Lisias) for KSP >= 1.2
