@@ -406,20 +406,24 @@ namespace KSPe.UI.Toolbar
 			this.displayName = displayName ?? type.Namespace;
 		}
 
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public bool BlizzyActive(bool? useBlizzy = null)
 		{
 			return false;
 		}
 
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public bool StockActive(bool? useStock = null)
 		{
 			return true;
 		}
 
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public void ButtonsActive(bool? useStock, bool? useBlizzy)
 		{
 		}
 
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public Toolbar Add(Button button)
 		{
 			if (this.buttons.Contains(button))
@@ -455,6 +459,7 @@ namespace KSPe.UI.Toolbar
 
 		private readonly Dictionary<Type, Toolbar> toolbars = new Dictionary<Type, Toolbar>();
 
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public bool Register<T>(string displayName = null, bool useBlizzy = false, bool useStock = true, bool NoneAllowed = true)
 		{
 			Log.info("Toolbar is registering {0} with type {1}", displayName??typeof(T).Namespace, typeof(T));
