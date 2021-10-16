@@ -1,5 +1,9 @@
 # KSP API Extensions/L :: Known Issues
 
+* The Toobar support incepted on 2.4.1.0 is still embryonic.
+	+ Using it on your own add'os is risky at this moment.
+	+ The API is still being worked out, as services to use [Blizzy Toolbar /L](https://github.com/net-lisias-kspu/ksp_toolbar) or commute the control to [ToolBar Control](https://forum.kerbalspaceprogram.com/index.php?/topic/169509-112x-toolbar-controller-for-modders/) are still RiP.
+		- Yes, baby, the user will choose what to use at runtime merely by installing the desired library. :) 
 * The new 2.4 series breaks binary compatibility with the 2.3!!
 	+ I failed on implementing the new features I needed without breaking some legacy API that were meant to be trashed on the next major release, so I trashed them now and called a day. However, this left me between a rock and a hard place: I had to decide to keep binary compatibility or source code compatibility to work around a huge screw up of mine on the Logging mechanism.
 	+ I decided to to the Right Thing™ (what ended up being somewhat painful on the short run) in order to keep things sane and avoid exporting shitty code into the MainStream (on the KSPe.Light series).

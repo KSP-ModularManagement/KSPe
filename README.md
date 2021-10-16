@@ -69,7 +69,7 @@ Detailed installation instructions are now on its own file (see the [In a Hurry]
 			- You recognize and respect any trademarks
 			- You don't impersonate the authors, neither redistribute a derivative that could be misrepresented as theirs.
 			- You credit the author and republish the copyright notices on your works where the code is used.
-			- You relicense (and fully comply) your works using GPL 2.0 (or later)
+			- You relicense (and fully comply) your works using GPL 2.0
 			- You don't mix your work with GPL incompatible works.
 	* If by some reason the GPL would be invalid for you, rest assured that you still retain the right to Use the Work under SKL 1.0. 
 * See [3rd Parties License](./LICENSE.3rdParties) for additional licenses for Thirt Parties material used with permission (implicit or explicit).
