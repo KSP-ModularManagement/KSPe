@@ -27,7 +27,75 @@ using UnityEngine;
 
 namespace KSPe.UI.Toolbar
 {
-	public class Button
+	public class States
+	{
+		internal interface Interface
+		{
+			ApplicationLauncherButton Control { get; }
+		}
+
+		public class Data
+		{
+			internal readonly Texture2D largeIcon;
+			internal readonly Texture2D smallIcon;
+
+			private Data(Texture2D largeIcon, Texture2D smallIcon)
+			{
+				this.largeIcon = largeIcon;
+				this.smallIcon = smallIcon;
+			}
+
+			public static Data Create(Texture2D largeIcon, Texture2D smallIcon)
+			{
+				return new Data(largeIcon, smallIcon);
+			}
+		}
+
+		private readonly Interface owner;
+		private readonly Dictionary<Type, Dictionary<object, Data>> states = new Dictionary<Type, Dictionary<object, Data>>();
+		private object currentState = null;
+
+		internal bool isEmpty => null == this.currentState || 0 == this.states.Count;
+
+		internal States(Interface owner)
+		{
+			this.owner = owner;
+		}
+
+		public States Create<T>(Dictionary<object, Data> data)
+		{
+			if (this.states.ContainsKey(typeof(T))) this.states.Remove(typeof(T));
+			this.states.Add(typeof(T), data);
+			return this;
+		}
+
+		public object State { get => this.currentState; set => this.Set(value); }
+		public States Set(object value)
+		{
+			this.currentState = value;
+			this.update();
+			return this;
+		}
+
+		public States Clear()
+		{
+			this.currentState = null;
+			return this;
+		}
+
+		internal void update()
+		{
+			if (null == this.currentState) return;
+			Type t = this.currentState.GetType();
+			if (!this.states.ContainsKey(t)) return;
+			Dictionary<object, Data> dict = this.states[t];
+			if (!dict.ContainsKey(this.currentState)) return;
+			Data d = dict[this.currentState];
+			this.owner.Control.SetTexture(d.largeIcon);
+		}
+	}
+
+	public class Button : States.Interface
 	{
 		public class Event
 		{
@@ -62,7 +130,6 @@ namespace KSPe.UI.Toolbar
 				internal readonly ClickHandler clickHandler;
 				internal readonly ScrollHandler scrollHandler;
 				internal readonly KeyCode[] modifier;
-
 
 				internal Handler(Kind kind, ClickHandler handler, KeyCode[] modifier)
 				{
@@ -117,10 +184,7 @@ namespace KSPe.UI.Toolbar
 			}
 
 			public Handler this[Kind index] => this.events[index];
-			public bool Has(Kind kind)
-			{
-				return this.events.ContainsKey(kind);
-			}
+			public bool Has(Kind kind) => this.events.ContainsKey(kind);
 		}
 
 		public class ToolbarEvents
@@ -153,7 +217,6 @@ namespace KSPe.UI.Toolbar
 		public readonly object owner;
 		public readonly string ID;
 
-		internal ApplicationLauncherButton control { get; private set; }
 		internal readonly ApplicationLauncher.AppScenes visibleInScenes;
 		internal readonly Texture2D largeIconActive;
 		internal readonly Texture2D largeIconInactive;
@@ -162,9 +225,14 @@ namespace KSPe.UI.Toolbar
 		internal readonly string toolTip;
 		private readonly ToolbarEvents toolbarEvents = new ToolbarEvents();
 		private readonly MouseEvents mouseEvents = new MouseEvents();
+		private readonly States states;
+
+		ApplicationLauncherButton control;
+		public ApplicationLauncherButton Control => this.control;
 
 		public ToolbarEvents Toolbar => this.toolbarEvents;
 		public MouseEvents Mouse => this.mouseEvents;
+		public States States => this.states;
 
 		private bool active = false;
 		private bool enabled = true;
@@ -186,6 +254,7 @@ namespace KSPe.UI.Toolbar
 			this.smallIconActive = smallIconActive;
 			this.smallIconInactive = smallIconInactive;
 			this.toolTip = toolTip;
+			this.states = new States(this);
 		}
 
 		public static Button Create(object owner, string id,
@@ -389,7 +458,13 @@ namespace KSPe.UI.Toolbar
 
 		private void updateIcon()
 		{
-			this.control.SetTexture(this.enabled ? this.largeIconActive : this.largeIconInactive);
+			if (!this.enabled)
+			{
+				this.control.SetTexture(this.largeIconInactive);
+				return;
+			}
+			if (this.states.isEmpty) this.control.SetTexture(this.largeIconActive);
+			else this.states.update();
 		}
 
 	}
@@ -429,7 +504,7 @@ namespace KSPe.UI.Toolbar
 			if (this.buttons.Contains(button))
 			{
 				this.buttons.Remove(button);
-				ApplicationLauncher.Instance.RemoveModApplication(button.control);
+				ApplicationLauncher.Instance.RemoveModApplication(button.Control);
 				button.clear();
 			}
 			this.buttons.Add(button);
@@ -447,7 +522,7 @@ namespace KSPe.UI.Toolbar
 
 		public void Destroy()
 		{
-			foreach(Button b in this.buttons) ApplicationLauncher.Instance.RemoveModApplication(b.control);
+			foreach(Button b in this.buttons) ApplicationLauncher.Instance.RemoveModApplication(b.Control);
 			this.buttons.Clear();
 		}
 	}
