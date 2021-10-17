@@ -302,21 +302,6 @@ namespace KSPe.UI.Toolbar
 				);
 		}
 
-		public static Button Create<T>(object owner
-				, ApplicationLauncher.AppScenes visibleInScenes
-				, string largeIconActive, string largeIconInactive
-				, string smallIconActive, string smallIconInactive
-				, string toolTip = null
-			)
-		{
-			return Create(owner
-					, visibleInScenes
-					, IO.Asset<T>.Texture2D.LoadFromFile(largeIconActive), IO.Asset<T>.Texture2D.LoadFromFile(largeIconInactive)
-					, IO.Asset<T>.Texture2D.LoadFromFile(smallIconActive), IO.Asset<T>.Texture2D.LoadFromFile(smallIconInactive)
-					, toolTip
-				);
-		}
-
 		public static Button Create(object owner
 				, ApplicationLauncher.AppScenes visibleInScenes
 				, UnityEngine.Texture2D largeIcon
@@ -328,21 +313,6 @@ namespace KSPe.UI.Toolbar
 					, visibleInScenes
 					, largeIcon, largeIcon
 					, smallIcon, smallIcon
-					, toolTip
-				);
-		}
-
-		public static Button Create<T>(object owner
-				, ApplicationLauncher.AppScenes visibleInScenes
-				, string largeIcon
-				, string smallIcon
-				, string toolTip = null
-			)
-		{
-			return Create(owner
-					, visibleInScenes
-					, IO.Asset<T>.Texture2D.LoadFromFile(largeIcon)
-					, IO.Asset<T>.Texture2D.LoadFromFile(smallIcon)
 					, toolTip
 				);
 		}
