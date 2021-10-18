@@ -73,6 +73,8 @@ namespace KSPe.UI.Toolbar
 		public object State { get => this.currentState; set => this.Set(value); }
 		public States Set(object value)
 		{
+			if (this.currentState == value) return this;
+
 			this.currentState = value;
 			this.update();
 			return this;
