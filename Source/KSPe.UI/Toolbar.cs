@@ -22,7 +22,6 @@
 // */
 using System;
 using System.Collections.Generic;
-using System.Resources;
 using KSP.UI.Screens;
 using UnityEngine;
 
@@ -33,6 +32,35 @@ namespace KSPe.UI.Toolbar
 		internal interface Interface
 		{
 			ApplicationLauncherButton Control { get; }
+		}
+
+		public abstract class Control {
+			internal new abstract Type GetType();
+			internal Type GetSurrogateType() => base.GetType();
+		}
+		[Serializable]
+		public class Control<T> : Control
+		{
+			protected readonly T v;
+			protected readonly Type myRealType = typeof(T);
+			protected Control(T v) { this.v = v; }
+			internal override Type GetType() => this.myRealType;
+			public override bool Equals(object o) => o is Control<T> && this.v.Equals(((Control<T>)o).v);
+
+			private int _hash = -1;
+			public override int GetHashCode()
+			{
+				if (this._hash > 0) return this._hash;
+				int hash = 7;
+				hash = 31 * hash + this.myRealType.GetHashCode();
+				hash = 31 * hash + this.v.GetHashCode();
+				return (this._hash = hash);
+			}
+
+			public override string ToString()
+			{
+				return base.ToString() + ":" + this.v.ToString();
+			}
 		}
 
 		public class Data
@@ -46,6 +74,7 @@ namespace KSPe.UI.Toolbar
 				this.smallIcon = smallIcon;
 			}
 
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 			public static Data Create(Texture2D largeIcon, Texture2D smallIcon)
 			{
 				return new Data(largeIcon, smallIcon);
@@ -53,8 +82,8 @@ namespace KSPe.UI.Toolbar
 		}
 
 		private readonly Interface owner;
-		private readonly Dictionary<Type, Dictionary<object, Data>> states = new Dictionary<Type, Dictionary<object, Data>>();
-		private object currentState = null;
+		private readonly Dictionary<Type, Dictionary<Control, Data>> states = new Dictionary<Type, Dictionary<Control, Data>>();
+		private Control currentState = null;
 
 		internal bool isEmpty => null == this.currentState || 0 == this.states.Count;
 
@@ -63,16 +92,25 @@ namespace KSPe.UI.Toolbar
 			this.owner = owner;
 		}
 
-		public State Create<T>(Dictionary<object, Data> data)
+		public State Create<T>(Dictionary<Control, Data> data)
 		{
 			if (this.states.ContainsKey(typeof(T))) this.states.Remove(typeof(T));
 			this.states.Add(typeof(T), data);
+			#if DEBUG
+			{
+				Control[] keys = new Control[data.Keys.Count];
+				data.Keys.CopyTo(keys, 0);
+				Log.debug("State.Data created for type {0} using Controls {1}", typeof(T).FullName, string.Join("; ", Array.ConvertAll(keys, item => item.ToString())));
+			}
+			#endif
 			return this;
 		}
 
-		public object CurrentState { get => this.currentState; set => this.Set(value); }
-		public State Set(object value)
+		public Control CurrentState { get => this.currentState; set => this.Set(value); }
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
+		public State Set(Control value)
 		{
+			Log.debug("State.Data Set from {0} to {1}", this.currentState, value);
 			if (this.currentState == value) return this;
 
 			this.currentState = value;
@@ -80,6 +118,7 @@ namespace KSPe.UI.Toolbar
 			return this;
 		}
 
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public State Clear()
 		{
 			this.currentState = null;
@@ -91,10 +130,11 @@ namespace KSPe.UI.Toolbar
 			if (null == this.currentState) return;
 			Type t = this.currentState.GetType();
 			if (!this.states.ContainsKey(t)) return;
-			Dictionary<object, Data> dict = this.states[t];
+			Dictionary<Control, Data> dict = this.states[t];
 			if (!dict.ContainsKey(this.currentState)) return;
 			Data d = dict[this.currentState];
 			this.owner.Control.SetTexture(d.largeIcon);
+			Log.debug("State.Control update type {0} using {1}", t, this.currentState);
 		}
 	}
 
@@ -155,38 +195,53 @@ namespace KSPe.UI.Toolbar
 			private static readonly KeyCode[] EMPTY_MODIFIER = new KeyCode[]{}; 
 			internal MouseEvents() { }
 
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 			public MouseEvents Add(Handler handler)
 			{
 				if (this.events.ContainsKey(handler.kind)) this.events.Remove(handler.kind);
 				this.events.Add(handler.kind, handler);
+				#if DEBUG
+				Log.debug("Button.MouseEvent.Add {0}{1}{2}{3}"
+						, handler.kind
+						, (null != handler.clickHandler) ? "with clickhandler" : ""
+						, (null != handler.scrollHandler) ? "with scrollHandler" : ""
+						, (null != handler.modifier) ? "with modifiers" : ""
+					);
+				#endif
 				return this;
 			}
 
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 			public MouseEvents Add(MouseEvents.Kind kind, Handler.ClickHandler handler)
 			{
 				Handler h = new Handler(kind, handler, EMPTY_MODIFIER);
 				return this.Add(h);
 			}
 
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 			public MouseEvents Add(MouseEvents.Kind kind, Handler.ClickHandler handler, KeyCode[] modifiler)
 			{
 				Handler h = new Handler(kind, handler, modifiler);
 				return this.Add(h);
 			}
 
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 			public MouseEvents Add(Handler.ScrollHandler handler)
 			{
 				Handler h = new Handler(MouseEvents.Kind.Scroll, handler, EMPTY_MODIFIER);
 				return this.Add(h);
 			}
 
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 			public MouseEvents Add(Handler.ScrollHandler handler, KeyCode[] modifiler)
 			{
 				Handler h = new Handler(MouseEvents.Kind.Scroll, handler, modifiler);
 				return this.Add(h);
 			}
 
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 			public Handler this[Kind index] => this.events[index];
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 			public bool Has(Kind kind) => this.events.ContainsKey(kind);
 		}
 
@@ -203,14 +258,24 @@ namespace KSPe.UI.Toolbar
 
 			internal ToolbarEvents() {	}
 
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 			public ToolbarEvents Add(Kind kind, Event @event)
 			{
 				if (this.events.ContainsKey(kind)) this.events.Remove(kind);
 				this.events.Add(kind, @event);
+				#if DEBUG
+				Log.debug("Button.ToolbarEvents.Add {0}{1}"
+						, kind
+						, (null != @event.raisingEdge) ? "with raisingEdge" : ""
+						, (null != @event.fallingEdge) ? "with fallingEdge" : ""
+					);
+				#endif
 				return this;
 			}
 
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 			public Event this[Kind index] => this.events[index];
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 			public bool Has(Kind kind)
 			{
 				return this.events.ContainsKey(kind);
@@ -224,24 +289,28 @@ namespace KSPe.UI.Toolbar
 		internal readonly string toolTip;
 
 		private readonly ToolbarEvents toolbarEvents = new ToolbarEvents();
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public ToolbarEvents Toolbar => this.toolbarEvents;
 
 		private readonly MouseEvents mouseEvents = new MouseEvents();
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public MouseEvents Mouse => this.mouseEvents;
 
 		private readonly State state;
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public State State => this.state;
 
 		private ApplicationLauncherButton control;
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public ApplicationLauncherButton Control => this.control;
 
 		// A bit messy, but I need the classes to use the Toolbar.States stunt!
 		// So, instead of creating 3 dummy classes and then hard code the association with its boolean var,
 		// I made the state and the selector class the same! :)
 		// (I'm spending too much time programming in Python, I should code a bit more on Java as it appears!!)
-		private class ActiveState	{ readonly bool v; protected ActiveState(bool v) { this.v = v; }  public static implicit operator ActiveState(bool v) => new ActiveState(v);   public static implicit operator bool(ActiveState s) => s.v;  public override bool Equals(object o) => o is ActiveState && this.v == ((ActiveState)o).v;   public override int GetHashCode() => this.v.GetHashCode(); }
-		private class EnabledState	{ readonly bool v; protected EnabledState(bool v) { this.v = v; } public static implicit operator EnabledState(bool v) => new EnabledState(v); public static implicit operator bool(EnabledState s) => s.v; public override bool Equals(object o) => o is EnabledState && this.v == ((EnabledState)o).v; public override int GetHashCode() => this.v.GetHashCode(); }
-		private class HoverState	{ readonly bool v; protected HoverState(bool v) { this.v = v; }   public static implicit operator HoverState(bool v) => new HoverState(v);     public static implicit operator bool(HoverState s) => s.v;   public override bool Equals(object o) => o is HoverState && this.v == ((HoverState)o).v;     public override int GetHashCode() => this.v.GetHashCode(); }
+		private class ActiveState:State.Control<bool>  { protected ActiveState(bool v):base(v) { }  public static implicit operator ActiveState(bool v) => new ActiveState(v);   public static implicit operator bool(ActiveState s) => s.v; }
+		private class EnabledState:State.Control<bool> { protected EnabledState(bool v):base(v) { } public static implicit operator EnabledState(bool v) => new EnabledState(v); public static implicit operator bool(EnabledState s) => s.v; }
+		private class HoverState:State.Control<bool>   { protected HoverState(bool v):base(v) { }   public static implicit operator HoverState(bool v) => new HoverState(v);     public static implicit operator bool(HoverState s) => s.v; }
 		private ActiveState active = false;
 		private EnabledState enabled = true;
 		private HoverState hovering = false;
@@ -257,8 +326,16 @@ namespace KSPe.UI.Toolbar
 			this.visibleInScenes = visibleInScenes;
 			this.toolTip = toolTip;
 			this.state = new State(this);
+			#if DEBUG
+			Log.debug("Button Created for {0}, ID {1} for Scenes {2} and toolTip {3}"
+					, this.owner, this.ID
+					, visibleInScenes
+					, toolTip??"<none>"
+				);
+			#endif
 		}
 
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public static Button Create(object owner, string id
 				, ApplicationLauncher.AppScenes visibleInScenes
 				, string toolTip = null
@@ -271,6 +348,24 @@ namespace KSPe.UI.Toolbar
 			return r;
 		}
 
+		public override bool Equals(object o)
+		{
+			if (!(o is Button)) return false;
+			Button b = (Button)o;
+			return this.owner.Equals(b.owner) && this.ID.Equals(b.ID);
+		}
+
+		private int _hash = -1;
+		public override int GetHashCode()
+		{
+			if (this._hash > 0) return this._hash;
+			int hash = 7;
+			hash = 31 * hash + this.owner.GetHashCode();
+			hash = 31 * hash + this.ID.GetHashCode();
+			return (this._hash = hash);
+		}
+
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public static Button Create(object owner, string id,
 				ApplicationLauncher.AppScenes visibleInScenes
 				, State.Data iconActive, State.Data iconInactive
@@ -285,6 +380,7 @@ namespace KSPe.UI.Toolbar
 			return r;
 		}
 
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public static Button Create(object owner, string id,
 				ApplicationLauncher.AppScenes visibleInScenes
 				, UnityEngine.Texture2D largeIconActive, UnityEngine.Texture2D largeIconInactive
@@ -300,6 +396,7 @@ namespace KSPe.UI.Toolbar
 				);
 		}
 
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public static Button Create(object owner
 				, ApplicationLauncher.AppScenes visibleInScenes
 				, UnityEngine.Texture2D largeIconActive, UnityEngine.Texture2D largeIconInactive
@@ -315,6 +412,7 @@ namespace KSPe.UI.Toolbar
 				);
 		}
 
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public static Button Create(object owner
 				, ApplicationLauncher.AppScenes visibleInScenes
 				, UnityEngine.Texture2D largeIcon
@@ -330,6 +428,7 @@ namespace KSPe.UI.Toolbar
 				);
 		}
 
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public bool Active
 		{
 			get { return this.active; }
@@ -342,34 +441,35 @@ namespace KSPe.UI.Toolbar
 			set { this.updateHoverState(value); }
 		}
 
-
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public bool Enabled
 		{
 			get { return this.enabled; }
 			set { this.updateEnableState(value); }
 		}
 
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public void Add(ToolbarEvents.Kind kind, State.Data iconActive, State.Data iconInactive)
 		{
 			switch (kind)
 			{
 				case ToolbarEvents.Kind.Active:
 					this.state.Create<ActiveState>(
-						new Dictionary<object, State.Data> {
+						new Dictionary<State.Control, State.Data> {
 							{ (ActiveState)false, iconInactive }, { (ActiveState)true, iconActive }
 						})
 					;
 					break;
 				case ToolbarEvents.Kind.Hover:
 					this.state.Create<HoverState>(
-						new Dictionary<object, State.Data> {
+						new Dictionary<State.Control, State.Data> {
 							{ (HoverState)false, iconInactive }, { (HoverState)true, iconActive }
 						})
 					;
 					break;
 				case ToolbarEvents.Kind.Enabled:
 					this.state.Create<EnabledState>(
-						new Dictionary<object, State.Data> {
+						new Dictionary<State.Control, State.Data> {
 							{ (EnabledState)false, iconInactive }, { (EnabledState)true, iconActive }
 						})
 					;
@@ -461,22 +561,40 @@ namespace KSPe.UI.Toolbar
 		private void updateActiveState(bool newState)
 		{
 			if (newState == this.active) return;
+			#if DEBUG
+			Log.debug("Button {0}::{1} updateActiveState set to {2}"
+					, this.owner, this.ID
+					, newState
+				);
+			#endif
 			if (this.active) this.OnFalse(); else this.OnTrue();
-			this.states.Set(this.active);	// Now do you see why that mess above? ;)
+			this.state.Set(this.active);	// Now do you see why that mess above? ;)
 		}
 
 		private void updateHoverState(bool newState)
 		{
 			if (newState == this.hovering) return;
+			#if DEBUG
+			Log.debug("Button {0}::{1} updateHoverState set to {2}"
+					, this.owner, this.ID
+					, newState
+				);
+			#endif
 			if (this.hovering) this.OnHoverOut(); else this.OnHoverIn();
-			this.states.Set(this.hovering);	// Now do you see why that mess above? ;)
+			this.state.Set(this.hovering);	// Now do you see why that mess above? ;)
 		}
 
 		private void updateEnableState(bool newState)
 		{
 			if (newState == this.enabled) return;
+			#if DEBUG
+			Log.debug("Button {0}::{1} updateEnableState set to {2}"
+					, this.owner, this.ID
+					, newState
+				);
+			#endif
 			if (this.enabled) this.OnDisable(); else this.OnEnable();
-			this.states.Set(this.enabled);	// Now do you see why that mess above? ;)
+			this.state.Set(this.enabled);	// Now do you see why that mess above? ;)
 		}
 	}
 
@@ -490,6 +608,25 @@ namespace KSPe.UI.Toolbar
 		{
 			this.type = type;
 			this.displayName = displayName ?? type.Namespace;
+		}
+
+		/**
+		 * I know that you know that everybody knows that people will forget to call the Destroy
+		 * on the Destroy of their MonoBehaviours...
+		 * 
+		 * It's still bad doing it here, but it's less worse than not doing it at all!
+		 * 
+		 * Calling Destroy twice will not hurt anyway.
+		 */
+		~Toolbar()
+		{
+			this.Destroy();
+		}
+
+		public void Destroy()
+		{
+			foreach(Button b in this.buttons) ApplicationLauncher.Instance.RemoveModApplication(b.Control);
+			this.buttons.Clear();
 		}
 
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
@@ -545,12 +682,6 @@ namespace KSPe.UI.Toolbar
 				)
 			);
 			return this;
-		}
-
-		public void Destroy()
-		{
-			foreach(Button b in this.buttons) ApplicationLauncher.Instance.RemoveModApplication(b.Control);
-			this.buttons.Clear();
 		}
 	}
 
