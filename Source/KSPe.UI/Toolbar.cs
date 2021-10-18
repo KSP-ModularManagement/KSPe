@@ -28,7 +28,7 @@ using UnityEngine;
 
 namespace KSPe.UI.Toolbar
 {
-	public class States
+	public class State
 	{
 		internal interface Interface
 		{
@@ -58,20 +58,20 @@ namespace KSPe.UI.Toolbar
 
 		internal bool isEmpty => null == this.currentState || 0 == this.states.Count;
 
-		internal States(Interface owner)
+		internal State(Interface owner)
 		{
 			this.owner = owner;
 		}
 
-		public States Create<T>(Dictionary<object, Data> data)
+		public State Create<T>(Dictionary<object, Data> data)
 		{
 			if (this.states.ContainsKey(typeof(T))) this.states.Remove(typeof(T));
 			this.states.Add(typeof(T), data);
 			return this;
 		}
 
-		public object State { get => this.currentState; set => this.Set(value); }
-		public States Set(object value)
+		public object CurrentState { get => this.currentState; set => this.Set(value); }
+		public State Set(object value)
 		{
 			if (this.currentState == value) return this;
 
@@ -80,7 +80,7 @@ namespace KSPe.UI.Toolbar
 			return this;
 		}
 
-		public States Clear()
+		public State Clear()
 		{
 			this.currentState = null;
 			return this;
@@ -98,7 +98,7 @@ namespace KSPe.UI.Toolbar
 		}
 	}
 
-	public class Button : States.Interface
+	public class Button : State.Interface
 	{
 		public class Event
 		{
@@ -229,8 +229,8 @@ namespace KSPe.UI.Toolbar
 		private readonly MouseEvents mouseEvents = new MouseEvents();
 		public MouseEvents Mouse => this.mouseEvents;
 
-		private readonly States states;
-		public States States => this.states;
+		private readonly State state;
+		public State State => this.state;
 
 		private ApplicationLauncherButton control;
 		public ApplicationLauncherButton Control => this.control;
@@ -256,7 +256,7 @@ namespace KSPe.UI.Toolbar
 			this.ID = this.owner.GetType().Namespace + "_" + id + "_Button";
 			this.visibleInScenes = visibleInScenes;
 			this.toolTip = toolTip;
-			this.states = new States(this);
+			this.state = new State(this);
 		}
 
 		public static Button Create(object owner, string id
@@ -273,7 +273,7 @@ namespace KSPe.UI.Toolbar
 
 		public static Button Create(object owner, string id,
 				ApplicationLauncher.AppScenes visibleInScenes
-				, States.Data iconActive, States.Data iconInactive
+				, State.Data iconActive, State.Data iconInactive
 				, string toolTip = null
 			)
 		{
@@ -294,8 +294,8 @@ namespace KSPe.UI.Toolbar
 		{
 			return Create(owner, id
 					, visibleInScenes
-					, States.Data.Create(largeIconActive, smallIconActive)
-					, States.Data.Create(largeIconInactive, smallIconInactive)
+					, State.Data.Create(largeIconActive, smallIconActive)
+					, State.Data.Create(largeIconInactive, smallIconInactive)
 					, toolTip
 				);
 		}
@@ -309,8 +309,8 @@ namespace KSPe.UI.Toolbar
 		{
 			return Create(owner, owner.GetType().Name
 					, visibleInScenes
-					, States.Data.Create(largeIconActive, smallIconActive)
-					, States.Data.Create(largeIconInactive, smallIconInactive)
+					, State.Data.Create(largeIconActive, smallIconActive)
+					, State.Data.Create(largeIconInactive, smallIconInactive)
 					, toolTip
 				);
 		}
@@ -324,8 +324,8 @@ namespace KSPe.UI.Toolbar
 		{
 			return Create(owner, owner.GetType().Name
 					, visibleInScenes
-					, States.Data.Create(largeIcon, largeIcon)
-					, States.Data.Create(smallIcon, smallIcon)
+					, State.Data.Create(largeIcon, largeIcon)
+					, State.Data.Create(smallIcon, smallIcon)
 					, toolTip
 				);
 		}
@@ -349,27 +349,27 @@ namespace KSPe.UI.Toolbar
 			set { this.updateEnableState(value); }
 		}
 
-		public void Add(ToolbarEvents.Kind kind, States.Data iconActive, States.Data iconInactive)
+		public void Add(ToolbarEvents.Kind kind, State.Data iconActive, State.Data iconInactive)
 		{
 			switch (kind)
 			{
 				case ToolbarEvents.Kind.Active:
-					this.states.Create<ActiveState>(
-						new Dictionary<object, States.Data> {
+					this.state.Create<ActiveState>(
+						new Dictionary<object, State.Data> {
 							{ (ActiveState)false, iconInactive }, { (ActiveState)true, iconActive }
 						})
 					;
 					break;
 				case ToolbarEvents.Kind.Hover:
-					this.states.Create<HoverState>(
-						new Dictionary<object, States.Data> {
+					this.state.Create<HoverState>(
+						new Dictionary<object, State.Data> {
 							{ (HoverState)false, iconInactive }, { (HoverState)true, iconActive }
 						})
 					;
 					break;
 				case ToolbarEvents.Kind.Enabled:
-					this.states.Create<EnabledState>(
-						new Dictionary<object, States.Data> {
+					this.state.Create<EnabledState>(
+						new Dictionary<object, State.Data> {
 							{ (EnabledState)false, iconInactive }, { (EnabledState)true, iconActive }
 						})
 					;
