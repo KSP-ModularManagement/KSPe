@@ -67,6 +67,10 @@
   <ItemGroup>
     <Folder Include="Common\" />
     <Folder Include="Common\Dialogs\" />
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\launch_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

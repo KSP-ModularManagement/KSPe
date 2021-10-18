@@ -93,6 +93,37 @@ namespace Tests
 			}
 		}
 
+		private class ActiveState
+		{
+			readonly bool v;
+			protected ActiveState(bool v) { this.v = v; }
+			public static implicit operator ActiveState(bool v) => new ActiveState(v);
+			public static implicit operator bool(ActiveState s) => s.v;
+			public override bool Equals(object o) => o is ActiveState && this.v == ((ActiveState)o).v;
+			public override int GetHashCode() => this.v.GetHashCode();
+		}
+
+		public static void T()
+		{
+			Dictionary<object, string> d = new Dictionary<object, string>();
+			ActiveState a = false;
+			ActiveState b = true;
+			ActiveState c = true;
+
+			d[a] = "a";
+			d[b] = "b";
+			d[c] = "c";
+
+			Console.WriteLine(string.Format("a == a {0}", a == a));
+			Console.WriteLine(string.Format("a equals a {0}", a.Equals(a)));
+			Console.WriteLine(string.Format("a == b {0}", a == b));
+			Console.WriteLine(string.Format("a equals b {0}", a.Equals(b)));
+			Console.WriteLine(string.Format("c == b {0}", c == b));
+			Console.WriteLine(string.Format("c equals b {0}", c.Equals(b)));
+
+
+		}
+
 		public static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");

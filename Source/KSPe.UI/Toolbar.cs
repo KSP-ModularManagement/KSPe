@@ -22,6 +22,7 @@
 // */
 using System;
 using System.Collections.Generic;
+using System.Resources;
 using KSP.UI.Screens;
 using UnityEngine;
 
@@ -192,7 +193,7 @@ namespace KSPe.UI.Toolbar
 			public enum Kind
 			{
 				Active,		// OnTrue, OnFalse
-				Hover,
+				Hover,		// HoverIn, HoverOut
 				Enabled,	// OnEnable, OnDisable
 			};
 
@@ -218,43 +219,68 @@ namespace KSPe.UI.Toolbar
 		public readonly string ID;
 
 		internal readonly ApplicationLauncher.AppScenes visibleInScenes;
-		internal readonly Texture2D largeIconActive;
-		internal readonly Texture2D largeIconInactive;
-		internal readonly Texture2D smallIconActive;
-		internal readonly Texture2D smallIconInactive;
 		internal readonly string toolTip;
+
 		private readonly ToolbarEvents toolbarEvents = new ToolbarEvents();
-		private readonly MouseEvents mouseEvents = new MouseEvents();
-		private readonly States states;
-
-		ApplicationLauncherButton control;
-		public ApplicationLauncherButton Control => this.control;
-
 		public ToolbarEvents Toolbar => this.toolbarEvents;
+
+		private readonly MouseEvents mouseEvents = new MouseEvents();
 		public MouseEvents Mouse => this.mouseEvents;
+
+		private readonly States states;
 		public States States => this.states;
 
-		private bool active = false;
-		private bool enabled = true;
-		private bool hovering = false;
+		private ApplicationLauncherButton control;
+		public ApplicationLauncherButton Control => this.control;
+
+		// A bit messy, but I need the classes to use the Toolbar.States stunt!
+		// So, instead of creating 3 dummy classes and then hard code the association with its boolean var,
+		// I made the state and the selector class the same! :)
+		// (I'm spending too much time programming in Python, I should code a bit more on Java as it appears!!)
+		private class ActiveState	{ readonly bool v; protected ActiveState(bool v) { this.v = v; }  public static implicit operator ActiveState(bool v) => new ActiveState(v);   public static implicit operator bool(ActiveState s) => s.v;  public override bool Equals(object o) => o is ActiveState && this.v == ((ActiveState)o).v;   public override int GetHashCode() => this.v.GetHashCode(); }
+		private class EnabledState	{ readonly bool v; protected EnabledState(bool v) { this.v = v; } public static implicit operator EnabledState(bool v) => new EnabledState(v); public static implicit operator bool(EnabledState s) => s.v; public override bool Equals(object o) => o is EnabledState && this.v == ((EnabledState)o).v; public override int GetHashCode() => this.v.GetHashCode(); }
+		private class HoverState	{ readonly bool v; protected HoverState(bool v) { this.v = v; }   public static implicit operator HoverState(bool v) => new HoverState(v);     public static implicit operator bool(HoverState s) => s.v;   public override bool Equals(object o) => o is HoverState && this.v == ((HoverState)o).v;     public override int GetHashCode() => this.v.GetHashCode(); }
+		private ActiveState active = false;
+		private EnabledState enabled = true;
+		private HoverState hovering = false;
 
 		private Button(
 				object owner, string id
 				, ApplicationLauncher.AppScenes visibleInScenes
-				, UnityEngine.Texture2D largeIconActive, UnityEngine.Texture2D largeIconInactive
-				, UnityEngine.Texture2D smallIconActive, UnityEngine.Texture2D smallIconInactive
 				, string toolTip
 			)
 		{
 			this.owner = owner;
 			this.ID = this.owner.GetType().Namespace + "_" + id + "_Button";
 			this.visibleInScenes = visibleInScenes;
-			this.largeIconActive = largeIconActive;
-			this.largeIconInactive = largeIconInactive;
-			this.smallIconActive = smallIconActive;
-			this.smallIconInactive = smallIconInactive;
 			this.toolTip = toolTip;
 			this.states = new States(this);
+		}
+
+		public static Button Create(object owner, string id
+				, ApplicationLauncher.AppScenes visibleInScenes
+				, string toolTip = null
+			)
+		{
+			Button r = new Button(owner, id
+					, visibleInScenes
+					, toolTip
+				);
+			return r;
+		}
+
+		public static Button Create(object owner, string id,
+				ApplicationLauncher.AppScenes visibleInScenes
+				, States.Data iconActive, States.Data iconInactive
+				, string toolTip = null
+			)
+		{
+			Button r = new Button(owner, id
+					, visibleInScenes
+					, toolTip
+				);
+			r.Add(ToolbarEvents.Kind.Enabled, iconActive, iconInactive);
+			return r;
 		}
 
 		public static Button Create(object owner, string id,
@@ -264,25 +290,10 @@ namespace KSPe.UI.Toolbar
 				, string toolTip = null
 			)
 		{
-			return new Button(owner, id
-					, visibleInScenes
-					, largeIconActive, largeIconInactive
-					, smallIconActive, smallIconInactive
-					, toolTip
-				);
-		}
-
-		public static Button Create<T>(object owner, string id,
-				ApplicationLauncher.AppScenes visibleInScenes
-				, string largeIconActive, string largeIconInactive
-				, string smallIconActive, string smallIconInactive
-				, string toolTip = null
-			)
-		{
 			return Create(owner, id
 					, visibleInScenes
-					, IO.Asset<T>.Texture2D.LoadFromFile(largeIconActive), IO.Asset<T>.Texture2D.LoadFromFile(largeIconInactive)
-					, IO.Asset<T>.Texture2D.LoadFromFile(smallIconActive), IO.Asset<T>.Texture2D.LoadFromFile(smallIconInactive)
+					, States.Data.Create(largeIconActive, smallIconActive)
+					, States.Data.Create(largeIconInactive, smallIconInactive)
 					, toolTip
 				);
 		}
@@ -294,10 +305,10 @@ namespace KSPe.UI.Toolbar
 				, string toolTip = null
 			)
 		{
-			return new Button(owner, owner.GetType().Name
+			return Create(owner, owner.GetType().Name
 					, visibleInScenes
-					, largeIconActive, largeIconInactive
-					, smallIconActive, smallIconInactive
+					, States.Data.Create(largeIconActive, smallIconActive)
+					, States.Data.Create(largeIconInactive, smallIconInactive)
 					, toolTip
 				);
 		}
@@ -309,10 +320,10 @@ namespace KSPe.UI.Toolbar
 				, string toolTip = null
 			)
 		{
-			return new Button(owner, owner.GetType().Name
+			return Create(owner, owner.GetType().Name
 					, visibleInScenes
-					, largeIcon, largeIcon
-					, smallIcon, smallIcon
+					, States.Data.Create(largeIcon, largeIcon)
+					, States.Data.Create(smallIcon, smallIcon)
 					, toolTip
 				);
 		}
@@ -323,10 +334,47 @@ namespace KSPe.UI.Toolbar
 			set { this.updateActiveState(value); }
 		}
 
+		private bool Hovering
+		{
+			get { return this.hovering; }
+			set { this.updateHoverState(value); }
+		}
+
+
 		public bool Enabled
 		{
 			get { return this.enabled; }
 			set { this.updateEnableState(value); }
+		}
+
+		public void Add(ToolbarEvents.Kind kind, States.Data iconActive, States.Data iconInactive)
+		{
+			switch (kind)
+			{
+				case ToolbarEvents.Kind.Active:
+					this.states.Create<ActiveState>(
+						new Dictionary<object, States.Data> {
+							{ (ActiveState)false, iconInactive }, { (ActiveState)true, iconActive }
+						})
+					;
+					break;
+				case ToolbarEvents.Kind.Hover:
+					this.states.Create<HoverState>(
+						new Dictionary<object, States.Data> {
+							{ (HoverState)false, iconInactive }, { (HoverState)true, iconActive }
+						})
+					;
+					break;
+				case ToolbarEvents.Kind.Enabled:
+					this.states.Create<EnabledState>(
+						new Dictionary<object, States.Data> {
+							{ (EnabledState)false, iconInactive }, { (EnabledState)true, iconActive }
+						})
+					;
+					break;
+				default:
+					break;
+			}
 		}
 
 		internal void set(ApplicationLauncherButton applicationLauncherButton)
@@ -347,7 +395,6 @@ namespace KSPe.UI.Toolbar
 				this.toolbarEvents[ToolbarEvents.Kind.Active].raisingEdge();
 
 			this.active = true;
-			this.updateIcon();
 		}
 
 		internal void OnFalse()
@@ -356,7 +403,6 @@ namespace KSPe.UI.Toolbar
 				this.toolbarEvents[ToolbarEvents.Kind.Active].fallingEdge();
 
 			this.active = false;
-			this.updateIcon();
 		}
 
 		internal void OnHoverIn()
@@ -365,7 +411,6 @@ namespace KSPe.UI.Toolbar
 				this.toolbarEvents[ToolbarEvents.Kind.Hover].raisingEdge();
 
 			this.hovering = true;
-			this.updateIcon();
 		}
 
 		internal void OnHoverOut()
@@ -374,7 +419,6 @@ namespace KSPe.UI.Toolbar
 				this.toolbarEvents[ToolbarEvents.Kind.Hover].fallingEdge();
 
 			this.hovering = false;
-			this.updateIcon();
 		}
 
 		internal void OnEnable()
@@ -383,7 +427,6 @@ namespace KSPe.UI.Toolbar
 				this.toolbarEvents[ToolbarEvents.Kind.Enabled].raisingEdge();
 
 			this.enabled = true;
-			this.updateIcon();
 		}
 
 		internal void OnDisable()
@@ -391,8 +434,7 @@ namespace KSPe.UI.Toolbar
 			if (this.toolbarEvents.Has(ToolbarEvents.Kind.Enabled) && null != this.toolbarEvents[ToolbarEvents.Kind.Enabled].fallingEdge)
 				this.toolbarEvents[ToolbarEvents.Kind.Enabled].fallingEdge();
 
-			this.enabled = true;
-			this.updateIcon();
+			this.enabled = false;
 		}
 
 		private void OnLeftClick()
@@ -418,25 +460,22 @@ namespace KSPe.UI.Toolbar
 		{
 			if (newState == this.active) return;
 			if (this.active) this.OnFalse(); else this.OnTrue();
+			this.states.Set(this.active);	// Now do you see why that mess above? ;)
+		}
+
+		private void updateHoverState(bool newState)
+		{
+			if (newState == this.hovering) return;
+			if (this.hovering) this.OnHoverOut(); else this.OnHoverIn();
+			this.states.Set(this.hovering);	// Now do you see why that mess above? ;)
 		}
 
 		private void updateEnableState(bool newState)
 		{
 			if (newState == this.enabled) return;
 			if (this.enabled) this.OnDisable(); else this.OnEnable();
+			this.states.Set(this.enabled);	// Now do you see why that mess above? ;)
 		}
-
-		private void updateIcon()
-		{
-			if (!this.enabled)
-			{
-				this.control.SetTexture(this.largeIconInactive);
-				return;
-			}
-			if (this.states.isEmpty) this.control.SetTexture(this.largeIconActive);
-			else this.states.update();
-		}
-
 	}
 
 	public class Toolbar
@@ -468,9 +507,25 @@ namespace KSPe.UI.Toolbar
 		{
 		}
 
+		private static Texture2D defaultButton = null;
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public Toolbar Add(Button button)
 		{
+			if (null == defaultButton) try
+			{
+				using (System.IO.Stream si = System.Reflection.Assembly.GetEntryAssembly().GetManifestResourceStream("KSPe.UI.Resources.launch_icon.png"))
+				{ 
+					Byte[] data = new System.IO.BinaryReader(si).ReadBytes(int.MaxValue);
+					if (!KSPe.Util.Image.File.Load(out defaultButton, data))
+						defaultButton = new Texture2D(16, 16);
+				}
+			}
+			catch (Exception e)
+			{
+				Log.error(e, this);
+				defaultButton = new Texture2D(16, 16);
+			}
+
 			if (this.buttons.Contains(button))
 			{
 				this.buttons.Remove(button);
@@ -484,7 +539,7 @@ namespace KSPe.UI.Toolbar
 					, button.OnHoverIn, button.OnHoverOut
 					, button.OnEnable, button.OnDisable
 					, button.visibleInScenes
-					, button.largeIconActive
+					, defaultButton
 				)
 			);
 			return this;
