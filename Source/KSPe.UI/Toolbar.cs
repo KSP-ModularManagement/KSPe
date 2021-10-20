@@ -710,7 +710,7 @@ namespace KSPe.UI.Toolbar
 				{ 
 					Byte[] data = new System.IO.BinaryReader(si).ReadBytes(int.MaxValue);
 					if (!KSPe.Util.Image.File.Load(out defaultButton, data))
-						defaultButton = new Texture2D(16, 16);
+						throw new NullReferenceException("KSPe.UI.Resources.launchicon");	// Screw the best practices, I will not rework ths just because of them.
 				}
 			}
 			catch (Exception e)

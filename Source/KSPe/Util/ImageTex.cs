@@ -136,9 +136,11 @@ namespace KSPe.Util.Image {
 				dbg(ex);
 				throw new Error(ex, "Failed to load (are you missing a file?): {0}", fileNamePath);
 			}
-
-			// Preventing a memory leak
-			if (!validReturn && null != tex) UnityEngine.Object.Destroy(tex);
+			finally
+			{ 
+				// Preventing a memory leak
+				if (!validReturn && null != tex) UnityEngine.Object.Destroy(tex);
+			}
 
 			return tex;
 		}
