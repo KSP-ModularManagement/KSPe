@@ -693,7 +693,7 @@ namespace KSPe.UI.Toolbar
 		{
 			if (null == defaultButton) try
 			{
-				using (System.IO.Stream si = System.Reflection.Assembly.GetEntryAssembly().GetManifestResourceStream("KSPe.UI.Resources.launch_icon.png"))
+				using (System.IO.Stream si = this.GetType().Assembly.GetManifestResourceStream("KSPe.UI.Resources.launchicon"))
 				{ 
 					Byte[] data = new System.IO.BinaryReader(si).ReadBytes(int.MaxValue);
 					if (!KSPe.Util.Image.File.Load(out defaultButton, data))

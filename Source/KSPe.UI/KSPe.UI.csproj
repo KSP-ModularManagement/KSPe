@@ -70,7 +70,9 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\launch_icon.png" />
+    <EmbeddedResource Include="Resources\launch_icon.png">
+      <LogicalName>KSPe.UI.Resources.launchicon</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
