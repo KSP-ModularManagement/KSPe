@@ -94,6 +94,12 @@ namespace KSPe.UI.Toolbar
 
 		public State Create<T>(Dictionary<Control, Data> data)
 		{
+			if (!(typeof(T).IsSubclassOf(typeof(Control))))
+				throw new InvalidCastException(string.Format("Type {0} is not valid for the operation. It needs to be derived from  KSPe.UI.State.Control<?>!", typeof(T).FullName));
+
+			foreach (Control i in data.Keys) if (i.GetSurrogateType() != typeof(T))
+				throw new InvalidCastException(string.Format("State {0} is not valid for this dataset. It needs to be type {1}", i, typeof(T).FullName));
+
 			if (this.states.ContainsKey(typeof(T))) this.states.Remove(typeof(T));
 			this.states.Add(typeof(T), data);
 			#if DEBUG
@@ -113,6 +119,11 @@ namespace KSPe.UI.Toolbar
 			Log.debug("State.Data Set from {0} to {1}", this.currentState, value);
 			if (this.currentState == value) return this;
 
+			return this.set(value);
+		}
+
+		internal State set(Control value)
+		{
 			this.currentState = value;
 			this.update();
 			return this;
@@ -128,13 +139,17 @@ namespace KSPe.UI.Toolbar
 		internal void update()
 		{
 			if (null == this.currentState) return;
-			Type t = this.currentState.GetType();
+			Type t = this.currentState.GetSurrogateType();
 			if (!this.states.ContainsKey(t)) return;
 			Dictionary<Control, Data> dict = this.states[t];
-			if (!dict.ContainsKey(this.currentState)) return;
-			Data d = dict[this.currentState];
-			this.owner.Control.SetTexture(d.largeIcon);
-			Log.debug("State.Control update type {0} using {1}", t, this.currentState);
+
+			bool haveTex = dict.ContainsKey(this.currentState);
+			if (haveTex)
+			{ 
+				Data d = dict[this.currentState];
+				this.owner.Control.SetTexture(d.largeIcon);
+			}
+			Log.debug("State.Control update type {0} using {1} {2} texture", t, this.currentState, haveTex ? "with" : "without");
 		}
 	}
 
@@ -264,10 +279,10 @@ namespace KSPe.UI.Toolbar
 				if (this.events.ContainsKey(kind)) this.events.Remove(kind);
 				this.events.Add(kind, @event);
 				#if DEBUG
-				Log.debug("Button.ToolbarEvents.Add {0}{1}"
+				Log.debug("Button.ToolbarEvents.Add {0} event{1}{2}"
 						, kind
-						, (null != @event.raisingEdge) ? "with raisingEdge" : ""
-						, (null != @event.fallingEdge) ? "with fallingEdge" : ""
+						, (null != @event.raisingEdge) ? " with raisingEdge" : ""
+						, (null != @event.fallingEdge) ? " with fallingEdge" : ""
 					);
 				#endif
 				return this;
@@ -368,7 +383,7 @@ namespace KSPe.UI.Toolbar
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public static Button Create(object owner, string id,
 				ApplicationLauncher.AppScenes visibleInScenes
-				, State.Data iconActive, State.Data iconInactive
+				, State.Data iconEnabled, State.Data iconDisabled
 				, string toolTip = null
 			)
 		{
@@ -376,22 +391,22 @@ namespace KSPe.UI.Toolbar
 					, visibleInScenes
 					, toolTip
 				);
-			r.Add(ToolbarEvents.Kind.Enabled, iconActive, iconInactive);
+			r.Add(ToolbarEvents.Kind.Enabled, iconEnabled, iconDisabled);
 			return r;
 		}
 
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public static Button Create(object owner, string id,
 				ApplicationLauncher.AppScenes visibleInScenes
-				, UnityEngine.Texture2D largeIconActive, UnityEngine.Texture2D largeIconInactive
-				, UnityEngine.Texture2D smallIconActive, UnityEngine.Texture2D smallIconInactive
+				, UnityEngine.Texture2D largeIconEnabled, UnityEngine.Texture2D largeIconDisabled
+				, UnityEngine.Texture2D smallIconEnabled, UnityEngine.Texture2D smallIconDisabled
 				, string toolTip = null
 			)
 		{
 			return Create(owner, id
 					, visibleInScenes
-					, State.Data.Create(largeIconActive, smallIconActive)
-					, State.Data.Create(largeIconInactive, smallIconInactive)
+					, State.Data.Create(largeIconEnabled, smallIconEnabled)
+					, State.Data.Create(largeIconDisabled, smallIconDisabled)
 					, toolTip
 				);
 		}
@@ -493,66 +508,76 @@ namespace KSPe.UI.Toolbar
 
 		internal void OnTrue()
 		{
-			if (this.toolbarEvents.Has(ToolbarEvents.Kind.Active) && null != this.toolbarEvents[ToolbarEvents.Kind.Active].raisingEdge)
-				this.toolbarEvents[ToolbarEvents.Kind.Active].raisingEdge();
-
+			if (!this.enabled)	return;
+			this.sendRaisingEvent(ToolbarEvents.Kind.Active);
 			this.active = true;
 		}
 
 		internal void OnFalse()
 		{
-			if (this.toolbarEvents.Has(ToolbarEvents.Kind.Active) && null != this.toolbarEvents[ToolbarEvents.Kind.Active].fallingEdge)
-				this.toolbarEvents[ToolbarEvents.Kind.Active].fallingEdge();
-
+			if (!this.enabled)	return;
+			this.sendFallingEvent(ToolbarEvents.Kind.Active);
 			this.active = false;
 		}
 
 		internal void OnHoverIn()
 		{
-			if (this.toolbarEvents.Has(ToolbarEvents.Kind.Hover) && null != this.toolbarEvents[ToolbarEvents.Kind.Hover].raisingEdge)
-				this.toolbarEvents[ToolbarEvents.Kind.Hover].raisingEdge();
+			if (!this.enabled)
+			{ 
+				if (this.hovering)
+				{
+					this.sendFallingEvent(ToolbarEvents.Kind.Hover);
+					this.hovering = false;
+				}
+				return;
+			}
 
+			this.sendRaisingEvent(ToolbarEvents.Kind.Hover);
 			this.hovering = true;
 		}
 
 		internal void OnHoverOut()
 		{
-			if (this.toolbarEvents.Has(ToolbarEvents.Kind.Hover) && null != this.toolbarEvents[ToolbarEvents.Kind.Hover].fallingEdge)
-				this.toolbarEvents[ToolbarEvents.Kind.Hover].fallingEdge();
-
+			if (!this.enabled)	return;
+			this.sendFallingEvent(ToolbarEvents.Kind.Hover);
 			this.hovering = false;
 		}
 
 		internal void OnEnable()
 		{
-			if (this.toolbarEvents.Has(ToolbarEvents.Kind.Enabled) && null != this.toolbarEvents[ToolbarEvents.Kind.Enabled].raisingEdge)
-				this.toolbarEvents[ToolbarEvents.Kind.Enabled].raisingEdge();
-
+			this.sendRaisingEvent(ToolbarEvents.Kind.Enabled);
 			this.enabled = true;
 		}
 
 		internal void OnDisable()
 		{
-			if (this.toolbarEvents.Has(ToolbarEvents.Kind.Enabled) && null != this.toolbarEvents[ToolbarEvents.Kind.Enabled].fallingEdge)
-				this.toolbarEvents[ToolbarEvents.Kind.Enabled].fallingEdge();
+			if (this.active)
+			{
+				this.sendFallingEvent(ToolbarEvents.Kind.Active);
+				return;
+			}
 
+			this.sendFallingEvent(ToolbarEvents.Kind.Enabled);
 			this.enabled = false;
 		}
 
 		private void OnLeftClick()
 		{
+			if (!this.enabled)	return;
 			if (!this.mouseEvents.Has(MouseEvents.Kind.Left)) return;
 			this.HandleMouseClick(MouseEvents.Kind.Left);
 		}
 
 		private void OnRightClick()
 		{
+			if (!this.enabled)	return;
 			if (!this.mouseEvents.Has(MouseEvents.Kind.Right)) return;
 			this.HandleMouseClick(MouseEvents.Kind.Right);
 		}
 
 		private void HandleMouseClick(MouseEvents.Kind kind)
 		{
+			if (!this.enabled)	return;
 			foreach (KeyCode k in this.mouseEvents[kind].modifier)
 				if (!UnityEngine.Input.GetKeyDown(k)) return;
 			this.mouseEvents[kind].clickHandler();
@@ -568,7 +593,8 @@ namespace KSPe.UI.Toolbar
 				);
 			#endif
 			if (this.active) this.OnFalse(); else this.OnTrue();
-			this.state.Set(this.active);	// Now do you see why that mess above? ;)
+			this.active = newState;
+			this.state.set(this.active);	// Now do you see why that mess above? ;)
 		}
 
 		private void updateHoverState(bool newState)
@@ -581,7 +607,8 @@ namespace KSPe.UI.Toolbar
 				);
 			#endif
 			if (this.hovering) this.OnHoverOut(); else this.OnHoverIn();
-			this.state.Set(this.hovering);	// Now do you see why that mess above? ;)
+			this.hovering = newState;
+			this.state.set(this.hovering);	// Now do you see why that mess above? ;)
 		}
 
 		private void updateEnableState(bool newState)
@@ -594,8 +621,22 @@ namespace KSPe.UI.Toolbar
 				);
 			#endif
 			if (this.enabled) this.OnDisable(); else this.OnEnable();
-			this.state.Set(this.enabled);	// Now do you see why that mess above? ;)
+			this.enabled = newState;
+			this.state.set(this.enabled);	// Now do you see why that mess above? ;)
 		}
+
+		private void sendRaisingEvent(ToolbarEvents.Kind kind)
+		{
+			if (this.toolbarEvents.Has(kind) && null != this.toolbarEvents[kind].raisingEdge)
+				this.toolbarEvents[kind].raisingEdge();
+		}
+
+		private void sendFallingEvent(ToolbarEvents.Kind kind)
+		{
+			if (this.toolbarEvents.Has(kind) && null != this.toolbarEvents[kind].fallingEdge)
+				this.toolbarEvents[kind].fallingEdge();
+		}
+
 	}
 
 	public class Toolbar
@@ -661,7 +702,7 @@ namespace KSPe.UI.Toolbar
 			}
 			catch (Exception e)
 			{
-				Log.error(e, this);
+				Log.error(e, "Could not read the Default Button texture from Resources.");
 				defaultButton = new Texture2D(16, 16);
 			}
 
