@@ -450,8 +450,8 @@ namespace KSPe.UI.Toolbar
 		{
 			return Create(owner, owner.GetType().Name
 					, visibleInScenes
-					, State.Data.Create(largeIcon, largeIcon)
-					, State.Data.Create(smallIcon, smallIcon)
+					, State.Data.Create(largeIcon, smallIcon)
+					, State.Data.Create(largeIcon, smallIcon)
 					, toolTip
 				);
 		}
