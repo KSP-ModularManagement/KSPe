@@ -350,19 +350,6 @@ namespace KSPe.UI.Toolbar
 			#endif
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
-		public static Button Create(object owner, string id
-				, ApplicationLauncher.AppScenes visibleInScenes
-				, string toolTip = null
-			)
-		{
-			Button r = new Button(owner, id
-					, visibleInScenes
-					, toolTip
-				);
-			return r;
-		}
-
 		public override bool Equals(object o)
 		{
 			if (!(o is Button)) return false;
@@ -378,6 +365,19 @@ namespace KSPe.UI.Toolbar
 			hash = 31 * hash + this.owner.GetHashCode();
 			hash = 31 * hash + this.ID.GetHashCode();
 			return (this._hash = hash);
+		}
+
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
+		public static Button Create(object owner, string id
+				, ApplicationLauncher.AppScenes visibleInScenes
+				, string toolTip = null
+			)
+		{
+			Button r = new Button(owner, id
+					, visibleInScenes
+					, toolTip
+				);
+			return r;
 		}
 
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
@@ -409,6 +409,19 @@ namespace KSPe.UI.Toolbar
 					, State.Data.Create(largeIconDisabled, smallIconDisabled)
 					, toolTip
 				);
+		}
+
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
+		public static Button Create(object owner
+				, ApplicationLauncher.AppScenes visibleInScenes
+				, string toolTip = null
+			)
+		{
+			Button r = new Button(owner, owner.GetType().Name
+					, visibleInScenes
+					, toolTip
+				);
+			return r;
 		}
 
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
