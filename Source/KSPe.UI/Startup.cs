@@ -38,7 +38,7 @@ namespace KSPe.UI
 				// There can be only one! #highlanderFeelings
 				if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,4,0))
 				{
-					if (System.IO.File.Exists("./000_ClickThroughBlocker/Plugins/ClickThroughBlocker.dll"))
+					if (KSPe.Util.SystemTools.Assembly.Finder.ExistsByName("ClickThroughBlocker"))
 						a.LoadAndStartup("KSPe.UI.14");
 					else
 					{
