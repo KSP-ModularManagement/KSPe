@@ -512,6 +512,7 @@ namespace KSPe.UI.Toolbar
 			this.control = applicationLauncherButton;
 			this.control.onLeftClick = this.OnLeftClick;
 			this.control.onRightClick = this.OnRightClick;
+			this.state.set(this.enabled = true);
 		}
 
 		internal void clear()
