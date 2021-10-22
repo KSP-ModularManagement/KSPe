@@ -69,6 +69,7 @@ namespace KSPe.IO
 					for (int i = ASSET.Length;--i >= 0;)
 					{
 						string t = Path.Combine(fn, ASSET[i]);
+						Log.debug("File<{0}>.Asset.solveRoot() {1}", typeof(T).FullName, t);
 						if (SIO.Directory.Exists(t))
 							return t;
 					}
@@ -78,6 +79,7 @@ namespace KSPe.IO
 					for (int i = ASSET.Length;--i >= 0;)
 					{
 						string t = Hierarchy<T>.GAMEDATA.SolveFull(false, ASSET[i]);
+						Log.debug("File<{0}>.Asset.solveRoot() {1}", typeof(T).FullName, t);
 						if (SIO.Directory.Exists(t))
 							return t;
 					}
@@ -90,6 +92,7 @@ namespace KSPe.IO
 					// An example is AirPark that shares the toolbar icon to the Agency's flag.
 
 					string t = Hierarchy<T>.GAMEDATA.SolveFull(false, ".");
+					Log.debug("File<{0}>.Asset.solveRoot() {1}", typeof(T).FullName, t);
 					if (SIO.Directory.Exists(t))
 						return t;
 				}
