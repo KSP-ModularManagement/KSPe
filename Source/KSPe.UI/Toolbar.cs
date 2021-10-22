@@ -357,14 +357,14 @@ namespace KSPe.UI.Toolbar
 			return this.owner.Equals(b.owner) && this.ID.Equals(b.ID);
 		}
 
-		private int _hash = -1;
+		private int? hash = null;
 		public override int GetHashCode()
 		{
-			if (this._hash > 0) return this._hash;
+			if (null != this.hash) return (int)this.hash;
 			int hash = 7;
 			hash = 31 * hash + this.owner.GetHashCode();
 			hash = 31 * hash + this.ID.GetHashCode();
-			return (this._hash = hash);
+			return (int)(this.hash = hash);
 		}
 
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
