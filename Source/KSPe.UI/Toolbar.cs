@@ -738,6 +738,9 @@ namespace KSPe.UI.Toolbar
 			);
 			return this;
 		}
+
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
+		public bool Contains(Button button) => this.buttons.Contains(button);
 	}
 
 	public class Controller
