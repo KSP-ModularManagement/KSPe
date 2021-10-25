@@ -528,6 +528,7 @@ namespace KSPe.UI.Toolbar
 			if (!this.enabled)	return;
 			this.sendRaisingEvent(ToolbarEvents.Kind.Active);
 			this.active = true;
+			this.state.set(this.active);	// Now do you see why that mess above? ;)
 		}
 
 		internal void OnFalse()
@@ -535,6 +536,7 @@ namespace KSPe.UI.Toolbar
 			if (!this.enabled)	return;
 			this.sendFallingEvent(ToolbarEvents.Kind.Active);
 			this.active = false;
+			this.state.set(this.active);	// Now do you see why that mess above? ;)
 		}
 
 		internal void OnHoverIn()
@@ -551,6 +553,7 @@ namespace KSPe.UI.Toolbar
 
 			this.sendRaisingEvent(ToolbarEvents.Kind.Hover);
 			this.hovering = true;
+			this.state.set(this.hovering);	// Now do you see why that mess above? ;)
 		}
 
 		internal void OnHoverOut()
@@ -558,24 +561,26 @@ namespace KSPe.UI.Toolbar
 			if (!this.enabled)	return;
 			this.sendFallingEvent(ToolbarEvents.Kind.Hover);
 			this.hovering = false;
+			this.state.set(this.hovering);	// Now do you see why that mess above? ;)
 		}
 
 		internal void OnEnable()
 		{
 			this.sendRaisingEvent(ToolbarEvents.Kind.Enabled);
 			this.enabled = true;
+			this.state.set(this.enabled);	// Now do you see why that mess above? ;)
 		}
 
 		internal void OnDisable()
 		{
-			if (this.active)
-			{
-				this.sendFallingEvent(ToolbarEvents.Kind.Active);
-				return;
-			}
+			if (this.hovering)	this.sendFallingEvent(ToolbarEvents.Kind.Hover);
+			if (this.active)	this.sendFallingEvent(ToolbarEvents.Kind.Active);
 
 			this.sendFallingEvent(ToolbarEvents.Kind.Enabled);
+			this.active = false;
+			this.hovering = false;
 			this.enabled = false;
+			this.state.set(this.enabled);	// Now do you see why that mess above? ;)
 		}
 
 		private void OnLeftClick()
@@ -610,8 +615,6 @@ namespace KSPe.UI.Toolbar
 				);
 			#endif
 			if (this.active) this.OnFalse(); else this.OnTrue();
-			this.active = newState;
-			this.state.set(this.active);	// Now do you see why that mess above? ;)
 		}
 
 		private void updateHoverState(bool newState)
@@ -624,8 +627,6 @@ namespace KSPe.UI.Toolbar
 				);
 			#endif
 			if (this.hovering) this.OnHoverOut(); else this.OnHoverIn();
-			this.hovering = newState;
-			this.state.set(this.hovering);	// Now do you see why that mess above? ;)
 		}
 
 		private void updateEnableState(bool newState)
@@ -638,8 +639,6 @@ namespace KSPe.UI.Toolbar
 				);
 			#endif
 			if (this.enabled) this.OnDisable(); else this.OnEnable();
-			this.enabled = newState;
-			this.state.set(this.enabled);	// Now do you see why that mess above? ;)
 		}
 
 		private void sendRaisingEvent(ToolbarEvents.Kind kind)
