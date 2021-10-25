@@ -507,6 +507,9 @@ namespace KSPe.UI.Toolbar
 			}
 		}
 
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
+		public Vector3 GetAnchor() => this.control.GetAnchor(); // FIXME: What I return when I'm on Blizzy mode?
+
 		internal void set(ApplicationLauncherButton applicationLauncherButton)
 		{
 			this.control = applicationLauncherButton;
