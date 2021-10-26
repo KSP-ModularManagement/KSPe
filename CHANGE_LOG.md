@@ -1,5 +1,13 @@
 # KSP API Extensions/L :: Change Log
 
+* 2021-1026: 2.4.1.1 (Lisias) for KSP >= 1.2
+	+ Safer handling of Button lists (getHashCode thingy)
+	+ Preventing adding a button twice to the same Toolbar
+	+ Exposing AppLauncher's GetAnchor (probably a mistake...)
+	+ Fixes handling of some internal events.
+	+ **Note**
+		- The Toolbar API is still unstable, and are being published as R&D on the KSPU series. 
+		- Read the [Known Issues](./KNOWN_ISSUES.md) before risking your SAS with this stunt! :)
 * 2021-1020: 2.4.1.0 (Lisias) for KSP >= 1.2
 	+ Incepts `KSPe.UI.Toolbar`, a facade to allow the use of any Toolbar support (as long a driver is written for it on KSPe, or it supports KSPe natively).
 		- Extremely unstable. Being published for R&D on the KSPU series.
