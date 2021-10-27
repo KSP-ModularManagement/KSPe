@@ -83,9 +83,9 @@ namespace KSPe.UI.Toolbar
 
 		private readonly Interface owner;
 		private readonly Dictionary<Type, Dictionary<Control, Data>> states = new Dictionary<Type, Dictionary<Control, Data>>();
-		private Control currentState = null;
+		private Control currentStateController = null;
 
-		internal bool isEmpty => null == this.currentState || 0 == this.states.Count;
+		internal bool isEmpty => null == this.currentStateController || 0 == this.states.Count;
 
 		internal State(Interface owner)
 		{
@@ -112,19 +112,21 @@ namespace KSPe.UI.Toolbar
 			return this;
 		}
 
-		public Control CurrentState { get => this.currentState; set => this.Set(value); }
+		[Obsolete("CurrentState is deprecated. Use Controller instead. To be removed on KSPe 2.4.2.0")]
+		public Control CurrentState { get => this.currentStateController; set => this.Set(value); }
+		public Control Controller { get => this.currentStateController; set => this.Set(value); }
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public State Set(Control value)
 		{
-			Log.debug("State.Data Set from {0} to {1}", this.currentState, value);
-			if (this.currentState == value) return this;
+			Log.debug("State.Data Set from {0} to {1}", this.currentStateController, value);
+			if (this.currentStateController == value) return this;
 
 			return this.set(value);
 		}
 
 		internal State set(Control value)
 		{
-			this.currentState = value;
+			this.currentStateController = value;
 			this.update();
 			return this;
 		}
@@ -132,25 +134,27 @@ namespace KSPe.UI.Toolbar
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggest to wait until v2.4.2.0 before using it on your plugins.")]
 		public State Clear()
 		{
-			this.currentState = null;
+			this.currentStateController = null;
 			return this;
 		}
 
 		internal void update()
 		{
-			if (null == this.currentState) return;
-			Type t = this.currentState.GetSurrogateType();
+			if (null == this.currentStateController) return;
+			Type t = this.currentStateController.GetSurrogateType();
 			if (!this.states.ContainsKey(t)) return;
 			Dictionary<Control, Data> dict = this.states[t];
 
-			bool haveTex = dict.ContainsKey(this.currentState);
+			bool haveTex = dict.ContainsKey(this.currentStateController);
 			if (haveTex)
 			{ 
-				Data d = dict[this.currentState];
+				Data d = dict[this.currentStateController];
 				this.owner.Control.SetTexture(d.largeIcon);
 			}
-			Log.debug("State.Control update type {0} using {1} {2} texture", t, this.currentState, haveTex ? "with" : "without");
+			Log.debug("State.Control update type {0} using {1} {2} texture", t, this.currentStateController, haveTex ? "with" : "without");
 		}
+
+		public static implicit operator Control(State s) => s.CurrentState;
 	}
 
 	public class Button : State.Interface
