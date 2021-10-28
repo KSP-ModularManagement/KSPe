@@ -1,6 +1,10 @@
 # KSP API Extensions/L :: Change Log
 
-* 2021-1027: 2.4.1.2 (Lisias) for KSP >= 1.2
+* 2021-1028: 2.4.1.2 (Lisias) for KSP >= 1.2
+	+ Refactoring the thing (yep, one day and I already refactored the stunt)
+		- getting rid of some conceptually nice ideas that ended up being a tragedy on trial of real life.
+			- In special, mixing the Status and the Controller on the same entity rendered some pretty and sleek code - and terribly confusing after some days of being written.
+		- Functional Programming is nice to have some fun, but once the code is written and someone else (what including you after some time) need to maintain the thing, things start to be less fun.
 	+ Safer handling of Button lists (getHashCode thingy)
 	+ Preventing adding a button twice to the same Toolbar
 	+ Exposing AppLauncher's GetAnchor (probably a mistake...)
