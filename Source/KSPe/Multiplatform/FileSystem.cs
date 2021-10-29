@@ -58,7 +58,7 @@ namespace KSPe.Multiplatform
 		{
 			try
 			{
-				string rl = Shell.command(realpath, "-eLz " + path);
+				string rl = Shell.command(realpath, string.Format("-eLz \"{0}\"",path));
 				return rl;
 			}
 			catch (System.Exception e)
@@ -75,7 +75,7 @@ namespace KSPe.Multiplatform
 			do {
 				try
 				{
-					string rl = Shell.command(readlink, "-n " + path);
+					string rl = Shell.command(readlink, string.Format("-n \"{0}\"", path));
 					parcels.Add(rl);
 				}
 				catch (Shell.Exception e)
