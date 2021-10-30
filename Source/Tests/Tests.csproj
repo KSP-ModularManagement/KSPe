@@ -54,6 +54,9 @@
     <Compile Include="Mockups\KSPe\Util\Log.cs" />
     <Compile Include="Mockups\Startup.cs" />
     <Compile Include="Mockups\Log.cs" />
+    <Compile Include="..\KSPe\IO\Directory.cs">
+      <Link>KSPe.Artefacts\IO\Directory.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="KSPe.Artefacts\" />

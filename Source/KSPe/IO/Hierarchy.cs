@@ -132,7 +132,7 @@ namespace KSPe.IO
 			if (createDirs)
 			{
 				string d = System.IO.Path.GetDirectoryName(fullPathname);
-				if (!System.IO.Directory.Exists(d))
+				if (!Directory.Exists(d))
 					System.IO.Directory.CreateDirectory(d);
 			}
 			Log.debug("Hierarchy Calculate {0} {1} {2}", this.name, partialPathname, fullPathname);
