@@ -55,7 +55,7 @@ namespace KSPe.IO
 
 		internal static string[] List(string rawdir, string mask = "*", bool include_subdirs = false)
 		{
-			if (!SIO.Directory.Exists(rawdir))
+			if (!Directory.Exists(rawdir))
 				throw new SIO.FileNotFoundException(rawdir);
 
 			string[] files = SIO.Directory.GetFiles(

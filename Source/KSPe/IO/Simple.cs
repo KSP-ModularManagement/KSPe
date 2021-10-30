@@ -120,40 +120,40 @@ namespace KSPe.IO
 			public static bool Exists(string fn)
 			{
 				string fullPath = Path<T>.Name(fn);
-				return SIO.Directory.Exists(fullPath);
+				return Directory.Exists(fullPath);
 			}
 
 			public static bool Exists(string mask, params object[] @params)
 			{
 				string fullPath = Path<T>.Name(mask, @params);
-				return SIO.Directory.Exists(fullPath);
+				return Directory.Exists(fullPath);
 			}
 
 			public static void Delete(string fn)
 			{
 				string fullPath = Path<T>.Name(fn);
-				if (SIO.Directory.Exists(fullPath))
+				if (Directory.Exists(fullPath))
 					SIO.Directory.Delete(fullPath);
 			}
 
 			public static void Delete(string mask, params object[] @params)
 			{
 				string fullPath = Path<T>.Name(mask, @params);
-				if (SIO.Directory.Exists(fullPath))
+				if (Directory.Exists(fullPath))
 					SIO.Directory.Delete(fullPath);
 			}
 
 			public static void Create(string fn)
 			{
 				string fullPath = Path<T>.Name(fn);
-				if (!SIO.Directory.Exists(fullPath))
+				if (!Directory.Exists(fullPath))
 					SIO.Directory.CreateDirectory(fullPath);
 			}
 
 			public static void Create(string mask, params object[] @params)
 			{
 				string fullPath = Path<T>.Name(mask, @params);
-				if (!SIO.Directory.Exists(fullPath))
+				if (!Directory.Exists(fullPath))
 					SIO.Directory.CreateDirectory(fullPath);
 			}
 		}

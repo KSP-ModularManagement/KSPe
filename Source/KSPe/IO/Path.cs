@@ -47,10 +47,13 @@ namespace KSPe.IO
 
 		public static string EnsureTrailingSeparatorOnDir(string path, bool blindlyAppend = false)
 		{
-			if (path.EndsWith(DirectorySeparatorStr)) return path;
-			return blindlyAppend || SIO.Directory.Exists(path)
-				? path + DirectorySeparatorChar
-				: path
+			if (path.EndsWith(DirectorySeparatorStr) || path.EndsWith(AltDirectorySeparatorStr))
+				return path;
+			if (blindlyAppend) return path + DirectorySeparatorChar;
+
+			return Directory.Exists(path)
+					? path + DirectorySeparatorChar
+					: path
 				;
 		}
 
@@ -139,7 +142,7 @@ namespace KSPe.IO
 					.Replace("Managed", ".")							// Everybody
 				;
 				path = GetDirectoryName(GetAbsolutePath(path));
-				if (!SIO.Directory.Exists(SIO.Path.Combine(path, "GameData"))) path = null;
+				if (!Directory.Exists(SIO.Path.Combine(path, "GameData"))) path = null;
 			}
 
 			if (null == path)
@@ -149,7 +152,7 @@ namespace KSPe.IO
 				while (path.Length > 4) // The smaller relevant path for us is C:\ on Windows. Less than it, we are toasted, no GameData found!
 				{
 					Log.debug("Trying {0}", path);
-					if (SIO.Directory.Exists(SIO.Path.Combine(path, "GameData"))) break;
+					if (Directory.Exists(SIO.Path.Combine(path, "GameData"))) break;
 					path = SIO.Path.GetDirectoryName(path);
 				}
 				path = (path.Length < 4) ? null : GetAbsolutePath(path);

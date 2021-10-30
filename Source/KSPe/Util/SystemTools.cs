@@ -26,6 +26,7 @@ namespace KSPe.Util
     using System.Threading;
     using Reflection = System.Reflection;
 	using Type = System.Type;
+	using SIO = System.IO;
 
 	public static class SystemTools
 	{
@@ -173,11 +174,11 @@ namespace KSPe.Util
 
 				private string TryPath(string path, params string[] subdirs)
 				{
-					string t = System.IO.Path.Combine(this.namespaceOverride, path);
+					string t = SIO.Path.Combine(this.namespaceOverride, path);
 					LOG.debug("Assembly TryPath: {0}", t);
-					string p = KSPe.IO.Hierarchy.GAMEDATA.SolveFull(false, t, subdirs);
-					if (System.IO.Directory.Exists(p))
-						return KSPe.IO.Hierarchy.GAMEDATA.Solve(false, t, subdirs);
+					string p = IO.Hierarchy.GAMEDATA.SolveFull(false, t, subdirs);
+					if (IO.Directory.Exists(p))
+						return IO.Hierarchy.GAMEDATA.Solve(false, t, subdirs);
 
 					return null;
 				}
@@ -224,11 +225,10 @@ namespace KSPe.Util
 
 				private string TryPath(string path, params string[] subdirs)
 				{
-					string p = KSPe.IO.Hierarchy<T>.GAMEDATA.SolveFull(false, path, subdirs);
+					string p = IO.Hierarchy<T>.GAMEDATA.SolveFull(false, path, subdirs);
 					LOG.debug("Assembly TryPath: {0}", p);
-					// Tremendo furo, eu deveria ter implementado o KSPe.IO.Directory<T> jah...
-					if (System.IO.Directory.Exists(p))
-						return KSPe.IO.Hierarchy<T>.GAMEDATA.Solve(false, path, subdirs);
+					if (IO.Directory.Exists(p))
+						return IO.Hierarchy<T>.GAMEDATA.Solve(false, path, subdirs);
 					return null;
 				}
 			}
@@ -246,10 +246,10 @@ namespace KSPe.Util
 			[Obsolete("Assembly.AddSearchPath(string) will be made internal on Release 2.5")]
 			public static void AddSearchPath(string path)
 			{
-				string fullpath = KSPe.IO.Hierarchy.ROOT.SolveFull(false, path);
+				string fullpath = IO.Hierarchy.ROOT.SolveFull(false, path);
 
-				if (!System.IO.Directory.Exists(fullpath))
-					throw new System.IO.FileNotFoundException(string.Format("The path {0} doesn't resolve to a valid DLL search path!", path));
+				if (!IO.Directory.Exists(fullpath))
+					throw new SIO.FileNotFoundException(string.Format("The path {0} doesn't resolve to a valid DLL search path!", path));
 
 				LOG.debug("AddSearchPath {0}", path);
 				lock(CUSTOM_SEARCH_PATHS)
@@ -291,7 +291,7 @@ namespace KSPe.Util
 			public static Reflection.Assembly LoadFromFile(string pathname)
 			{
 				byte[] rawAssembly;
-				using (System.IO.FileStream fs = new System.IO.FileStream(pathname, System.IO.FileMode.Open))
+				using (SIO.FileStream fs = new SIO.FileStream(pathname, SIO.FileMode.Open))
 				{
 					rawAssembly = new byte[(int)fs.Length];
 					fs.Read(rawAssembly, 0, rawAssembly.Length);
@@ -369,7 +369,7 @@ namespace KSPe.Util
 					{
 						if (verbose) LOG.force("Looking for {0} on {1}...", filename, path);
 						string asmFile = IO.Path.Combine(path,filename);
-						if (System.IO.File.Exists(asmFile)) return asmFile;
+						if (SIO.File.Exists(asmFile)) return asmFile;
 					}
 				return null;
 			}
@@ -379,7 +379,7 @@ namespace KSPe.Util
 			private static System.Reflection.Assembly LoadAssemblyByKsp(string asmName, string asmFile)
 			{
 				Uri uri = new Uri(BASEURI, asmFile);
-				System.IO.FileInfo fi = new System.IO.FileInfo(uri.AbsolutePath);
+				SIO.FileInfo fi = new SIO.FileInfo(uri.AbsolutePath);
 				global::ConfigNode cn = new global::ConfigNode();
 				LOG.force("fi {0} -- url {1}", fi.FullName, uri.AbsoluteUri);
 				if (!global::AssemblyLoader.LoadPlugin(fi, uri.AbsoluteUri, cn)) // If the return value of this thing working as expected?

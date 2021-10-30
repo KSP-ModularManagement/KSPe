@@ -52,7 +52,7 @@ namespace KSPe.IO
 			fn = Path.Combine(fn, Path.GetFileName(filename));
 			{
 				string d = Path.GetDirectoryName(fn);
-				if (!SIO.Directory.Exists(d))
+				if (!Directory.Exists(d))
 					SIO.Directory.CreateDirectory(d);
 			}
 			return Path.GetFullPath(fn);
@@ -70,7 +70,7 @@ namespace KSPe.IO
 					{
 						string t = Path.Combine(fn, ASSET[i]);
 						Log.debug("File<{0}>.Asset.solveRoot() {1}", typeof(T).FullName, t);
-						if (SIO.Directory.Exists(t))
+						if (Directory.Exists(t))
 							return t;
 					}
 				}
@@ -80,7 +80,7 @@ namespace KSPe.IO
 					{
 						string t = Hierarchy<T>.GAMEDATA.SolveFull(false, ASSET[i]);
 						Log.debug("File<{0}>.Asset.solveRoot() {1}", typeof(T).FullName, t);
-						if (SIO.Directory.Exists(t))
+						if (Directory.Exists(t))
 							return t;
 					}
 				}
@@ -93,7 +93,7 @@ namespace KSPe.IO
 
 					string t = Hierarchy<T>.GAMEDATA.SolveFull(false, ".");
 					Log.debug("File<{0}>.Asset.solveRoot() {1}", typeof(T).FullName, t);
-					if (SIO.Directory.Exists(t))
+					if (Directory.Exists(t))
 						return t;
 				}
 
