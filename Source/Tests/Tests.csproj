@@ -57,6 +57,7 @@
     <Compile Include="..\KSPe\IO\Directory.cs">
       <Link>KSPe.Artefacts\IO\Directory.cs</Link>
     </Compile>
+    <Compile Include="Mockups\KSPe\IO\Hierarchy.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="KSPe.Artefacts\" />
@@ -68,6 +69,7 @@
     <Folder Include="Mockups\KSP\" />
     <Folder Include="Mockups\KSPe\" />
     <Folder Include="Mockups\KSPe\Util\" />
+    <Folder Include="Mockups\KSPe\IO\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
