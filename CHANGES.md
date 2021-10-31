@@ -1,5 +1,10 @@
 # KSP API Extensions/L :: Changes
 
+* 2021-1030: 2.4.1.3 (Lisias) for KSP >= 1.2
+	+ Handles yet another borderline situation related to symlinks to directories on the sandboxed file system
+	+ Adds a (questionable) work around for add'ons that need to know their "local origin" without accessing a file.
+	+ Rework issues:
+		- [#16](https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/16) The Sandboxed File System is borking on symlinks. Again. 
 * 2021-1029: 2.4.1.2 (Lisias) for KSP >= 1.2
 	+ Refactoring the thing (yep, one day and I already refactored the stunt)
 		- getting rid of some conceptually nice ideas that ended up being a tragedy on trial of real life.
