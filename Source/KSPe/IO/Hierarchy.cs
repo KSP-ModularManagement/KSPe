@@ -126,6 +126,7 @@ namespace KSPe.IO
 			string fn = Path.Combine(this_fullPathNameMangled, fname);
 			fullPathname = Path.GetFullPath(fn); // Checks against a series of ".." trying to escape the intended sandbox
 
+			Log.debug("IsolatedStorageCheck full {0} ; mangled {1}", fullPathname, this_fullPathNameMangled);
 			if (!fullPathname.StartsWith(this_fullPathNameMangled, StringComparison.Ordinal))
 				throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the sandboxed file system! [{0}]", partialPathname));
 

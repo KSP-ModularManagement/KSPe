@@ -125,6 +125,12 @@ namespace KSPe.IO
 				return FullPathName(path);
 			}
 
+			[Obsolete("File<T>.Asset.Root() is not recommended to be used. This can be removed futurelly.")]
+			public static string Root()
+			{
+				return SolveRoot();
+			}
+
 			public static string Solve(string fn)
 			{
 				return FullPathName(fn).Replace(Hierarchy.ROOTPATH, "");
@@ -373,6 +379,12 @@ namespace KSPe.IO
 			internal static string FullPathName(bool createDirs, string fn, params string[] fns)
 			{
 				return Hierarchy<T>.PLUGINDATA.SolveFull(createDirs, fn, fns);
+			}
+
+			[Obsolete("File<T>.Data.Root() is not recommended to be used. This can be removed futurelly.")]
+			public static string Root()
+			{
+				return Hierarchy<T>.PLUGINDATA.relativePathName;
 			}
 
 			public static string Solve(string fn)
@@ -643,6 +655,12 @@ namespace KSPe.IO
 			internal static string FullPathName(bool createDirs, string fn, params string[] fns)
 			{
 				return Hierarchy<T>.LOCALDATA.SolveFull(createDirs, fn, fns);
+			}
+
+			[Obsolete("File<T>.Local.Root() is not recommended to be used. This can be removed futurelly.")]
+			public static string Root()
+			{
+				return Hierarchy<T>.LOCALDATA.relativePathName;
 			}
 
 			public static string Solve(string fn)
@@ -1072,6 +1090,12 @@ namespace KSPe.IO
 			internal static string FullPathName(bool createDirs, string fn, params string[] fns)
 			{
 				return Hierarchy<T>.SAVE.SolveFull(createDirs, fn, fns);
+			}
+
+			[Obsolete("File<T>.Save.Root() is not recommended to be used. This can be removed futurelly.")]
+			public static string Root()
+			{
+				return Hierarchy<T>.SAVE.relativePathName;
 			}
 
 			public static string Solve(string fn)
