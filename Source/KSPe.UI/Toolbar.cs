@@ -47,12 +47,12 @@ namespace KSPe.UI.Toolbar
 			internal override Type GetType() => this.myRealType;
 			public override bool Equals(object o) => o is Status<T> && this.v.Equals(((Status<T>)o).v);
 
-			private int _hash = -1;
+			private int _hash = int.MinValue;
 			public override int GetHashCode()
 			{
-				if (this._hash > 0) return this._hash;
+				if (this._hash > int.MinValue) return this._hash;
 				int hash = 7;
-				hash = 31 * hash + this.myRealType.GetHashCode();
+				hash = 31 * hash + this.GetSurrogateType().GetHashCode();
 				hash = 31 * hash + this.v.GetHashCode();
 				return (this._hash = hash);
 			}
