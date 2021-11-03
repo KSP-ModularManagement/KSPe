@@ -1,5 +1,13 @@
 # KSP API Extensions/L :: Change Log
 
+* 2021-1104: 2.4.1.4 (Lisias) for KSP >= 1.2
+	+ Maintenance release
+		- Safer image loading
+		- Safer Toolbar button initialisation.
+		- Smarter live cycle handling
+	+ Minor improvements
+		- Some new convenience methods for `ConfigNode` 
+		- Better support for KSPe.UI's `GUI` and `GUILayout` facades.
 * 2021-1030: 2.4.1.3 (Lisias) for KSP >= 1.2
 	+ Handles yet another borderline situation related to symlinks to directories on the sandboxed file system
 	+ Adds a (questionable) work around for add'ons that need to know their "local origin" without accessing a file.
