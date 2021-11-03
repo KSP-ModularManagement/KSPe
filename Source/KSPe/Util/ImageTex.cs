@@ -138,8 +138,11 @@ namespace KSPe.Util.Image {
 			}
 			finally
 			{ 
-				// Preventing a memory leak
-				if (!validReturn && null != tex) UnityEngine.Object.Destroy(tex);
+				if (!validReturn)
+				{
+					if(null != tex) UnityEngine.Object.Destroy(tex);	// Preventing a memory leak
+					throw new Error("Invalid content while reading file {0}", fileNamePath);
+				}
 			}
 
 			return tex;
