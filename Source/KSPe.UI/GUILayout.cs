@@ -166,6 +166,52 @@ namespace KSPe.UI
 		public static GUILayoutOption ExpandWidth (bool expand)		{ return UnityEngine.GUILayout.ExpandWidth(expand); }
 		public static GUILayoutOption ExpandHeight (bool expand)	{ return UnityEngine.GUILayout.ExpandHeight(expand); }
 
+		public class AreaScope : UnityEngine.GUILayout.AreaScope
+		{
+			public AreaScope (Rect screenRect)										: base(screenRect) { }
+			public AreaScope (Rect screenRect, string text)							: base(screenRect, text) { }
+			public AreaScope (Rect screenRect, Texture image)						: base(screenRect, image) { }
+			public AreaScope (Rect screenRect, GUIContent content)					: base(screenRect, content) { }
+			public AreaScope (Rect screenRect, string text, GUIStyle style)			: base(screenRect, text, style) { }
+			public AreaScope (Rect screenRect, Texture image, GUIStyle style)		: base(screenRect, image, style) { }
+			public AreaScope (Rect screenRect, GUIContent content, GUIStyle style)	: base(screenRect, content, style) { }
+		}
+
+		public class HorizontalScope:UnityEngine.GUILayout.HorizontalScope
+		{
+			public HorizontalScope(params GUILayoutOption[] options)										: base(options) { }
+			public HorizontalScope(GUIStyle style, params GUILayoutOption[] options)						: base(style, options) { }
+			public HorizontalScope(string text, GUIStyle style, params GUILayoutOption[] options)			: base(text, style, options) { }
+			public HorizontalScope(Texture image, GUIStyle style, params GUILayoutOption[] options)			: base(image, style, options) { }
+			public HorizontalScope(GUIContent content, GUIStyle style, params GUILayoutOption[] options)	: base(content, style, options) { }
+		}
+
+		public class ScrollViewScope:UnityEngine.GUILayout.ScrollViewScope
+		{
+			public new Vector2 scrollPosition => base.scrollPosition;
+			public new bool handleScrollWheel { get => base.handleScrollWheel; set => base.handleScrollWheel = value; }
+			public ScrollViewScope (Vector2 scrollPosition, params GUILayoutOption[] options) : base(scrollPosition, options) { }
+			public ScrollViewScope (Vector2 scrollPosition, bool alwaysShowHorizontal, bool alwaysShowVertical, params GUILayoutOption[] options)
+				: base(scrollPosition, alwaysShowHorizontal, alwaysShowVertical, options) { }
+			public ScrollViewScope (Vector2 scrollPosition, GUIStyle horizontalScrollbar, GUIStyle verticalScrollbar, params GUILayoutOption[] options)
+				: base(scrollPosition, horizontalScrollbar, verticalScrollbar, options) { }
+			public ScrollViewScope (Vector2 scrollPosition, GUIStyle style, params GUILayoutOption[] options)
+				: base(scrollPosition, style, options) { }
+			public ScrollViewScope (Vector2 scrollPosition, bool alwaysShowHorizontal, bool alwaysShowVertical, GUIStyle horizontalScrollbar, GUIStyle verticalScrollbar, params GUILayoutOption[] options)
+				: base(scrollPosition, alwaysShowHorizontal, alwaysShowVertical, horizontalScrollbar, verticalScrollbar, options) { }
+			public ScrollViewScope (Vector2 scrollPosition, bool alwaysShowHorizontal, bool alwaysShowVertical, GUIStyle horizontalScrollbar, GUIStyle verticalScrollbar, GUIStyle background, params GUILayoutOption[] options)
+				: base(scrollPosition, alwaysShowHorizontal, alwaysShowVertical, horizontalScrollbar, verticalScrollbar, background, options) { }
+		}
+
+		public class VerticalScope:UnityEngine.GUILayout.VerticalScope
+		{
+			public VerticalScope (params GUILayoutOption[] options)										: base(options) { }
+			public VerticalScope (GUIStyle style, params GUILayoutOption[] options)						: base(style, options) { }
+			public VerticalScope (string text, GUIStyle style, params GUILayoutOption[] options)		: base(text, style, options) { }
+			public VerticalScope (Texture image, GUIStyle style, params GUILayoutOption[] options)		: base(image, style, options) { }
+			public VerticalScope (GUIContent content, GUIStyle style, params GUILayoutOption[] options)	: base(content, style, options) { }
+		}
+
 		private static readonly Interface INSTANCE;
 		private static Interface GetInstance()
 		{
