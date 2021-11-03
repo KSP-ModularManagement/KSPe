@@ -24,6 +24,15 @@ using UnityEngine;
 
 namespace KSPe.UI
 {
+	// This using is useless #tumdumtss but I put it here to remember how a headache
+	// this one is going to give me on the field!
+	// My derived *Scope classes can't inherit from an hypotethical KSPe.UI.GUI.Scope,
+	// as it will break the inheritance from UnityEngine.GUI.Scope...
+	using Scope = UnityEngine.GUI.Scope;
+
+	// This one too, by similar reasons
+	using WindowFunction = UnityEngine.GUI.WindowFunction;
+
 	public static class GUI
 	{
 		public interface Interface
@@ -227,6 +236,39 @@ namespace KSPe.UI
 		public static void BringWindowToBack(int windowID)	{ UnityEngine.GUI.BringWindowToBack(windowID); }
 		public static void FocusWindow(int windowID)		{ UnityEngine.GUI.FocusWindow(windowID); }
 		public static void UnfocusWindow()					{ UnityEngine.GUI.UnfocusWindow(); }
+
+		public class ClipScope : UnityEngine.GUI.ClipScope
+		{
+			public ClipScope (Rect position) : base(position) { }
+		}
+
+		public class GroupScope : UnityEngine.GUI.GroupScope
+		{
+			public GroupScope (Rect position)									: base(position) { }
+			public GroupScope (Rect position, string text)						: base(position, text) { }
+			public GroupScope (Rect position, Texture image)					: base(position, image) { }
+			public GroupScope (Rect position, GUIContent content)				: base(position, content) { }
+			public GroupScope (Rect position, GUIStyle style)					: base(position, style) { }
+			public GroupScope (Rect position, string text, GUIStyle style)		: base(position, text, style) { }
+			public GroupScope (Rect position, Texture image, GUIStyle style)	: base(position, image, style) { }
+		}
+
+		public class ScrollViewScope : UnityEngine.GUI.ScrollViewScope
+		{
+			public new Vector2 scrollPosition => base.scrollPosition;
+			public bool handleScrollWheel {
+				get => base.handleScrollWheel;
+				set => base.handleScrollWheel = value;
+			}
+			public ScrollViewScope (Rect position, Vector2 scrollPosition, Rect viewRect)
+				: base(position, scrollPosition, viewRect) { }
+			public ScrollViewScope (Rect position, Vector2 scrollPosition, Rect viewRect, bool alwaysShowHorizontal, bool alwaysShowVertical)
+				: base(position, scrollPosition, viewRect, alwaysShowHorizontal, alwaysShowVertical) { }
+			public ScrollViewScope (Rect position, Vector2 scrollPosition, Rect viewRect, GUIStyle horizontalScrollbar, GUIStyle verticalScrollbar)
+				: base(position, scrollPosition, viewRect, horizontalScrollbar, verticalScrollbar) { }
+			public ScrollViewScope (Rect position, Vector2 scrollPosition, Rect viewRect, bool alwaysShowHorizontal, bool alwaysShowVertical, GUIStyle horizontalScrollbar, GUIStyle verticalScrollbar)
+				: base(position, scrollPosition, viewRect, alwaysShowHorizontal, alwaysShowVertical, horizontalScrollbar, verticalScrollbar) { }
+		}
 
 		private static readonly Interface INSTANCE;
 		private static Interface GetInstance()
