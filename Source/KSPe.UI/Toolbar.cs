@@ -605,6 +605,7 @@ namespace KSPe.UI.Toolbar
 			this.stockTolbarController.onHoverOut = this.dummy;
 			this.stockTolbarController.onTrue = this.dummy;
 			this.stockTolbarController.onFalse = this.dummy;
+			ApplicationLauncher.Instance.RemoveModApplication(this.ToolbarController);
 			this.stockTolbarController = null;
 		}
 
@@ -754,7 +755,7 @@ namespace KSPe.UI.Toolbar
 			this.displayName = displayName ?? type.Namespace;
 		}
 
-		/**
+        /**
 		 * I know that you know that everybody knows that people will forget to call the Destroy
 		 * on the Destroy of their MonoBehaviours...
 		 * 
@@ -762,7 +763,7 @@ namespace KSPe.UI.Toolbar
 		 * 
 		 * Calling Destroy twice will not hurt anyway.
 		 */
-		~Toolbar()
+        ~Toolbar()
 		{
 			this.Destroy();
 		}
@@ -770,10 +771,7 @@ namespace KSPe.UI.Toolbar
 		public void Destroy()
 		{
 			foreach(Button b in this.buttons)
-			{
-				ApplicationLauncher.Instance.RemoveModApplication(b.ToolbarController);
 				b.clear();
-			}
 			this.buttons.Clear();
 		}
 
