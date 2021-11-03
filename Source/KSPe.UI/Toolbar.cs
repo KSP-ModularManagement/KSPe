@@ -54,7 +54,7 @@ namespace KSPe.UI.Toolbar
 			{
 				if (this._hash > int.MinValue) return this._hash;
 				int hash = 7;
-				hash = 31 * hash + this.GetSurrogateType().GetHashCode();
+				hash = 31 * hash + this.GetSurrogateType().FullName.GetHashCode();
 				hash = 31 * hash + this.v.GetHashCode();
 				return (this._hash = hash);
 			}
