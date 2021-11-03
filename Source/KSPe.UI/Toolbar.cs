@@ -31,6 +31,8 @@ namespace KSPe.UI.Toolbar
 	{
 		internal interface Interface
 		{
+			object Owner { get; }
+			string ID { get; }
 			ApplicationLauncherButton ToolbarController { get; }
 		}
 
@@ -85,15 +87,17 @@ namespace KSPe.UI.Toolbar
 		{
 			private readonly Interface owner;
 			private readonly Dictionary<Type, Dictionary<Status, Data>> states = new Dictionary<Type, Dictionary<Status, Data>>();
-			private Status currentStatus;
+
+			private class InitialStatus:State.Status<bool>  { protected InitialStatus(bool v):base(v) { }  public static implicit operator InitialStatus(bool v) => new InitialStatus(v);   public static implicit operator bool(InitialStatus s) => s.v; }
+			private Status currentStatus = (InitialStatus)true;
 			internal Status CurrentStatus
 			{
 				get => this.currentStatus;
 				set
 				{
+					Log.debug("Toolbar.State.Control.CurrentStatus({0}) from {1} to {2}", this.owner.ID, this.currentStatus, value);
 					if (null == value || this.isEmpty || (value.Equals(this.currentStatus))) return;
-					this.currentStatus = value;
-					this.update();
+					this.update(value);
 				}
 			}
 
@@ -124,34 +128,49 @@ namespace KSPe.UI.Toolbar
 				return this;
 			}
 
-			internal void update()
+			private void update(Status value)
 			{
 				if (this.isEmpty)
 				{
-					Log.warn("{0}'s State.Update() was handled without currentStatus!", this.owner.GetType());
+					Log.warn("{0}'s State.Update() was handled registered statuses!", this.owner.GetType());
 					return;
 				}
-				Type t = this.currentStatus.GetSurrogateType();
-				if (!this.states.ContainsKey(t)) return;
-				Dictionary<Status, Data> dict = this.states[t];
+				Type t = value.GetSurrogateType();
+				if (!this.states.ContainsKey(t))
+				{
+					Log.detail("{0}'s State.Update({1}) has no registered stated to be used.", this.owner.GetType(), value);
+					return;
+				}
 
-				bool haveTex = dict.ContainsKey(this.currentStatus);
+				Dictionary<Status, Data> dict = this.states[t];
+				bool haveTex = dict.ContainsKey(value);
 				if (haveTex) try
 				{
-					Data d = dict[this.currentStatus];
-					Log.debug("Using status {0} with image {1} to {2}", this.currentStatus, d.largeIcon, this.owner.ToolbarController);
+					Data d = dict[value];
+					Log.debug("Using status {0} with image {1} to {2}", value, d.largeIcon, this.owner.ToolbarController);
 					this.owner.ToolbarController.SetTexture(d.largeIcon);
 				} catch (Exception e)
 				{
 					Log.detail("It's embarrasing, but somehow KSPe.UI.Toolbar.State.Control.Update got a {0} with message {1}. It's probably am error on handling the {2}'s life cycle.", e.GetType().Name, e.Message, this.owner.ToolbarController);
+					return;
 				}
-				Log.debug("State.Control update type {0} using {1} {2} texture", t, this.currentStatus, haveTex ? "with" : "without");
+				this.currentStatus = value;
+				Log.debug("State.Control update type {0} using {1} {2} texture is commited.", t, value, haveTex ? "with" : "without");
 			}
 
 			internal void Destroy()
 			{
-				this.currentStatus = null;
+				this.currentStatus = (InitialStatus)false;
 				this.states.Clear();
+			}
+
+			internal void init()
+			{
+				Log.debug("State.Control.Init for {0}.", this.owner.ID);
+				// Dirty trick to make sure the initial status is commited.
+				Status v = this.currentStatus;
+				this.currentStatus = (InitialStatus)true;
+				this.update(v);
 			}
 		}
 
@@ -186,6 +205,11 @@ namespace KSPe.UI.Toolbar
 		{
 			this.controller.Destroy();
 			return this;
+		}
+
+		internal void init()
+		{
+			this.controller.init();
 		}
 	}
 
@@ -334,7 +358,12 @@ namespace KSPe.UI.Toolbar
 		}
 
 		public readonly object owner;
-		public readonly string ID;
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		public object Owner => this.owner;
+
+		public readonly string id;
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		public string ID => this.id;
 
 		internal readonly ApplicationLauncher.AppScenes visibleInScenes;
 		internal readonly string toolTip;
@@ -366,7 +395,7 @@ namespace KSPe.UI.Toolbar
 		private class EnabledStatus:State.Status<bool> { protected EnabledStatus(bool v):base(v) { } public static implicit operator EnabledStatus(bool v) => new EnabledStatus(v); public static implicit operator bool(EnabledStatus s) => s.v; }
 		private class HoverStatus:State.Status<bool>   { protected HoverStatus(bool v):base(v) { }   public static implicit operator HoverStatus(bool v) => new HoverStatus(v);     public static implicit operator bool(HoverStatus s) => s.v; }
 		private ActiveStatus active = false;
-		private EnabledStatus enabled = true;
+		private EnabledStatus enabled = false;
 		private HoverStatus hovering = false;
 
 		private Button(
@@ -376,13 +405,13 @@ namespace KSPe.UI.Toolbar
 			)
 		{
 			this.owner = owner;
-			this.ID = this.owner.GetType().Namespace + "_" + id + "_Button";
+			this.id = this.owner.GetType().Namespace + "_" + id + "_Button";
 			this.visibleInScenes = visibleInScenes;
 			this.toolTip = toolTip;
 			this.state = new State(this);
 			#if DEBUG
 			Log.debug("Button Created for {0}, ID {1} for Scenes {2} and toolTip {3}"
-					, this.owner, this.ID
+					, this.owner, this.id
 					, visibleInScenes
 					, toolTip??"<none>"
 				);
@@ -393,7 +422,7 @@ namespace KSPe.UI.Toolbar
 		{
 			if (!(o is Button)) return false;
 			Button b = (Button)o;
-			return this.owner.Equals(b.owner) && this.ID.Equals(b.ID);
+			return this.owner.Equals(b.owner) && this.id.Equals(b.id);
 		}
 
 		private int? hash = null;
@@ -402,7 +431,7 @@ namespace KSPe.UI.Toolbar
 			if (null != this.hash) return (int)this.hash;
 			int hash = 7;
 			hash = 31 * hash + this.owner.GetHashCode();
-			hash = 31 * hash + this.ID.GetHashCode();
+			hash = 31 * hash + this.id.GetHashCode();
 			return (int)(this.hash = hash);
 		}
 
@@ -562,6 +591,7 @@ namespace KSPe.UI.Toolbar
 			this.stockTolbarController.onFalse = this.OnFalse;
 
 			this.state.set(this.enabled = this.stockTolbarController.enabled);
+			this.state.init();
 		}
 
 		internal void clear()
@@ -667,7 +697,7 @@ namespace KSPe.UI.Toolbar
 			if (newState == this.active) return;
 			#if DEBUG
 			Log.debug("Button {0}::{1} updateActiveState set to {2}"
-					, this.owner, this.ID
+					, this.owner, this.id
 					, newState
 				);
 			#endif
@@ -679,7 +709,7 @@ namespace KSPe.UI.Toolbar
 			if (newState == this.hovering) return;
 			#if DEBUG
 			Log.debug("Button {0}::{1} updateHoverState set to {2}"
-					, this.owner, this.ID
+					, this.owner, this.id
 					, newState
 				);
 			#endif
@@ -691,7 +721,7 @@ namespace KSPe.UI.Toolbar
 			if (newState == this.enabled) return;
 			#if DEBUG
 			Log.debug("Button {0}::{1} updateEnableState set to {2}"
-					, this.owner, this.ID
+					, this.owner, this.id
 					, newState
 				);
 			#endif
