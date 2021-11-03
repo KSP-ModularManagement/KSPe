@@ -89,10 +89,15 @@ namespace KSPe.UI.Toolbar
 			internal Status CurrentStatus
 			{
 				get => this.currentStatus;
-				set { this.currentStatus = value; this.update(); }
+				set
+				{
+					if (null == value || this.isEmpty || (value.Equals(this.currentStatus))) return;
+					this.currentStatus = value;
+					this.update();
+				}
 			}
 
-			internal bool isEmpty => null == this.currentStatus || 0 == this.states.Count;
+			internal bool isEmpty => 0 == this.states.Count;
 
 			internal Control(Interface owner)
 			{
@@ -121,7 +126,7 @@ namespace KSPe.UI.Toolbar
 
 			internal void update()
 			{
-				if (null == this.currentStatus)
+				if (this.isEmpty)
 				{
 					Log.warn("{0}'s State.Update() was handled without currentStatus!", this.owner.GetType());
 					return;
@@ -131,10 +136,14 @@ namespace KSPe.UI.Toolbar
 				Dictionary<Status, Data> dict = this.states[t];
 
 				bool haveTex = dict.ContainsKey(this.currentStatus);
-				if (haveTex)
+				if (haveTex) try
 				{
 					Data d = dict[this.currentStatus];
+					Log.debug("Using status {0} with image {1} to {2}", this.currentStatus, d.largeIcon, this.owner.ToolbarController);
 					this.owner.ToolbarController.SetTexture(d.largeIcon);
+				} catch (Exception e)
+				{
+					Log.detail("It's embarrasing, but somehow KSPe.UI.Toolbar.State.Control.Update got a {0} with message {1}. It's probably am error on handling the {2}'s life cycle.", e.GetType().Name, e.Message, this.owner.ToolbarController);
 				}
 				Log.debug("State.Control update type {0} using {1} {2} texture", t, this.currentStatus, haveTex ? "with" : "without");
 			}
@@ -169,7 +178,6 @@ namespace KSPe.UI.Toolbar
 		internal State set(Status value)
 		{
 			this.controller.CurrentStatus = value;
-			this.update();
 			return this;
 		}
 
@@ -178,12 +186,6 @@ namespace KSPe.UI.Toolbar
 		{
 			this.controller.Destroy();
 			return this;
-		}
-
-		internal void update()
-		{
-			if (null == this.controller) return;
-			this.controller.update();
 		}
 	}
 
