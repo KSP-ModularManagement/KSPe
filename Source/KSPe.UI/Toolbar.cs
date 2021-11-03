@@ -748,11 +748,14 @@ namespace KSPe.UI.Toolbar
 		private readonly Type type;
 		private readonly string displayName;
 		private readonly List<Button> buttons = new List<Button>();
+		private bool IsStockReady = false;
 
 		public Toolbar(Type type, string displayName)
 		{
 			this.type = type;
 			this.displayName = displayName ?? type.Namespace;
+			GameEvents.onGUIApplicationLauncherReady.Add(this.OnGUIApplicationLauncherReady);
+			GameEvents.onGUIApplicationLauncherDestroyed.Add(this.OnGUIApplicationLauncherDestroyed);
 		}
 
         /**
@@ -770,9 +773,22 @@ namespace KSPe.UI.Toolbar
 
 		public void Destroy()
 		{
+			GameEvents.onGUIApplicationLauncherDestroyed.Remove(this.OnGUIApplicationLauncherDestroyed);
+			GameEvents.onGUIApplicationLauncherReady.Remove(this.OnGUIApplicationLauncherReady);
+
 			foreach(Button b in this.buttons)
 				b.clear();
 			this.buttons.Clear();
+		}
+
+		private void OnGUIApplicationLauncherReady()
+		{
+			this.IsStockReady = true;
+		}
+
+		private void OnGUIApplicationLauncherDestroyed()
+		{
+			this.IsStockReady = false;
 		}
 
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
