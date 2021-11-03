@@ -121,6 +121,11 @@ namespace KSPe.UI.Toolbar
 
 			internal void update()
 			{
+				if (null == this.currentStatus)
+				{
+					Log.warn("{0}'s State.Update() was handled without currentStatus!", this.owner.GetType());
+					return;
+				}
 				Type t = this.currentStatus.GetSurrogateType();
 				if (!this.states.ContainsKey(t)) return;
 				Dictionary<Status, Data> dict = this.states[t];
@@ -547,13 +552,31 @@ namespace KSPe.UI.Toolbar
 			this.stockTolbarController = applicationLauncherButton;
 			this.stockTolbarController.onLeftClick = this.OnLeftClick;
 			this.stockTolbarController.onRightClick = this.OnRightClick;
-			this.state.set(this.enabled = true);
+			this.stockTolbarController.onEnable = this.OnEnable;
+			this.stockTolbarController.onDisable = this.OnDisable;
+			this.stockTolbarController.onHover = this.OnHoverIn;
+			this.stockTolbarController.onHoverOut = this.OnHoverOut;
+			this.stockTolbarController.onTrue = this.OnTrue;
+			this.stockTolbarController.onFalse = this.OnFalse;
+
+			this.state.set(this.enabled = this.stockTolbarController.enabled);
 		}
 
 		internal void clear()
 		{
+			// Preventing the button's callback from being called from now on.
+			this.stockTolbarController.onLeftClick = this.dummy;
+			this.stockTolbarController.onRightClick = this.dummy;
+			this.stockTolbarController.onEnable = this.dummy;
+			this.stockTolbarController.onDisable = this.dummy;
+			this.stockTolbarController.onHover = this.dummy;
+			this.stockTolbarController.onHoverOut = this.dummy;
+			this.stockTolbarController.onTrue = this.dummy;
+			this.stockTolbarController.onFalse = this.dummy;
 			this.stockTolbarController = null;
 		}
+
+		private void dummy() { }
 
 		internal void OnTrue()
 		{
@@ -714,7 +737,11 @@ namespace KSPe.UI.Toolbar
 
 		public void Destroy()
 		{
-			foreach(Button b in this.buttons) ApplicationLauncher.Instance.RemoveModApplication(b.ToolbarController);
+			foreach(Button b in this.buttons)
+			{
+				ApplicationLauncher.Instance.RemoveModApplication(b.ToolbarController);
+				b.clear();
+			}
 			this.buttons.Clear();
 		}
 
@@ -754,24 +781,24 @@ namespace KSPe.UI.Toolbar
 				defaultButton = new Texture2D(16, 16);
 			}
 
-			if (this.buttons.Contains(button))
-			{
-				this.buttons.Remove(button);
-				ApplicationLauncher.Instance.RemoveModApplication(button.ToolbarController);
-				button.clear();
-			}
-			this.buttons.Add(button);
+			// If we are added twice, just ignore. My previous approach of
+			// removing the button from the ApplicationLauncher just to read it was silly...
+			if (this.buttons.Contains(button)) return this;
+
 			button.set(
 				ApplicationLauncher.Instance.AddModApplication(
-					button.OnTrue, button.OnFalse
-					, button.OnHoverIn, button.OnHoverOut
-					, button.OnEnable, button.OnDisable
+					this.Dummy, this.Dummy		// We use Dummy to prevent the callbacks to be used
+					, this.Dummy, this.Dummy	// if the ApplicationLauncher calls them before
+					, this.Dummy, this.Dummy	// our caller is ready to receive them.
 					, button.visibleInScenes
 					, defaultButton
 				)
 			);
+			this.buttons.Add(button);
 			return this;
 		}
+
+		private void Dummy() { }
 
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
 		public bool Contains(Button button) => this.buttons.Contains(button);
