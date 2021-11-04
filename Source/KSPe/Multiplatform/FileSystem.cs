@@ -125,7 +125,13 @@ namespace KSPe.Multiplatform
 		public static bool IsReparsePoint(string path)
 		{
 			SIO.FileInfo pathInfo = new SIO.FileInfo(path);
-			return 0 != (pathInfo.Attributes & SIO.FileAttributes.ReparsePoint);
+
+			// This is prone to failure. A SymLink is only one of the possible
+			// ReparsePoints on Windows (and, so, C#). I need to inspect the
+			// ReparsePoint and check if it's a symbolic link or something else.
+			// https://coderedirect.com/questions/136750/check-if-a-file-is-real-or-a-symbolic-link
+			// Problem: I don't know if this will work on MacOS or Linux.
+			return 0 != (pathInfo.Attributes & (SIO.FileAttributes.ReparsePoint));
 		}
 	}
 }

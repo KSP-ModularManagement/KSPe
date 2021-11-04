@@ -7,6 +7,10 @@
 		- A message like **""[LOG hh:mm:ss.sss] [KSPe.UI] DETAIL: It's embarrasing, but somehow KSPe.UI.Toolbar.State.Control.Update got a NullReferenceException with message Object reference not set to an instance of an object. It's probably am error on handling the \<namespace>_Button's life cycle.""** will appears in the log if you are using DETAIL log level.
 		- Other than this log entry, no collateral effects were detected.
 		- Yeah, I will fix this. Eventually™. 
+* There's a unhandled borderline situation on detecting symlinks
+	+ On MS lingo, a `ReparsePoint` is a pathname that contains special metadata instead of a file, and this metadata can be Junction, a MountPoint, a SymLink, etc. It's pretty different from UNICES where these things are completely different entities.
+	+ When this mishap happens (as putting the KSP on a MountPoint), the code will misunderstand is as a SymLink and will try to resolve it on UNIX using `readlink`, and then an `Win32Exception` error logged (the exception itself is pretty deceptive too!). The good news is that no collateral effects were detected, as the code fails gracefully.
+	+ Handling correctly this mess is currently WiP, as I don't know how to proceed (yet) on MacOS and Linux, but it will be fixed Soon™.
 * The new 2.4 series breaks binary compatibility with the 2.3!!
 	+ I failed on implementing the new features I needed without breaking some legacy API that were meant to be trashed on the next major release, so I trashed them now and called a day. However, this left me between a rock and a hard place: I had to decide to keep binary compatibility or source code compatibility to work around a huge screw up of mine on the Logging mechanism.
 	+ I decided to to the Right Thing™ (what ended up being somewhat painful on the short run) in order to keep things sane and avoid exporting shitty code into the MainStream (on the KSPe.Light series).
