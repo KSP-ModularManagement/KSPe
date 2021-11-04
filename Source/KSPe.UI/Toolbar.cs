@@ -39,6 +39,17 @@ namespace KSPe.UI.Toolbar
 		public abstract class Status {
 			internal new abstract Type GetType();
 			internal Type GetSurrogateType() => base.GetType();
+
+			public override bool Equals(object o) => this.Identical(o);
+			protected abstract bool Identical(object o);
+
+			private int _hash = int.MinValue;
+			public override int GetHashCode()
+			{
+				if (this._hash > int.MinValue) return this._hash;
+				return (this._hash = this.CalculateHashCode());
+			}
+			protected abstract int CalculateHashCode();
 		}
 		[Serializable]
 		public class Status<T> : Status
@@ -47,18 +58,22 @@ namespace KSPe.UI.Toolbar
 			protected readonly Type myRealType = typeof(T);
 			protected Status(T v) { this.v = v; }
 			internal override Type GetType() => this.myRealType;
-			public override bool Equals(object o) => o is Status<T> && this.v.Equals(((Status<T>)o).v);
 
-			private int _hash = int.MinValue;
-			public override int GetHashCode()
+			protected override int CalculateHashCode()
 			{
-				if (this._hash > int.MinValue) return this._hash;
 				int hash = 7;
 				hash = 31 * hash + this.GetSurrogateType().FullName.GetHashCode();
 				hash = 31 * hash + this.v.GetHashCode();
-				return (this._hash = hash);
+				return hash;
 			}
 
+			protected override bool Identical(object o)
+			{
+				if (this.GetHashCode() != o.GetHashCode()) return false;
+				if (!(o is Status<T>)) return false;
+				Status<T> oo = (Status<T>)o;
+				return this.v.Equals(oo.v);
+			}
 			public override string ToString()
 			{
 				return base.ToString() + ":" + this.v.ToString();
@@ -95,8 +110,8 @@ namespace KSPe.UI.Toolbar
 				get => this.currentStatus;
 				set
 				{
-					Log.debug("Toolbar.State.Control.CurrentStatus({0}) from {1} to {2}", this.owner.ID, this.currentStatus, value);
-					if (null == value || this.isEmpty || (value.Equals(this.currentStatus))) return;
+					Log.debug("Toolbar.State.Control.CurrentStatus({0}) from {1} to {2} {3}", this.owner.ID, this.currentStatus, value, value.Equals(this.currentStatus));
+					if (null == value || (value.Equals(this.currentStatus))) return;
 					this.update(value);
 				}
 			}
@@ -130,15 +145,22 @@ namespace KSPe.UI.Toolbar
 
 			private void update(Status value)
 			{
+				if (null == this.owner.ToolbarController)
+				{
+					Log.detail("{0}'s State.Update() owner has no Target Controller set!", this.owner.ID);
+					this.currentStatus = value;
+				}
 				if (this.isEmpty)
 				{
-					Log.warn("{0}'s State.Update() was handled registered statuses!", this.owner.GetType());
+					Log.warn("{0}'s State.Update() was handled without registered statuses!", this.owner.ID);
+					this.currentStatus = value;
 					return;
 				}
 				Type t = value.GetSurrogateType();
 				if (!this.states.ContainsKey(t))
 				{
-					Log.detail("{0}'s State.Update({1}) has no registered stated to be used.", this.owner.GetType(), value);
+					Log.detail("{0}'s State.Update({1}) has no registered stated to be used.", this.owner.ID, value);
+					this.currentStatus = value;
 					return;
 				}
 
@@ -147,14 +169,17 @@ namespace KSPe.UI.Toolbar
 				if (haveTex) try
 				{
 					Data d = dict[value];
-					Log.debug("Using status {0} with image {1} to {2}", value, d.largeIcon, this.owner.ToolbarController);
+					Log.debug("Using status {0} with image {1} to {2}", value, d.largeIcon, this.owner.ID);
 					this.owner.ToolbarController.SetTexture(d.largeIcon);
 				} catch (Exception e)
 				{
-					Log.detail("It's embarrasing, but somehow KSPe.UI.Toolbar.State.Control.Update got a {0} with message {1}. It's probably am error on handling the {2}'s life cycle.", e.GetType().Name, e.Message, this.owner.ToolbarController);
+					Log.detail("It's embarrasing, but somehow KSPe.UI.Toolbar.State.Control.Update got a {0} with message {1}. It's probably am error on handling the {2}'s life cycle.", e.GetType().Name, e.Message, this.owner.ID);
 					return;
 				}
-				this.currentStatus = value;
+				finally
+				{
+					this.currentStatus = value;
+				}
 				Log.debug("State.Control update type {0} using {1} {2} texture is commited.", t, value, haveTex ? "with" : "without");
 			}
 
