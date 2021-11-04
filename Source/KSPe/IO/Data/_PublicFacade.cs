@@ -61,7 +61,19 @@ namespace KSPe.IO
 
 			public static string[] ListFor(string mask = "*.cfg", bool subdirs = false)
 			{
-				string dir = IO.File<T>.Data.FullPathName(false, ".");
+				return ListFor(mask, subdirs, ".");
+			}
+
+			public static string[] ListFor(string mask, params string[] dirs)
+			{
+				return ListFor(mask, false, dirs);
+			}
+
+			public static string[] ListFor(string mask, bool subdirs, params string[] dirs)
+			{
+				string[] slice = new string[dirs.Length-1];
+				Array.Copy(dirs, 1, slice, 0, dirs.Length-1);
+				string dir = IO.File<T>.Data.FullPathName(false, dirs[0], slice);
 				string[] files = ReadableConfigNode.ListFiles(dir, mask, subdirs);
 				return files;
 			}
