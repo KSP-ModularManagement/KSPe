@@ -383,7 +383,7 @@ namespace KSPe.UI.Toolbar
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
 		public State.Status Status { get => this.state.Controller.CurrentStatus; set => this.state.Controller.CurrentStatus = value; }
 
-		private ApplicationLauncherButton stockTolbarController;
+		private ApplicationLauncherButton stockTolbarController = null;
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
 		public ApplicationLauncherButton ToolbarController => this.stockTolbarController;
 
@@ -578,7 +578,36 @@ namespace KSPe.UI.Toolbar
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
 		public Vector3 GetAnchor() => this.stockTolbarController.GetAnchor(); // FIXME: What I return when I'm on Blizzy mode?
 
-		internal void set(ApplicationLauncherButton applicationLauncherButton)
+		internal bool IsReady => null != this.stockTolbarController;
+
+
+		private void Dummy() { }
+		internal void init()
+		{
+			this.state.set(this.enabled = true);
+			this.stockTolbarController = null;	// Better safe than sorry...
+		}
+
+		internal void start()
+		{
+			ApplicationLauncherButton applicationLauncherButton = this.createApplicationLauncher();
+			this.initHandlers(applicationLauncherButton);
+			this.state.init();
+		}
+
+		private ApplicationLauncherButton createApplicationLauncher()
+		{
+			return ApplicationLauncher.Instance.AddModApplication(
+						this.Dummy, this.Dummy      // We use Dummy to prevent the callbacks to be used
+						, this.Dummy, this.Dummy    // if the ApplicationLauncher calls them before
+						, this.Dummy, this.Dummy    // our caller is ready to receive them.
+						, this.visibleInScenes
+						, Controller.defaultButton
+					)
+				;
+		}
+
+		private void initHandlers(ApplicationLauncherButton applicationLauncherButton)
 		{
 			this.stockTolbarController = applicationLauncherButton;
 			this.stockTolbarController.onLeftClick = this.OnLeftClick;
@@ -589,12 +618,9 @@ namespace KSPe.UI.Toolbar
 			this.stockTolbarController.onHoverOut = this.OnHoverOut;
 			this.stockTolbarController.onTrue = this.OnTrue;
 			this.stockTolbarController.onFalse = this.OnFalse;
-
-			this.state.set(this.enabled = this.stockTolbarController.enabled);
-			this.state.init();
 		}
 
-		internal void clear()
+		internal void stop()
 		{
 			// Preventing the button's callback from being called from now on.
 			this.stockTolbarController.onLeftClick = this.dummy;
@@ -740,7 +766,6 @@ namespace KSPe.UI.Toolbar
 			if (this.toolbarEvents.Has(kind) && null != this.toolbarEvents[kind].fallingEdge)
 				this.toolbarEvents[kind].fallingEdge();
 		}
-
 	}
 
 	public class Toolbar
@@ -758,7 +783,7 @@ namespace KSPe.UI.Toolbar
 			GameEvents.onGUIApplicationLauncherDestroyed.Add(this.OnGUIApplicationLauncherDestroyed);
 		}
 
-        /**
+		/**
 		 * I know that you know that everybody knows that people will forget to call the Destroy
 		 * on the Destroy of their MonoBehaviours...
 		 * 
@@ -766,7 +791,7 @@ namespace KSPe.UI.Toolbar
 		 * 
 		 * Calling Destroy twice will not hurt anyway.
 		 */
-        ~Toolbar()
+		~Toolbar()
 		{
 			this.Destroy();
 		}
@@ -777,18 +802,22 @@ namespace KSPe.UI.Toolbar
 			GameEvents.onGUIApplicationLauncherReady.Remove(this.OnGUIApplicationLauncherReady);
 
 			foreach(Button b in this.buttons)
-				b.clear();
+				b.stop();
 			this.buttons.Clear();
 		}
 
 		private void OnGUIApplicationLauncherReady()
 		{
 			this.IsStockReady = true;
+			foreach(Button b in this.buttons) if(!b.IsReady)
+				b.start();
 		}
 
 		private void OnGUIApplicationLauncherDestroyed()
 		{
 			this.IsStockReady = false;
+			foreach(Button b in this.buttons)
+				b.stop();
 		}
 
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
@@ -808,43 +837,19 @@ namespace KSPe.UI.Toolbar
 		{
 		}
 
-		private static Texture2D defaultButton = null;
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
 		public Toolbar Add(Button button)
 		{
-			if (null == defaultButton) try
-			{
-				using (System.IO.Stream si = this.GetType().Assembly.GetManifestResourceStream("KSPe.UI.Resources.launchicon"))
-				{ 
-					Byte[] data = new System.IO.BinaryReader(si).ReadBytes(int.MaxValue);
-					if (!KSPe.Util.Image.File.Load(out defaultButton, data))
-						throw new NullReferenceException("KSPe.UI.Resources.launchicon");	// Screw the best practices, I will not rework ths just because of them.
-				}
-			}
-			catch (Exception e)
-			{
-				Log.error(e, "Could not read the Default Button texture from Resources.");
-				defaultButton = new Texture2D(16, 16);
-			}
-
 			// If we are added twice, just ignore. My previous approach of
 			// removing the button from the ApplicationLauncher just to read it was silly...
 			if (this.buttons.Contains(button)) return this;
 
-			button.set(
-				ApplicationLauncher.Instance.AddModApplication(
-					this.Dummy, this.Dummy		// We use Dummy to prevent the callbacks to be used
-					, this.Dummy, this.Dummy	// if the ApplicationLauncher calls them before
-					, this.Dummy, this.Dummy	// our caller is ready to receive them.
-					, button.visibleInScenes
-					, defaultButton
-				)
-			);
+			button.init();
+			if (this.IsStockReady)
+				button.start();
 			this.buttons.Add(button);
 			return this;
 		}
-
-		private void Dummy() { }
 
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
 		public bool Contains(Button button) => this.buttons.Contains(button);
@@ -856,6 +861,25 @@ namespace KSPe.UI.Toolbar
 		public static Controller Instance = instance ?? (instance = new Controller());
 
 		private readonly Dictionary<Type, Toolbar> toolbars = new Dictionary<Type, Toolbar>();
+
+		internal static Texture2D defaultButton = null;
+		private Controller()
+		{
+			if (null == defaultButton) try
+				{
+					using (System.IO.Stream si = this.GetType().Assembly.GetManifestResourceStream("KSPe.UI.Resources.launchicon"))
+					{
+						Byte[] data = new System.IO.BinaryReader(si).ReadBytes(int.MaxValue);
+						if (!KSPe.Util.Image.File.Load(out defaultButton, data))
+							throw new NullReferenceException("KSPe.UI.Resources.launchicon");   // Screw the best practices, I will not rework ths just because of them.
+					}
+				}
+				catch (Exception e)
+				{
+					Log.error(e, "Could not read the Default Button texture from Resources.");
+					defaultButton = new Texture2D(16, 16);
+				}
+		}
 
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
 		public bool Register<T>(string displayName = null, bool useBlizzy = false, bool useStock = true, bool NoneAllowed = true)
