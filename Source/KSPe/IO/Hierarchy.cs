@@ -98,6 +98,7 @@ namespace KSPe.IO
 			return resultFullPathName;
 		}
 
+		private const string ADDONS_FOLDER = "AddOns";
 		private void Calculate(bool createDirs, string fname, out string partialPathname, out string fullPathname)
 		{
 			if ("SAVE" == this.name && null == HighLogic.CurrentGame)
@@ -108,7 +109,7 @@ namespace KSPe.IO
 					partialPathname = Regex.Replace(
 						partialPathname
 						, "^saves" + Path.DirectorySeparatorChar
-						, "saves" + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE_SANDBOX)", "") + Path.DirectorySeparatorChar 
+						, "saves" + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE_SANDBOX)", "") + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
 					)
 				;
 
@@ -120,7 +121,7 @@ namespace KSPe.IO
 				this_fullPathNameMangled = Regex.Replace( 
 							this.fullPathName
 							, Path.DirectorySeparatorChar + "saves" + Path.DirectorySeparatorChar
-							, Path.DirectorySeparatorChar + "saves" + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE)", "") + Path.DirectorySeparatorChar 
+							, Path.DirectorySeparatorChar + "saves" + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE)", "") + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
 						);
 
 			string fn = Path.Combine(this_fullPathNameMangled, fname);
