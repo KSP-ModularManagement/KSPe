@@ -82,19 +82,43 @@ namespace KSPe.UI.Toolbar
 
 		public class Data
 		{
-			internal readonly Texture2D largeIcon;
-			internal readonly Texture2D smallIcon;
-
-			private Data(Texture2D largeIcon, Texture2D smallIcon)
+			public delegate Texture2D SelectTexture2dHandler();
+			public delegate Animation SelectAnimationHandler();
+			public class Item
 			{
-				this.largeIcon = largeIcon;
-				this.smallIcon = smallIcon;
+				public readonly Texture2D texture;
+				public readonly SelectTexture2dHandler texHandler;
+
+				private Item(Texture2D texture, SelectTexture2dHandler texHandler)
+				{
+					this.texture = texture;
+					this.texHandler = texHandler;
+				}
+
+				public static Item Empty() => new Item(null, null);
+				public static Item Create(Texture2D texture) => new Item(texture, null);
+				public static Item Create(SelectTexture2dHandler handler) => new Item(null, handler);
+			}
+
+			internal readonly Item largeItem;
+			internal readonly Item smallItem;
+
+			private Data(Item largeItem, Item smallItem)
+			{
+				this.largeItem = largeItem;
+				this.smallItem = smallItem;
 			}
 
 			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
 			public static Data Create(Texture2D largeIcon, Texture2D smallIcon)
 			{
-				return new Data(largeIcon, smallIcon);
+				return new Data(Item.Create(largeIcon), Item.Create(smallIcon));
+			}
+
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+			public static Data Create(Item largeItem, Item smallItem)
+			{
+				return new Data(largeItem, smallItem);
 			}
 		}
 
@@ -129,7 +153,7 @@ namespace KSPe.UI.Toolbar
 					throw new InvalidCastException(string.Format("Type {0} is not valid for the operation. It needs to be derived from  KSPe.UI.State.Status<?>!", typeof(T).FullName));
 
 				foreach (Status i in data.Keys) if (i.GetSurrogateType() != typeof(T))
-						throw new InvalidCastException(string.Format("Status {0} is not valid for this dataset. It needs to be type {1}", i, typeof(T).FullName));
+					throw new InvalidCastException(string.Format("Status {0} is not valid for this dataset. It needs to be type {1}", i, typeof(T).FullName));
 
 				if (this.states.ContainsKey(typeof(T))) this.states.Remove(typeof(T));
 				this.states.Add(typeof(T), data);
@@ -165,12 +189,16 @@ namespace KSPe.UI.Toolbar
 				}
 
 				Dictionary<Status, Data> dict = this.states[t];
-				bool haveTex = dict.ContainsKey(value);
-				if (haveTex) try
+				bool haveItem = dict.ContainsKey(value);
+				if (haveItem) try
 				{
 					Data d = dict[value];
-					Log.debug("Using status {0} with image {1} to {2}", value, d.largeIcon, this.owner.ID);
-					this.owner.ToolbarController.SetTexture(d.largeIcon);
+					Log.debug("Using status {0} with Item {1} to {2}", value, d, this.owner.ID);
+
+					if (null != d.largeItem.texture)		this.owner.ToolbarController.SetTexture(d.largeItem.texture);
+					else if(null != d.largeItem.texHandler)	this.owner.ToolbarController.SetTexture(d.largeItem.texHandler());
+					else Log.detail("Status {0} has no useable item for {1}!", value, this.owner.ID);
+
 				} catch (Exception e)
 				{
 					Log.detail("It's embarrasing, but somehow KSPe.UI.Toolbar.State.Control.Update got a {0} with message {1}. It's probably am error on handling the {2}'s life cycle.", e.GetType().Name, e.Message, this.owner.ID);
@@ -180,7 +208,7 @@ namespace KSPe.UI.Toolbar
 				{
 					this.currentStatus = value;
 				}
-				Log.debug("State.Control update type {0} using {1} {2} texture is commited.", t, value, haveTex ? "with" : "without");
+				Log.debug("State.Control update type {0} using {1} {2} Item is commited.", t, value, haveItem ? "with" : "without");
 			}
 
 			internal void Destroy()
@@ -536,6 +564,22 @@ namespace KSPe.UI.Toolbar
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
 		public static Button Create(object owner
 				, ApplicationLauncher.AppScenes visibleInScenes
+				, State.Data.Item largeActive, State.Data.Item largeInactive
+				, State.Data.Item smallActive, State.Data.Item smallInactive
+				, string toolTip = null
+			)
+		{
+			return Create(owner, owner.GetType().Name
+					, visibleInScenes
+					, State.Data.Create(largeActive, smallActive)
+					, State.Data.Create(largeInactive, smallInactive)
+					, toolTip
+				);
+		}
+
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		public static Button Create(object owner
+				, ApplicationLauncher.AppScenes visibleInScenes
 				, UnityEngine.Texture2D largeIcon
 				, UnityEngine.Texture2D smallIcon
 				, string toolTip = null
@@ -545,6 +589,22 @@ namespace KSPe.UI.Toolbar
 					, visibleInScenes
 					, State.Data.Create(largeIcon, smallIcon)
 					, State.Data.Create(largeIcon, smallIcon)
+					, toolTip
+				);
+		}
+
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		public static Button Create(object owner
+				, ApplicationLauncher.AppScenes visibleInScenes
+				, State.Data.Item large
+				, State.Data.Item small
+				, string toolTip = null
+			)
+		{
+			return Create(owner, owner.GetType().Name
+					, visibleInScenes
+					, State.Data.Create(large, small)
+					, State.Data.Create(large, small)
 					, toolTip
 				);
 		}
