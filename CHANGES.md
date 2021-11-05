@@ -1,5 +1,11 @@
 # KSP API Extensions/L :: Changes
 
+* 2021-1105: 2.4.1.5 (Lisias) for KSP >= 1.2
+	+ Minor improvements:
+		- Expands the Toobar.Button's icon support to client side callbacks.
+			- Convenient way to support "pseudo-states" when the only place where state changes is on a GUI activated by the button.
+			- Can be redundant when runtime States are handled by the `State.Status<T>` classes, but can lead to a code easier to understand when the Button's State can be changed by UI **and** by code state.
+		- Avoiding cluttering the savegame folder by moving data into an `AddOns` subdirectory on it on add'ons that save info on the savegame and not on the "global" `<ROOT>/PluginData/*`.
 * 2021-1104: 2.4.1.4 (Lisias) for KSP >= 1.2
 	+ Maintenance release
 		- Safer image loading
