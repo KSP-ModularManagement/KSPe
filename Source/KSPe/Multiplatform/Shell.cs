@@ -65,7 +65,7 @@ namespace KSPe.Multiplatform
 				cmd.StartInfo.FileName = program;
 				cmd.StartInfo.RedirectStandardInput = true;
 				cmd.StartInfo.RedirectStandardOutput = true;
-				cmd.StartInfo.RedirectStandardError = false;
+				cmd.StartInfo.RedirectStandardError = true;
 				cmd.StartInfo.CreateNoWindow = false;
 				cmd.StartInfo.UseShellExecute = false;
 				cmd.Start();
@@ -75,7 +75,7 @@ namespace KSPe.Multiplatform
 				cmd.StandardInput.Close();
 
 				cmd.WaitForExit();
-				if (0 != cmd.ExitCode) Exception.raise(program, cmd.ExitCode);
+				if (0 != cmd.ExitCode) Exception.raise(program, cmd.ExitCode, cmd.StandardError.ReadToEnd());
 				return cmd.StandardOutput.ReadToEnd();
 			}
 		}
