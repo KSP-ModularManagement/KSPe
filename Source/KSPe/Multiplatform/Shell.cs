@@ -60,39 +60,43 @@ namespace KSPe.Multiplatform
 
 		public static string run(string program, string[] text)
 		{
-			Process cmd = new Process();
-			cmd.StartInfo.FileName = program;
-			cmd.StartInfo.RedirectStandardInput = true;
-			cmd.StartInfo.RedirectStandardOutput = true;
-			cmd.StartInfo.RedirectStandardError = false;
-			cmd.StartInfo.CreateNoWindow = false;
-			cmd.StartInfo.UseShellExecute = false;
-			cmd.Start();
+			using (Process cmd = new Process())
+			{ 
+				cmd.StartInfo.FileName = program;
+				cmd.StartInfo.RedirectStandardInput = true;
+				cmd.StartInfo.RedirectStandardOutput = true;
+				cmd.StartInfo.RedirectStandardError = false;
+				cmd.StartInfo.CreateNoWindow = false;
+				cmd.StartInfo.UseShellExecute = false;
+				cmd.Start();
 
-			foreach (string t in text) cmd.StandardInput.WriteLine(t);
-			cmd.StandardInput.Flush();
-			cmd.StandardInput.Close();
+				foreach (string t in text) cmd.StandardInput.WriteLine(t);
+				cmd.StandardInput.Flush();
+				cmd.StandardInput.Close();
 
-			cmd.WaitForExit();
-			if (0 != cmd.ExitCode) Exception.raise(program, cmd.ExitCode);
-			return cmd.StandardOutput.ReadToEnd();
+				cmd.WaitForExit();
+				if (0 != cmd.ExitCode) Exception.raise(program, cmd.ExitCode);
+				return cmd.StandardOutput.ReadToEnd();
+			}
 		}
 
 		public static string command(string command, string commandline)
 		{
-			Process cmd = new Process();
-			cmd.StartInfo.FileName = command;
-			cmd.StartInfo.Arguments = commandline;
-			cmd.StartInfo.RedirectStandardInput = false;
-			cmd.StartInfo.RedirectStandardOutput = true;
-			cmd.StartInfo.RedirectStandardError = true;
-			cmd.StartInfo.CreateNoWindow = false;
-			cmd.StartInfo.UseShellExecute = false;
-			cmd.Start();
+			using (Process cmd = new Process())
+			{ 
+				cmd.StartInfo.FileName = command;
+				cmd.StartInfo.Arguments = commandline;
+				cmd.StartInfo.RedirectStandardInput = false;
+				cmd.StartInfo.RedirectStandardOutput = true;
+				cmd.StartInfo.RedirectStandardError = true;
+				cmd.StartInfo.CreateNoWindow = false;
+				cmd.StartInfo.UseShellExecute = false;
+				cmd.Start();
 
-			cmd.WaitForExit();
-			if (0 != cmd.ExitCode) Exception.raise(command, cmd.ExitCode, cmd.StandardError.ReadToEnd());
-			return cmd.StandardOutput.ReadToEnd();
+				cmd.WaitForExit();
+				if (0 != cmd.ExitCode) Exception.raise(command, cmd.ExitCode, cmd.StandardError.ReadToEnd());
+				return cmd.StandardOutput.ReadToEnd();
+			}
 		}
 	}
 }
