@@ -1,5 +1,8 @@
 # KSP API Extensions/L :: Changes
 
+* 2021-1120: 2.4.1.6 (Lisias) for KSP >= 1.2
+	+ Maintenance release
+		- Fixes a memory leak and a mishap on forking processes handling.
 * 2021-1105: 2.4.1.5 (Lisias) for KSP >= 1.2
 	+ Minor improvements:
 		- Expands the Toobar.Button's icon support to client side callbacks.
