@@ -676,6 +676,9 @@ namespace KSPe.UI.Toolbar
 		internal void start()
 		{
 			ApplicationLauncherButton applicationLauncherButton = this.createApplicationLauncher();
+			Log.assert(() => null != applicationLauncherButton, "ApplicationLauncherButton must be NOT NULL");
+			if (null == applicationLauncherButton) return;
+
 			this.initHandlers(applicationLauncherButton);
 			this.state.init();
 		}
@@ -893,6 +896,9 @@ namespace KSPe.UI.Toolbar
 
 		private void OnGUIApplicationLauncherReady()
 		{
+			Log.trace("OnGUIApplicationLauncherReady :: {0}", this.displayName);
+			if (this.IsStockReady) return;
+
 			this.IsStockReady = true;
 			foreach(Button b in this.buttons) if(!b.IsReady)
 				b.start();
@@ -900,6 +906,9 @@ namespace KSPe.UI.Toolbar
 
 		private void OnGUIApplicationLauncherDestroyed()
 		{
+			Log.trace("OnGUIApplicationLauncherDestroyed :: {0}", this.displayName);
+			if (!this.IsStockReady) return;
+
 			this.IsStockReady = false;
 			foreach(Button b in this.buttons)
 				b.stop();

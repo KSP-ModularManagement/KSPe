@@ -68,5 +68,11 @@ namespace KSPe.UI
 		{
 			log.trace(msg, @params);
 		}
+
+		[ConditionalAttribute("DEBUG")]
+		internal static void assert(Func<bool> f, string msg, params object[] @params)
+		{
+			log.assert(f, msg, @params);
+		}
 	}
 }
