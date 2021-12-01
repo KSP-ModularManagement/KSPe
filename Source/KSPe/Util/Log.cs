@@ -30,6 +30,7 @@ namespace KSPe.Util.Log
 	{
 		OFF = 0,
 		ERROR = 1,
+		ASSERT = 1,
 		WARNING = 2,
 		INFO = 3,
 		DETAIL = 4,
@@ -274,6 +275,12 @@ namespace KSPe.Util.Log
 
 			this.ParseStack(out string caller, out int line);
 			this.logException(this.BuildMessage(Level.ERROR, "{0} raised Exception {1} at {2}:{3}", offended.GetType().FullName, e.ToString(), caller, line), e);
+		}
+
+		public void assert(Func<bool> f, string message, object[] @params)
+		{
+			if (!(this.IsLoggable(Level.ERROR) && f())) return;
+			this.select()(this.BuildMessage(Level.ASSERT, message, @params));
 		}
 
 		public void fatal(int skip, string message, params object[] @params)
