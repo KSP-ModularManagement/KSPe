@@ -1,5 +1,10 @@
 # KSP API Extensions/L :: Change Log
 
+* 2021-1204: 2.4.1.7 (Lisias) for KSP >= 1.2
+	+ (Correctly this time) handling on AppLauncher for buttons that are not "alive" on the current scene.
+		- The AppLauncher returns `null` when the Button is not applicable on the current scene, but the Controller doesn't care about the current scene
+		- The easiest way out of the mess is to just ignore the Button on scenes where the AppLauncher returns `null`, and then try to reregister it on the scene change.
+	+ Adds `assert` to the Log subsystem.
 * 2021-1120: 2.4.1.6 (Lisias) for KSP >= 1.2
 	+ Maintenance release
 		- Fixes a memory leak and a mishap on forking processes handling.
