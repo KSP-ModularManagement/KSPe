@@ -31,71 +31,71 @@ namespace KSPe.Util
 		// Unity: https://unity3d.com/get-unity/download/archive
 		// Unity: https://answers.unity.com/questions/474716/unity-3d-releases-history-with-release-dates.html
 		public static readonly Version[] PUBLISHED_VERSIONS = {
-			new Version(0,0,0,  "2010-0401", 3,		-1, "<unk>", 35),	// Synthetic version, to prevent errors on FindByVersion. Using the date in which Monkey Squad hired HarvesteR
-			new Version(0,7,3,  "2011-0624", 3,		-1, "<unk>", 35),	// Prior to 3.4.0, no info on https://unity3d.com/get-unity/download/archive
-			new Version(0,8,0,  "2011-0711", 3,		-1, "<unk>", 35),	// 3.4.0?
-			new Version(0,8,1,  "2011-0713", 3,		-1, "<unk>", 35),	// 3.4.0?
-			new Version(0,8,2,  "2011-0713", 3,		-1, "<unk>", 35),	// 3.4.0?
-			new Version(0,8,3,  "2011-0714", 3,		-1, "<unk>", 35),	// 3.4.0?
-			new Version(0,8,4,  "2011-0714", 3,		-1, "<unk>", 35),	// 3.4.0?
-			new Version(0,8,5,  "2011-0718", 3,		-1, "<unk>", 35),	// 3.4.0?
-			new Version(0,9,0,  "2011-0812", 3,		-1, "<unk>", 35),	// 3.4.0?
-			new Version(0,10,0, "2011-0910", 3,		-1, "<unk>", 35),	// 3.4.0?
-			new Version(0,10,1, "2011-0913", 3,		-1, "<unk>", 35),	// 3.4.0?
-			new Version(0,11,0, "2011-1012", 3,		-1, "<unk>", 35),	// 3.4.1?
-			new Version(0,11,1, "2011-1013", 3,		-1, "<unk>", 35),	// 3.4.1?
-			new Version(0,12,0, "2011-1111", 3,		-1, "<unk>", 35),	// 3.4.1?
-			new Version(0,13,0, "2011-1216", 3,		-1, "<unk>", 35),	// 3.4.1? Can be 3.4.2 by the date.
-			new Version(0,13,1, "2012-0111", 3,		4, "3.4.2", 35),	// Estimated using the release date and readme.txt contents
-			new Version(0,13,2, "2012-0126", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,13,3, "2012-0303", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,14,0, "2012-0303", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,14,1, "2012-0327", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,14,2, "2012-0327", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,14,3, "2012-0403", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,14,4, "2012-0403", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,15,0, "2012-0517", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,15,1, "2012-0531", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,15,2, "2012-0601", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,16,0, "2012-0720", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,17,0, "2012-0919", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,17,1, "2012-1030", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,18,0, "2012-1201", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,18,1, "2012-1203", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,18,2, "2012-1220", 3,		4, "3.4.2", 35),	// Estimated
-			new Version(0,18,3, "2013-0212", 4,		0, "4.0.1f2", 35),
-			new Version(0,18,4, "2013-0214", 4,		-1, "<unk>", 35),	// 4.0.1?
-			new Version(0,19,0, "2013-0316", 4,		-1, "<unk>", 35),	// 4.1.0?
-			new Version(0,19,1, "2013-0318", 4,		-1, "<unk>", 35),	// 4.1.0?
-			new Version(0,20,0, "2013-0521", 4,		-1, "<unk>", 35),	// 4.1.3?
-			new Version(0,20,1, "2013-0529", 4,		-1, "<unk>", 35),	// 4.1.3?
-			new Version(0,20,2, "2013-0530", 4,		-1, "<unk>", 35),	// 4.1.3?
-			new Version(0,21,0, "2013-0724", 4,		-1, "<unk>", 35),	// 4.2.0?
-			new Version(0,21,1, "2013-0724", 4,		-1, "<unk>", 35),	// 4.2.0?
-			new Version(0,22,0, "2013-1016", 4,		3, "4.3.3f1", 35),
-			new Version(0,23,0, "2013-1217", 4,		3, "4.3.3f1", 35),
-			new Version(0,23,5, "2014-0401", 4,		3, "4.3.3f1", 35),
-			new Version(0,24,0, "2014-0717", 4,		-1, "<unk>", 35),	// 4.5.2?
-			new Version(0,24,1, "2014-0724", 4,		-1, "<unk>", 35),	// 4.5.2?
-			new Version(0,24,2, "2014-0725", 4,		5, "4.5.2f1", 35),
-			new Version(0,25,0, "2014-1007", 4,		5, "4.5.3p2", 35),
-			new Version(0,90,0, "2014-1215", 4,		5, "4.5.5f1", 35),
-			new Version(1,0,0,  "2015-0427", 4,		-1, "<unk>", 35),	// 4.6.4?
-			new Version(1,0,1,  "2015-0501", 4,		-1, "<unk>", 35),	// 4.6.4?
-			new Version(1,0,2,  "2015-0501", 4,		-1, "<unk>", 35),	// 4.6.4?
-			new Version(1,0,3,  "2015-0622", 4,		-1, "<unk>", 35),	// 4.6.4?
-			new Version(1,0,4,  "2015-0623", 4,		-1, "<unk>", 35),	// 4.6.4?
-			new Version(1,0,5,  "2015-1109", 4,		6, "4.6.4f1", 35),
-			new Version(1,1,0,  "2016-0419", 5,		2, "5.2.4f1", 35),
-			new Version(1,1,1,  "2016-0429", 5,		2, "5.2.4f1", 35),
-			new Version(1,1,2,  "2016-0430", 5,		2, "5.2.4f1", 35),	// Last release before HarvesteR (Felipe Falanghe) quits
-			new Version(1,1,3,  "2016-0621", 5,		2, "5.2.4f1", 35),	// First release after HarvesteR (Felipe Falanghe) had leaved
-			new Version(1,2,0,  "2016-1011", 5,		4, "5.4.0p4", 35),
-			new Version(1,2,1,  "2016-1101", 5,		4, "5.4.0p4", 35),
-			new Version(1,2,2,  "2016-1206", 5, 	4, "5.4.0p4", 35),
-			new Version(1,3,0,  "2017-0525", 5, 	4, "5.4.0p4", 35),	// First release after TTI acquired KSP.
-			new Version(1,3,1,  "2017-1005", 5, 	4, "5.4.0p4", 35),	// Last release before KSP2 kick off?
-			new Version(1,4,0,  "2018-0306", 2017,	1, "2017.1.3p1", 35),
+			new Version(0,0,0,  "2010-0401", 3,		-1, "<unk>", 30),	// Synthetic version, to prevent errors on FindByVersion. Using the date in which Monkey Squad hired HarvesteR
+			new Version(0,7,3,  "2011-0624", 3,		-1, "<unk>", 30),	// Prior to 3.4.0, no info on https://unity3d.com/get-unity/download/archive
+			new Version(0,8,0,  "2011-0711", 3,		-1, "<unk>", 30),	// 3.4.0?
+			new Version(0,8,1,  "2011-0713", 3,		-1, "<unk>", 30),	// 3.4.0?
+			new Version(0,8,2,  "2011-0713", 3,		-1, "<unk>", 30),	// 3.4.0?
+			new Version(0,8,3,  "2011-0714", 3,		-1, "<unk>", 30),	// 3.4.0?
+			new Version(0,8,4,  "2011-0714", 3,		-1, "<unk>", 30),	// 3.4.0?
+			new Version(0,8,5,  "2011-0718", 3,		-1, "<unk>", 30),	// 3.4.0?
+			new Version(0,9,0,  "2011-0812", 3,		-1, "<unk>", 30),	// 3.4.0?
+			new Version(0,10,0, "2011-0910", 3,		-1, "<unk>", 30),	// 3.4.0?
+			new Version(0,10,1, "2011-0913", 3,		-1, "<unk>", 30),	// 3.4.0?
+			new Version(0,11,0, "2011-1012", 3,		-1, "<unk>", 30),	// 3.4.1?
+			new Version(0,11,1, "2011-1013", 3,		-1, "<unk>", 30),	// 3.4.1?
+			new Version(0,12,0, "2011-1111", 3,		-1, "<unk>", 30),	// 3.4.1?
+			new Version(0,13,0, "2011-1216", 3,		-1, "<unk>", 30),	// 3.4.1? Can be 3.4.2 by the date.
+			new Version(0,13,1, "2012-0111", 3,		4, "3.4.2", 30),	// Estimated using the release date and readme.txt contents
+			new Version(0,13,2, "2012-0126", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,13,3, "2012-0303", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,14,0, "2012-0303", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,14,1, "2012-0327", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,14,2, "2012-0327", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,14,3, "2012-0403", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,14,4, "2012-0403", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,15,0, "2012-0517", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,15,1, "2012-0531", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,15,2, "2012-0601", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,16,0, "2012-0720", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,17,0, "2012-0919", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,17,1, "2012-1030", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,18,0, "2012-1201", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,18,1, "2012-1203", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,18,2, "2012-1220", 3,		4, "3.4.2", 30),	// Estimated
+			new Version(0,18,3, "2013-0212", 4,		0, "4.0.1f2", 30),
+			new Version(0,18,4, "2013-0214", 4,		-1, "<unk>", 30),	// 4.0.1?
+			new Version(0,19,0, "2013-0316", 4,		-1, "<unk>", 30),	// 4.1.0?
+			new Version(0,19,1, "2013-0318", 4,		-1, "<unk>", 30),	// 4.1.0?
+			new Version(0,20,0, "2013-0521", 4,		-1, "<unk>", 30),	// 4.1.3?
+			new Version(0,20,1, "2013-0529", 4,		-1, "<unk>", 30),	// 4.1.3?
+			new Version(0,20,2, "2013-0530", 4,		-1, "<unk>", 30),	// 4.1.3?
+			new Version(0,21,0, "2013-0724", 4,		-1, "<unk>", 30),	// 4.2.0?
+			new Version(0,21,1, "2013-0724", 4,		-1, "<unk>", 30),	// 4.2.0?
+			new Version(0,22,0, "2013-1016", 4,		3, "4.3.3f1", 30),	// C# used on compiling is 3.0.40818
+			new Version(0,23,0, "2013-1217", 4,		3, "4.3.3f1", 30),
+			new Version(0,23,5, "2014-0401", 4,		3, "4.3.3f1", 30),
+			new Version(0,24,0, "2014-0717", 4,		-1, "<unk>", 30),	// 4.5.2?
+			new Version(0,24,1, "2014-0724", 4,		-1, "<unk>", 30),	// 4.5.2?
+			new Version(0,24,2, "2014-0725", 4,		5, "4.5.2f1", 30),	// C# used on compiling is 3.0.40818
+			new Version(0,25,0, "2014-1007", 4,		5, "4.5.3p2", 30),	// C# used on compiling is 3.0.40818
+			new Version(0,90,0, "2014-1215", 4,		5, "4.5.5f1", 30),	// C# used on compiling is 3.0.40818
+			new Version(1,0,0,  "2015-0427", 4,		-1, "<unk>", 30),	// 4.6.4?
+			new Version(1,0,1,  "2015-0501", 4,		-1, "<unk>", 30),	// 4.6.4?
+			new Version(1,0,2,  "2015-0501", 4,		-1, "<unk>", 30),	// 4.6.4?
+			new Version(1,0,3,  "2015-0622", 4,		-1, "<unk>", 30),	// 4.6.4?
+			new Version(1,0,4,  "2015-0623", 4,		-1, "<unk>", 30),	// 4.6.4?
+			new Version(1,0,5,  "2015-1109", 4,		6, "4.6.4f1", 30),	// C# used on compiling is 3.0.40818
+			new Version(1,1,0,  "2016-0419", 5,		2, "5.2.4f1", 30),	// C# used on compiling is 3.0.40818
+			new Version(1,1,1,  "2016-0429", 5,		2, "5.2.4f1", 30),
+			new Version(1,1,2,  "2016-0430", 5,		2, "5.2.4f1", 30),	// Last release before HarvesteR (Felipe Falanghe) quits
+			new Version(1,1,3,  "2016-0621", 5,		2, "5.2.4f1", 30),	// First release after HarvesteR (Felipe Falanghe) had leaved
+			new Version(1,2,0,  "2016-1011", 5,		4, "5.4.0p4", 30),	// C# used on compiling is 3.0.40818
+			new Version(1,2,1,  "2016-1101", 5,		4, "5.4.0p4", 30),
+			new Version(1,2,2,  "2016-1206", 5, 	4, "5.4.0p4", 30),
+			new Version(1,3,0,  "2017-0525", 5, 	4, "5.4.0p4", 30),	// First release after TTI acquired KSP.
+			new Version(1,3,1,  "2017-1005", 5, 	4, "5.4.0p4", 30),	// Last release before KSP2 kick off?
+			new Version(1,4,0,  "2018-0306", 2017,	1, "2017.1.3p1", 35),	// C# used on compiling is 3.5.21022
 			new Version(1,4,1,  "2018-0313", 2017,	1, "2017.1.3p1", 35),
 			new Version(1,4,2,  "2018-0328", 2017,	1, "2017.1.3p1", 35),
 			new Version(1,4,3,  "2018-0427", 2017,	1, "2017.1.3p1", 35),
@@ -109,18 +109,18 @@ namespace KSPe.Util
 			new Version(1,7,1,  "2019-0430", 2017,	1, "2017.1.3p1", 35),
 			new Version(1,7,2,  "2019-0612", 2017,	1, "2017.1.3p1", 35),
 			new Version(1,7,3,  "2019-0711", 2017,	1, "2017.1.3p1", 35),
-			new Version(1,8,0,  "2019-1016", 2019,	2, "2019.2.2f1", 47),
-			new Version(1,8,1,  "2019-1029", 2019,	2, "2019.2.2f1", 47),
-			new Version(1,9,0,  "2020-0212", 2019,	2, "2019.2.2f1", 47),
-			new Version(1,9,1,  "2020-0227", 2019,	2, "2019.2.2f1", 47),
-			new Version(1,10,0, "2020-0701", 2019,	2, "2019.2.2f1", 47),
-			new Version(1,10,1, "2020-0728", 2019,	2, "2019.2.2f1", 47),
-			new Version(1,11,0, "2020-1218", 2019,	2, "2019.2.2f1", 47),
-			new Version(1,11,1, "2021-0128", 2019,	2, "2019.2.2f1", 47),
-			new Version(1,11,2, "2021-0316", 2019,	2, "2019.2.2f1", 47),
-			new Version(1,12,0, "2021-0624", 2019,	4, "2019.4.18f1", 47),
-			new Version(1,12,1, "2021-0629", 2019,	4, "2019.4.18f1", 47),
-			new Version(1,12,2, "2021-0803", 2019,	4, "2019.4.18f1", 47),
+			new Version(1,8,0,  "2019-1016", 2019,	2, "2019.2.2f1", 46),	// C# used on compiling is 4.6.57
+			new Version(1,8,1,  "2019-1029", 2019,	2, "2019.2.2f1", 46),
+			new Version(1,9,0,  "2020-0212", 2019,	2, "2019.2.2f1", 46),
+			new Version(1,9,1,  "2020-0227", 2019,	2, "2019.2.2f1", 46),
+			new Version(1,10,0, "2020-0701", 2019,	2, "2019.2.2f1", 46),
+			new Version(1,10,1, "2020-0728", 2019,	2, "2019.2.2f1", 46),
+			new Version(1,11,0, "2020-1218", 2019,	2, "2019.2.2f1", 46),
+			new Version(1,11,1, "2021-0128", 2019,	2, "2019.2.2f1", 46),
+			new Version(1,11,2, "2021-0316", 2019,	2, "2019.2.2f1", 46),
+			new Version(1,12,0, "2021-0624", 2019,	4, "2019.4.18f1", 46),
+			new Version(1,12,1, "2021-0629", 2019,	4, "2019.4.18f1", 46),
+			new Version(1,12,2, "2021-0803", 2019,	4, "2019.4.18f1", 46),
 		};
 
 		public class Version
