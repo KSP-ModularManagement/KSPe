@@ -1,5 +1,7 @@
 # KSP API Extensions/L :: Changes
 
+* 2022-0216: 2.4.1.8 (Lisias) for KSP >= 1.2
+	+ Trying a fix for [Issue #27](https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/27). 
 * 2021-1204: 2.4.1.7 (Lisias) for KSP >= 1.2
 	+ (Correctly this time) handling on AppLauncher for buttons that are not "alive" on the current scene.
 		- The AppLauncher returns `null` when the Button is not applicable on the current scene, but the Controller doesn't care about the current scene
