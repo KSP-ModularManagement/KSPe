@@ -40,7 +40,7 @@ namespace KSPe.Multiplatform.LowLevelTools {
 		private const uint FILE_READ_EA = 0x0008;
 		private const uint FILE_FLAG_BACKUP_SEMANTICS = 0x2000000;
 
-		[DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+		[DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
 		static extern uint GetFinalPathNameByHandle(IntPtr hFile, [MarshalAs(UnmanagedType.LPTStr)] StringBuilder lpszFilePath, uint cchFilePath, uint dwFlags);
 
 		[DllImport("kernel32.dll", SetLastError = true)]
