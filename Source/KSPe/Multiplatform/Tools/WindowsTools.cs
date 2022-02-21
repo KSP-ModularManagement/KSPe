@@ -74,7 +74,7 @@ namespace KSPe.Multiplatform.LowLevelTools {
 			if (h == INVALID_HANDLE_VALUE)
 			{
 				int error = Marshal.GetLastWin32Error();
-				throw new Win32Exception(string.Format("Got a invalid handle while CreateFile for {0} with errno {1}!!", path, error));
+				throw new Win32Exception(string.Format("Got a invalid handle while CreateFile for {0} with errno {1} - '{2}' !!", path, error, new Win32Exception(error).Message));
 			}
 
 			try
@@ -84,7 +84,7 @@ namespace KSPe.Multiplatform.LowLevelTools {
 				if (res == 0)
 				{ 
 					int error = Marshal.GetLastWin32Error();
-					throw new Win32Exception(string.Format("Got a 0 == res while GetFinalPathNameByHandle for {0} with errno {1}!!", path, error));
+					throw new Win32Exception(string.Format("Got a 0 == res while GetFinalPathNameByHandle for {0} with errno {1} - '{2}' !!", path, error, new Win32Exception(error).Message));
 				}
 
 				return sb.ToString();
