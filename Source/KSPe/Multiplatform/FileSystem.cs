@@ -100,8 +100,16 @@ namespace KSPe.Multiplatform
 
 		private static string Reparse_windows(string path)
 		{
-			string r = LowLevelTools.Windows32.GetFinalPathName(path).Replace("\\\\?\\","").Replace("\\\\.\\",""); // Gets rid of the UNC stunt. Why, Microsoft? Why?
-			return SIO.Path.GetFullPath(r);
+			try
+			{ 
+				string r = LowLevelTools.Windows32.GetFinalPathName(path).Replace("\\\\?\\","").Replace("\\\\.\\",""); // Gets rid of the UNC stunt. Why, Microsoft? Why?
+				return SIO.Path.GetFullPath(r);
+			}
+			catch (System.ComponentModel.Win32Exception e)
+			{
+				Log.debug("Failed to reparse {0} due {1}.", path, e.Message);
+				return SIO.Path.GetFullPath(path);
+			}
 		}
 
 		public static string ReparsePath(string path)
