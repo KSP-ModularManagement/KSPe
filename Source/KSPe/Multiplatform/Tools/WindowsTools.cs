@@ -41,7 +41,11 @@ namespace KSPe.Multiplatform.LowLevelTools {
 		private const uint FILE_FLAG_BACKUP_SEMANTICS = 0x2000000;
 
 		[DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-		static extern uint GetFinalPathNameByHandle(IntPtr hFile, [MarshalAs(UnmanagedType.LPTStr)] StringBuilder lpszFilePath, uint cchFilePath, uint dwFlags);
+		static extern uint GetFinalPathNameByHandle(
+			IntPtr hFile,
+			[MarshalAs(UnmanagedType.LPTStr)] StringBuilder lpszFilePath,
+			uint cchFilePath,
+			uint dwFlags);
 
 		[DllImport("kernel32.dll", SetLastError = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
@@ -72,8 +76,8 @@ namespace KSPe.Multiplatform.LowLevelTools {
 
 			try
 			{
-				StringBuilder sb = new StringBuilder(1024);
-				uint res = GetFinalPathNameByHandle(h, sb, 1024, 0);
+				StringBuilder sb = new StringBuilder(8191);
+				uint res = GetFinalPathNameByHandle(h, sb, 8192, 0); // 8192 == size of the StringBuilder buffer plus the null terminating zero.
 				if (res == 0)
 					throw new Win32Exception();
 
