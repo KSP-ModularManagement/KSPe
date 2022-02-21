@@ -112,9 +112,9 @@ namespace KSPe.Multiplatform
 			//} catch (System.Exception) { } // If anything goes wrong, just try readlink.
 
 			Log.debug("Reparsing {0}", path);
-			if (null != readlink) return Reparse_readlink(path);
+			if (null != readlink) return IO.Path.EnsureTrailingSeparatorOnDir(Reparse_readlink(path));
 
-			if (LowLevelTools.Windows.IsThisWindows) return Reparse_windows(path);
+			if (LowLevelTools.Windows.IsThisWindows) return IO.Path.EnsureTrailingSeparatorOnDir(Reparse_windows(path));
 
 			// If everything else fails, oh well...
 			return IO.Path.EnsureTrailingSeparatorOnDir(path);	// This is a public interface. It needs to follow the expected behaviour
