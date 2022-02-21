@@ -24,6 +24,7 @@ using SIO = System.IO;
 
 namespace KSPe.Multiplatform
 {
+	[System.Obsolete("This class will be made internal on Version 2.5. **DO NOT** use it outside KSPe.dll.")]
 	public static class FileSystem
 	{
 		private static string realpath = null;
@@ -120,13 +121,12 @@ namespace KSPe.Multiplatform
 			//} catch (System.Exception) { } // If anything goes wrong, just try readlink.
 
 			Log.debug("Reparsing {0}", path);
-			if (null != readlink) return IO.Path.EnsureTrailingSeparatorOnDir(Reparse_readlink(path));
+			if (null != readlink) return Reparse_readlink(path);
 
-			if (LowLevelTools.Windows.IsThisWindows) return IO.Path.EnsureTrailingSeparatorOnDir(Reparse_windows(path));
+			if (LowLevelTools.Windows.IsThisWindows) return Reparse_windows(path);
 
 			// If everything else fails, oh well...
-			return IO.Path.EnsureTrailingSeparatorOnDir(path);	// This is a public interface. It needs to follow the expected behaviour
-																// of ensuring a trailing Directory Separator on directories.
+			return path;
 		}
 
 		public static bool IsReparsePoint(string path)
