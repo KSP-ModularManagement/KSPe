@@ -1,5 +1,7 @@
 # KSP API Extensions/L :: Change Log
 
+* 2022-0220: 2.4.1.9 (Lisias) for KSP >= 1.2
+	+ Trying another fix for [Issue #27](https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/27). 
 * 2022-0216: 2.4.1.8 (Lisias) for KSP >= 1.2
 	+ Trying a fix for [Issue #27](https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/27). 
 * 2021-1204: 2.4.1.7 (Lisias) for KSP >= 1.2
