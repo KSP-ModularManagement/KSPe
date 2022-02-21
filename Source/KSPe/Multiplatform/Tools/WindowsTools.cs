@@ -79,7 +79,7 @@ namespace KSPe.Multiplatform.LowLevelTools {
 
 			try
 			{
-				StringBuilder sb = new StringBuilder(8191);
+				StringBuilder sb = new StringBuilder(1023);
 				uint res = GetFinalPathNameByHandle(h, sb, (uint)(1+sb.Capacity), 0); // size of the StringBuilder buffer plus the null terminating zero.
 				if (res == 0)
 				{ 
