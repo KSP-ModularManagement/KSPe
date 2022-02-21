@@ -80,7 +80,7 @@ namespace KSPe.Multiplatform.LowLevelTools {
 			try
 			{
 				StringBuilder sb = new StringBuilder(8191);
-				uint res = GetFinalPathNameByHandle(h, sb, 8192, 0); // 8192 == size of the StringBuilder buffer plus the null terminating zero.
+				uint res = GetFinalPathNameByHandle(h, sb, (uint)(1+sb.Capacity), 0); // size of the StringBuilder buffer plus the null terminating zero.
 				if (res == 0)
 				{ 
 					int error = Marshal.GetLastWin32Error();
