@@ -72,14 +72,20 @@ namespace KSPe.Multiplatform.LowLevelTools {
 				IntPtr.Zero);
 
 			if (h == INVALID_HANDLE_VALUE)
-				throw new Win32Exception();
+			{
+				int error = Marshal.GetLastWin32Error();
+				throw new Win32Exception(string.Format("Got a invalid handle while CreateFile for {0} with errno {1}!!", path, error));
+			}
 
 			try
 			{
 				StringBuilder sb = new StringBuilder(8191);
 				uint res = GetFinalPathNameByHandle(h, sb, 8192, 0); // 8192 == size of the StringBuilder buffer plus the null terminating zero.
 				if (res == 0)
-					throw new Win32Exception();
+				{ 
+					int error = Marshal.GetLastWin32Error();
+					throw new Win32Exception(string.Format("Got a 0 == res while GetFinalPathNameByHandle for {0} with errno {1}!!", path, error));
+				}
 
 				return sb.ToString();
 			}
