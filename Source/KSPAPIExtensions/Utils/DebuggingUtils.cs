@@ -83,6 +83,7 @@ namespace KSPAPIExtensions.DebuggingUtils
             if ((((int)options & 0x10) == 0))
                 goto skipComponents;
 
+            Renderer renderer = t.gameObject.GetComponent<Renderer>();
             foreach (Component c in t.gameObject.GetComponents<Component>())
             {
 
@@ -90,7 +91,7 @@ namespace KSPAPIExtensions.DebuggingUtils
                     sb.AppendLine(space + "+ component:" + c.GetType());
 
                 if (c is Renderer && (options & DumpTreeOption.Materials) == DumpTreeOption.Materials)
-                    foreach (Material m in t.renderer.sharedMaterials)
+                    foreach (Material m in renderer.sharedMaterials)
                         sb.AppendLine(space + "++ mat:" + m.name);
 
                 if (c is MeshFilter && (options & DumpTreeOption.Mesh) == DumpTreeOption.Mesh)

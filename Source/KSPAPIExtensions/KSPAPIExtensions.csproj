@@ -68,6 +68,7 @@
     <Compile Include="..\KSPe\Properties\Version.cs">
       <Link>Properties\Version.cs</Link>
     </Compile>
+    <Compile Include="Utils\DebuggingUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
