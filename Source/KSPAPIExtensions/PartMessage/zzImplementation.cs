@@ -990,6 +990,7 @@ namespace KSPAPIExtensions.PartMessage
     }
 
     #region Initialization and Other Mod Interfacing
+	[KSPAddon(KSPAddon.Startup.Instantly, true)]
     internal class PartMessageServiceInitializer : MonoBehaviour
     {
         private static bool loadedInScene;
@@ -1043,6 +1044,7 @@ namespace KSPAPIExtensions.PartMessage
         internal bool known;
     }
 
+	[KSPAddon(KSPAddon.Startup.Instantly, true)]
     internal class ListenerFerramAerospaceResearch : MonoBehaviour
     {
         // ReSharper disable once InconsistentNaming

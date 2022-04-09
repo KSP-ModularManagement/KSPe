@@ -68,6 +68,10 @@
     <Compile Include="..\KSPe\Properties\Version.cs">
       <Link>Properties\Version.cs</Link>
     </Compile>
+    <Compile Include="PartMessage\PartMessageService.cs" />
+    <Compile Include="PartMessage\Attributes.cs" />
+    <Compile Include="PartMessage\CommonMessages.cs" />
+    <Compile Include="PartMessage\zzImplementation.cs" />
     <Compile Include="Utils\DebuggingUtils.cs" />
   </ItemGroup>
   <ItemGroup>
