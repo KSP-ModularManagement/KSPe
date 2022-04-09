@@ -1,5 +1,8 @@
 # KSP API Extensions/L :: Change Log
 
+* 2022-0410: 2.4.1.13 (Lisias) for KSP >= 1.2 PRE-RELEASE
+	+ Resurrects `KSPAPIExtensions.PartMessage` on the legacy KSPApiExtensions.
+	+ Resurrects `KSPAPIExtensions.ListenerFerramAerospaceResearch` on the legacy KSPApiExtensions.
 * 2022-0221: 2.4.1.12 (Lisias) for KSP >= 1.2
 	+ Finally² fixing [Issue #27](https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/27). 
 * 2022-0221: 2.4.1.11 (Lisias) for KSP >= 1.2
