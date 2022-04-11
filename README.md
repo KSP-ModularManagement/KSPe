@@ -16,7 +16,7 @@ New extensions and utilities for Kerbal Space Program by Lisias.
 	+ [Change Log](./CHANGE_LOG.md)
 	+ [Known Issues](./KNOWN_ISSUES.md)
 	+ [TODO](./TODO.md) list
-* Official Distribution Sites:
+* Official Distribution Channels:
 	+ [Homepage](http://ksp.lisias.net/add-ons/KSPAPIExtensions) on L Aerospace
 	+ [Source and Binaries](https://github.com/net-lisias-ksp/KSPAPIExtensions) on GitHub.
 
