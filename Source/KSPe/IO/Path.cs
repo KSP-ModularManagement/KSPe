@@ -166,7 +166,7 @@ namespace KSPe.IO
 
 			// SYMLINKS are returned as is, ie, relative symlinks returns "../../something".
 			// Realpaths returns itselves, is, /somedir/somefile
-			foreach(string dir in SIO.Directory.GetDirectories(currentDir, "*", SIO.SearchOption.AllDirectories))
+			foreach(string dir in Multiplatform.FileSystem.GetDirectories(currentDir, "*", SIO.SearchOption.AllDirectories))
 				process_dir(currentDir, dir);
 
 			root = EnsureTrailingSeparatorOnDir(path);  // Note: it should end with a DSC because I do fast string manipulations everywhere, and they depends on it.

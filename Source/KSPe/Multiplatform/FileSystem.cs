@@ -140,5 +140,10 @@ namespace KSPe.Multiplatform
 			// Problem: I don't know if this will work on MacOS or Linux.
 			return 0 != (pathInfo.Attributes & (SIO.FileAttributes.ReparsePoint));
 		}
+
+		public static string[] GetDirectories(string path, string searchPattern, SIO.SearchOption searchOption)
+        {
+			return SIO.Directory.GetDirectories(path, searchPattern, searchOption);
+        }
 	}
 }
