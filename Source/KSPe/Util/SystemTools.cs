@@ -22,10 +22,13 @@ namespace KSPe.Util
 {
 	using System;
 	using System.Collections.Generic;
-    using System.Threading;
-    using Reflection = System.Reflection;
+	using System.Linq;
+	using System.Threading;
 	using Type = System.Type;
+
 	using SIO = System.IO;
+	using SReflection = System.Reflection;
+
 
 	public static class SystemTools
 	{
@@ -37,7 +40,7 @@ namespace KSPe.Util
 				lock (TYPES)
 				{
 					if (TYPES.ContainsKey(qn)) return true;
-					foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+					foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 						foreach (System.Type type in assembly.GetTypes()) if (qn.Equals(string.Format("{0}.{1}", type.Namespace, type.Name)))
 							{
 								TYPES.Add(qn, type);
@@ -52,7 +55,7 @@ namespace KSPe.Util
 				lock(TYPES)
 				{ 
 					if (TYPES.ContainsKey(qn)) return TYPES[qn];
-					foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+					foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 						foreach (System.Type type in assembly.GetTypes()) if (qn.Equals(string.Format("{0}.{1}", type.Namespace, type.Name)))
 						{
 							TYPES.Add(qn, type);
@@ -67,7 +70,7 @@ namespace KSPe.Util
 				lock(TYPES)
 				{ 
 					if (TYPES.ContainsKey(qn)) return TYPES[qn];
-					foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+					foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 						foreach (System.Type type in assembly.GetTypes())
 							foreach (System.Type ifc in type.GetInterfaces()) if (qn.Equals(string.Format("{0}.{1}", ifc.Namespace, ifc.Name)))
 							{
@@ -83,7 +86,7 @@ namespace KSPe.Util
 				lock(TYPES)
 				{ 
 					if (TYPES.ContainsKey(ifc.FullName)) return TYPES[ifc.ToString()];
-					foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+					foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 						foreach (System.Type type in assembly.GetTypes())
 							foreach (System.Type i in type.GetInterfaces()) if (i.Equals(ifc))
 							{
@@ -99,7 +102,7 @@ namespace KSPe.Util
 		{
 			public static IEnumerable<Type> ByInterfaceName(string qn)
 			{
-				foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+				foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 					foreach (System.Type type in assembly.GetTypes())
 						foreach (System.Type ifc in type.GetInterfaces()) if (qn.Equals(string.Format("{0}.{1}", ifc.Namespace, ifc.Name)))
 							yield return type;
@@ -107,7 +110,7 @@ namespace KSPe.Util
 
 			public static IEnumerable<Type> ByInterface(Type ifc)
 			{
-				foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+				foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 					foreach (System.Type type in assembly.GetTypes())
 						foreach (System.Type i in type.GetInterfaces()) if (i.Equals(ifc))
 							yield return type;
@@ -118,13 +121,13 @@ namespace KSPe.Util
 		{ 
 			public static class Finder
 			{
-				private static readonly Dictionary<string, System.Reflection.Assembly> ASSEMBLIES = new Dictionary<string, System.Reflection.Assembly>();
+				private static readonly Dictionary<string, SReflection.Assembly> ASSEMBLIES = new Dictionary<string, SReflection.Assembly>();
 				public static bool ExistsByName(string qn)
 				{
 					lock (ASSEMBLIES)
 					{
 						if (ASSEMBLIES.ContainsKey(qn)) return true;
-						foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies()) if (assembly.GetName().Name.Equals(qn))
+						foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies()) if (assembly.GetName().Name.Equals(qn))
 						{
 							ASSEMBLIES.Add(qn, assembly);
 							return true;
@@ -132,12 +135,12 @@ namespace KSPe.Util
 					}
 					return false;
 				}
-				public static System.Reflection.Assembly FindByName(string qn)
+				public static SReflection.Assembly FindByName(string qn)
 				{
 					lock(ASSEMBLIES)
 					{ 
 						if (ASSEMBLIES.ContainsKey(qn)) return ASSEMBLIES[qn];
-						foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies()) if (assembly.GetName().Name.Equals(qn))
+						foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies()) if (assembly.GetName().Name.Equals(qn))
 						{
 							ASSEMBLIES.Add(qn, assembly);
 							return assembly;
@@ -195,7 +198,7 @@ namespace KSPe.Util
 					Monitor.Exit(MUTEX);
 				}
 
-				public Reflection.Assembly LoadAndStartup(string assemblyName)
+				public SReflection.Assembly LoadAndStartup(string assemblyName)
 				{
 					return Assembly.LoadAndStartup(assemblyName);
 				}
@@ -268,9 +271,9 @@ namespace KSPe.Util
 			}
 
 			[Obsolete("Assembly.LoadAndStartup(string) will be made internal on Release 2.5")]
-			public static Reflection.Assembly LoadAndStartup(string assemblyName)
+			public static SReflection.Assembly LoadAndStartup(string assemblyName)
 			{
-				Reflection.Assembly assembly = System.AppDomain.CurrentDomain.Load(assemblyName);
+				SReflection.Assembly assembly = System.AppDomain.CurrentDomain.Load(assemblyName);
 				foreach (Type type in assembly.GetTypes())
 				{
 					if ("Startup" != type.Name) continue;
@@ -287,7 +290,7 @@ namespace KSPe.Util
 			// DAMN. I will keep them however, these ones can be useful somehow.
 
 			[Obsolete("This call doesn't loads the Assembly on the same context as the caller. Unexpected cast problems (among others) can happen. Consider using KSPe.Util.SystemTools.Assembly.AddSearchPath(path) to register a folder and using System.AppDomain.CurrentDomain.Load(name) instead.")]
-			public static Reflection.Assembly LoadFromFile(string pathname)
+			public static SReflection.Assembly LoadFromFile(string pathname)
 			{
 				byte[] rawAssembly;
 				using (SIO.FileStream fs = new SIO.FileStream(pathname, SIO.FileMode.Open))
@@ -300,9 +303,9 @@ namespace KSPe.Util
 			}
 
 			[Obsolete("This call doesn't loads the Assembly on the same context as the caller. Unexpected cast problems (among others) can happen. Consider using KSPe.Util.SystemTools.Assembly.AddSearchPath(path) to register a folder and using KSPe.Util.SystemTools.Assembly.LoadAndStartup(name) instead.")]
-			public static Reflection.Assembly LoadFromFileAndStartup(string pathname)
+			public static SReflection.Assembly LoadFromFileAndStartup(string pathname)
 			{
-				Reflection.Assembly assembly = LoadFromFile(pathname);
+				SReflection.Assembly assembly = LoadFromFile(pathname);
 				foreach (Type type in assembly.GetTypes())
 				{
 					if ("Startup" != type.Name) continue;
@@ -317,20 +320,20 @@ namespace KSPe.Util
 
 			private static object InvokeOrNull(Type t, object o, string methodName)
 			{
-				Reflection.MethodInfo method = t.GetMethod(methodName, Reflection.BindingFlags.Public |Reflection.BindingFlags.Instance);
-				method = method ?? t.GetMethod(methodName, Reflection.BindingFlags.NonPublic | Reflection.BindingFlags.Instance);
+				SReflection.MethodInfo method = t.GetMethod(methodName, SReflection.BindingFlags.Public | SReflection.BindingFlags.Instance);
+				method = method ?? t.GetMethod(methodName, SReflection.BindingFlags.NonPublic | SReflection.BindingFlags.Instance);
 				if (null != method)	return method.Invoke(o, null);
 				return null;
 			}
 
 			private static readonly System.Collections.Generic.List<string> CUSTOM_SEARCH_PATHS = new System.Collections.Generic.List<string>();
-			private static System.Reflection.Assembly AssemblyResolve(object sender, System.ResolveEventArgs args)
+			private static SReflection.Assembly AssemblyResolve(object sender, System.ResolveEventArgs args)
 			{
 				// Ignore missing resources
 				if (args.Name.Contains(".resources")) return null;
 
 				// check for assemblies already loaded
-				foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+				foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 					if (assembly.GetName().Name == args.Name)
 					{	// We had found it. Let's check for a conflict.
 						string asmFile = FindThisGuy(args.Name, false);
@@ -345,7 +348,7 @@ namespace KSPe.Util
 					{
 						LOG.force("Found it on {0}.", asmFile);
 						//return LoadAssemblyByKsp(args.Name, asmFile);
-						return System.Reflection.Assembly.LoadFrom(asmFile);
+						return SReflection.Assembly.LoadFrom(asmFile);
 					}
 					catch (System.Exception ex)
 					{
@@ -375,7 +378,7 @@ namespace KSPe.Util
 
 			/* I CAN'T MAKE THIS THING TO WORK! */
 			private static readonly System.Uri BASEURI = new System.Uri(IO.Path.Origin());
-			private static System.Reflection.Assembly LoadAssemblyByKsp(string asmName, string asmFile)
+			private static SReflection.Assembly LoadAssemblyByKsp(string asmName, string asmFile)
 			{
 				Uri uri = new Uri(BASEURI, asmFile);
 				SIO.FileInfo fi = new SIO.FileInfo(uri.AbsolutePath);
@@ -395,6 +398,121 @@ namespace KSPe.Util
 			}
 
 			private static readonly KSPe.Util.Log.Logger LOG = KSPe.Util.Log.Logger.CreateForType<KSPe.Startup>("KSPe", "Binder", 0);
+		}
+
+		public static class Reflection
+		{
+			internal static SType GetClass(SType klass, string innerClassName) => klass?.GetNestedType(innerClassName);
+			internal static Y GetField<Y>(SType klass, string fieldName, Y defaultValue)
+			{
+				Y r = defaultValue;
+				if (null != klass) try
+				{
+					r = (Y)klass.GetField(fieldName).GetValue(null);
+				}
+				catch (ArgumentNullException) { }
+				catch (NotSupportedException) { }
+				catch (FieldAccessException) { }
+				catch (ArgumentException) { }
+				catch (NullReferenceException) { }
+				return r;
+			}
+
+			internal static class Version
+			{
+				public static string NameSpace(SType klass) => GetField<string>(klass, "Namespace", klass.Namespace);
+				public static string Vendor(SType klass) => GetField<string>(klass, "Vendor", null);
+				public static string FriendlyName(SType klass) => GetField<string>(klass, "FriendlyName", klass.Name);
+
+				public static int major(SType klass) => GetField<int>(klass, "major", 0);
+				public static int minor(SType klass) => GetField<int>(klass, "minor", 0);
+				public static int patch(SType klass) => GetField<int>(klass, "patch", 0);
+				public static int build(SType klass) => GetField<int>(klass, "build", 0);
+				public static System.Version V(SType klass) => new System.Version(major(klass), minor(klass), patch(klass), build(klass));
+				public static string Number(SType klass) => GetField<string>(klass, "Number", "0.0.0.0");
+				public static string Text(SType klass) => GetField<string>(klass, "Text", "0.0.0.0");
+			}
+
+			public static class Version<T>
+			{
+				public static SType Class = Type.Finder.FindBy(typeof(T).Namespace, "Version");
+				private static Y GetField<Y>(string fieldName, Y defaultValue) => Reflection.GetField<Y>(Class, fieldName, defaultValue);
+
+				public static string NameSpace => GetField<string>("Namespace", typeof(T).Namespace);
+				public static string Vendor => GetField<string>("Vendor", null);
+				public static string FriendlyName => GetField<string>("FriendlyName", typeof(T).Name);
+
+				public static int major => GetField<int>("major", 0);
+				public static int minor => GetField<int>("minor", 0);
+				public static int patch => GetField<int>("patch", 0);
+				public static int build => GetField<int>("build", 0);
+				public static System.Version V => new System.Version(major, minor, patch, build);
+				public static string Number => GetField<string>("Number", "0.0.0.0");
+				public static string Text => GetField<string>("Text", "0.0.0.0");
+			}
+
+			internal static class Configuration
+			{
+				public static int[] Unity(SType klass) => GetField<int[]>(klass, "Unity", new int[0]);
+
+				public static class Dependencies
+				{
+					public static string[] Assemblies(SType klass)	=> GetField<string[]>(
+																						Reflection.GetClass(klass, "Dependencies")
+																						,"Assemblies"
+																						, new string[0]
+																					);
+					public static string[] Types(SType klass)		=> GetField<string[]>(
+																						Reflection.GetClass(klass, "Dependencies")
+																						,"Types"
+																						, new string[0]
+																					);
+				}
+
+				public static class Conflicts
+				{
+					public static string[] Assemblies(SType klass)	=> GetField<string[]>(
+																						Reflection.GetClass(klass, "Conflicts")
+																						,"Assemblies"
+																						, new string[0]
+																					);
+					public static string[] Types(SType klass)		=> GetField<string[]>(
+																						Reflection.GetClass(klass, "Conflicts")
+																						,"Types"
+																						, new string[0]
+																					);
+				}
+
+			}
+
+			public static class Configuration<T>
+			{
+				public static SType Class = Type.Finder.ExistsBy(typeof(T).Namespace, "Configuration")
+											? Type.Finder.FindBy(typeof(T).Namespace, "Configuration")
+											: null
+										;
+				private static Y GetField<Y>(string fieldName, Y defaultValue) =>
+																			Reflection.GetField<Y>(Class, fieldName, defaultValue);
+				public static int[] Unity => GetField<int[]>("Unity", new int[0]);
+
+				public static class Dependencies
+				{
+					public static SType Class = Configuration<T>.Class?.GetNestedType("Dependencies");
+					private static Y GetField<Y>(string fieldName, Y defaultValue) =>
+																			Reflection.GetField<Y>(Class, fieldName, defaultValue);
+					public static string[] Assemblies	=> GetField<string[]>("Assemblies", new string[0]);
+					public static string[] Types		=> GetField<string[]>("Types", new string[0]);
+				}
+
+				public static class Conflicts
+				{
+					public static SType Class = Configuration<T>.Class?.GetNestedType("Conflicts");
+					private static Y GetField<Y>(string fieldName, Y defaultValue) =>
+																			Reflection.GetField<Y>(Class, fieldName, defaultValue);
+					public static string[] Assemblies	=> GetField<string[]>("Assemblies", new string[0]);
+					public static string[] Types		=> GetField<string[]>("Types", new string[0]);
+				}
+			}
 		}
 	}
 }

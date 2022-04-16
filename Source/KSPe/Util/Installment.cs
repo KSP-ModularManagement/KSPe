@@ -23,7 +23,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using SIO = System.IO;
+using SReflection = System.Reflection;
+using KAssemblyLoader = AssemblyLoader;
 using IO = KSPe.IO;
+using SystemTools = KSPe.Util.SystemTools;
 
 namespace KSPe.Util
 {
@@ -34,7 +38,12 @@ namespace KSPe.Util
 
 	public static class Installation
 	{
-		public class WrongDirectoryInstallationException : InstallmentException
+		public class Exception : InstallmentException
+		{
+			internal Exception(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
+		}
+
+		public class WrongDirectoryInstallationException : Exception
 		{
 			private static readonly string message = @"{0} is installed on the wrong Directory!
 
@@ -66,7 +75,7 @@ Your KSP is running on [{3}]."
 			}
 		}
 
-		public class MissingDependencyInstallationException : InstallmentException
+		public class MissingDependencyInstallationException : Exception
 		{
 			public readonly string assemblyName;
 
@@ -90,7 +99,7 @@ Your KSP is running in [{1}]. Check {0}'s INSTALL instructions."
 			}
 		}
 
-		public class DuplicityInstallationException : InstallmentException
+		public class DuplicityInstallationException : Exception
 		{
 			public readonly string assemblyName;
 			public readonly string[] paths;
@@ -105,11 +114,11 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 
 			private static readonly string shortMessage = "There are {1} instances of the Add'On {0}. Only one must exist.";
 
-			internal DuplicityInstallationException(List<AssemblyLoader.LoadedAssembly> loaded): base(shortMessage, loaded[0].name, loaded.Count)
+			internal DuplicityInstallationException(List<KAssemblyLoader.LoadedAssembly> loaded): base(shortMessage, loaded[0].name, loaded.Count)
 			{
 				this.assemblyName = loaded[0].name;
 				List<string> paths = new List<string>();
-				foreach (AssemblyLoader.LoadedAssembly l in loaded) paths.Add(l.path);
+				foreach (KAssemblyLoader.LoadedAssembly l in loaded) paths.Add(l.path);
 				this.paths = paths.ToArray();
 			}
 
@@ -145,28 +154,8 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 		}
 		public static void Check<T>(System.Type versionClass, bool unique = true)
 		{
-			string name = typeof(T).Namespace;
-			try
-			{
-				name = versionClass.GetField("Namespace").GetValue(null).ToString();
-			}
-			catch (ArgumentNullException) { }
-			catch (NotSupportedException) { }
-			catch (FieldAccessException) { }
-			catch (ArgumentException) { }
-			catch (NullReferenceException) { }
-
-			string vendor = null;
-			try
-			{
-				vendor = versionClass.GetField("Vendor").GetValue(null).ToString();
-			}
-			catch (ArgumentNullException) { }
-			catch (NotSupportedException) { }
-			catch (FieldAccessException) { }
-			catch (ArgumentException) { }
-			catch (NullReferenceException) { }
-
+			string name = SystemTools.Reflection.Version.NameSpace(versionClass);
+			string vendor = SystemTools.Reflection.Version.Vendor(versionClass);
 			Check<T>(name, name, vendor, unique);
 		}
 
@@ -176,10 +165,7 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 		}
 		public static void Check<T>(bool unique)
 		{
-			Type versionClass = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
-					from tt in assembly.GetTypes()
-					where tt.Namespace == typeof(T).Namespace && tt.Name == "Version"
-					select tt).FirstOrDefault();
+			Type versionClass = SystemTools.Reflection.Version<T>.Class;
 			Check<T>(versionClass, unique);
 		}
 
@@ -216,12 +202,7 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 
 		private static void CheckForDuplicity(string name)
 		{
-			IEnumerable<AssemblyLoader.LoadedAssembly> loaded =
-				from a in AssemblyLoader.loadedAssemblies
-					let ass = a.assembly
-					where name == ass.GetName().Name
-					orderby a.path ascending
-					select a;
+			IEnumerable<KAssemblyLoader.LoadedAssembly> loaded = AssemblyLoader.Search.ByName(name);
 
 			if (0 == loaded.Count()) throw new MissingDependencyInstallationException(name);
 			if (1 != loaded.Count()) throw new DuplicityInstallationException(loaded.ToList());
@@ -272,62 +253,205 @@ It will only run on the following Unity Versions [ {3} ] ! Install {0} on a KSP 
 			}
 		}
 
-		public static void Check<T>(System.Type versionClass, System.Type compatibilityClass)
+		public abstract class IncompatibleArfefactException : Exception
 		{
-			string name = typeof(T).Namespace;
-			try
-			{
-				name = versionClass.GetField("Namespace").GetValue(null).ToString();
-			}
-			catch (ArgumentNullException) { }
-			catch (NotSupportedException) { }
-			catch (FieldAccessException) { }
-			catch (ArgumentException) { }
-			catch (NullReferenceException) { }
+			internal IncompatibleArfefactException(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
+		}
 
-			string versionText = null;
-			try
-			{
-				versionText = versionClass.GetField("Text").GetValue(null).ToString();
-			}
-			catch (ArgumentNullException) { }
-			catch (NotSupportedException) { }
-			catch (FieldAccessException) { }
-			catch (ArgumentException) { }
-			catch (NullReferenceException) { }
+		public class ConflictTypeException : IncompatibleArfefactException
+		{
+			public readonly string offendedName;
+			public readonly string offendedVersion;
+			public readonly Type offender;
 
-			int[] desiredunityVersions;
-			try
+			private static readonly string message = @"{0} {1} found a conflicting Type installed!
+
+The Type ""{2}"" from ""{3}"" is conflicting with {0}.
+
+You need to <b>completely</b> remove ""{4}"" and its respective files and directories."
+			;
+
+			private static readonly string shortMessage = "{0} {1} found a conflicting type called {2}. The respective Add'On must be uninstalled.";
+
+			internal ConflictTypeException(string offendedName, string offendedVersion, Type offender): base(shortMessage, offendedName, offendedVersion, offender.FullName)
 			{
-				desiredunityVersions = (int[])compatibilityClass.GetField("Unity").GetValue(null);
-				CheckForCompatibleUnity<T>(name, versionText, desiredunityVersions);
+				this.offendedName = offendedName;
+				this.offendedVersion = offendedVersion;
+				this.offender = offender;
 			}
-			catch (ArgumentNullException) { }
-			catch (NotSupportedException) { }
-			catch (FieldAccessException) { }
-			catch (ArgumentException) { }
-			catch (NullReferenceException) { }
+
+			public override string ToLongMessage()
+			{
+				return string.Format(message, this.offendedName, this.offendedVersion, this.offender.FullName, this.offender.Assembly.FullName, SIO.Path.GetDirectoryName(this.offender.Assembly.Location));
+			}
+		}
+
+		public class ConflictAssemblyException : IncompatibleArfefactException
+		{
+			public readonly string offendedName;
+			public readonly string offendedVersion;
+			public readonly SReflection.Assembly offender;
+
+			private static readonly string message = @"{0} {1} found an incompatible Assembly installed!
+
+The Asssembly ""{2}"" is not compatible with {0}.
+
+You need to <b>completely</b> remove ""{3}"" and its respective files and directories."
+			;
+
+			private static readonly string shortMessage = "{0} {1} found an incompatible type called {2}. The respective Add'On must be uninstalled.";
+
+			internal ConflictAssemblyException(string offendedName, string offendedVersion, SReflection.Assembly offender): base(shortMessage, offendedName, offendedVersion, offender.FullName)
+			{
+				this.offendedName = offendedName;
+				this.offendedVersion = offendedVersion;
+				this.offender = offender;
+			}
+
+			public override string ToLongMessage()
+			{
+				return string.Format(message, this.offendedName, this.offendedVersion, this.offender.FullName, SIO.Path.GetDirectoryName(this.offender.Location));
+			}
+		}
+
+		public abstract class MissingDependencyException : Exception
+		{
+			internal MissingDependencyException(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
+		}
+
+		public class MissingDependencyTypeException : MissingDependencyException
+		{
+			public readonly string offendedName;
+			public readonly string offendedVersion;
+			public readonly string offenderName;
+
+			private static readonly string message = @"{0} {1} didn't found a needed Type!
+
+The Type ""{2}"" is missing on this Installment.
+
+You need to install the Add'On than provides the missing Type ""{2}""."
+			;
+
+			private static readonly string shortMessage = "{0} {1} didn't found a needed Type called {2}. The respective Add'On must be installed.";
+
+			internal MissingDependencyTypeException(string offendedName, string offendedVersion, string offenderName): base(shortMessage, offendedName, offendedVersion, offenderName)
+			{
+				this.offendedName = offendedName;
+				this.offendedVersion = offendedVersion;
+				this.offenderName = offenderName;
+			}
+
+			public override string ToLongMessage()
+			{
+				return string.Format(message, this.offendedName, this.offendedVersion, this.offenderName);
+			}
+		}
+
+		public class MissingDependencyAssemblyException : MissingDependencyException
+		{
+			public readonly string offendedName;
+			public readonly string offendedVersion;
+			public readonly string offenderName;
+
+			private static readonly string message = @"{0} {1} didn't found a needed Assembly!
+
+The Assembly ""{2}"" is missing on this Installment.
+
+You need to install the Add'On than provides the missing Assembly ""{2}""."
+			;
+
+			private static readonly string shortMessage = "{0} {1} didn't found a needed Assembly called {2}. The respective Add'On must be installed.";
+
+			internal MissingDependencyAssemblyException(string offendedName, string offendedVersion, string offenderName): base(shortMessage, offendedName, offendedVersion, offenderName)
+			{
+				this.offendedName = offendedName;
+				this.offendedVersion = offendedVersion;
+				this.offenderName = offenderName;
+			}
+
+			public override string ToLongMessage()
+			{
+				return string.Format(message, this.offendedName, this.offendedVersion, this.offenderName);
+			}
+		}
+
+
+		public static void Check<T>(System.Type versionClass, System.Type configurationClass)
+		{
+			string name = SystemTools.Reflection.Version.NameSpace(versionClass);
+			string versionText = SystemTools.Reflection.Version.Text(versionClass);
+
+			{
+				int[] list = SystemTools.Reflection.Configuration.Unity(configurationClass);
+				UnityEngine.Debug.LogFormat("*** desiredunityVersions {0}", list.Length);
+				CheckForCompatibleUnity<T>(name, versionText, list);
+			}
+			{
+				string[] list = SystemTools.Reflection.Configuration.Dependencies.Assemblies(configurationClass);
+				UnityEngine.Debug.LogFormat("*** dependencyAssemblies {0}", list.Length);
+				CheckForDependencyAssemblies<T>(name, versionText, list);
+			}
+			{
+				string[] list = SystemTools.Reflection.Configuration.Dependencies.Types(configurationClass);
+				UnityEngine.Debug.LogFormat("*** dependencyTypes {0}", list.Length);
+				CheckForDependencyTypes<T>(name, versionText, list);
+			}
+			{
+				string[] list = SystemTools.Reflection.Configuration.Conflicts.Assemblies(configurationClass);
+				UnityEngine.Debug.LogFormat("*** conflictAssemblies {0}", list.Length);
+				CheckForConflictAssemblies<T>(name, versionText, list);
+			}
+			{
+				string[] list = SystemTools.Reflection.Configuration.Conflicts.Types(configurationClass);
+				UnityEngine.Debug.LogFormat("*** conflictTypes {0}", list.Length);
+				CheckForConflictTypes<T>(name, versionText, list);
+			}
 		}
 
 		public static void Check<T>()
 		{
-			Type versionClass = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
-					from tt in assembly.GetTypes()
-					where tt.Namespace == typeof(T).Namespace && tt.Name == "Version"
-					select tt).FirstOrDefault();
-			Type compatibilityClass = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
-					from tt in assembly.GetTypes()
-					where tt.Namespace == typeof(T).Namespace && tt.Name == "Compatibility"
-					select tt).FirstOrDefault();
-			Check<T>(versionClass, compatibilityClass);
+			Type versionClass = SystemTools.Reflection.Version<T>.Class;
+			Type configurationClass = SystemTools.Reflection.Configuration<T>.Class;
+			Check<T>(versionClass, configurationClass);
 		}
 
 		public static void CheckForCompatibleUnity<T>(string name, string version, int[] unityVersions)
 		{
+			if (0 == unityVersions.Length) return;
 			foreach (int unityVersion in unityVersions)
 				if (UnityTools.UnityVersion == unityVersion) return;
 
 			throw new IncompatibleUnityException(name, version, unityVersions);
+		}
+
+		public static void CheckForConflictTypes<T>(string name, string version, string[] types)
+		{
+			foreach (string s in types) if (SystemTools.Type.Finder.ExistsByQualifiedName(s))
+			{
+				System.Type offender = SystemTools.Type.Finder.FindByQualifiedName(s);
+				throw new ConflictTypeException(name, version, offender);
+			}
+		}
+
+		public static void CheckForConflictAssemblies<T>(string name, string version, string[] types)
+		{
+			foreach (string s in types) if (SystemTools.Assembly.Finder.ExistsByName(s))
+			{
+				SReflection.Assembly offender = SystemTools.Assembly.Finder.FindByName(s);
+				throw new ConflictAssemblyException(name, version, offender);
+			}
+		}
+
+		public static void CheckForDependencyTypes<T>(string name, string version, string[] types)
+		{
+			foreach (string s in types) if (!SystemTools.Type.Finder.ExistsByQualifiedName(s))
+				throw new MissingDependencyTypeException(name, version, s);
+		}
+
+		public static void CheckForDependencyAssemblies<T>(string name, string version, string[] types)
+		{
+			foreach (string s in types) if (!SystemTools.Assembly.Finder.ExistsByName(s))
+				throw new MissingDependencyAssemblyException(name, version, s);
 		}
 	}
 }
