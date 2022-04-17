@@ -1,0 +1,20 @@
+KSP Extensions (KSPe) /L - Licensing terms
+
+Except where explicitly stated, KSP Extensions (KSPe) is double licensed as follows:
+	* SKL 1.0 (https://ksp.lisias.net/SKL-1_0.txt)
+	* GPL 2.0 (https://www.gnu.org/licenses/gpl-2.0.txt)
+
+KSPe embeds KSP API Extensions, © 2014-2018 swamp_ig and licensed as follows:
+	* CC BY-SA 3.0U (https://creativecommons.org/licenses/by-sa/3.0/)
+
+This work containts derivatives from works from Damien Guard <https://github.com/damieng> on the following files:
+	* [Source/CSharpEmulator/System/EnumT.cs](./Source/CSharpEmulator/System/EnumT.cs)
+		+ Licensed under Apache 2.0
+
+This work contains copyrighted material from Remi Gillig <remigillig@gmail.com> on the following files:
+	* [Source/KSPe/Util/Image.cs](./Source/KSPe/Util)
+		+ Licensed under the MIT
+
+This work contains copyrighted material from Maik Schreiber on the following files:
+	* [Source/KSPe/Util/Image.cs](./Source/KSPe/Util)
+		+ And licensed under BSD 2 Clausules 
