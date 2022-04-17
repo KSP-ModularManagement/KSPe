@@ -177,7 +177,8 @@ namespace KSPe.Util.Image {
 		private static readonly Interface INSTANCE;
 		private static Interface GetInstance()
 		{
-			Interface r = (Interface)Multiplatform.Tools.CreateInstanceByInterface("KSPe.Util.Image.Screenshot+Interface");
+			//Interface r = (Interface)Util.SystemTools.Interface.CreateInstanceByInterfaceName("KSPe.Util.Image.Screenshot+Interface");
+			Interface r = (Interface)Util.SystemTools.Interface.CreateInstanceByInterface(typeof(Interface));
 			if (null != r) return r;
 
 			KSPe.Log.warn("Util.Image.Screenshot: No realisation for the abstract Interface found! Using a fallback one!");

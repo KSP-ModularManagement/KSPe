@@ -31,6 +31,56 @@ namespace KSPe.Util
 
 	public static class SystemTools
 	{
+		public static class Interface
+		{
+			public static object CreateInstanceByInterface(SType iifc)
+			{
+				Log.debug("Looking for {0}", iifc.FullName);
+				foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+					foreach (SType type in assembly.GetTypes())
+						foreach (SType ifc in type.GetInterfaces())
+						{
+							Log.debug("Checking {0} {1} {2}", assembly, type, ifc);
+							/*
+							 * This caught me with my pants down!
+							 * (typeof(Interface).Equals(ifc.GetType())) and (typeof(Interface) == ifc.GetType()) does not work!
+							 */
+							if (iifc.ToString() == ifc.ToString()) // Don't ask. This works...
+							{
+								Log.debug("Found one! {0}", ifc);
+								return CreateInstance(type);
+							}
+						}
+				return null;
+			}
+
+			public static object CreateInstanceByInterfaceName(string ifcName)
+			{
+				Log.debug("Looking for {0}", ifcName);
+				foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+					foreach (SType type in assembly.GetTypes())
+						foreach (SType ifc in type.GetInterfaces())
+						{
+							Log.debug("Checking {0} {1} {2}", assembly, type, ifc);
+							if (ifcName == ifc.ToString())
+							{
+								Log.debug("Found one! {0}", ifc);
+								return CreateInstance(type);
+							}
+						}
+				return null;
+			}
+
+			internal static object CreateInstance(System.Type type)
+			{
+				object r = System.Activator.CreateInstance(type);
+				Log.debug("Type of result {0}", r.GetType());
+				return r;
+			}
+
+			private static readonly KSPe.Util.Log.Logger Log = KSPe.Util.Log.Logger.CreateForType<Startup>("KSPe.SystemTools", "Type", 0);
+		}
+
 		public static class Type
 		{
 			public static class Finder

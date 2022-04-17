@@ -39,9 +39,6 @@
     <Compile Include="..\KSPe\Multiplatform\Shell.cs">
       <Link>KSPe.Artefacts\Multiplatform\Shell.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Multiplatform\Tools.cs">
-      <Link>KSPe.Artefacts\Multiplatform\Tools.cs</Link>
-    </Compile>
     <Compile Include="..\KSPe\Multiplatform\FileSystem.cs">
       <Link>KSPe.Artefacts\Multiplatform\FileSystem.cs</Link>
     </Compile>

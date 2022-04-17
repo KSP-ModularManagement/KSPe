@@ -104,7 +104,6 @@
     </Compile>
     <Compile Include="Properties\LegalMamboJambo.cs" />
     <Compile Include="Util\log\UnityLogDecorator.cs" />
-    <Compile Include="Multiplatform\Tools.cs" />
     <Compile Include="ModuleManagerSupport.cs" />
     <Compile Include="Util\log\FileChainUnityLogger.cs" />
     <Compile Include="Util\log\UnityUiThreadSafe.cs" />
