@@ -22,9 +22,8 @@ namespace KSPe.Util
 {
 	using System;
 	using System.Collections.Generic;
-	using System.Linq;
 	using System.Threading;
-	using Type = System.Type;
+	using SType = System.Type;
 
 	using SIO = System.IO;
 	using SReflection = System.Reflection;
@@ -32,93 +31,118 @@ namespace KSPe.Util
 
 	public static class SystemTools
 	{
-		public static class TypeFinder
+		public static class Type
 		{
-			private static readonly Dictionary<string, Type> TYPES = new Dictionary<string, Type>();
-			public static bool ExistsByQualifiedName(string qn)
+			public static class Finder
 			{
-				lock (TYPES)
+				private static readonly Dictionary<string, SType> TYPES = new Dictionary<string, SType>();
+
+				public static bool ExistsBy(string ns, string name) => ExistsByQualifiedName(ns + "." + name);
+				public static bool ExistsByQualifiedName(string qn)
 				{
-					if (TYPES.ContainsKey(qn)) return true;
-					foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
-						foreach (System.Type type in assembly.GetTypes()) if (qn.Equals(string.Format("{0}.{1}", type.Namespace, type.Name)))
+					lock (TYPES)
+					{
+						if (TYPES.ContainsKey(qn)) return true;
+						foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+							foreach (SType type in assembly.GetTypes()) if (qn.Equals(string.Format("{0}.{1}", type.Namespace, type.Name)))
 							{
 								TYPES.Add(qn, type);
 								return true;
 							}
+					}
+					return false;
 				}
-				return false;
-			}
 
-			public static Type FindByQualifiedName(string qn)
-			{
-				lock(TYPES)
-				{ 
-					if (TYPES.ContainsKey(qn)) return TYPES[qn];
-					foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
-						foreach (System.Type type in assembly.GetTypes()) if (qn.Equals(string.Format("{0}.{1}", type.Namespace, type.Name)))
-						{
-							TYPES.Add(qn, type);
-							return type;
-						}
-				}
-				throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing type : " + qn);
-			}
-
-			public static Type FindByInterfaceName(string qn)
-			{
-				lock(TYPES)
-				{ 
-					if (TYPES.ContainsKey(qn)) return TYPES[qn];
-					foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
-						foreach (System.Type type in assembly.GetTypes())
-							foreach (System.Type ifc in type.GetInterfaces()) if (qn.Equals(string.Format("{0}.{1}", ifc.Namespace, ifc.Name)))
+				public static SType FindBy(string ns, string name) => FindByQualifiedName(ns + "." + name);
+				public static SType FindByQualifiedName(string qn)
+				{
+					lock(TYPES)
+					{ 
+						if (TYPES.ContainsKey(qn)) return TYPES[qn];
+						foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+							foreach (SType type in assembly.GetTypes()) if (qn.Equals(string.Format("{0}.{1}", type.Namespace, type.Name)))
 							{
 								TYPES.Add(qn, type);
 								return type;
 							}
+					}
+					throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing type : " + qn);
 				}
-				throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing Interface : " + qn);
+
+				public static SType FindByInterface(string ns, string name) => FindByInterfaceName(ns + "." + name);
+				public static SType FindByInterfaceName(string qn)
+				{
+					lock(TYPES)
+					{ 
+						if (TYPES.ContainsKey(qn)) return TYPES[qn];
+						foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+							foreach (SType type in assembly.GetTypes())
+								foreach (SType ifc in type.GetInterfaces()) if (qn.Equals(string.Format("{0}.{1}", ifc.Namespace, ifc.Name)))
+								{
+									TYPES.Add(qn, type);
+									return type;
+								}
+					}
+					throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing Interface : " + qn);
+				}
+
+				public static SType FindBy(SType ifc)
+				{
+					lock(TYPES)
+					{ 
+						if (TYPES.ContainsKey(ifc.FullName)) return TYPES[ifc.ToString()];
+						foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+							foreach (SType type in assembly.GetTypes())
+								foreach (SType i in type.GetInterfaces()) if (i.Equals(ifc))
+								{
+									TYPES.Add(ifc.ToString(), type);
+									return type;
+								}
+					}
+					throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing Interface : " + ifc.FullName);
+				}
 			}
 
-			public static Type FindByInterface(Type ifc)
+			public static class Search
 			{
-				lock(TYPES)
-				{ 
-					if (TYPES.ContainsKey(ifc.FullName)) return TYPES[ifc.ToString()];
+				public static IEnumerable<SType> ByInterfaceName(string qn)
+				{
 					foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
-						foreach (System.Type type in assembly.GetTypes())
-							foreach (System.Type i in type.GetInterfaces()) if (i.Equals(ifc))
-							{
-								TYPES.Add(ifc.ToString(), type);
-								return type;
-							}
+						foreach (SType type in assembly.GetTypes())
+							foreach (SType ifc in type.GetInterfaces()) if (qn.Equals(string.Format("{0}.{1}", ifc.Namespace, ifc.Name)))
+								yield return type;
 				}
-				throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing Interface : " + ifc.FullName);
+
+				public static IEnumerable<SType> By(SType ifc)
+				{
+					foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+						foreach (SType type in assembly.GetTypes())
+							foreach (SType i in type.GetInterfaces()) if (i.Equals(ifc))
+								yield return type;
+				}
 			}
 		}
 
+		// TODO: Remove this on Version 2.5
+		[Obsolete("SystemTools.TypeFinder is obsolete. Please use Type.Finder instead.")]
+		public static class TypeFinder
+		{
+			public static bool ExistsByQualifiedName(string qn) => Type.Finder.ExistsByQualifiedName(qn);
+			public static SType FindByQualifiedName(string qn) => Type.Finder.FindByQualifiedName(qn);
+			public static SType FindByInterfaceName(string qn) => Type.Finder.FindByInterfaceName(qn);
+			public static SType FindByInterface(SType ifc) => Type.Finder.FindBy(ifc);
+		}
+
+		// TODO: Remove this on Version 2.5
+		[Obsolete("SystemTools.TypeSearch is obsolete. Please use Type.Search instead.")]
 		public static class TypeSearch
 		{
-			public static IEnumerable<Type> ByInterfaceName(string qn)
-			{
-				foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
-					foreach (System.Type type in assembly.GetTypes())
-						foreach (System.Type ifc in type.GetInterfaces()) if (qn.Equals(string.Format("{0}.{1}", ifc.Namespace, ifc.Name)))
-							yield return type;
-			}
-
-			public static IEnumerable<Type> ByInterface(Type ifc)
-			{
-				foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
-					foreach (System.Type type in assembly.GetTypes())
-						foreach (System.Type i in type.GetInterfaces()) if (i.Equals(ifc))
-							yield return type;
-			}
+			public static IEnumerable<SType> ByInterfaceName(string qn) => Type.Search.ByInterfaceName(qn);
+			public static IEnumerable<SType> ByInterface(SType ifc) => Type.Search.By(ifc);
 		}
 
 		public static class Assembly
-		{ 
+		{
 			public static class Finder
 			{
 				private static readonly Dictionary<string, SReflection.Assembly> ASSEMBLIES = new Dictionary<string, SReflection.Assembly>();
@@ -150,6 +174,18 @@ namespace KSPe.Util
 				}
 			}
 
+			public static class Search
+			{
+				public static IEnumerable<SReflection.Assembly> ByName(string name)
+				{
+					foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+						if (assembly.GetName().Name.Equals(name))
+							yield return assembly;
+				}
+			}
+
+			// TODO: Change this on Version 2.5
+			[Obsolete("Assembly.Loader(string) will be made internal on Release 2.5")]
 			public class Loader : IDisposable
 			{
 				protected static readonly object MUTEX = new object();
@@ -206,7 +242,7 @@ namespace KSPe.Util
 
 			public class Loader<T> : Loader
 			{
-				private readonly Type type;
+				private readonly SType type;
 
 				public Loader(params string[] subdirs) : base()
 				{
@@ -274,7 +310,7 @@ namespace KSPe.Util
 			public static SReflection.Assembly LoadAndStartup(string assemblyName)
 			{
 				SReflection.Assembly assembly = System.AppDomain.CurrentDomain.Load(assemblyName);
-				foreach (Type type in assembly.GetTypes())
+				foreach (SType type in assembly.GetTypes())
 				{
 					if ("Startup" != type.Name) continue;
 
@@ -306,7 +342,7 @@ namespace KSPe.Util
 			public static SReflection.Assembly LoadFromFileAndStartup(string pathname)
 			{
 				SReflection.Assembly assembly = LoadFromFile(pathname);
-				foreach (Type type in assembly.GetTypes())
+				foreach (SType type in assembly.GetTypes())
 				{
 					if ("Startup" != type.Name) continue;
 
@@ -318,7 +354,7 @@ namespace KSPe.Util
 				return assembly;
 			}
 
-			private static object InvokeOrNull(Type t, object o, string methodName)
+			private static object InvokeOrNull(SType t, object o, string methodName)
 			{
 				SReflection.MethodInfo method = t.GetMethod(methodName, SReflection.BindingFlags.Public | SReflection.BindingFlags.Instance);
 				method = method ?? t.GetMethod(methodName, SReflection.BindingFlags.NonPublic | SReflection.BindingFlags.Instance);

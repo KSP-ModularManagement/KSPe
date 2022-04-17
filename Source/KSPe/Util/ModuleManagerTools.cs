@@ -19,6 +19,7 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 */
 using System;
+using KAssemblyLoader = AssemblyLoader;
 using SIO = System.IO;
 
 namespace KSPe.Util
@@ -37,7 +38,7 @@ namespace KSPe.Util
 				try
 				{
 					// Check if we are using MM /Experimental. Use its attribute if yes.
-					foreach (AssemblyLoader.LoadedAssembly asm in AssemblyLoader.loadedAssemblies) if (null != asm && asm.name.Equals("ModuleManager"))
+					foreach (KAssemblyLoader.LoadedAssembly asm in KAssemblyLoader.loadedAssemblies) if (null != asm && asm.name.Equals("ModuleManager"))
 						foreach (Type type in asm.assembly.GetTypes()) if (type.IsClass && type.FullName.Equals("ModuleManager.ModuleManager"))
 						{
 							UnityEngine.Object o = UnityEngine.Object.FindObjectOfType(type);
