@@ -192,12 +192,12 @@ namespace KSPe.Util
 				private readonly string namespaceOverride;
 				protected string searchPath;
 
-				protected Loader() { this.namespaceOverride = null; }
+				internal Loader() { this.namespaceOverride = null; }
 				public Loader(string namespaceOverride, params string[] subdirs)
 				{
 					this.namespaceOverride = namespaceOverride;
 					List<string> parms = new List<string>(subdirs);
-					parms.Insert(0, "PluginData");
+					parms.Insert(0, "PluginData");	// Remove this on 2.5. The internal loader should be able to load DLLs from anyplace
 					string[] sd = parms.ToArray();
 					this.searchPath = this.TryPath("Plugins", sd)
 										?? this.TryPath("Plugin", sd)
@@ -249,10 +249,11 @@ namespace KSPe.Util
 					this.type = typeof(T);
 					List<string> parms = new List<string>(subdirs);
 					parms.Insert(0, "PluginData");
+					parms.InsertRange(0, new List<string>(
+						IO.Hierarchy<T>.GAMEDATA.Solve().Split(SIO.Path.AltDirectorySeparatorChar, SIO.Path.DirectorySeparatorChar)
+						));
 					string[] sd = parms.ToArray();
-					this.searchPath = this.TryPath("Plugins", sd)
-										?? this.TryPath("Plugin", sd)
-										?? this.TryPath(".", sd)
+					this.searchPath = this.TryPath(".", sd)
 										?? throw new DllNotFoundException(
 											string.Format("{0}'s DLL search path does not exists!", this.type.Namespace)
 										)
@@ -412,28 +413,13 @@ namespace KSPe.Util
 				return null;
 			}
 
-			/* I CAN'T MAKE THIS THING TO WORK! */
-			private static readonly System.Uri BASEURI = new System.Uri(IO.Path.Origin());
-			private static SReflection.Assembly LoadAssemblyByKsp(string asmName, string asmFile)
-			{
-				Uri uri = new Uri(BASEURI, asmFile);
-				SIO.FileInfo fi = new SIO.FileInfo(uri.AbsolutePath);
-				global::ConfigNode cn = new global::ConfigNode();
-				LOG.force("fi {0} -- url {1}", fi.FullName, uri.AbsoluteUri);
-				if (!global::AssemblyLoader.LoadPlugin(fi, uri.AbsoluteUri, cn)) // If the return value of this thing working as expected?
-					throw new DllNotFoundException(string.Format("Could not load {0} from {1}!", asmName, asmFile));
-				foreach (global::AssemblyLoader.LoadedAssembly a in global::AssemblyLoader.loadedAssemblies) if (a.name.Equals(asmName))
-						a.Load();
-				return Finder.FindByName(asmName);
-			}
-
 			static Assembly()
 			{
 				System.AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 				LOG.force("Hooked.");
 			}
 
-			private static readonly KSPe.Util.Log.Logger LOG = KSPe.Util.Log.Logger.CreateForType<KSPe.Startup>("KSPe", "Binder", 0);
+			internal static readonly KSPe.Util.Log.Logger LOG = KSPe.Util.Log.Logger.CreateForType<KSPe.Startup>("KSPe", "Binder", 0);
 		}
 
 		public static class Reflection

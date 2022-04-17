@@ -23,6 +23,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
+using SIO = System.IO;
+using SType = System.Type;
+using SReflection = System.Reflection;
+using KAssemblyLoader = AssemblyLoader;
+
 namespace KSPe.Util
 {
 	public static class KSP
@@ -415,6 +420,82 @@ namespace KSPe.Util
 				}
 			}
 			return r;
+		}
+	}
+
+	public static class AssemblyLoader
+	{
+		public static class Finder
+		{
+			private static readonly Dictionary<string, KAssemblyLoader.LoadedAssembly> ASSEMBLIES = new Dictionary<string, KAssemblyLoader.LoadedAssembly>();
+			public static bool ExistsByName(string qn)
+			{
+				lock (ASSEMBLIES)
+				{
+					if (ASSEMBLIES.ContainsKey(qn)) return true;
+					foreach (KAssemblyLoader.LoadedAssembly assembly in KAssemblyLoader.loadedAssemblies) if (assembly.assembly.GetName().Name.Equals(qn))
+					{
+						ASSEMBLIES.Add(qn, assembly);
+						return true;
+					}
+				}
+				return false;
+			}
+			public static KAssemblyLoader.LoadedAssembly FindByName(string qn)
+			{
+				lock(ASSEMBLIES)
+				{ 
+					if (ASSEMBLIES.ContainsKey(qn)) return ASSEMBLIES[qn];
+					foreach (KAssemblyLoader.LoadedAssembly assembly in KAssemblyLoader.loadedAssemblies) if (assembly.assembly.GetName().Name.Equals(qn))
+					{
+						ASSEMBLIES.Add(qn, assembly);
+						return assembly;
+					}
+				}
+				throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing LoadedAssembly : " + qn);
+			}
+		}
+
+		public static class Search
+		{
+			public static IEnumerable<KAssemblyLoader.LoadedAssembly> ByName(string name)
+			{
+				foreach (KAssemblyLoader.LoadedAssembly assembly in KAssemblyLoader.loadedAssemblies)
+					if (assembly.assembly.GetName().Name.Equals(name))
+						yield return assembly;
+			}
+		}
+
+		public class Loader : SystemTools.Assembly.Loader
+		{
+			protected Loader() : base() { }
+			public Loader(string namespaceOverride, params string[] subdirs) : base(namespaceOverride, subdirs) { }
+
+			/* I CAN'T MAKE THIS THING TO WORK! */
+			private static readonly System.Uri BASEURI = new System.Uri(IO.Path.Origin());
+			public KAssemblyLoader.LoadedAssembly LoadAndStartup(string asmName, string asmFile)
+			{
+				string asmPath = SIO.Path.Combine(this.searchPath, asmFile);
+				Uri uri = new Uri(BASEURI, asmPath);
+				SIO.FileInfo fi = new SIO.FileInfo(uri.AbsolutePath);
+				//LOG.debug("fi {0} -- url {1}", fi.FullName, uri.AbsoluteUri);
+				global::ConfigNode cn = new global::ConfigNode();
+				if (!KAssemblyLoader.LoadPlugin(fi, uri.AbsoluteUri, cn)) // If the return value of this thing working as expected?
+					throw new DllNotFoundException(string.Format("Could not load {0} from {1}!", asmName, asmFile));
+				foreach (KAssemblyLoader.LoadedAssembly a in KAssemblyLoader.loadedAssemblies) if (a.name.Equals(asmName))
+				{
+					a.Load();
+					return a;
+				}
+				throw new DllNotFoundException(string.Format("Could not load {0} from {1}!", asmName, asmFile));
+			}
+		}
+
+		public class Loader<T> : SystemTools.Assembly.Loader<T>
+		{
+			private readonly SType type;
+
+			public Loader(params string[] subdirs) : base(subdirs) { }
 		}
 	}
 }
