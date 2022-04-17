@@ -29,6 +29,8 @@ namespace KSPe.Multiplatform.LowLevelTools {
 
 	public static class Windows
 	{
+		// Reference https://github.com/mono/mono/blob/main/mcs/class/referencesource/mscorlib/system/platformid.cs
+		// and https://github.com/mono/mono/blob/main/mcs/class/corlib/System/Environment.cs#L234
 		public static bool IsThisWindows => ((int)System.Environment.OSVersion.Platform < 4);
 	}
 

@@ -20,6 +20,8 @@
 
 */
 using System.Collections.Generic;
+using System.ComponentModel;
+
 using SIO = System.IO;
 
 namespace KSPe.Multiplatform
@@ -86,6 +88,12 @@ namespace KSPe.Multiplatform
 						return path;	// May God help the caller. :)
 					}
 					parcels.Add(IO.Path.GetFileName(path));
+				}
+				catch (Win32Exception e)
+				{
+					// WHAT IN HELL??? Since then this crappy exception is being thrown by Mono here???
+					Log.warn("Reparse_readlink got a {0} ", e.Message);
+					return path;	// May God help the caller. :)
 				}
 				finally
 				{
