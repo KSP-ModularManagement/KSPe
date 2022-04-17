@@ -5,20 +5,20 @@ New extensions and utilities for Kerbal Space Program by Lisias.
 
 ## In a Hurry
 
-* [Latest Release](https://github.com/net-lisias-ksp/KSPAPIExtensions/releases)
-    + [Binaries](https://github.com/net-lisias-ksp/KSPAPIExtensions/tree/Archive)
-* [Source](https://github.com/net-lisias-ksp/KSPAPIExtensions)
-* [Issue Tracker](https://github.com/net-lisias-ksp/KSPAPIExtensions/issues)
+* [Latest Release](https://github.com/net-lisias-ksp/KSPe/releases)
+    + [Binaries](https://github.com/net-lisias-ksp/KSPe/tree/Archive)
+* [Source](https://github.com/net-lisias-ksp/KSPe)
+* [Issue Tracker](https://github.com/net-lisias-ksp/KSPe/issues)
 * Documentation	
-	+ [Homepage](http://ksp.lisias.net/add-ons/KSPAPIExtensions) on L Aerospace KSP Division
-	+ [Project's README](https://github.com/net-lisias-ksp/KSPAPIExtensions/blob/master/README.md)
-	+ [Install Instructions](https://github.com/net-lisias-ksp/KSPAPIExtensions/blob/master/INSTALL.md)
+	+ [Homepage](http://ksp.lisias.net/add-ons/KSPe) on L Aerospace KSP Division
+	+ [Project's README](https://github.com/net-lisias-ksp/KSPe/blob/mestre/README.md)
+	+ [Install Instructions](https://github.com/net-lisias-ksp/KSPe/blob/mestre/INSTALL.md)
 	+ [Change Log](./CHANGE_LOG.md)
 	+ [Known Issues](./KNOWN_ISSUES.md)
 	+ [TODO](./TODO.md) list
 * Official Distribution Channels:
-	+ [Homepage](http://ksp.lisias.net/add-ons/KSPAPIExtensions) on L Aerospace
-	+ [Source and Binaries](https://github.com/net-lisias-ksp/KSPAPIExtensions) on GitHub.
+	+ [Homepage](http://ksp.lisias.net/add-ons/KSPe) on L Aerospace
+	+ [Source and Binaries](https://github.com/net-lisias-ksp/KSPe) on GitHub.
 
 
 ## Description
@@ -27,13 +27,13 @@ New extensions and utilities for Kerbal Space Program by Lisias.
 
 Offer standardised, KSP version abstracted features, utilities and helpers to help the fellow KSP Add'On Author to seamless support part, present and (hopefully) future versions of KSP without needing even a recompile.
 
-See [the respective Manual](https://github.com/net-lisias-ksp/KSPAPIExtensions/blob/mestre/Docs/KSPe.md) for more information.
+See [the respective Manual](https://github.com/net-lisias-ksp/KSPe/blob/mestre/Docs/KSPe.md) for more information.
 
 ### KSP API Extension
 
 Offer a compatibility layer to older Add'Ons that relies on the (now) legacy API from KSP API Extensions.
 
-See [the respective Manual](https://github.com/net-lisias-ksp/KSPAPIExtensions/blob/mestre/Docs/KSP-API-Extensions.md) for more information.
+See [the respective Manual](https://github.com/net-lisias-ksp/KSPe/blob/mestre/Docs/KSP-API-Extensions.md) for more information.
 
 
 ## Installation
@@ -94,6 +94,6 @@ KSPe use, embed or reference previous works by:
 
 * [swamp_ig](https://forum.kerbalspaceprogram.com/index.php?/profile/85299-pellinor/): ROOT
 	+ [Forum](https://forum.kerbalspaceprogram.com/index.php?/topic/73648-104-kspapiextensions-v175-utilities-for-shared-mod-use-25-jun/)
-	+ [GitHub](https://github.com/Swamp-Ig/KSPAPIExtensions)
+	+ [GitHub](https://github.com/Swamp-Ig/KSPe)
 * [toadicus](https://forum.kerbalspaceprogram.com/index.php?/profile/67745-toadicus/): Parallel Fork
-	+ [GitHub](https://github.com/toadicus/KSPAPIExtensions)
+	+ [GitHub](https://github.com/toadicus/KSPe)
