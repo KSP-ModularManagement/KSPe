@@ -57,7 +57,38 @@
     <Compile Include="..\KSPe\IO\Directory.cs">
       <Link>KSPe.Artefacts\IO\Directory.cs</Link>
     </Compile>
-    <Compile Include="Mockups\KSPe\IO\Hierarchy.cs" />
+    <Compile Include="..\KSPe\Util\Installment.cs">
+      <Link>KSPe.Artefacts\Util\Installment.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\Util\SystemTools.cs">
+      <Link>KSPe.Artefacts\Util\SystemTools.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\AbstractException.cs">
+      <Link>KSPe.Artefacts\AbstractException.cs</Link>
+    </Compile>
+    <Compile Include="Mockups\KSP\AssemblyLoader.cs" />
+    <Compile Include="..\KSPe\Util\UnityTools.cs">
+      <Link>KSPe.Artefacts\Util\UnityTools.cs</Link>
+    </Compile>
+    <Compile Include="Mockups\UnityEngine\Application.cs" />
+    <Compile Include="..\KSPe\Util\KSPTools.cs">
+      <Link>KSPe.Artefacts\Util\KSPTools.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Hierarchy.cs">
+      <Link>KSPe.Artefacts\IO\Hierarchy.cs</Link>
+    </Compile>
+    <Compile Include="Mockups\KSP\ConfigNode.cs" />
+    <Compile Include="..\KSPe\IO\HierarchyT.cs">
+      <Link>KSPe.Artefacts\IO\HierarchyT.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\LocalCache.cs">
+      <Link>KSPe.Artefacts\LocalCache.cs</Link>
+    </Compile>
+    <Compile Include="Mockups\KSP\HighLogic.cs" />
+    <Compile Include="Mockups\KSP\Game.cs" />
+    <Compile Include="Mockups\KSP\Versioning.cs" />
+    <Compile Include="Properties\Version.cs" />
+    <Compile Include="Properties\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="KSPe.Artefacts\" />
@@ -70,6 +101,7 @@
     <Folder Include="Mockups\KSPe\" />
     <Folder Include="Mockups\KSPe\Util\" />
     <Folder Include="Mockups\KSPe\IO\" />
+    <Folder Include="KSPe.Artefacts\Util\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -103,7 +103,7 @@ namespace Tests
 			public override int GetHashCode() => this.v.GetHashCode();
 		}
 
-		public static void T()
+		private static void T()
 		{
 			Dictionary<object, string> d = new Dictionary<object, string>();
 			ActiveState a = false;
@@ -124,19 +124,29 @@ namespace Tests
 
 		}
 
+		private class Dummy { }
+
+		private static void InstallationTest()
+		{
+			KSPe.Util.Compatibility.Check<Dummy>();
+			KSPe.Util.Installation.Check<Dummy>();
+		}
+
 		public static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");
 			Console.WriteLine(Environment.GetCommandLineArgs()[0]);
 
-            TestCase_StackDump();
+			TestCase_StackDump();
 
-            TestCase_InstallPath();
+			TestCase_InstallPath();
 
-            TestCase_MiscPaths();
-            TestCase_Raparsing(Environment.GetCommandLineArgs()[1]);
+			TestCase_MiscPaths();
+			//TestCase_Raparsing(Environment.GetCommandLineArgs()[1]);
 
-            DumbTest();
+			DumbTest();
+
+			InstallationTest();
 		}
 	}
 }
