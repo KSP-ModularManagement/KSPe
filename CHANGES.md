@@ -1,8 +1,19 @@
 # KSP API Extensions/L :: Changes
 
+* 2022-0418: 2.4.1.14 (Lisias) for KSP >= 1.2 PRE-RELEASE
+	+ Implements new helpers on `KSPe.Util.SystemTools`
+	+ **Finally** Implementing the Compatibility checking tools!
+	+ Refactoring: eating my own dog-food on the code, getting rid of redundancy.
+	+ Fixes long standing errors on the URL scattered on the repository.
+	+ Works around an absolutely and terrible bug on Mono's Process.Process() IDisposable handling.
+		- DAMN!!! 
 * 2022-0410: 2.4.1.13 (Lisias) for KSP >= 1.2 PRE-RELEASE
 	+ Resurrects `KSPAPIExtensions.PartMessage` on the legacy KSPApiExtensions.
 	+ Resurrects `KSPAPIExtensions.ListenerFerramAerospaceResearch` on the legacy KSPApiExtensions.
+	+ Implements new helpers on `KSPe.Util.SystemTools`
+	+ **Finally** Implementing the Compatibility checking tools!
+	+ Refactoring: eating my own dog-food on the code, getting rid of redundancy.
+	+ Fixes long standing errors on the URL scattered on the repository
 * 2022-0221: 2.4.1.12 (Lisias) for KSP >= 1.2
 	+ Finally² fixing [Issue #27](https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/27). 
 * 2022-0221: 2.4.1.11 (Lisias) for KSP >= 1.2
