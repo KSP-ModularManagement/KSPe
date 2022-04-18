@@ -253,6 +253,37 @@ It will only run on the following Unity Versions [ {3} ] ! Install {0} on a KSP 
 			}
 		}
 
+		public class IncompatibleKSPException : Exception
+		{
+			private static readonly string message = @"Unfortunately {0} {1} is not compatible with currently running KSP {2}!
+
+It will only run on the following KSP Versions [ {3} ] ! Install {0} on a compatible KSP.";
+			private static readonly string shortMessage = "{0} {1} is incompatible  with KSP in use.";
+
+			public readonly string name;
+			public readonly string version;
+			public readonly KSP.Version min;
+			public readonly KSP.Version max;
+
+			internal IncompatibleKSPException(string name, string version, KSP.Version min, KSP.Version max) : base(shortMessage, name, version)
+			{
+				this.name = name;
+				this.version = version;
+				this.min = min;
+				this.max = max;
+			}
+
+			public override string ToLongMessage()
+			{
+				return string.Format(message, this.name, this.version, KSP.Version.Current, this.JoinKSPVersions());
+			}
+
+			private string JoinKSPVersions()
+			{
+				return string.Format("{0} .. {1}", this.min, this.max);
+			}
+		}
+
 		public abstract class IncompatibleArfefactException : Exception
 		{
 			internal IncompatibleArfefactException(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
@@ -387,6 +418,12 @@ You need to install the Add'On than provides the missing Assembly ""{2}""."
 				CheckForCompatibleUnity<T>(name, versionText, list);
 			}
 			{
+				KSPe.Util.KSP.Version min = SystemTools.Reflection.Configuration.KSP.Min(configurationClass);
+				KSPe.Util.KSP.Version max = SystemTools.Reflection.Configuration.KSP.Max(configurationClass);
+				UnityEngine.Debug.LogFormat("*** desiredKSP Versions [{0}...{1}]", min, max);
+				CheckForCompatibleKSP<T>(name, versionText, min, max);
+			}
+			{
 				string[] list = SystemTools.Reflection.Configuration.Dependencies.Assemblies(configurationClass);
 				UnityEngine.Debug.LogFormat("*** dependencyAssemblies {0}", list.Length);
 				CheckForDependencyAssemblies<T>(name, versionText, list);
@@ -422,6 +459,12 @@ You need to install the Add'On than provides the missing Assembly ""{2}""."
 				if (UnityTools.UnityVersion == unityVersion) return;
 
 			throw new IncompatibleUnityException(name, version, unityVersions);
+		}
+
+		public static void CheckForCompatibleKSP<T>(string name, string version, KSP.Version min, KSP.Version max)
+		{
+			if (min <= KSP.Version.Current && KSP.Version.Current <= max) return;
+			throw new IncompatibleKSPException(name, version, min, max);
 		}
 
 		public static void CheckForConflictTypes<T>(string name, string version, string[] types)

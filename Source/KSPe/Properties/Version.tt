@@ -82,6 +82,7 @@ namespace <#= PROJECT_NAME #>
 		public const int minor = <#= minor #>;
 		public const int patch = <#= patch #>;
 		public const int build = <#= build #>;
+		public static readonly System.Version V = new System.Version(major, minor, patch, build);
 		public const string Number = "<#= major #>.<#= minor #>.<#= patch #>.<#= build #>";
 #if DEBUG
 		public const string Text = Number + " /L DEBUG";

@@ -525,7 +525,28 @@ namespace KSPe.Util
 
 			internal static class Configuration
 			{
+				internal static Util.KSP.Version deriveMax()
+				{
+					// Handles hypothetical future KSP versions.
+					Util.KSP.Version max = Util.KSP.PUBLISHED_VERSIONS[Util.KSP.PUBLISHED_VERSIONS.Length - 1];
+					return (max < Util.KSP.Version.Current) ? Util.KSP.Version.Current : max;
+				}
+
 				public static int[] Unity(SType klass) => GetField<int[]>(klass, "Unity", new int[0]);
+
+				public static class KSP
+				{
+					public static KSPe.Util.KSP.Version Min(SType klass)	=> GetField<Util.KSP.Version>(
+																						Reflection.GetClass(klass, "KSP")
+																						,"Min"
+																						, Util.KSP.Version.FindByVersion(0,0,0)
+																					);
+					public static KSPe.Util.KSP.Version Max(SType klass)	=> GetField<Util.KSP.Version>(
+																						Reflection.GetClass(klass, "KSP")
+																						,"Max"
+																						, deriveMax()
+																					);
+				}
 
 				public static class Dependencies
 				{
@@ -566,6 +587,15 @@ namespace KSPe.Util
 				private static Y GetField<Y>(string fieldName, Y defaultValue) =>
 																			Reflection.GetField<Y>(Class, fieldName, defaultValue);
 				public static int[] Unity => GetField<int[]>("Unity", new int[0]);
+
+				public static class KSP
+				{
+					public static SType Class = Configuration<T>.Class?.GetNestedType("KSP");
+					private static Y GetField<Y>(string fieldName, Y defaultValue) =>
+																			Reflection.GetField<Y>(Class, fieldName, defaultValue);
+					public static KSPe.Util.KSP.Version	Min => GetField<KSPe.Util.KSP.Version>("Min", Util.KSP.Version.Current);
+					public static KSPe.Util.KSP.Version	Max => GetField<KSPe.Util.KSP.Version>("Max", Configuration.deriveMax());
+				}
 
 				public static class Dependencies
 				{
