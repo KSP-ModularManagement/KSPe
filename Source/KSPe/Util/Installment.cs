@@ -34,6 +34,15 @@ namespace KSPe.Util
 	public class InstallmentException : AbstractException
 	{
 		internal InstallmentException(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
+
+		protected string CleanPath(string path)
+		{
+			if (path.EndsWith(IO.Path.DirectorySeparatorStr)) path = path.Substring(0, path.Length - 1);
+			if (path.EndsWith(IO.Path.AltDirectorySeparatorStr)) path = path.Substring(0, path.Length - 1);
+			if (path.EndsWith("/Plugins")) path = path.Substring(0, path.Length - "/Plugins".Length);
+			if (path.EndsWith("/Plugin")) path = path.Substring(0, path.Length - "/Plugin".Length);
+			return IO.Hierarchy.CalculateRelativePath(path, IO.Hierarchy.ROOTPATH);
+		}
 	}
 
 	public static class Installation
@@ -68,10 +77,10 @@ Your KSP is running on [{3}]."
 			public override string ToLongMessage()
 			{
 				return string.Format(message, this.name
-					, IO.Hierarchy.CalculateRelativePath(this.intendedPath, IO.Hierarchy.ROOTPATH)
-					, IO.Hierarchy.CalculateRelativePath(this.installedDllPath, IO.Hierarchy.ROOTPATH)
+					, this.CleanPath(this.intendedPath)
+					, this.CleanPath(this.installedDllPath)
 					, IO.Hierarchy.ROOTPATH
-				);
+				);;
 			}
 		}
 
@@ -118,7 +127,7 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 			{
 				this.assemblyName = loaded[0].name;
 				List<string> paths = new List<string>();
-				foreach (KAssemblyLoader.LoadedAssembly l in loaded) paths.Add(l.path);
+				foreach (KAssemblyLoader.LoadedAssembly l in loaded) paths.Add(this.CleanPath(l.path));
 				this.paths = paths.ToArray();
 			}
 
@@ -299,7 +308,9 @@ It will only run on the following KSP Versions [ {3} ] ! Install {0} on a compat
 
 The Type ""{2}"" from ""{3}"" is conflicting with {0}.
 
-You need to <b>completely</b> remove ""{4}"" and its respective files and directories."
+You need to <b>completely</b> remove [{4}] and its respective files and directories.
+
+Your KSP is running on [{5}]."
 			;
 
 			private static readonly string shortMessage = "{0} {1} found a conflicting type called {2}. The respective Add'On must be uninstalled.";
@@ -313,7 +324,14 @@ You need to <b>completely</b> remove ""{4}"" and its respective files and direct
 
 			public override string ToLongMessage()
 			{
-				return string.Format(message, this.offendedName, this.offendedVersion, this.offender.FullName, this.offender.Assembly.FullName, SIO.Path.GetDirectoryName(this.offender.Assembly.Location));
+				return string.Format(message
+								, this.offendedName
+								, this.offendedVersion
+								, this.offender.FullName
+								, this.offender.Assembly.FullName
+								, this.CleanPath(SIO.Path.GetDirectoryName(this.offender.Assembly.Location))
+								, IO.Hierarchy.ROOTPATH
+							);
 			}
 		}
 
@@ -327,7 +345,9 @@ You need to <b>completely</b> remove ""{4}"" and its respective files and direct
 
 The Asssembly ""{2}"" is not compatible with {0}.
 
-You need to <b>completely</b> remove ""{3}"" and its respective files and directories."
+You need to <b>completely</b> remove [{3}] and its respective files and directories.
+
+Your KSP is running on [{4}]."
 			;
 
 			private static readonly string shortMessage = "{0} {1} found an incompatible type called {2}. The respective Add'On must be uninstalled.";
@@ -341,7 +361,13 @@ You need to <b>completely</b> remove ""{3}"" and its respective files and direct
 
 			public override string ToLongMessage()
 			{
-				return string.Format(message, this.offendedName, this.offendedVersion, this.offender.FullName, SIO.Path.GetDirectoryName(this.offender.Location));
+				return string.Format(message
+									, this.offendedName
+									, this.offendedVersion
+									, this.offender.FullName
+									, this.CleanPath(SIO.Path.GetDirectoryName(this.offender.Location))
+									, IO.Hierarchy.ROOTPATH
+								);
 			}
 		}
 
