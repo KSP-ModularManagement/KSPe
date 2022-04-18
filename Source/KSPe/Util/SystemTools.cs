@@ -492,7 +492,7 @@ namespace KSPe.Util
 
 			internal static class Version
 			{
-				public static string NameSpace(SType klass) => GetField<string>(klass, "Namespace", klass.Namespace);
+				public static string Namespace(SType klass) => GetField<string>(klass, "Namespace", klass.Namespace);
 				public static string Vendor(SType klass) => GetField<string>(klass, "Vendor", null);
 				public static string FriendlyName(SType klass) => GetField<string>(klass, "FriendlyName", klass.Name);
 
@@ -503,6 +503,7 @@ namespace KSPe.Util
 				public static System.Version V(SType klass) => new System.Version(major(klass), minor(klass), patch(klass), build(klass));
 				public static string Number(SType klass) => GetField<string>(klass, "Number", "0.0.0.0");
 				public static string Text(SType klass) => GetField<string>(klass, "Text", "0.0.0.0");
+				public static string EffectivePath(SType klass) => null == Vendor(klass) ? Namespace(klass) : SIO.Path.Combine(Vendor(klass), Namespace(klass));
 			}
 
 			public static class Version<T>
@@ -510,7 +511,7 @@ namespace KSPe.Util
 				public static SType Class = Type.Finder.FindBy(typeof(T).Namespace, "Version");
 				private static Y GetField<Y>(string fieldName, Y defaultValue) => Reflection.GetField<Y>(Class, fieldName, defaultValue);
 
-				public static string NameSpace => GetField<string>("Namespace", typeof(T).Namespace);
+				public static string Namespace => GetField<string>("Namespace", typeof(T).Namespace);
 				public static string Vendor => GetField<string>("Vendor", null);
 				public static string FriendlyName => GetField<string>("FriendlyName", typeof(T).Name);
 
@@ -521,6 +522,7 @@ namespace KSPe.Util
 				public static System.Version V => new System.Version(major, minor, patch, build);
 				public static string Number => GetField<string>("Number", "0.0.0.0");
 				public static string Text => GetField<string>("Text", "0.0.0.0");
+				public static string EffectivePath = null == Vendor ? Namespace : SIO.Path.Combine(Vendor, Namespace);
 			}
 
 			internal static class Configuration

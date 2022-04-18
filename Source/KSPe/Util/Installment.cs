@@ -163,7 +163,7 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 		}
 		public static void Check<T>(System.Type versionClass, bool unique = true)
 		{
-			string name = SystemTools.Reflection.Version.NameSpace(versionClass);
+			string name = SystemTools.Reflection.Version.Namespace(versionClass);
 			string vendor = SystemTools.Reflection.Version.Vendor(versionClass);
 			Check<T>(name, name, vendor, unique);
 		}
@@ -435,38 +435,38 @@ You need to install the Add'On than provides the missing Assembly ""{2}""."
 
 		public static void Check<T>(System.Type versionClass, System.Type configurationClass)
 		{
-			string name = SystemTools.Reflection.Version.NameSpace(versionClass);
+			string name = SystemTools.Reflection.Version.Namespace(versionClass);
 			string versionText = SystemTools.Reflection.Version.Text(versionClass);
 
 			{
 				int[] list = SystemTools.Reflection.Configuration.Unity(configurationClass);
-				UnityEngine.Debug.LogFormat("*** desiredunityVersions {0}", list.Length);
+				LOG.debug("*** desiredunityVersions {0}", list.Length);
 				CheckForCompatibleUnity<T>(name, versionText, list);
 			}
 			{
 				KSPe.Util.KSP.Version min = SystemTools.Reflection.Configuration.KSP.Min(configurationClass);
 				KSPe.Util.KSP.Version max = SystemTools.Reflection.Configuration.KSP.Max(configurationClass);
-				UnityEngine.Debug.LogFormat("*** desiredKSP Versions [{0}...{1}]", min, max);
+				LOG.debug("*** desiredKSP Versions [{0}...{1}]", min, max);
 				CheckForCompatibleKSP<T>(name, versionText, min, max);
 			}
 			{
 				string[] list = SystemTools.Reflection.Configuration.Dependencies.Assemblies(configurationClass);
-				UnityEngine.Debug.LogFormat("*** dependencyAssemblies {0}", list.Length);
+				LOG.debug("*** dependencyAssemblies {0}", list.Length);
 				CheckForDependencyAssemblies<T>(name, versionText, list);
 			}
 			{
 				string[] list = SystemTools.Reflection.Configuration.Dependencies.Types(configurationClass);
-				UnityEngine.Debug.LogFormat("*** dependencyTypes {0}", list.Length);
+				LOG.debug("*** dependencyTypes {0}", list.Length);
 				CheckForDependencyTypes<T>(name, versionText, list);
 			}
 			{
 				string[] list = SystemTools.Reflection.Configuration.Conflicts.Assemblies(configurationClass);
-				UnityEngine.Debug.LogFormat("*** conflictAssemblies {0}", list.Length);
+				LOG.debug("*** conflictAssemblies {0}", list.Length);
 				CheckForConflictAssemblies<T>(name, versionText, list);
 			}
 			{
 				string[] list = SystemTools.Reflection.Configuration.Conflicts.Types(configurationClass);
-				UnityEngine.Debug.LogFormat("*** conflictTypes {0}", list.Length);
+				LOG.debug("*** conflictTypes {0}", list.Length);
 				CheckForConflictTypes<T>(name, versionText, list);
 			}
 		}
