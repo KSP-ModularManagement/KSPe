@@ -19,8 +19,6 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using System;
-using System.Linq;
 
 namespace KSPe.IO
 {
@@ -43,30 +41,6 @@ namespace KSPe.IO
 			return c.ContainsKey(".") ? c["."] : (c["."] = calculateTypeRoot());
 		}
 
-		private static string calculateTypeRoot()
-		{
-			string typeRootDir = typeof(T).Namespace;
-			{
-				Type t = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
-						  from tt in assembly.GetTypes()
-						  where tt.Namespace == typeof(T).Namespace && tt.Name == "Version" && tt.GetMembers().Any(m => m.Name == "Namespace")
-						  select tt).FirstOrDefault();
-
-				typeRootDir = (null == t)
-					? typeRootDir
-					: t.GetField("Namespace").GetValue(null).ToString();
-			}
-			{
-				Type t = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
-						  from tt in assembly.GetTypes()
-						  where tt.Namespace == typeof(T).Namespace && tt.Name == "Version" && tt.GetMembers().Any(m => m.Name == "Vendor")
-						  select tt).FirstOrDefault();
-
-				typeRootDir = (null == t)
-					? typeRootDir
-					: Path.Combine(t.GetField("Vendor").GetValue(null).ToString(), typeRootDir);
-			}
-			return typeRootDir;
-		}
+		private static string calculateTypeRoot() => Util.SystemTools.Reflection.Version<T>.EffectivePath;
 	}
 }
