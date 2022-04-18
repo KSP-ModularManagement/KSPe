@@ -234,36 +234,45 @@ namespace KSPe.Util
 				}
 			}
 
-			// TODO: Change this on Version 2.5
-			[Obsolete("Assembly.Loader(string) will be made internal on Release 2.5")]
 			public class Loader : IDisposable
 			{
 				protected static readonly object MUTEX = new object();
-				private readonly string namespaceOverride;
-				protected string searchPath;
+				protected readonly string @namespace;
+				protected readonly string effectivePath;
+				protected readonly string searchPath;
 
-				internal Loader() { this.namespaceOverride = null; }
-				public Loader(string namespaceOverride, params string[] subdirs)
+				internal Loader() { this.@namespace = null; }
+				internal Loader(string @namespace, string effectivePath, params string[] subdirs)
 				{
-					this.namespaceOverride = namespaceOverride;
-					List<string> parms = new List<string>(subdirs);
-					parms.Insert(0, "PluginData");	// Remove this on 2.5. The internal loader should be able to load DLLs from anyplace
-					string[] sd = parms.ToArray();
-					this.searchPath = this.TryPath("Plugins", sd)
-										?? this.TryPath("Plugin", sd)
-										?? this.TryPath(".", sd)
-										?? throw new DllNotFoundException(
-											string.Format("{0}'s DLL search path does not exists!", this.namespaceOverride)
-										)
-							;
+					this.@namespace = @namespace;
+					this.effectivePath = effectivePath;
+					this.searchPath = this.buildSearchPath(subdirs);
 					LOG.debug("Assembly searchPath: {0}", this.searchPath);
 					this.EnterCritical();
 				}
+				// TODO: Change this on Version 2.5
+				[Obsolete("Assembly.Loader(string) will be made internal on Release 2.5")]
+				public Loader(string @namespace, params string[] subdirs) : this(@namespace, @namespace, subdirs) { }
 
-				private string TryPath(string path, params string[] subdirs)
+				protected string buildSearchPath(params string[] subdirs)
 				{
-					string t = SIO.Path.Combine(this.namespaceOverride, path);
+					List<string> parms = new List<string>(subdirs);
+					parms.Insert(0, "PluginData");	// FIXME: Rework this on 2.5. The internal loader should be able to load DLLs from anyplace
+					string[] sd = parms.ToArray();
+					return this.TryPath("Plugins", sd)
+										?? this.TryPath("Plugin", sd)
+										?? this.TryPath(".", sd)
+										?? throw new DllNotFoundException(
+											string.Format("{0}'s DLL search path does not exists!", this.@namespace)
+										)
+							;
+				}
+
+				protected virtual string TryPath(string path, params string[] subdirs)
+				{
+					string t = SIO.Path.Combine(this.@namespace, path);
 					LOG.debug("Assembly TryPath: {0}", t);
+					LOG.force("Assembly TryPath: {0}", t);
 					string p = IO.Hierarchy.GAMEDATA.SolveFull(false, t, subdirs);
 					if (IO.Directory.Exists(p))
 						return IO.Hierarchy.GAMEDATA.Solve(false, t, subdirs);
@@ -294,25 +303,15 @@ namespace KSPe.Util
 			{
 				private readonly SType type;
 
-				public Loader(params string[] subdirs) : base()
+				public Loader(params string[] subdirs) : base(
+											SystemTools.Reflection.Version<T>.Namespace,
+											SystemTools.Reflection.Version<T>.EffectivePath,
+											subdirs)
 				{
 					this.type = typeof(T);
-					List<string> parms = new List<string>(subdirs);
-					parms.Insert(0, "PluginData");
-					parms.InsertRange(0, new List<string>(
-						IO.Hierarchy<T>.GAMEDATA.Solve().Split(SIO.Path.AltDirectorySeparatorChar, SIO.Path.DirectorySeparatorChar)
-						));
-					string[] sd = parms.ToArray();
-					this.searchPath = this.TryPath(".", sd)
-										?? throw new DllNotFoundException(
-											string.Format("{0}'s DLL search path does not exists!", this.type.Namespace)
-										)
-							;
-					LOG.debug("Assembly searchPath: {0}", this.searchPath);
-					this.EnterCritical();
 				}
 
-				private string TryPath(string path, params string[] subdirs)
+				protected override string TryPath(string path, params string[] subdirs)
 				{
 					string p = IO.Hierarchy<T>.GAMEDATA.SolveFull(false, path, subdirs);
 					LOG.debug("Assembly TryPath: {0}", p);

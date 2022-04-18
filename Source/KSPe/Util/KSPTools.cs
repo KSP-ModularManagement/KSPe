@@ -466,36 +466,46 @@ namespace KSPe.Util
 			}
 		}
 
-		public class Loader : SystemTools.Assembly.Loader
+
+		private static readonly System.Uri BASEURI = new System.Uri(IO.Path.Origin());
+		/* I CAN'T MAKE THIS THING TO WORK! */
+		internal static KAssemblyLoader.LoadedAssembly LoadPlugin(string searchPath, string asmName, string asmFile)
+		{
+			string asmPath = SIO.Path.Combine(searchPath, asmFile);
+			Uri uri = new Uri(BASEURI, asmPath);
+			SIO.FileInfo fi = new SIO.FileInfo(uri.AbsolutePath);
+			//LOG.debug("fi {0} -- url {1}", fi.FullName, uri.AbsoluteUri);
+			global::ConfigNode cn = new global::ConfigNode();
+			if (!KAssemblyLoader.LoadPlugin(fi, uri.AbsoluteUri, cn)) // If the return value of this thing working as expected?
+				throw new DllNotFoundException(string.Format("Could not load {0} from {1}!", asmName, asmFile));
+			foreach (KAssemblyLoader.LoadedAssembly a in KAssemblyLoader.loadedAssemblies) if (a.name.Equals(asmName))
+			{
+				a.Load();
+				return a;
+			}
+			throw new DllNotFoundException(string.Format("Could not load {0} from {1}!", asmName, asmFile));
+		}
+
+		internal class Loader : SystemTools.Assembly.Loader
 		{
 			protected Loader() : base() { }
-			public Loader(string namespaceOverride, params string[] subdirs) : base(namespaceOverride, subdirs) { }
+			public Loader(string @namespace, string effectivePath, params string[] subdirs) : base(@namespace, effectivePath, subdirs) { }
 
-			/* I CAN'T MAKE THIS THING TO WORK! */
-			private static readonly System.Uri BASEURI = new System.Uri(IO.Path.Origin());
 			public KAssemblyLoader.LoadedAssembly LoadAndStartup(string asmName, string asmFile)
 			{
-				string asmPath = SIO.Path.Combine(this.searchPath, asmFile);
-				Uri uri = new Uri(BASEURI, asmPath);
-				SIO.FileInfo fi = new SIO.FileInfo(uri.AbsolutePath);
-				//LOG.debug("fi {0} -- url {1}", fi.FullName, uri.AbsoluteUri);
-				global::ConfigNode cn = new global::ConfigNode();
-				if (!KAssemblyLoader.LoadPlugin(fi, uri.AbsoluteUri, cn)) // If the return value of this thing working as expected?
-					throw new DllNotFoundException(string.Format("Could not load {0} from {1}!", asmName, asmFile));
-				foreach (KAssemblyLoader.LoadedAssembly a in KAssemblyLoader.loadedAssemblies) if (a.name.Equals(asmName))
-				{
-					a.Load();
-					return a;
-				}
-				throw new DllNotFoundException(string.Format("Could not load {0} from {1}!", asmName, asmFile));
+				return LoadPlugin(this.searchPath, asmName, asmFile);
 			}
 		}
 
 		public class Loader<T> : SystemTools.Assembly.Loader<T>
 		{
 			private readonly SType type;
-
 			public Loader(params string[] subdirs) : base(subdirs) { }
+
+			public KAssemblyLoader.LoadedAssembly LoadAndStartup(string asmName, string asmFile)
+			{
+				return LoadPlugin(this.searchPath, asmName, asmFile);
+			}
 		}
 	}
 }
