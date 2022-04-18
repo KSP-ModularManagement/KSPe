@@ -132,6 +132,9 @@
     <Compile Include="..\KSPe\IO\Directory.cs">
       <Link>IO\Directory.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe\Properties\Annotations.cs">
+      <Link>Properties\Annotations.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />

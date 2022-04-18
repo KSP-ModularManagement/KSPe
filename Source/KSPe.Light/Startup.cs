@@ -19,23 +19,27 @@
 	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
 
 */
+using KSPe.Annotations;
+
 using UnityEngine;
 namespace KSPe
 {
 	[KSPAddon(KSPAddon.Startup.Instantly, true)]
 	public class Startup:MonoBehaviour
 	{
+		[UsedImplicitly]
 		private void Start()
 		{
 			LOG.force("Version {0}", Version.Text);
 		}
 
+		[UsedImplicitly]
 		private void OnDestroy()
 		{
-			// Someone, probably a FatalError, told us to quit the game.
 			if (!quitOnDestroy) return;
 
-			LOG.info("Quitting KSP due an unrecoreable error.");
+			// Someone, probably a FatalError, told us to quit the game.
+			Log.force("Quitting KSP due an unrecoverable error.");
 			UnityEngine.Application.Quit();
 		}
 
@@ -48,10 +52,10 @@ namespace KSPe
 			{
 				if (value)
 				{
-					System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
-					LOG.warn("was told to quit the game. Stackdump of the caller: {0}", t);
+					LOG.fatal(1, "I was told to quit the game. Stackdump of the caller follows.");
+					LOG.stack(typeof(Startup), true);
+					quitOnDestroy = value;
 				}
-				quitOnDestroy = value;
 			}
 		}
 
