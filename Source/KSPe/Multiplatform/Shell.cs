@@ -59,8 +59,22 @@ namespace KSPe.Multiplatform
 
 		public static string run(string program, string[] text)
 		{
-			using (Process cmd = new Process())
-			{ 
+			/*
+			 * This is absolutely f*cking unbeliable!!! 
+			 * They didn't called Close on the IDisposable implementation, so every
+			 * shell command I launched was leaking at least 3 file handlers (stdin, stdout and stderr)!!
+			 * 
+			 * By swithing using (Process cmd = new Process()) by this try-finally structure, I solved the
+			 * avalanche of Win32Exceptions being thrown when I have enought KSP.Lights being loaded.
+			 * 
+			 * GOD KNOWS how many users were royally screwed by this crap!!!
+			 * 
+			 * DAMN YOU MONO AND MICROSOFT "DEVELOPERS".
+			 */
+			Process cmd = null;
+			try
+			{
+				cmd = new Process();
 				cmd.StartInfo.FileName = program;
 				cmd.StartInfo.RedirectStandardInput = true;
 				cmd.StartInfo.RedirectStandardOutput = true;
@@ -77,12 +91,20 @@ namespace KSPe.Multiplatform
 				if (0 != cmd.ExitCode) Exception.raise(program, cmd.ExitCode, cmd.StandardError.ReadToEnd());
 				return cmd.StandardOutput.ReadToEnd();
 			}
+			finally
+			{
+				cmd?.Close();
+			}
 		}
 
 		public static string command(string command, string commandline)
 		{
-			using (Process cmd = new Process())
-			{ 
+			// See the remarks on `run` method. DAMN!!
+			Process cmd = null;
+			try 
+			{
+				cmd = new Process();
+
 				cmd.StartInfo.FileName = command;
 				cmd.StartInfo.Arguments = commandline;
 				cmd.StartInfo.RedirectStandardInput = false;
@@ -95,6 +117,10 @@ namespace KSPe.Multiplatform
 				cmd.WaitForExit();
 				if (0 != cmd.ExitCode) Exception.raise(command, cmd.ExitCode, cmd.StandardError.ReadToEnd());
 				return cmd.StandardOutput.ReadToEnd();
+			}
+			finally
+			{
+				cmd?.Close();
 			}
 		}
 	}

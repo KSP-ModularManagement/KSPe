@@ -91,7 +91,13 @@ namespace KSPe.Multiplatform
 				}
 				catch (Win32Exception e)
 				{
-					// WHAT IN HELL??? Since then this crappy exception is being thrown by Mono here???
+					// This happens here when the System is running out of File Handlers. 
+					// The Shell.Command *WAS* being used on a IDisposable structure, but unfortunately
+					// the apparently **IDIOTS** that coded that crap apparently was not closing the
+					// file handlers on the IDisposable implementation.
+					// 
+					// This is also a hint that I should push KSPe to mainstream the fastest I can, and start to phase out
+					// the KSPe.Light program - I'm getting a huge surface of exposition to MS/Mono/Whoever crap.
 					Log.warn("Reparse_readlink got a {0} ", e.Message);
 					return path;	// May God help the caller. :)
 				}
