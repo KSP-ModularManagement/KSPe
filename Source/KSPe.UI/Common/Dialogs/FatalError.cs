@@ -34,9 +34,7 @@ namespace KSPe.Common.Dialogs
 
 This is a Show Stopper problem. Your best line of action is to click the OK button to {1}.
 
-If you choose to ignore this message and click Cancel to proceed, be advised that your savegames can get corrupted at any time, even when things appear to work by now - and the salvage can be harder.
-
-Backup everything *NOW* if you choose to ignore this message and proceed - it's recommended to use S.A.V.E. to automate this task for you.";
+If you choose to ignore this message and click Cancel to proceed, be advised that your savegames can get corrupted at any time, even when things appear to work by now. Backup everything *NOW* if you choose to ignore this message and proceed.";
 
 		public static void Show(KSPe.Util.AbstractException ex)
 		{
