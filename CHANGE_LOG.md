@@ -1,5 +1,9 @@
 # KSP API Extensions/L :: Change Log
 
+* 2022-0425: 2.4.1.15 (Lisias) for KSP >= 1.2 PRE-RELEASE
+	+ Fixed a lame mishap handling `Module Manager`
+	+ Some small internal enhancements on the Exceptions and Error dialogs
+	+ New `KSPe.IO.Path.GetPath` helper
 * 2022-0418: 2.4.1.14 (Lisias) for KSP >= 1.2 PRE-RELEASE
 	+ Implements new helpers on `KSPe.Util.SystemTools`
 	+ **Finally** Implementing the Compatibility checking tools!
