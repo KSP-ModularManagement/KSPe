@@ -118,7 +118,8 @@ namespace KSPe.IO
 		private static string root = null;
 		private static readonly Dictionary<string,string> UNREPARSE = new Dictionary<string, string>();
 		private static readonly List<string> UNREPARSE_KEYS = new List<string>();
-		internal static string Origin()
+		[System.Obsolete("I'm unconfortable on exporting this call. Don't expect it on the next release, I can change my mind at any time!")]
+		public static string Origin()
 		{
 			if (null != root) return root;	// Preventing accidents. No reentrant.
 

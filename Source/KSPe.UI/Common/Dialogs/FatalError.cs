@@ -34,7 +34,10 @@ namespace KSPe.Common.Dialogs
 
 This is a Show Stopper problem. Your best line of action is to click the OK button to {1}.
 
-If you choose to ignore this message and click Cancel to proceed, be advised that your savegames can get corrupted at any time, even when things appear to work by now. Backup everything *NOW* if you choose to ignore this message and proceed.";
+If you choose to ignore this message and click Cancel to proceed, be advised that your savegames can get corrupted at any time, even when things appear to work by now. Backup everything *NOW* if you choose to ignore this message and proceed.
+
+Your KSP is running from {2}.
+";
 
 		public static void Show(KSPe.Util.AbstractException ex)
 		{
@@ -87,7 +90,7 @@ If you choose to ignore this message and click Cancel to proceed, be advised tha
 			// TODO: Shove a MUTEX here to prevent more than one AlertBox to be displayed at the same time!
 			dlg.Show(
 				"Houston, we have a Problem!",
-				String.Format(MSG, errorMessage, actionMessage),
+				String.Format(MSG, errorMessage, actionMessage, IO.Path.Origin()),
 				lambda,
 				win, text
 			);
