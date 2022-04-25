@@ -31,9 +31,21 @@ using SystemTools = KSPe.Util.SystemTools;
 
 namespace KSPe.Util
 {
-	public class InstallmentException : AbstractException
+	public abstract class InstallmentException : AbstractException
 	{
-		internal InstallmentException(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
+		private static readonly string message = @"{0}
+
+		Your KSP is running from {1}.
+";
+
+		public override string ToLongMessage()
+		{
+			return string.Format(message, this.GetLongMessage(), IO.Hierarchy.ROOTPATH);
+		}
+
+		protected abstract string GetLongMessage();
+
+		protected InstallmentException(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
 
 		protected string CleanPath(string path)
 		{
@@ -47,7 +59,7 @@ namespace KSPe.Util
 
 	public static class Installation
 	{
-		public class Exception : InstallmentException
+		public abstract class Exception : InstallmentException
 		{
 			internal Exception(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
 		}
@@ -74,7 +86,7 @@ Your KSP is running on [{3}]."
 				this.installedDllPath = installedDllPath;
 			}
 
-			public override string ToLongMessage()
+			protected override string GetLongMessage()
 			{
 				return string.Format(message, this.name
 					, this.CleanPath(this.intendedPath)
@@ -102,7 +114,7 @@ Your KSP is running in [{1}]. Check {0}'s INSTALL instructions."
 				this.assemblyName = assemblyName;
 			}
 
-			public override string ToLongMessage()
+			protected override string GetLongMessage()
 			{
 				return string.Format(message, this.assemblyName, IO.Hierarchy.ROOTPATH);
 			}
@@ -131,7 +143,7 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 				this.paths = paths.ToArray();
 			}
 
-			public override string ToLongMessage()
+			protected override string GetLongMessage()
 			{
 				List<string> paths = new List<string>();
 				foreach(string path in this.paths) paths.Add(string.Format("* {0}\n", IO.Hierarchy.CalculateRelativePath(path, IO.Hierarchy.ROOTPATH)));
@@ -220,7 +232,7 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 
 	public static class Compatibility
 	{
-		public class Exception : InstallmentException
+		public abstract class Exception : InstallmentException
 		{
 			internal Exception(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
 		}
@@ -243,7 +255,7 @@ It will only run on the following Unity Versions [ {3} ] ! Install {0} on a KSP 
 				this.desiredUnityVersions = desiredUnityVersions;
 			}
 
-			public override string ToLongMessage()
+			protected override string GetLongMessage()
 			{
 				return string.Format(message, this.name, this.version, UnityTools.UnityVersion, this.JoinUnityVersions(), this.JoinKSPVersions());
 			}
@@ -282,7 +294,7 @@ It will only run on the following KSP Versions [ {3} ] ! Install {0} on a compat
 				this.max = max;
 			}
 
-			public override string ToLongMessage()
+			protected override string GetLongMessage()
 			{
 				return string.Format(message, this.name, this.version, KSP.Version.Current, this.JoinKSPVersions());
 			}
@@ -322,7 +334,7 @@ Your KSP is running on [{5}]."
 				this.offender = offender;
 			}
 
-			public override string ToLongMessage()
+			protected override string GetLongMessage()
 			{
 				return string.Format(message
 								, this.offendedName
@@ -359,7 +371,7 @@ Your KSP is running on [{4}]."
 				this.offender = offender;
 			}
 
-			public override string ToLongMessage()
+			protected override string GetLongMessage()
 			{
 				return string.Format(message
 									, this.offendedName
@@ -398,7 +410,7 @@ You need to install the Add'On than provides the missing Type ""{2}""."
 				this.offenderName = offenderName;
 			}
 
-			public override string ToLongMessage()
+			protected override string GetLongMessage()
 			{
 				return string.Format(message, this.offendedName, this.offendedVersion, this.offenderName);
 			}
@@ -426,7 +438,7 @@ You need to install the Add'On than provides the missing Assembly ""{2}""."
 				this.offenderName = offenderName;
 			}
 
-			public override string ToLongMessage()
+			protected override string GetLongMessage()
 			{
 				return string.Format(message, this.offendedName, this.offendedVersion, this.offenderName);
 			}
