@@ -33,7 +33,7 @@ namespace KSPe.Util.Log {
 			}
 		}
 
-		void ILogHandler.LogException(Exception exception, UnityEngine.Object context) {}
+		void ILogHandler.LogException(System.Exception exception, UnityEngine.Object context) {}
 
 		void ILogHandler.LogFormat(LogType logType, UnityEngine.Object context, string format, params object[] args) {}
 	}

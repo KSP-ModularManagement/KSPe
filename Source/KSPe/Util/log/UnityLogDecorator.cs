@@ -52,7 +52,7 @@ namespace KSPe.Util.Log
 			UnityEngine.Debug.logger.logHandler = this;
 		}
 
-		void UnityEngine.ILogHandler.LogException(Exception exception, UnityEngine.Object context)
+		void UnityEngine.ILogHandler.LogException(System.Exception exception, UnityEngine.Object context)
 		{
 			lock (MUTEX)
 			{

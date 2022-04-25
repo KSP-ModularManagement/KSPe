@@ -44,10 +44,10 @@ namespace KSPe.Util.Log {
 
 		private class LogExceptionMsg : AbstractLogMsg
 		{
-			internal readonly Exception exception;
+			internal readonly System.Exception exception;
 			internal readonly UnityEngine.Object context;
 
-			internal LogExceptionMsg(Exception exception, UnityEngine.Object context)
+			internal LogExceptionMsg(System.Exception exception, UnityEngine.Object context)
 			{
 				this.exception = exception;
 				this.context = context;
@@ -89,7 +89,7 @@ namespace KSPe.Util.Log {
 			this.upstream = UnityEngine.Debug.logger.logHandler;
 		}
 
-		void UnityEngine.ILogHandler.LogException(Exception exception, UnityEngine.Object context)
+		void UnityEngine.ILogHandler.LogException(System.Exception exception, UnityEngine.Object context)
 		{
 			lock (MUTEX)
 			{

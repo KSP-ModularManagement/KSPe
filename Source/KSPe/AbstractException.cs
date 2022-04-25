@@ -23,7 +23,7 @@
 using System;
 namespace KSPe.Util
 {
-	public abstract class AbstractException : Exception
+	public abstract class AbstractException : System.Exception
 	{
 		private readonly object[] parms;
 

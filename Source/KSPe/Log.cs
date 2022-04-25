@@ -53,12 +53,12 @@ namespace KSPe
 			log.error(msg, @params);
 		}
 
-		public static void error(Exception e, object offended)
+		public static void error(System.Exception e, object offended)
 		{
 			log.error(offended, e);
 		}
 
-		public static void error(Exception e, string msg, params object[] @params)
+		public static void error(System.Exception e, string msg, params object[] @params)
 		{
 			log.error(e, msg, @params);
 		}

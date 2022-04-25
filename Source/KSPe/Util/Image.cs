@@ -27,9 +27,9 @@ using TextureFormat = UnityEngine.TextureFormat;
 using UTexture2D = UnityEngine.Texture2D;
 
 namespace KSPe.Util.Image {
-	public class Error : Exception
+	public class Error : System.Exception
 	{
-		public readonly Exception ex;
+		public readonly System.Exception ex;
 		private readonly string message;
 		private readonly object[] parameters;
 
@@ -46,7 +46,7 @@ namespace KSPe.Util.Image {
 			this.parameters = parameters;
 		}
 
-		public Error(Exception ex, string message, params object[] parameters) : base(string.Format(message, parameters))
+		public Error(System.Exception ex, string message, params object[] parameters) : base(string.Format(message, parameters))
 		{
 			this.ex = ex;
 			this.message = message;

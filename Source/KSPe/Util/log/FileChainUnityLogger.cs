@@ -95,7 +95,7 @@ namespace KSPe.Util.Log {
 			this.write(message);
 		}
 
-		protected override void logException(string message, Exception e)
+		protected override void logException(string message, System.Exception e)
 		{
 			UnityEngine.Debug.LogError(message);
 			this.write(message);

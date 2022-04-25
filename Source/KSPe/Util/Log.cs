@@ -184,7 +184,7 @@ namespace KSPe.Util.Log
 
 		protected abstract LogMethod select();
 		protected abstract void log(string message);
-		protected abstract void logException(string message, Exception e);
+		protected abstract void logException(string message, System.Exception e);
 
 		public void force(string message, params object[] @params)
 		{
@@ -235,7 +235,7 @@ namespace KSPe.Util.Log
 			this.select()(this.BuildMessage(Level.WARNING, message, @params));
 		}
 
-		public void warn(Exception e, string message, params object[] @params)
+		public void warn(System.Exception e, string message, params object[] @params)
 		{
 			if (!this.IsLoggable(Level.WARNING)) return;
 			this.logException(this.BuildMessage(Level.WARNING, message, @params), e);
@@ -259,7 +259,7 @@ namespace KSPe.Util.Log
 			this.select()(this.BuildMessage(Level.ERROR, message, @params));
 		}
 
-		public void error(Exception e, string message, params object[] @params)
+		public void error(System.Exception e, string message, params object[] @params)
 		{
 			if (!this.IsLoggable(Level.ERROR)) return;
 
@@ -296,7 +296,7 @@ namespace KSPe.Util.Log
 			this.select()(this.BuildMessage(Level.ERROR, message, @params));
 		}
 
-		public void fatal(Exception e, string message, params object[] @params)
+		public void fatal(System.Exception e, string message, params object[] @params)
 		{
 			this.ParseStack(out string caller, out int line);
 			message = string.Format("{0} at {1}:{2}", message, caller, line);

@@ -129,7 +129,7 @@ namespace KSPe.Util.Image {
 				dbg(ex);
 				throw ex;
 			}
-			catch (Exception ex)
+			catch (System.Exception ex)
 			{
 				dbg(ex);
 				throw new Error(ex, "Failed to load (are you missing a file?): {0}", fileNamePath);
@@ -247,7 +247,7 @@ namespace KSPe.Util.Image {
 		}
 
 		[ConditionalAttribute("DEBUG")]
-		private static void dbg(Exception ex)
+		private static void dbg(System.Exception ex)
 		{
 			KSPe.Log.error(ex, "Util.Image.Texture2D");
 		}
