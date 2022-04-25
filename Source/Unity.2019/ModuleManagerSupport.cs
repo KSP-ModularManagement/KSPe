@@ -23,7 +23,7 @@ using System.Collections.Generic;
 
 namespace KSP.Unity2019
 {
-	public static class ModuleManagerSupport
+	public class ModuleManagerSupport : UnityEngine.MonoBehaviour
 	{
 		public static IEnumerable<string> ModuleManagerAddToModList()
 		{

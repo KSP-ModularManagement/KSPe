@@ -24,7 +24,7 @@ using System.Collections.Generic;
 
 namespace KSP.KSP19
 {
-	public static class ModuleManagerSupport
+	public class ModuleManagerSupport : UnityEngine.MonoBehaviour
 	{
 		public static IEnumerable<string> ModuleManagerAddToModList()
 		{
