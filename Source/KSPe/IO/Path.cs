@@ -71,6 +71,16 @@ namespace KSPe.IO
 		public static string GetFileName(string path)					{ return SIO.Path.GetFileName(path); }
 		public static string GetFileNameWithoutExtension(string path)	{ return SIO.Path.GetFileNameWithoutExtension(path); }
 
+		public static string GetPath(string path)
+		{
+			UnityEngine.Debug.LogFormat("*** {0}", path);
+			path = GetFullPath(path);
+			UnityEngine.Debug.LogFormat("*** {0}", path);
+			path = path.Replace(Origin(), "");
+			UnityEngine.Debug.LogFormat("*** {0} || {1}", path, Origin());
+			return path;
+		}
+
 		public static string GetFullPath(string path)
 		{
 			return GetFullPath(path, false);
@@ -78,6 +88,7 @@ namespace KSPe.IO
 
 		public static string GetFullPath(string path, bool iKnowItsDir)
 		{
+			// No, we don't use CurrentDir here, we are confined insided the KSP folder structure, rememeber? ;)
 			if (!SIO.Path.IsPathRooted(path)) return GetFullPath(Combine(SIO.Directory.GetCurrentDirectory(), path), iKnowItsDir);
 			string r = GetAbsolutePath(path);
 			foreach (string k in UNREPARSE_KEYS)
