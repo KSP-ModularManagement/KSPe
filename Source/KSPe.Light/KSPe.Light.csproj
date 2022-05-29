@@ -111,9 +111,6 @@
     <Compile Include="Multiplatform\stubs\ImageStub.cs" />
     <Compile Include="Multiplatform\Tools.cs" />
     <Compile Include="Util\log\UnityUiThreadSafeStub.cs" />
-    <Compile Include="..\KSPe\Multiplatform\Tools\WindowsTools.cs">
-      <Link>Multiplatform\Tools\WindowsTools.cs</Link>
-    </Compile>
     <Compile Include="..\KSPe\FatalErrors.cs">
       <Link>FatalErrors.cs</Link>
     </Compile>
@@ -134,6 +131,9 @@
     </Compile>
     <Compile Include="..\KSPe\Properties\Annotations.cs">
       <Link>Properties\Annotations.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\Multiplatform\Tools\LowLevelTools.cs">
+      <Link>Multiplatform\Tools\LowLevelTools.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
