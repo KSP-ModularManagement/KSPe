@@ -1,5 +1,9 @@
 # KSP API Extensions/L :: Change Log
 
+* 2022-0529: 2.4.1.16 (Lisias) for KSP >= 1.2
+	+ And yet another lame mistake fixed. Big thanks to [lion328](https://github.com/lion328) for their efforts on reporting the problem **AND** working around by obtusity!
+	+ Closes
+		- [#31](https://github.com/net-lisias-ksp/KSPe/issues/31) 
 * 2022-0425: 2.4.1.15 (Lisias) for KSP >= 1.2 PRE-RELEASE
 	+ Fixed a lame mishap handling `Module Manager`
 	+ Some small internal enhancements on the Exceptions and Error dialogs
