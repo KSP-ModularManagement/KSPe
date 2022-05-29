@@ -129,15 +129,15 @@ namespace KSPe.Multiplatform
 
 		public static string ReparsePath(string path)
 		{
+			Log.debug("Reparsing {0}", path);
+
 			//try
 			//{
 			//	if (null != realpath) return Reparse_realpath(path);
 			//} catch (System.Exception) { } // If anything goes wrong, just try readlink.
 
-			Log.debug("Reparsing {0}", path);
-			if (null != readlink) return Reparse_readlink(path);
-
 			if (LowLevelTools.Windows.IsThisWindows) return Reparse_windows(path);
+			if (null != readlink) return Reparse_readlink(path);
 
 			// If everything else fails, oh well...
 			return path;
