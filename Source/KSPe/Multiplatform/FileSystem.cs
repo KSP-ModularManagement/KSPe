@@ -37,7 +37,7 @@ namespace KSPe.Multiplatform
 		};
 		static FileSystem()
 		{
-			foreach (string path in posix_paths)
+			if (KSPe.Multiplatform.LowLevelTools.Unix.IsThisUnix) foreach (string path in posix_paths)
 			{
 				if (!SIO.Directory.Exists(path)) continue;
 				if (null == realpath) foreach (string p in SIO.Directory.GetFiles(path, "realpath"))
@@ -131,12 +131,11 @@ namespace KSPe.Multiplatform
 		{
 			Log.debug("Reparsing {0}", path);
 
+			if (LowLevelTools.Windows.IsThisWindows) return Reparse_windows(path);
 			//try
 			//{
 			//	if (null != realpath) return Reparse_realpath(path);
 			//} catch (System.Exception) { } // If anything goes wrong, just try readlink.
-
-			if (LowLevelTools.Windows.IsThisWindows) return Reparse_windows(path);
 			if (null != readlink) return Reparse_readlink(path);
 
 			// If everything else fails, oh well...

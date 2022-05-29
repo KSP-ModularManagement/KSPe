@@ -27,6 +27,15 @@ using System.Text;
 
 namespace KSPe.Multiplatform.LowLevelTools {
 
+	public static class Unix
+	{
+		// Reference: https://github.com/mono/mono/blob/main/mcs/class/System.Core/System/Util.cs
+		public static bool IsThisUnix => 4 == (int)System.Environment.OSVersion.Platform
+										|| 128 == (int)System.Environment.OSVersion.Platform
+										|| 6 == (int)System.Environment.OSVersion.Platform
+									;
+    }
+
 	public static class Windows
 	{
 		// Reference https://github.com/mono/mono/blob/main/mcs/class/referencesource/mscorlib/system/platformid.cs
