@@ -1,5 +1,7 @@
 # KSP API Extensions/L :: Change Log
 
+* 2022-0618: 2.4.1.17 (Lisias) for KSP >= 1.2
+	+ Fixing a mishap on the deployment.
 * 2022-0529: 2.4.1.16 (Lisias) for KSP >= 1.2
 	+ And yet another lame mistake fixed. Big thanks to [lion328](https://github.com/lion328) for their efforts on reporting the problem **AND** working around by obtusity!
 	+ Closes
