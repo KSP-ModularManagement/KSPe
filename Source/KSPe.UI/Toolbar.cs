@@ -721,12 +721,27 @@ namespace KSPe.UI.Toolbar
 
 		internal void start()
 		{
-			ApplicationLauncherButton applicationLauncherButton = this.createApplicationLauncher();
-			Log.assert(() => null != applicationLauncherButton, "ApplicationLauncherButton must be NOT NULL");
-			if (null == applicationLauncherButton) return;
-
-			this.initHandlers(applicationLauncherButton);
+			if (this.IsVisibleOnCurrentScene())
+			{	// Prevents the button from being displayed if the ApplicationLauncher was already initialized!
+				ApplicationLauncherButton applicationLauncherButton = this.createApplicationLauncher();
+				Log.assert(() => null != applicationLauncherButton, "ApplicationLauncherButton must be NOT NULL");
+				if (null == applicationLauncherButton) return;
+				this.initHandlers(applicationLauncherButton);
+			}
 			this.state.init();
+		}
+
+		private bool IsVisibleOnCurrentScene()
+		{
+			bool r = this.visibleInScenes != ApplicationLauncher.AppScenes.NEVER;
+			r &= this.visibleInScenes == ApplicationLauncher.AppScenes.ALWAYS;
+			r &= GameScenes.MAINMENU == HighLogic.LoadedScene && 0 != (this.visibleInScenes & ApplicationLauncher.AppScenes.MAINMENU);
+			r &= GameScenes.SPACECENTER == HighLogic.LoadedScene && 0 != (this.visibleInScenes & ApplicationLauncher.AppScenes.SPACECENTER);
+			r &= GameScenes.TRACKSTATION == HighLogic.LoadedScene && 0 != (this.visibleInScenes & ApplicationLauncher.AppScenes.TRACKSTATION);
+			r &= HighLogic.LoadedSceneIsEditor && 0 != (this.visibleInScenes & (ApplicationLauncher.AppScenes.SPH | ApplicationLauncher.AppScenes.VAB));
+			r &= HighLogic.LoadedSceneIsFlight && 0 != (this.visibleInScenes & ApplicationLauncher.AppScenes.FLIGHT);
+			r &= (HighLogic.LoadedSceneIsFlight && MapView.MapIsEnabled) && 0 != (this.visibleInScenes & ApplicationLauncher.AppScenes.MAPVIEW);
+			return r;
 		}
 
 		private ApplicationLauncherButton createApplicationLauncher()
