@@ -664,7 +664,6 @@ namespace KSPe.UI.Toolbar
 
 		internal bool IsReady => null != this.stockTolbarController;
 
-
 		private void Dummy() { }
 		internal void init()
 		{
@@ -718,7 +717,7 @@ namespace KSPe.UI.Toolbar
 			this.stockTolbarController.onHoverOut = this.dummy;
 			this.stockTolbarController.onTrue = this.dummy;
 			this.stockTolbarController.onFalse = this.dummy;
-			ApplicationLauncher.Instance.RemoveModApplication(this.ToolbarController);
+			ApplicationLauncher.Instance.RemoveModApplication(this.stockTolbarController);
 			this.stockTolbarController = null;
 		}
 
@@ -853,6 +852,11 @@ namespace KSPe.UI.Toolbar
 			if (this.toolbarEvents.Has(kind) && null != this.toolbarEvents[kind].fallingEdge)
 				this.toolbarEvents[kind].fallingEdge();
 		}
+
+		public override String ToString()
+		{
+			return string.Format("{0}({1},{2})", this.GetType().Name, this.owner, this.id);
+		}
 	}
 
 	public class Toolbar
@@ -935,7 +939,11 @@ namespace KSPe.UI.Toolbar
 		{
 			// If we are added twice, just ignore. My previous approach of
 			// removing the button from the ApplicationLauncher just to read it was silly...
-			if (this.buttons.Contains(button)) return this;
+			if (this.buttons.Contains(button))
+			{
+				Log.error("Toolbar.Add(Button): Button {1} (or some other with the same name) is already present on {0} Controller!", this, button);
+				return this;
+			}
 
 			button.init();
 			if (this.IsStockReady)
@@ -946,6 +954,11 @@ namespace KSPe.UI.Toolbar
 
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
 		public bool Contains(Button button) => this.buttons.Contains(button);
+
+		public override String ToString()
+		{
+			return string.Format("{0}({1})", this.GetType().Name, this.displayName);
+		}
 	}
 
 	public class Controller
