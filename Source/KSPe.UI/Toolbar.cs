@@ -503,6 +503,38 @@ namespace KSPe.UI.Toolbar
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
 		public static Button Create(object owner, string id,
 				ApplicationLauncher.AppScenes visibleInScenes
+				, UnityEngine.Texture2D largeIconEnabled, UnityEngine.Texture2D largeIconDisabled
+				, UnityEngine.Texture2D smallIconEnabled, UnityEngine.Texture2D smallIconDisabled
+				, string toolTip = null
+			)
+		{
+			return Create(owner, id
+					, visibleInScenes
+					, State.Data.Create(largeIconEnabled, smallIconEnabled)
+					, State.Data.Create(largeIconDisabled, smallIconDisabled)
+					, toolTip
+				);
+		}
+
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		public static Button Create(object owner, string id
+				, ApplicationLauncher.AppScenes visibleInScenes
+				, State.Data.Item largeActive, State.Data.Item largeInactive
+				, State.Data.Item smallActive, State.Data.Item smallInactive
+				, string toolTip = null
+			)
+		{
+			return Create(owner, id
+					, visibleInScenes
+					, State.Data.Create(largeActive, smallActive)
+					, State.Data.Create(largeInactive, smallInactive)
+					, toolTip
+				);
+		}
+
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		public static Button Create(object owner, string id,
+				ApplicationLauncher.AppScenes visibleInScenes
 				, State.Data iconEnabled, State.Data iconDisabled
 				, string toolTip = null
 			)
@@ -518,15 +550,31 @@ namespace KSPe.UI.Toolbar
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
 		public static Button Create(object owner, string id,
 				ApplicationLauncher.AppScenes visibleInScenes
-				, UnityEngine.Texture2D largeIconEnabled, UnityEngine.Texture2D largeIconDisabled
-				, UnityEngine.Texture2D smallIconEnabled, UnityEngine.Texture2D smallIconDisabled
+				, UnityEngine.Texture2D largeIcon
+				, UnityEngine.Texture2D smallIcon
 				, string toolTip = null
 			)
 		{
 			return Create(owner, id
 					, visibleInScenes
-					, State.Data.Create(largeIconEnabled, smallIconEnabled)
-					, State.Data.Create(largeIconDisabled, smallIconDisabled)
+					, State.Data.Create(largeIcon, smallIcon)
+					, State.Data.Create(largeIcon, smallIcon)
+					, toolTip
+				);
+		}
+
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		public static Button Create(object owner, string id
+				, ApplicationLauncher.AppScenes visibleInScenes
+				, State.Data.Item large
+				, State.Data.Item small
+				, string toolTip = null
+			)
+		{
+			return Create(owner, id
+					, visibleInScenes
+					, State.Data.Create(large, small)
+					, State.Data.Create(large, small)
 					, toolTip
 				);
 		}
