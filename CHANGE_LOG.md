@@ -1,5 +1,8 @@
 # KSP API Extensions/L :: Change Log
 
+* 2022-0627: 2.4.1.18 (Lisias) for KSP >= 1.2
+	+ Better error handling on Button registering on the UI.Toolbar
+	+ Some additional Button creator helpers
 * 2022-0618: 2.4.1.17 (Lisias) for KSP >= 1.2
 	+ Fixing a mishap on the deployment.
 * 2022-0529: 2.4.1.16 (Lisias) for KSP >= 1.2
