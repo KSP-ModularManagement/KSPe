@@ -29,7 +29,6 @@ namespace KSPe.Util.Log
 	{
 		OFF = 0,
 		ERROR = 1,
-		ASSERT = 1,
 		WARNING = 2,
 		INFO = 3,
 		DETAIL = 4,
@@ -279,7 +278,7 @@ namespace KSPe.Util.Log
 		public void assert(Func<bool> f, string message, object[] @params)
 		{
 			if (!(this.IsLoggable(Level.ERROR) && f())) return;
-			this.select()(this.BuildMessage(Level.ASSERT, message, @params));
+			this.select()(this.BuildMessage("ASSERT", message, @params));
 		}
 
 		public void fatal(int skip, string message, params object[] @params)
