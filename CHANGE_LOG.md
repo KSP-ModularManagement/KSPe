@@ -1,5 +1,8 @@
 # KSP API Extensions/L :: Change Log
 
+* 2022-0710: 2.4.1.19 (Lisias) for KSP >= 1.2
+	+ Fixed a stupidity on the logging system
+	+ Adding some niceties to the `ConfigNodeWithSteroids`
 * 2022-0627: 2.4.1.18 (Lisias) for KSP >= 1.2
 	+ Better error handling on Button registering on the UI.Toolbar
 	+ Some additional Button creator helpers
