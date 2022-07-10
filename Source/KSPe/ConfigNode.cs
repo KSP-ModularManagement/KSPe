@@ -20,6 +20,7 @@
 
 */
 using System;
+using System.Linq;
 using System.Reflection;
 
 namespace KSPe
@@ -45,6 +46,30 @@ namespace KSPe
 		public T GetValue<T>(string name, T defaultValue)
 		{
 			return base.HasValue(name) ? this.GetValue<T>(name) : defaultValue;
+		}
+
+		public bool SetArrayOf<T>(string name, T[] defaultValue)
+		{
+			string value = string.Join(", ", defaultValue.Select(s => s.ToString()).ToArray());
+			return base.SetValue(name, value);
+		}
+
+		public T[] GetArrayOf<T>(string name, T[] defaultValue) => GetArrayOf<T>(name)??defaultValue;
+		public T[] GetArrayOf<T>(string name)
+		{
+			if (!base.HasValue(name)) return null;
+			try
+			{
+				string value = base.GetValue(name);
+				return value.Split(',').Select(s => (T)Convert.ChangeType(s, typeof(T))).ToArray();
+			}
+			catch (Exception e)
+			{
+				if (!(e is InvalidCastException || e is FormatException || e is OverflowException || e is ArgumentNullException))
+					throw;
+				Log.warn("Failed to convert string value \"{0}\" to type {1}", name, typeof(T).Name);
+				return null;
+			}
 		}
 
 		public new ConfigNodeWithSteroids GetNode(string name)
