@@ -33,18 +33,7 @@ namespace KSPe.Util
 {
 	public abstract class InstallmentException : AbstractException
 	{
-		private static readonly string message = @"{0}
-
-		Your KSP is running from {1}.
-";
-
-		public override string ToLongMessage()
-		{
-			return string.Format(message, this.GetLongMessage(), IO.Hierarchy.ROOTPATH);
-		}
-
 		protected abstract string GetLongMessage();
-
 		protected InstallmentException(string shortMessage, params object[] @params) : base(shortMessage, @params) { }
 
 		protected string CleanPath(string path)
@@ -68,9 +57,7 @@ namespace KSPe.Util
 		{
 			private static readonly string message = @"{0} is installed on the wrong Directory!
 
-It should be installed on [{1}] but it's currently installed on [{2}] ! Delete the latter and be sure to install {0} on the former.
-
-Your KSP is running on [{3}]."
+It should be installed on [{1}] but it's currently installed on [{2}] ! Delete the latter and be sure to install {0} on the former."
 			;
 
 			private static readonly string shortMessage = "{0} should be installed on [{1}], not on [{2}].";
@@ -91,7 +78,6 @@ Your KSP is running on [{3}]."
 				return string.Format(message, this.name
 					, this.CleanPath(this.intendedPath)
 					, this.CleanPath(this.installedDllPath)
-					, IO.Hierarchy.ROOTPATH
 				);;
 			}
 		}
@@ -102,9 +88,7 @@ Your KSP is running on [{3}]."
 
 			private static readonly string message = @"{0} was not found on this installment!
 
-You need to install it.
-
-Your KSP is running in [{1}]. Check {0}'s INSTALL instructions."
+You need to install it, check {0}'s INSTALL instructions."
 			;
 
 			private static readonly string shortMessage = "There is no instance of the Add'On {0}. You need to install it.";
@@ -116,7 +100,7 @@ Your KSP is running in [{1}]. Check {0}'s INSTALL instructions."
 
 			protected override string GetLongMessage()
 			{
-				return string.Format(message, this.assemblyName, IO.Hierarchy.ROOTPATH);
+				return string.Format(message, this.assemblyName);
 			}
 		}
 
@@ -130,7 +114,7 @@ Your KSP is running in [{1}]. Check {0}'s INSTALL instructions."
 {1}
 (On KSP 1.8 and newer, this list is not accurate and you must find the copies manually)
 
-Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
+Check {0}'s INSTALL instructions."
 			;
 
 			private static readonly string shortMessage = "There are {1} instances of the Add'On {0}. Only one must exist.";
@@ -147,7 +131,7 @@ Your KSP is running on [{2}]. Check {0}'s INSTALL instructions."
 			{
 				List<string> paths = new List<string>();
 				foreach(string path in this.paths) paths.Add(string.Format("* {0}\n", IO.Hierarchy.CalculateRelativePath(path, IO.Hierarchy.ROOTPATH)));
-				return string.Format(message, this.assemblyName, string.Join("", paths.ToArray()), IO.Hierarchy.ROOTPATH);
+				return string.Format(message, this.assemblyName, string.Join("", paths.ToArray()));
 			}
 		}
 
@@ -320,9 +304,7 @@ It will only run on the following KSP Versions [ {3} ] ! Install {0} on a compat
 
 The Type ""{2}"" from ""{3}"" is conflicting with {0}.
 
-You need to <b>completely</b> remove [{4}] and its respective files and directories.
-
-Your KSP is running on [{5}]."
+You need to <b>completely</b> remove [{4}] and its respective files and directories."
 			;
 
 			private static readonly string shortMessage = "{0} {1} found a conflicting type called {2}. The respective Add'On must be uninstalled.";
@@ -342,7 +324,6 @@ Your KSP is running on [{5}]."
 								, this.offender.FullName
 								, this.offender.Assembly.FullName
 								, this.CleanPath(SIO.Path.GetDirectoryName(this.offender.Assembly.Location))
-								, IO.Hierarchy.ROOTPATH
 							);
 			}
 		}
@@ -357,9 +338,7 @@ Your KSP is running on [{5}]."
 
 The Asssembly ""{2}"" is not compatible with {0}.
 
-You need to <b>completely</b> remove [{3}] and its respective files and directories.
-
-Your KSP is running on [{4}]."
+You need to <b>completely</b> remove [{3}] and its respective files and directories."
 			;
 
 			private static readonly string shortMessage = "{0} {1} found an incompatible type called {2}. The respective Add'On must be uninstalled.";
@@ -378,7 +357,6 @@ Your KSP is running on [{4}]."
 									, this.offendedVersion
 									, this.offender.FullName
 									, this.CleanPath(SIO.Path.GetDirectoryName(this.offender.Location))
-									, IO.Hierarchy.ROOTPATH
 								);
 			}
 		}
