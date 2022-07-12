@@ -1,5 +1,12 @@
 # KSP API Extensions/L :: Change Log
 
+* 2022-0713: 2.4.1.21 (Lisias) for KSP >= 1.2
+	+ Solve some performance issues on the KSPe.IO.Directory "unreparsing"
+		- As KSP starts to get crowded, the fight for memory starts to get gory, and the damned Unity's garbage collector is crippled. 
+	+ Fixing a mess I did on the Fatal Error messages... :P
+		- (coding late night now and then haunts us later!)
+* 2022-0712: 2.4.1.20 (Lisias) for KSP >= 1.2
+	+ **DITCHED** as I released a new version in less that 24 hours
 * 2022-0710: 2.4.1.19 (Lisias) for KSP >= 1.2
 	+ Fixed a stupidity on the logging system
 	+ Adding some niceties to the `ConfigNodeWithSteroids`
