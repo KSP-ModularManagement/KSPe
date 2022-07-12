@@ -59,6 +59,7 @@
     <ProjectReference Include="..\KSPe\KSPe.csproj">
       <Project>{1DCC1744-4EEF-49DF-961C-A73F3ADCC6C5}</Project>
       <Name>KSPe</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -24,7 +24,16 @@ namespace KSPe.Util
 			{
 				Console.WriteLine(string.Format(msg, @params));
 			}
+		}
+	}
 
-        }
+	public static class LOG
+	{
+		private static Log.Logger log = new Log.Logger();
+
+		internal static void debug(string msg, params object[] @params)
+		{
+			log.debug(msg, @params);
+		}
 	}
 }
