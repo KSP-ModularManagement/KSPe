@@ -5,6 +5,17 @@ namespace Tests
 {
 	public static class MainClass
 	{
+		private static void symlink_check(string path)
+        {
+			Console.WriteLine(string.Format("Path {0} exists as a file: {1}", path, System.IO.File.Exists(path)));
+			Console.WriteLine(string.Format("Path {0} exists as a dir: {1}", path, System.IO.Directory.Exists(path)));
+        }
+		private static void TestCase_SymLinks()
+		{
+			symlink_check("/Users/lisias/Workspaces/KSP/runtime/1.12.3.ts");
+			symlink_check("/Users/lisias/Workspaces/KSP/runtime/1.4.3/GameData/GPOSpeedPump");
+		}
+
 		private static void TestCase_StackDump()
 		{
 			System.Diagnostics.StackTrace st = new System.Diagnostics.StackTrace();
@@ -120,8 +131,6 @@ namespace Tests
 			Console.WriteLine(string.Format("a equals b {0}", a.Equals(b)));
 			Console.WriteLine(string.Format("c == b {0}", c == b));
 			Console.WriteLine(string.Format("c equals b {0}", c.Equals(b)));
-
-
 		}
 
 		private class Dummy { }
@@ -136,6 +145,8 @@ namespace Tests
 		{
 			Console.WriteLine("Hello World!");
 			Console.WriteLine(Environment.GetCommandLineArgs()[0]);
+
+			TestCase_SymLinks();
 
 			TestCase_StackDump();
 
