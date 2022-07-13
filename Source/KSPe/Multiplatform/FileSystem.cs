@@ -35,8 +35,15 @@ namespace KSPe.Multiplatform
 			"/opt/local/libexec/gnubin", // Used on my rig (MacOS with MacPorts).
 			"/opt/local/bin", "/opt/bin", "/usr/local/bin", "/usr/bin", "/bin"
 		};
+		private static readonly Dictionary<string,string> UNREPARSE_CACHE = new Dictionary<string, string>();
+		private const int UNREPARSE_CACHE_TIMER_INTERVAL = 1000 * 5 * 60; // 5 minutes
+		private static readonly System.Timers.Timer UNREPARSE_CACHE_TIMER = new System.Timers.Timer(UNREPARSE_CACHE_TIMER_INTERVAL);
 		static FileSystem()
 		{
+			UNREPARSE_CACHE_TIMER.AutoReset = true;
+			UNREPARSE_CACHE_TIMER.Enabled = false;
+			UNREPARSE_CACHE_TIMER.Elapsed += (source, evenArgs) => { Log.debug("FileSystem is clearing the unreparsing cache..."); UNREPARSE_CACHE.Clear(); };
+
 			if (KSPe.Multiplatform.LowLevelTools.Unix.IsThisUnix) foreach (string path in posix_paths)
 			{
 				if (!SIO.Directory.Exists(path)) continue;
@@ -128,6 +135,15 @@ namespace KSPe.Multiplatform
 		}
 
 		public static string ReparsePath(string path)
+		{
+			UNREPARSE_CACHE_TIMER.Stop();
+			UNREPARSE_CACHE_TIMER.Interval = UNREPARSE_CACHE_TIMER_INTERVAL;
+			UNREPARSE_CACHE_TIMER.Start();
+			if (!UNREPARSE_CACHE.ContainsKey(path))
+				UNREPARSE_CACHE[path] = IsReparsePoint(path) ? reparsePath(path) : path;
+			return UNREPARSE_CACHE[path];
+		}
+		private static string reparsePath(string path)
 		{
 			Log.debug("Reparsing {0}", path);
 
