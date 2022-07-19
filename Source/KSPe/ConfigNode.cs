@@ -48,9 +48,9 @@ namespace KSPe
 			return base.HasValue(name) ? this.GetValue<T>(name) : defaultValue;
 		}
 
-		public bool SetArrayOf<T>(string name, T[] defaultValue)
+		public bool SetArrayOf<T>(string name, T[] values)
 		{
-			string value = string.Join(", ", defaultValue.Select(s => s.ToString()).ToArray());
+			string value = string.Join(", ", values.Select(s => s.ToString()).ToArray());
 			return base.SetValue(name, value);
 		}
 
