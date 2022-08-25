@@ -174,10 +174,34 @@ namespace KSPe.IO
 				return File.List(subdir, mask, include_subdirs);
 			}
 
-			public static void CopyToData(string sourceFileName, string destDataFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Asset.CopyToData"); }
-			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Asset.CopyToLocal"); }
-			public static void CopyToSave(string sourceFileName, string destSaveFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Asset.CopyToSave"); }
-			public static void CopyToTemp(string sourceFileName, string destTempFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Asset.CopyToTemp"); }
+			public static void CopyToData(string sourceFileName, string destDataFileName, bool overwrite)
+			{
+				if (!overwrite && Data.Exists(destDataFileName)) return;
+				string sfn = FullPathName(sourceFileName);
+				string dfn = Data.FullPathName(false, destDataFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
+			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite)
+			{
+				if (!overwrite && Local.Exists(destLocalFileName)) return;
+				string sfn = FullPathName(sourceFileName);
+				string dfn = Local.FullPathName(false, destLocalFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
+			public static void CopyToSave(string sourceFileName, string destSaveFileName, bool overwrite)
+			{
+				if (!overwrite && Save.Exists(destSaveFileName)) return;
+				string sfn = FullPathName(sourceFileName);
+				string dfn = Save.FullPathName(false, destSaveFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
+			public static void CopyToTemp(string sourceFileName, string destTempFileName, bool overwrite)
+			{
+				if (!overwrite && Temp.Exists(destTempFileName)) return;
+				string sfn = FullPathName(sourceFileName);
+				string dfn = Temp.FullPathName(destTempFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
 
 			public static void Decrypt(string path) { throw new NotImplementedException("KSPe.IO.File.Asset.Decrypt"); }
 			public static void Decrypt(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Asset.Decrypt"); }
@@ -418,10 +442,34 @@ namespace KSPe.IO
 			public static IO.Data<T>.StreamWriter AppendText(string path) { throw new NotImplementedException("KSPe.IO.File.Data.AppendText"); }
 			public static IO.Data<T>.StreamWriter AppendText(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Data.AppendText"); }
 
-			public static void Copy(string sourceFileName, string destFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Data.Copy"); }
-			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Data.CopyToLocal"); }
-			public static void CopyToSave(string sourceFileName, string destSaveFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Data.CopyToSave"); }
-			public static void CopyToTemp(string sourceFileName, string destTempFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Data.CopyToTemp"); }
+			public static void Copy(string sourceFileName, string destFileName, bool overwrite)
+			{
+				if (!overwrite && Exists(destFileName)) return;
+				string sfn = FullPathName(false, sourceFileName);
+				string dfn = FullPathName(false, destFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
+			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite)
+			{
+				if (!overwrite && Local.Exists(destLocalFileName)) return;
+				string sfn = FullPathName(false, sourceFileName);
+				string dfn = Local.FullPathName(false, destLocalFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
+			public static void CopyToSave(string sourceFileName, string destSaveFileName, bool overwrite)
+			{
+				if (!overwrite && Save.Exists(destSaveFileName)) return;
+				string sfn = FullPathName(false, sourceFileName);
+				string dfn = Save.FullPathName(false, destSaveFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
+			public static void CopyToTemp(string sourceFileName, string destTempFileName, bool overwrite)
+			{
+				if (!overwrite && Temp.Exists(destTempFileName)) return;
+				string sfn = FullPathName(false, sourceFileName);
+				string dfn = Temp.FullPathName(destTempFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
 
 			public static IO.Data<T>.FileStream Create(string path) { throw new NotImplementedException("KSPe.IO.File.Data.Create"); }
 			public static IO.Data<T>.FileStream Create(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Data.Create"); }
@@ -697,10 +745,34 @@ namespace KSPe.IO
 			public static IO.Local<T>.StreamWriter AppendText(string path) { throw new NotImplementedException("KSPe.IO.File.Local.AppendText"); }
 			public static IO.Local<T>.StreamWriter AppendText(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Local.AppendText"); }
 
-			public static void Copy(string sourceFileName, string destFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Local.Copy"); }
-			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Local.CopyToLocal"); }
-			public static void CopyToSave(string sourceFileName, string destSaveFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Local.CopyToSave"); }
-			public static void CopyToTemp(string sourceFileName, string destTempFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Local.CopyToTemp"); }
+			public static void Copy(string sourceFileName, string destFileName, bool overwrite)
+			{
+				if (!overwrite && Exists(destFileName)) return;
+				string sfn = FullPathName(false, sourceFileName);
+				string dfn = FullPathName(false, destFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
+			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite)
+			{
+				if (!overwrite && Local.Exists(destLocalFileName)) return;
+				string sfn = FullPathName(false, sourceFileName);
+				string dfn = Local.FullPathName(false, destLocalFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
+			public static void CopyToSave(string sourceFileName, string destSaveFileName, bool overwrite)
+			{
+				if (!overwrite && Save.Exists(destSaveFileName)) return;
+				string sfn = FullPathName(false, sourceFileName);
+				string dfn = Save.FullPathName(false, destSaveFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
+			public static void CopyToTemp(string sourceFileName, string destTempFileName, bool overwrite)
+			{
+				if (!overwrite && Temp.Exists(destTempFileName)) return;
+				string sfn = FullPathName(false, sourceFileName);
+				string dfn = Temp.FullPathName( destTempFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
 
 			public static IO.Local<T>.FileStream Create(string path) { throw new NotImplementedException("KSPe.IO.File.Local.Create"); }
 			public static IO.Local<T>.FileStream Create(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Local.Create"); }
@@ -946,10 +1018,34 @@ namespace KSPe.IO
 			public static void AppendAllText(string path, string contents, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Temp.AppendAllText"); }
 			public static IO.Temp<T>.StreamWriter AppendText(string path) { throw new NotImplementedException("KSPe.IO.File.Temp.AppendText"); }
 
-			public static void Copy(string sourceFileName, string destFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Temp.Copy"); }
-			public static void CopyToData(string sourceFileName, string destDataFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Temp.CopyToData"); }
-			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Temp.CopyToTemp"); }
-			public static void CopyToSave(string sourceFileName, string destSaveFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Temp.CopyToSave"); }
+			public static void Copy(string sourceFileName, string destFileName, bool overwrite)
+			{
+				if (!overwrite && Exists(destFileName)) return;
+				string sfn = FullPathName(sourceFileName);
+				string dfn = FullPathName(destFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
+			public static void CopyToData(string sourceFileName, string destDataFileName, bool overwrite)
+			{
+				if (!overwrite && Data.Exists(destDataFileName)) return;
+				string sfn = FullPathName(sourceFileName);
+				string dfn = Data.FullPathName(false, destDataFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
+			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite)
+			{
+				if (!overwrite && Local.Exists(destLocalFileName)) return;
+				string sfn = FullPathName(sourceFileName);
+				string dfn = Local.FullPathName(false, destLocalFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
+			public static void CopyToSave(string sourceFileName, string destSaveFileName, bool overwrite)
+			{
+				if (!overwrite && Local.Exists(destSaveFileName)) return;
+				string sfn = FullPathName(sourceFileName);
+				string dfn = Save.FullPathName(false, destSaveFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
 
 			public static IO.Temp<T>.FileStream Create(string path) { throw new NotImplementedException("KSPe.IO.File.Create"); }
 			public static IO.Temp<T>.FileStream Create(string path, int bufferSize) { throw new NotImplementedException("KSPe.IO.File.Create"); }
@@ -1134,9 +1230,27 @@ namespace KSPe.IO
 			public static IO.Save<T>.StreamWriter AppendText(string path) { throw new NotImplementedException("KSPe.IO.File.Save.AppendText"); }
 			public static IO.Save<T>.StreamWriter AppendText(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.AppendText"); }
 
-			public static void Copy(string sourceFileName, string destFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Save.Copy"); }
-			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Save.CopyToLocal"); }
-			public static void CopyToTemp(string sourceFileName, string destTempFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Save.CopyToTemp"); }
+			public static void Copy(string sourceFileName, string destFileName, bool overwrite)
+			{
+				if (!overwrite && Exists(destFileName)) return;
+				string sfn = FullPathName(false, sourceFileName);
+				string dfn = FullPathName(false, destFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
+			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite)
+			{
+				if (!overwrite && Local.Exists(destLocalFileName)) return;
+				string sfn = FullPathName(false, sourceFileName);
+				string dfn = Local.FullPathName(false, destLocalFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
+			public static void CopyToTemp(string sourceFileName, string destTempFileName, bool overwrite)
+			{
+				if (!overwrite && Temp.Exists(destTempFileName)) return;
+				string sfn = FullPathName(false, sourceFileName);
+				string dfn = Temp.FullPathName(destTempFileName);
+				SIO.File.Copy(sfn, dfn);
+			}
 
 			public static IO.Save<T>.FileStream Create(string path) { throw new NotImplementedException("KSPe.IO.File.Save.Create"); }
 			public static IO.Save<T>.FileStream Create(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.Create"); }
