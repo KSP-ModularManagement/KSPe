@@ -1,5 +1,7 @@
 # KSP API Extensions/L :: Change Log
 
+* 2022-0824: 2.4.2.0 (Lisias) for KSP >= 1.2
+	+ Implementing the `Copy*` stuff from `KSPe.IO.File<T>.<things>`
 * 2022-0713: 2.4.1.21 (Lisias) for KSP >= 1.2
 	+ Solve some performance issues on the KSPe.IO.Directory "unreparsing"
 		- As KSP starts to get crowded, the fight for memory starts to get gory, and the damned Unity's garbage collector is crippled. 
