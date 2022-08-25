@@ -176,6 +176,7 @@ namespace KSPe.IO
 
 			public static void CopyToData(string sourceFileName, string destDataFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Asset.CopyToData"); }
 			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Asset.CopyToLocal"); }
+			public static void CopyToSave(string sourceFileName, string destSaveFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Asset.CopyToSave"); }
 			public static void CopyToTemp(string sourceFileName, string destTempFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Asset.CopyToTemp"); }
 
 			public static void Decrypt(string path) { throw new NotImplementedException("KSPe.IO.File.Asset.Decrypt"); }
@@ -419,6 +420,7 @@ namespace KSPe.IO
 
 			public static void Copy(string sourceFileName, string destFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Data.Copy"); }
 			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Data.CopyToLocal"); }
+			public static void CopyToSave(string sourceFileName, string destSaveFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Data.CopyToSave"); }
 			public static void CopyToTemp(string sourceFileName, string destTempFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Data.CopyToTemp"); }
 
 			public static IO.Data<T>.FileStream Create(string path) { throw new NotImplementedException("KSPe.IO.File.Data.Create"); }
@@ -697,6 +699,7 @@ namespace KSPe.IO
 
 			public static void Copy(string sourceFileName, string destFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Local.Copy"); }
 			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Local.CopyToLocal"); }
+			public static void CopyToSave(string sourceFileName, string destSaveFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Local.CopyToSave"); }
 			public static void CopyToTemp(string sourceFileName, string destTempFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Local.CopyToTemp"); }
 
 			public static IO.Local<T>.FileStream Create(string path) { throw new NotImplementedException("KSPe.IO.File.Local.Create"); }
@@ -942,9 +945,12 @@ namespace KSPe.IO
 			public static void AppendAllText(string path, string contents) { throw new NotImplementedException("KSPe.IO.File.Temp.AppendAllText"); }	
 			public static void AppendAllText(string path, string contents, System.Text.Encoding encoding) { throw new NotImplementedException("KSPe.IO.File.Temp.AppendAllText"); }
 			public static IO.Temp<T>.StreamWriter AppendText(string path) { throw new NotImplementedException("KSPe.IO.File.Temp.AppendText"); }
+
 			public static void Copy(string sourceFileName, string destFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Temp.Copy"); }
 			public static void CopyToData(string sourceFileName, string destDataFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Temp.CopyToData"); }
-			public static void CopyToLocal(string sourceFileName, string destTempFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Temp.CopyToTemp"); }
+			public static void CopyToLocal(string sourceFileName, string destLocalFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Temp.CopyToTemp"); }
+			public static void CopyToSave(string sourceFileName, string destSaveFileName, bool overwrite) { throw new NotImplementedException("KSPe.IO.File.Temp.CopyToSave"); }
+
 			public static IO.Temp<T>.FileStream Create(string path) { throw new NotImplementedException("KSPe.IO.File.Create"); }
 			public static IO.Temp<T>.FileStream Create(string path, int bufferSize) { throw new NotImplementedException("KSPe.IO.File.Create"); }
 			public static IO.Temp<T>.FileStream Create(string path, int bufferSize, SIO.FileOptions options) { throw new NotImplementedException("KSPe.IO.File.Create"); }
@@ -1249,6 +1255,7 @@ namespace KSPe.IO
 
 			public static void Move(string sourceFileName, string destFileName) { throw new NotImplementedException("KSPe.IO.File.Save.Move"); }
 			public static void MoveToLocal(string sourceFileName, string destFileName) { throw new NotImplementedException("KSPe.IO.File.Save.Move"); }
+
 			public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName) { throw new NotImplementedException("KSPe.IO.File.Save.Replace"); }
 			public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors) { throw new NotImplementedException("KSPe.IO.File.Save.Replace"); }
 
@@ -1258,10 +1265,13 @@ namespace KSPe.IO
 			public static IO.Save<T>.FileStream Open(SIO.FileMode mode, SIO.FileAccess access, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.Open"); }
 			public static IO.Save<T>.FileStream Open(string path, SIO.FileMode mode, SIO.FileAccess access, SIO.FileShare share) { throw new NotImplementedException("KSPe.IO.File.Save.Open"); }
 			public static IO.Save<T>.FileStream Open(SIO.FileMode mode, SIO.FileAccess access, SIO.FileShare share, string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.Open"); }
+
 			public static IO.Save<T>.FileStream OpenRead(string path) { throw new NotImplementedException("KSPe.IO.File.Save.OpenRead"); }
 			public static IO.Save<T>.FileStream OpenRead(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.OpenRead"); }
+
 			public static IO.Save<T>.StreamReader OpenText(string path) { throw new NotImplementedException("KSPe.IO.File.Save.OpenText"); }
 			public static IO.Save<T>.StreamReader OpenText(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.OpenText"); }
+
 			public static IO.Save<T>.FileStream OpenWrite(string path) { throw new NotImplementedException("KSPe.IO.File.Save.OpenWrite"); }
 			public static IO.Save<T>.FileStream OpenWrite(string fn, params string[] fns) { throw new NotImplementedException("KSPe.IO.File.Save.OpenWrite"); }
 
