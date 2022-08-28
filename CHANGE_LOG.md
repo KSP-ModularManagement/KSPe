@@ -1,5 +1,7 @@
 # KSP API Extensions/L :: Change Log
 
+* 2022-0828: 2.4.2.1 (Lisias) for KSP >= 1.2
+	+ Implementing a convenient "Number to Text" helper
 * 2022-0824: 2.4.2.0 (Lisias) for KSP >= 1.2
 	+ Implementing the `Copy*` stuff from `KSPe.IO.File<T>.<things>`
 * 2022-0713: 2.4.1.21 (Lisias) for KSP >= 1.2
