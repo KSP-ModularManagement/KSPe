@@ -46,7 +46,7 @@ namespace KSPe.Util.TextProcessing
 					string r = (0 == amount_int && 0 == amount_dec)
 						? Text(0, startUpcase, zero)
 						: Text(amount_int) + (amount_dec == 0 ? "" : " point " + Text(amount_dec));
-					return startUpcase ? r[0].ToString().ToUpper() + r.Substring(1) : r;
+					return startUpcase ? char.ToUpper(r[0]) + r.Substring(1) : r;
 				}
 				catch (Exception e)
 				{
