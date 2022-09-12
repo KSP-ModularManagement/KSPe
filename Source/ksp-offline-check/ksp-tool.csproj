@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A98A987E-FD78-49E7-8301-F6B162C4E91C}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>kspofflinecheck</RootNamespace>
+    <AssemblyName>ksp-offline-check</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <BaseIntermediateOutputPath>..\..\obj\ksp-offline-check</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Checks\DLL.cs" />
+    <Compile Include="..\KSPe\Properties\LegalMamboJambo.cs">
+      <Link>Properties\LegalMamboJambo.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\Properties\Version.cs">
+      <Link>Properties\Version.cs</Link>
+    </Compile>
+    <Compile Include="util\Misc.cs" />
+    <Compile Include="util\KSP.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Checks\" />
+    <Folder Include="util\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
