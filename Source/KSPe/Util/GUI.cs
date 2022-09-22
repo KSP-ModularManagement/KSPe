@@ -29,21 +29,19 @@ namespace TweakScale.GUI
 {
     internal static class ShowStopperAlertBox
     {
-        private static readonly string MSG = @"Unfortunately TweakScale found {0} **FATAL** issue(s) on your KSP installment! This *will* corrupt your savagames sooner or later **FOR SURE**!
+        private const string MSG = @"TweakScale found {0} **FATAL** issue(s) with your KSP install! This *will* corrupt your saves!
 
-The KSP.log is listing every compromised part(s) on your installment, look for lines with '[TweakScale] ERROR: **FATAL**' on the log line. Be aware that the parts being reported are not the culprits, but the Screaming Victims.
+Your KSP.log lists every problematic part in your install; look for lines containing '[TweakScale] ERROR: **FATAL**'. Note that these parts are not the culprits, but innocent victims. No automated fix is possible for these problems.
 
-There's no possible automated fix for the problem, your best line of action is to call for help on Forum by clicking on the OK button below. We will help you on diagnosing the Add'On that is troubling you. Publish your KSP.log on some file share service and mention it on the post.
+You should click OK below to close KSP, then ask for help with diagnosing the problem mod on the forum. Please upload your KSP.log to a file share service and share a link to it in your post.
 
-Be advised that by not closing KSP right now, your savegames can get corrupted at any time, even when things appear to work by now - and the salvage can be harder.
-
-Backup everything *NOW* if you choose to ignore this message and proceed - TweakScale recommends S.A.V.E. to automate this task for you.";
+If you choose to continue running KSP, your saves may be unrecoverably corrupted, even if it seems to be working. Make back-ups now! You may find the S.A.V.E mod helpful for this.";
 
         internal static void Show(int failure_count)
         {
             GameObject go = new GameObject("TweakScale.AlertBox");
             MessageBox dlg = go.AddComponent<MessageBox>();
-            
+
             GUIStyle win = new GUIStyle("Window")
             {
                 fontSize = 26,
@@ -70,12 +68,12 @@ Backup everything *NOW* if you choose to ignore this message and proceed - Tweak
             }
 
             dlg.Show(
-                "Houston, we have a Problem!", 
+                "Houston, we have a problem!",
                 String.Format(MSG, failure_count),
                 () => { Application.OpenURL("https://forum.kerbalspaceprogram.com/index.php?/topic/179030-*"); },
                 win, text
             );
-            Log.detail("\"Houston, we have a Problem!\" was displayed");
+            Log.detail("\"Houston, we have a problem!\" was displayed");
         }
     }
 }
