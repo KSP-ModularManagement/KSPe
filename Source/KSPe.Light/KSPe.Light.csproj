@@ -92,12 +92,6 @@
     <Compile Include="..\KSPe\IO\Path.cs">
       <Link>IO\Path.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Multiplatform\FileSystem.cs">
-      <Link>Multiplatform\FileSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\KSPe\Multiplatform\Shell.cs">
-      <Link>Multiplatform\Shell.cs</Link>
-    </Compile>
     <Compile Include="..\KSPe\Globals.cs">
       <Link>Globals.cs</Link>
     </Compile>
@@ -132,9 +126,7 @@
     <Compile Include="..\KSPe\Properties\Annotations.cs">
       <Link>Properties\Annotations.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Multiplatform\Tools\LowLevelTools.cs">
-      <Link>Multiplatform\Tools\LowLevelTools.cs</Link>
-    </Compile>
+    <Compile Include="Multiplatform\FileSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />
@@ -142,7 +134,6 @@
     <Folder Include="Util\log\" />
     <Folder Include="IO\" />
     <Folder Include="Multiplatform\stubs\" />
-    <Folder Include="Multiplatform\Tools\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
