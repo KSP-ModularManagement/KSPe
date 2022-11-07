@@ -35,6 +35,10 @@ namespace KSPe
 			string pwd = KSPe.IO.Path.EnsureTrailingSeparatorOnDir(System.IO.Directory.GetCurrentDirectory(), true);
 			string origin = KSPe.IO.Path.Origin();
 
+			Log.debug("pwd:                        {0}", pwd);
+			Log.debug("origin:                     {0}", origin);
+			Log.debug("KSPUtil.ApplicationRootPath {0}", KSPUtil.ApplicationRootPath);
+
 			// Naivelly comparing the paths is borking on Windows, as this thingy uses case insensity pathnames by default.
 			// if (!pwd.Equals(origin)) FatalErrors.PwdIsNotOrigin.Show(pwd, origin);
 
