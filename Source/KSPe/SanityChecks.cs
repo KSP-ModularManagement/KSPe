@@ -36,8 +36,8 @@ namespace KSPe
 			string pwd = KSPe.IO.Path.EnsureTrailingSeparatorOnDir(System.IO.Directory.GetCurrentDirectory(), true);
 			string origin = KSPe.IO.Path.Origin();
 
-			Log.force("pwd:                        {0}", pwd);
-			Log.force("origin:                     {0}", origin);
+			Log.detail("pwd:                        {0}", pwd);
+			Log.detail("origin:                     {0}", origin);
 
 			// Naivelly comparing the paths is borking on Windows, as this thingy uses case insensity pathnames by default.
 			// if (!pwd.Equals(origin)) FatalErrors.PwdIsNotOrigin.Show(pwd, origin);
@@ -58,9 +58,9 @@ namespace KSPe
 			string origin = KSPe.IO.Path.Origin();
 			string app_root = KSPe.IO.Path.AppRoot();
 
-			Log.force("KSPUtil.ApplicationRootPath {0}", KSPUtil.ApplicationRootPath);
-			Log.force("KSPe.IO.Path.AppRoot        {0}", app_root);
-			Log.force("origin:                     {0}", origin);
+			Log.detail("KSPUtil.ApplicationRootPath {0}", KSPUtil.ApplicationRootPath);
+			Log.detail("KSPe.IO.Path.AppRoot        {0}", app_root);
+			Log.detail("origin:                     {0}", origin);
 
 			// On KSP 1.12.4, PD made a bad move on the PD Launcher that ended up users trying to get rid of it anyway they could.
 			// See https://forum.kerbalspaceprogram.com/index.php?/topic/210419-get-rid-of-the-stupid-launcher-nobody-likes-them-and-they-do-nothing-but-ruin-the-gaming-experience/&do=findComment&comment=4196378
