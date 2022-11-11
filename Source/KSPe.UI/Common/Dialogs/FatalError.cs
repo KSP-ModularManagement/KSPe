@@ -28,16 +28,16 @@ namespace KSPe.Common.Dialogs
 {
 	public class ShowStopperAlertBox : AbstractDialog
 	{
-		private static readonly string aMSG = "close KSP and then fix the problem described above";
-
 		private static readonly string MSG = @"{0}
 
-This is a Show Stopper problem. Your best line of action is to click the OK button to {1}.
+This is a show-stopper problem. You should click OK to {1}.
 
-If you choose to ignore this message and click Cancel to proceed, be advised that your savegames can get corrupted at any time, even when things appear to work by now. Backup everything *NOW* if you choose to ignore this message and proceed.
+If you choose to continue running KSP, your saves may be unrecoverably corrupted, even if it seems to be working correctly. Make back-ups now! You may find the S.A.V.E mod helpful for this.
 
 Your KSP is running from {2}.
 ";
+
+		private static readonly string aMSG = "close KSP, then fix the problem described above";
 
 		public static void Show(KSPe.Util.AbstractException ex)
 		{
@@ -56,7 +56,7 @@ Your KSP is running from {2}.
 
 		public static void Show(string errorMessage, string actionMessage, Action lambda)
 		{
-			GameObject go = new GameObject("KSPe.Common.Diallgs.ShowStopperAlertBox");
+			GameObject go = new GameObject("KSPe.Common.Dialogs.ShowStopperAlertBox");
 			MessageBox dlg = go.AddComponent<MessageBox>();
 
 			//GUIStyle win = new GUIStyle(HighLogic.Skin.window)
@@ -89,7 +89,7 @@ Your KSP is running from {2}.
 
 			// TODO: Shove a MUTEX here to prevent more than one AlertBox to be displayed at the same time!
 			dlg.Show(
-				"Houston, we have a Problem!",
+				"Houston, we have a problem!",
 				String.Format(MSG, errorMessage, actionMessage, IO.Path.AppRoot()),
 				lambda,
 				win, text
