@@ -272,7 +272,6 @@ namespace KSPe.Util
 				{
 					string t = SIO.Path.Combine(this.@namespace, path);
 					LOG.debug("Assembly TryPath: {0}", t);
-					LOG.force("Assembly TryPath: {0}", t);
 					string p = IO.Hierarchy.GAMEDATA.SolveFull(false, t, subdirs);
 					if (IO.Directory.Exists(p))
 						return IO.Hierarchy.GAMEDATA.Solve(false, t, subdirs);

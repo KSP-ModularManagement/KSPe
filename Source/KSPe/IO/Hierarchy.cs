@@ -27,7 +27,7 @@ namespace KSPe.IO
 {
 	public class Hierarchy
 	{
-		internal static readonly string ROOTPATH = Path.Origin();
+		internal static readonly string ROOTPATH = Path.AppRoot();
 
 		public static readonly Hierarchy ROOT = new Hierarchy("ROOT");
 		public static readonly Hierarchy GAMEDATA = new Hierarchy("GAMEDATA", "GameData");

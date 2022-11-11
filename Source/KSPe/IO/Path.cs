@@ -76,8 +76,8 @@ namespace KSPe.IO
 			UnityEngine.Debug.LogFormat("*** {0}", path);
 			path = GetFullPath(path);
 			UnityEngine.Debug.LogFormat("*** {0}", path);
-			path = path.Replace(Origin(), "");
-			UnityEngine.Debug.LogFormat("*** {0} || {1}", path, Origin());
+			path = path.Replace(AppRoot(), "");
+			UnityEngine.Debug.LogFormat("*** {0} || {1}", path, AppRoot());
 			return path;
 		}
 
@@ -191,6 +191,20 @@ namespace KSPe.IO
 			Log.debug("Origin is {0}", root);
 			Log.debug("PWD    is {0}", currentDir);
 			return root;
+		}
+
+		private static string app_root = null;
+		[System.Obsolete("I'm unconfortable on exporting this call. Don't expect it on the next release, I can change my mind at any time!")]
+		public static string AppRoot()
+		{
+			if (null != app_root) return app_root;
+			app_root = SIO.Path.GetFullPath(global::KSPUtil.ApplicationRootPath);
+			app_root = EnsureTrailingSeparatorOnDir(app_root);
+
+			string currentDir = EnsureTrailingSeparatorOnDir(SIO.Directory.GetCurrentDirectory());
+			process_dir(app_root, currentDir);
+
+			return app_root;
 		}
 
 		private static void process_dir(string path, string dir)

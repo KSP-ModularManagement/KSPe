@@ -467,7 +467,7 @@ namespace KSPe.Util
 		}
 
 
-		private static readonly System.Uri BASEURI = new System.Uri(IO.Path.Origin());
+		private static readonly System.Uri BASEURI = new System.Uri(IO.Path.AppRoot());
 		/* I CAN'T MAKE THIS THING TO WORK! */
 		internal static KAssemblyLoader.LoadedAssembly LoadPlugin(string searchPath, string asmName, string asmFile)
 		{
