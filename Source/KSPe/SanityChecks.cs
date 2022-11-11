@@ -28,12 +28,16 @@ namespace KSPe
 		internal static void DoIt()
 		{
 			CheckForPwd();
+			CheckForApplicationRootPath();
 		}
 
 		private static void CheckForPwd()
 		{
 			string pwd = KSPe.IO.Path.EnsureTrailingSeparatorOnDir(System.IO.Directory.GetCurrentDirectory(), true);
 			string origin = KSPe.IO.Path.Origin();
+
+			Log.force("pwd:                        {0}", pwd);
+			Log.force("origin:                     {0}", origin);
 
 			// Naivelly comparing the paths is borking on Windows, as this thingy uses case insensity pathnames by default.
 			// if (!pwd.Equals(origin)) FatalErrors.PwdIsNotOrigin.Show(pwd, origin);
@@ -44,7 +48,28 @@ namespace KSPe
 			{
 				Uri uri_pwd = new Uri(System.IO.Path.Combine(pwd, "dummy.txt"));
 				Uri uri_origin = new Uri(System.IO.Path.Combine(origin, "dummy.txt"));
+
 				if (uri_pwd != uri_origin) FatalErrors.PwdIsNotOrigin.Show(pwd, origin);
+			}
+		}
+
+		private static void CheckForApplicationRootPath()
+		{
+			string origin = KSPe.IO.Path.Origin();
+			string app_root = KSPe.IO.Path.AppRoot();
+
+			Log.force("KSPUtil.ApplicationRootPath {0}", KSPUtil.ApplicationRootPath);
+			Log.force("KSPe.IO.Path.AppRoot        {0}", app_root);
+			Log.force("origin:                     {0}", origin);
+
+			// On KSP 1.12.4, PD made a bad move on the PD Launcher that ended up users trying to get rid of it anyway they could.
+			// See https://forum.kerbalspaceprogram.com/index.php?/topic/210419-get-rid-of-the-stupid-launcher-nobody-likes-them-and-they-do-nothing-but-ruin-the-gaming-experience/&do=findComment&comment=4196378
+			// for the gory details.
+			{
+				Uri uri_origin = new Uri(System.IO.Path.Combine(origin, "dummy.txt"));
+				Uri uri_approot = new Uri(System.IO.Path.Combine(app_root, "dummy.txt"));
+
+				if (uri_approot != uri_origin) FatalErrors.ApplicationRootPathIsNotOrigin.Show(KSPUtil.ApplicationRootPath, origin);
 			}
 		}
 	}

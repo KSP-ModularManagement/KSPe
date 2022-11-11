@@ -90,7 +90,7 @@ Your KSP is running from {2}.
 			// TODO: Shove a MUTEX here to prevent more than one AlertBox to be displayed at the same time!
 			dlg.Show(
 				"Houston, we have a problem!",
-				String.Format(MSG, errorMessage, actionMessage, IO.Path.Origin()),
+				String.Format(MSG, errorMessage, actionMessage, IO.Path.AppRoot()),
 				lambda,
 				win, text
 			);

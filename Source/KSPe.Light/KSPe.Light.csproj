@@ -135,6 +135,9 @@
     <Compile Include="..\KSPe\Multiplatform\Tools\LowLevelTools.cs">
       <Link>Multiplatform\Tools\LowLevelTools.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe\Util\Text.cs">
+      <Link>Util\Text.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />

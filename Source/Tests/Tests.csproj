@@ -86,6 +86,9 @@
     <Compile Include="..\KSPe\Multiplatform\Tools\LowLevelTools.cs">
       <Link>KSPe.Artefacts\Multiplatform\Tools\LowLevelTools.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe\Util\Text.cs">
+      <Link>KSPe.Artefacts\Util\Text.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="KSPe.Artefacts\" />

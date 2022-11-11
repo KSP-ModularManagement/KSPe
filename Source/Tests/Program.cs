@@ -5,6 +5,31 @@ namespace Tests
 {
 	public static class MainClass
 	{
+		private static string NumberToText(long value)
+		{
+			return string.Format("{0} -> {1}", value, KSPe.Util.TextProcessing.Number.To.Text(value, true));
+		}
+		private static string NumberToText(double value)
+		{
+			return string.Format("{0} -> {1}", value, KSPe.Util.TextProcessing.Number.To.Text(value, false, "None"));
+		}
+		private static void TestCase_NumberToText()
+		{
+			Console.WriteLine(NumberToText(0));
+			Console.WriteLine(NumberToText(5));
+			Console.WriteLine(NumberToText(10));
+			Console.WriteLine(NumberToText(15));
+			Console.WriteLine(NumberToText(25));
+			Console.WriteLine(NumberToText(250));
+			Console.WriteLine(NumberToText(255));
+			Console.WriteLine(NumberToText(2550));
+			Console.WriteLine(NumberToText(25500));
+			Console.WriteLine(NumberToText(2550600403405));
+			Random r = new Random();
+			for (int i = 0; i < 50; ++i)
+				Console.WriteLine(NumberToText((double)(i * 100000000000 * r.NextDouble())));
+		}
+
 		private static void symlink_check(string path)
         {
 			Console.WriteLine(string.Format("Path {0} exists as a file: {1}", path, System.IO.File.Exists(path)));
@@ -156,6 +181,8 @@ namespace Tests
 			//TestCase_Raparsing(Environment.GetCommandLineArgs()[1]);
 
 			DumbTest();
+
+			TestCase_NumberToText();
 
 			InstallationTest();
 		}

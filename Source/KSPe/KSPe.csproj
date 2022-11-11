@@ -120,6 +120,7 @@
     <Compile Include="Log.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="IO\Directory.cs" />
+    <Compile Include="Util\Text.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">

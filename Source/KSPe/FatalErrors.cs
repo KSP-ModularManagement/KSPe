@@ -196,6 +196,34 @@ When this happens, KSP may write files on the wrong place, and you can lost trac
 		}
 	}
 
+	internal static class ApplicationRootPathIsNotOrigin
+	{
+		private static readonly string MSG = @"The KSP's ApplicationRootPath (`KSPUtil.ApplicationRootPath` on code) doesn't matches the KSPe's origin!
+
+KSPUtil.ApplicationRootPath : {0}
+origin                      : {1}
+
+When this happens, KSP may write files on the wrong place, and you can lost track of saves (if KSP manages to startup at all!).";
+
+		private static bool shown = false;
+		internal static void Show(string appRootPath, string origin)
+		{
+			if (shown) return;
+
+			Startup.QuitOnDestroy = shown = true;
+			if (null != GameObject.Find("KSPe.FatalError.ApplicationRootPathIsNotOrigin")) return; // Already being shown.
+
+			GameObject go = new GameObject("KSPe.FatalError.ApplicationRootPathIsNotOrigin");
+			FatalErrorMsgBox dlg = go.AddComponent<FatalErrorMsgBox>();
+
+			dlg.Show(
+				string.Format(MSG, appRootPath, origin),
+				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12"); Application.Quit(); }
+			);
+			Log.error("Fatal Error ApplicationRootPathIsNotOrigin was shown. AppRootPath = {0} ; origin = {1} . Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12", appRootPath, origin);
+		}
+	}
+
 	internal static class CriticalComponentsAbsent
 	{
 		private static readonly string MSG = @"KSPe got a Fatal Error ""{0}"" while trying to load the KSPe.KSP subsystem.
