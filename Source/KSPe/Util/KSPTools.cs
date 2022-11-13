@@ -127,6 +127,7 @@ namespace KSPe.Util
 			new Version(1,12,1, "2021-0629", 2019,	4, "2019.4.18f1", 46),
 			new Version(1,12,2, "2021-0803", 2019,	4, "2019.4.18f1", 46),
 			new Version(1,12,3, "2021-1213", 2019,	4, "2019.4.18f1", 46),
+			new Version(1,12,4, "2022-1102", 2019,	4, "2019.4.18f1", 46),
 		};
 
 		public class Version
@@ -149,9 +150,9 @@ namespace KSPe.Util
 				this.PATCH = PATCH;
 				this.RELEASED_AT = DateTime.Now;		// Fake a release date as being today
 				this.UNITY_VERSION = 2019;				// Hope we are using 2019.2, as this is probably a newer KSP version still unknown.
-				this.UNITY_VERSION_MINOR = 2;			// Hope we are using 2019.2, as this is probably a newer KSP version still unknown.
+				this.UNITY_VERSION_MINOR = 4;			// Hope we are using 2019.2, as this is probably a newer KSP version still unknown.
 				this.UNITY_VERSION_STRING = "2019";		// Hope we are using 2019.2, as this is probably a newer KSP version still unknown.
-				this.CSHARP_VERSION = 47;				// Ditto
+				this.CSHARP_VERSION = 46;				// Ditto
 			}
 
 			internal Version(int MAJOR, int MINOR, int PATCH, Version v)
