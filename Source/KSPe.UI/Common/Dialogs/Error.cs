@@ -26,17 +26,13 @@ using KSPe.UI;
 
 namespace KSPe.Common.Dialogs
 {
-	public class ShowStopperAlertBox : AbstractDialog
+	public class ErrorAlertBox : AbstractDialog
 	{
-		private static readonly string aMSG = "close KSP and then fix the problem described above";
-
 		private static readonly string MSG = @"{0}
 
-This is a Show Stopper problem. Your best line of action is to click the OK button to {1}.
+It's not wise to keep running KSP, as undesired side effects may happen. Make back-ups now! You may find the S.A.V.E mod helpful for this.
 
-If you choose to ignore this message and click Cancel to proceed, be advised that your savegames can get corrupted at any time, even when things appear to work by now. Backup everything *NOW* if you choose to ignore this message and proceed.
-
-Your KSP is running from {2}.";
+Your KSP is running from {1}.";
 
 		public static void Show(KSPe.Util.AbstractException ex)
 		{
@@ -45,17 +41,17 @@ Your KSP is running from {2}.";
 
 		public static void Show(KSPe.Util.AbstractException ex, string actionMessage, Action lambda)
 		{
-			Show(ex.ToLongMessage(), actionMessage, lambda);
+			Show(ex.ToLongMessage(), lambda);
 		}
 
 		public static void Show(string errorMessage)
 		{
-			Show(errorMessage, aMSG, () => {});
+			Show(errorMessage, Application.Quit);
 		}
 
-		public static void Show(string errorMessage, string actionMessage, Action lambda)
+		public static void Show(string errorMessage, Action lambda)
 		{
-			GameObject go = new GameObject("KSPe.Common.Diallgs.ShowStopperAlertBox");
+			GameObject go = new GameObject("KSPe.Common.Dialogs.ErrorAlertBox");
 			MessageBox dlg = go.AddComponent<MessageBox>();
 
 			//GUIStyle win = new GUIStyle(HighLogic.Skin.window)
@@ -88,8 +84,8 @@ Your KSP is running from {2}.";
 
 			// TODO: Shove a MUTEX here to prevent more than one AlertBox to be displayed at the same time!
 			dlg.Show(
-				"Houston, we have a Problem!",
-				String.Format(MSG, errorMessage, actionMessage, IO.Path.AppRoot()),
+				"Houston, we have a problem!",
+				String.Format(MSG, errorMessage, IO.Path.AppRoot()),
 				lambda,
 				win, text
 			);
