@@ -57,6 +57,7 @@
     <Compile Include="GUILayout.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Toolbar.cs" />
+    <Compile Include="Common\Dialogs\Error.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KSPe\KSPe.csproj">
