@@ -21,6 +21,7 @@
 */
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 using SIO = System.IO;
 
@@ -174,5 +175,35 @@ namespace KSPe.Multiplatform
         {
 			return SIO.Directory.GetDirectories(path, searchPattern, searchOption);
         }
+
+		public static string GetCurrentDirectory()
+		{
+			string path = SIO.Directory.GetCurrentDirectory();
+			path = GetRealPathname(path);
+			return path;
+		}
+
+		// FIXME: Must be a smarter way to do this.
+		// CMD, PowerShell and even CygWin does it, right?
+		// See https://github.com/net-lisias-ksp/KSPe/issues/37
+		public static string GetRealPathname(string path)
+		{
+			if (!LowLevelTools.Windows.IsThisWindows) return path;
+
+			path = SIO.Path.GetFullPath(path);
+
+			string[] parcels = path.Split('\\');
+			string r = parcels[0] + KSPe.IO.Path.DirectorySeparatorStr;
+			foreach (SIO.DriveInfo di in SIO.DriveInfo.GetDrives()) if (di.Name.Equals(r, System.StringComparison.OrdinalIgnoreCase))
+			{
+				r = di.Name;
+				break;
+			}
+
+			for (int i = 1; i < parcels.Length; ++i)
+				r = SIO.Directory.GetFileSystemEntries(r, parcels[i]).First();
+
+			return r;
+		}
 	}
 }
