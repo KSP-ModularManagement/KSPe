@@ -20,6 +20,11 @@ namespace KSPe.Util
 				Console.WriteLine(string.Format(msg, @params));
 			}
 
+			public void detail(string msg, params object[] @params)
+			{
+				Console.WriteLine(string.Format(msg, @params));
+			}
+
 			public void debug(string msg, params object[] @params)
 			{
 				Console.WriteLine(string.Format(msg, @params));
