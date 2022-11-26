@@ -102,6 +102,8 @@ namespace KSPe.IO
 			// No, we don't use CurrentDir here, we are confined insided the KSP folder structure, rememeber? ;)
 			if (!SIO.Path.IsPathRooted(path)) path = SIO.Path.Combine(Hierarchy.ROOTPATH, path);
 
+			path = Multiplatform.FileSystem.GetRealPathname(path);
+
 			// Ow, great. Just great. :(
 			// https://github.com/dotnet/corefx/pull/5020
 			// So Symlinks to directories are not recognized as a directory. So I need to do the job myself.

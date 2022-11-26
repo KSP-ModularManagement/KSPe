@@ -21,7 +21,6 @@
 */
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 
 using SIO = System.IO;
 
@@ -30,6 +29,8 @@ namespace KSPe.Multiplatform
 	[System.Obsolete("This class will be made internal on Version 2.5. **DO NOT** use it outside KSPe.dll.")]
 	public static class FileSystem
 	{
+		internal static readonly bool CASE_SENSITIVE_FILESYSTEM = GetCaseSensitiveFileSystem();
+
 		private static string realpath = null;
 		private static string readlink = null;
 		private static readonly string[] posix_paths = {
@@ -39,11 +40,19 @@ namespace KSPe.Multiplatform
 		private static readonly Dictionary<string,string> UNREPARSE_CACHE = new Dictionary<string, string>();
 		private const int UNREPARSE_CACHE_TIMER_INTERVAL = 1000 * 5 * 60; // 5 minutes
 		private static readonly System.Timers.Timer UNREPARSE_CACHE_TIMER = new System.Timers.Timer(UNREPARSE_CACHE_TIMER_INTERVAL);
+		private static readonly Dictionary<string,string> REALPATH_CACHE = new Dictionary<string, string>();
+		private const int REALPATH_CACHE_TIMER_INTERVAL = 1000 * 5 * 60; // 5 minutes
+		private static readonly System.Timers.Timer REALPATH_CACHE_TIMER = new System.Timers.Timer(UNREPARSE_CACHE_TIMER_INTERVAL);
+
 		static FileSystem()
 		{
 			UNREPARSE_CACHE_TIMER.AutoReset = true;
 			UNREPARSE_CACHE_TIMER.Enabled = false;
 			UNREPARSE_CACHE_TIMER.Elapsed += (source, evenArgs) => { Log.debug("FileSystem is clearing the unreparsing cache..."); UNREPARSE_CACHE.Clear(); };
+
+			REALPATH_CACHE_TIMER.AutoReset = true;
+			REALPATH_CACHE_TIMER.Enabled = false;
+			REALPATH_CACHE_TIMER.Elapsed += (source, evenArgs) => { Log.debug("FileSystem is clearing the real path cache..."); UNREPARSE_CACHE.Clear(); };
 
 			if (KSPe.Multiplatform.LowLevelTools.Unix.IsThisUnix) foreach (string path in posix_paths)
 			{
@@ -62,6 +71,24 @@ namespace KSPe.Multiplatform
 			}
 			Log.debug("Multiplatform.FileSystem: realpath found on {0}", realpath??"NOT FOUND!");
 			Log.debug("Multiplatform.FileSystem: readlink found on {0}", readlink??"NOT FOUND!");
+		}
+
+		private static bool GetCaseSensitiveFileSystem()
+		{
+			string path = typeof(FileSystem).Assembly.Location;
+			string mangledpath = path.ToLower();
+			bool a = SIO.File.Exists(path);
+			bool b = SIO.File.Exists(mangledpath);
+			Log.debug("GetCaseInsensitiveFileSystem {0} {1}", path, a);
+			Log.debug("GetCaseInsensitiveFileSystem {0} {1}", mangledpath, b);
+			if (!(a || b))
+			{
+				Log.error("Something unexpected and serious happened - no version of the test file were found! Assuming worst case!");
+				return true;
+			}
+			bool r = !(a && b) ;
+			Log.detail("KSPe is running from a Case {0} File System.", r ? "Sensitive" : "Insensitive");
+			return r;
 		}
 
 		private static string Reparse_realpath(string path)
@@ -188,20 +215,45 @@ namespace KSPe.Multiplatform
 		// See https://github.com/net-lisias-ksp/KSPe/issues/37
 		public static string GetRealPathname(string path)
 		{
-			if (!LowLevelTools.Windows.IsThisWindows) return path;
+			if (CASE_SENSITIVE_FILESYSTEM) return path;
 
+			REALPATH_CACHE_TIMER.Stop();
+			REALPATH_CACHE_TIMER.Interval = REALPATH_CACHE_TIMER_INTERVAL;
+			REALPATH_CACHE_TIMER.Start();
+			if (!REALPATH_CACHE.ContainsKey(path))
+				REALPATH_CACHE[path] = getRealPathname(path);
+			string r = REALPATH_CACHE[path];
+			Log.debug("GetRealPathName({0}) => {1}", path, r);
+			return r;
+		}
+		private static string getRealPathname(string path)
+		{
 			path = SIO.Path.GetFullPath(path);
+			if (!(SIO.File.Exists(path) || SIO.Directory.Exists(path))) return path;
 
-			string[] parcels = path.Split('\\');
-			string r = parcels[0] + KSPe.IO.Path.DirectorySeparatorStr;
-			foreach (SIO.DriveInfo di in SIO.DriveInfo.GetDrives()) if (di.Name.Equals(r, System.StringComparison.OrdinalIgnoreCase))
+			string[] parcels = path.Split(SIO.Path.DirectorySeparatorChar);
+			string r = "/";
+			if (LowLevelTools.Windows.IsThisWindows)
 			{
-				r = di.Name;
-				break;
+				Log.debug("getRealPathname on Windows");
+				r = parcels[0] + KSPe.IO.Path.DirectorySeparatorStr;
+				foreach (SIO.DriveInfo di in SIO.DriveInfo.GetDrives()) if (di.Name.Equals(r, System.StringComparison.OrdinalIgnoreCase))
+				{
+					r = di.Name;
+					break;
+				}
 			}
-
 			for (int i = 1; i < parcels.Length; ++i)
-				r = SIO.Directory.GetFileSystemEntries(r, parcels[i]).First();
+			{
+				Log.debug("Probing {0} {1}", r, parcels[i]);
+				string[] e = SIO.Directory.GetFileSystemEntries(r, parcels[i]);
+				if (1 != e.Length)
+				{
+					Log.error("Something weird happened while handling getRealPathname({0}). Returning original path and hoping for the best.", path);
+					return path;
+				}
+				r = e[0];
+			}
 
 			return r;
 		}

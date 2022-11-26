@@ -122,7 +122,7 @@ namespace KSPe.IO
 
 		public static string GetAbsolutePath(string path, bool iKnowItsDir)
 		{
-			return EnsureTrailingSeparatorOnDir(SIO.Path.GetFullPath(path), iKnowItsDir);
+			return EnsureTrailingSeparatorOnDir(Multiplatform.FileSystem.GetRealPathname(SIO.Path.GetFullPath(path)), iKnowItsDir);
 		}
 
 		public static char[] GetInvalidFileNameChars()					{ return SIO.Path.GetInvalidFileNameChars(); }
@@ -194,7 +194,8 @@ namespace KSPe.IO
 			foreach(string dir in Multiplatform.FileSystem.GetDirectories(currentDir, "*", SIO.SearchOption.AllDirectories))
 				process_dir(currentDir, dir);
 
-			root = EnsureTrailingSeparatorOnDir(path);  // Note: it should end with a DSC because I do fast string manipulations everywhere, and they depends on it.
+			// Note: it should end with a DSC because I do fast string manipulations everywhere, and they depends on it.
+			root = EnsureTrailingSeparatorOnDir(Multiplatform.FileSystem.GetRealPathname(path));
 
 			if (!currentDir.Equals(root)) // The PWD is reparsed by mono on MacOS. On Linux, **it's not**! Damn you, Microsoft!
 				register_alias(currentDir, root);
@@ -212,7 +213,7 @@ namespace KSPe.IO
 		{
 			if (null != app_root) return app_root;
 			Origin();	// Forces the calcultation of the unreparsing stuff!
-			app_root = SIO.Path.GetFullPath(global::KSPUtil.ApplicationRootPath);
+			app_root = SIO.Path.GetFullPath(Multiplatform.FileSystem.GetRealPathname(global::KSPUtil.ApplicationRootPath));
 			app_root = EnsureTrailingSeparatorOnDir(app_root);
 
 			process_dir(app_root);

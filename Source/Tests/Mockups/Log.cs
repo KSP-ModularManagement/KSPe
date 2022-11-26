@@ -13,6 +13,16 @@ namespace KSPe
 			Console.WriteLine(string.Format(msg, @params));
 		}
 
+		internal static void detail(string msg, params object[] @params)
+		{
+			Console.WriteLine(string.Format(msg, @params));
+		}
+
+		internal static void error(string msg, params object[] @params)
+		{
+			Console.WriteLine(string.Format(msg, @params));
+		}
+
 		internal static void error(Exception ex, string msg, params object[] @params)
 		{
 			Console.WriteLine(string.Format(msg, @params));
