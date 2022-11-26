@@ -32,7 +32,7 @@ namespace KSPe.UI
 
 		private void Awake()
 		{
-			using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader("000_KSPAPIExtensions"))
+			using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader(KSPe.Startup.KSPE_ROOT_DIR))
 			{ 
 				// There can be only one! #highlanderFeelings
 				if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,4,0))
