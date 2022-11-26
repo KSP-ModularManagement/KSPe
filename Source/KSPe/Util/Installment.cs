@@ -191,7 +191,7 @@ Check {0}'s INSTALL instructions."
 				// get rid of any Plugins or Plugin subdirs, but only inside the GameData
 				int pos;
 				if ((pos = installedDllPath.IndexOf(CheckForWrongDirectoy_GAMEDATA)) < 0)
-					throw new WrongDirectoryInstallationException(name, intendedPath, type.Assembly.Location);
+					throw new WrongDirectoryInstallationException(name, intendedPath, installedDllPath);
 				pos += CheckForWrongDirectoy_GAMEDATA.Length;
 
 				string baseIntendedPath = installedDllPath.Substring(0, pos);

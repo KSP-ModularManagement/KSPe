@@ -245,6 +245,10 @@ namespace KSPe.Multiplatform
 			}
 			for (int i = 1; i < parcels.Length; ++i)
 			{
+				// All the internals pathnames to directories ends with a Dir Separator, so we will get an empty parcel on the last
+				// parcel most of the time!
+				if (string.IsNullOrEmpty(parcels[i])) break;
+
 				Log.debug("Probing {0} {1}", r, parcels[i]);
 				string[] e = SIO.Directory.GetFileSystemEntries(r, parcels[i]);
 				if (1 != e.Length)
