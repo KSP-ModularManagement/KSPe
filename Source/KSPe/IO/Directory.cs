@@ -56,7 +56,7 @@ namespace KSPe.IO
 		public static DateTime GetCreationTimeUtc (string path)		{ return SIO.Directory.GetCreationTimeUtc(RealPath(path)); }
 
 		public static string GetCurrentDirectory ()																{ return GetCurrentDirectoryInternal(); } // FIXME Gambiarra temporaria enquanto eu nao arrumo a issue #37
-		internal static string GetCurrentDirectoryInternal ()													{ return Path.GetFullPathInternal(SIO.Directory.GetCurrentDirectory(), true); }
+		internal static string GetCurrentDirectoryInternal ()													{ return Path.GetFullPathInternal(KSPe.Multiplatform.FileSystem.GetCurrentDirectory(), true); }
 
 		public static string[] GetDirectories (string path)														{ return Path.GetFullPathInternal(SIO.Directory.GetDirectories(RealPath(path)), true); }
 		public static string[] GetDirectories (string path, string searchPattern)								{ return Path.GetFullPathInternal(SIO.Directory.GetDirectories(RealPath(path), searchPattern), true); }
