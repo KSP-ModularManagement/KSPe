@@ -90,6 +90,11 @@ namespace KSPe.IO
 		{
 			// No, we don't use CurrentDir here, we are confined insided the KSP folder structure, rememeber? ;)
 			if (!SIO.Path.IsPathRooted(path)) return GetFullPath(Combine(SIO.Directory.GetCurrentDirectory(), path), iKnowItsDir);
+			return GetFullPathInternal(path, iKnowItsDir);
+		}
+
+		internal static string GetFullPathInternal(string path, bool iKnowItsDir)
+		{
 			string r = GetAbsolutePath(path);
 			foreach (string k in UNREPARSE_KEYS)
 			{
@@ -100,6 +105,14 @@ namespace KSPe.IO
 				}
 			}
 			return EnsureTrailingSeparatorOnDir(r, iKnowItsDir);
+		}
+
+		internal static string[] GetFullPathInternal(string[] paths, bool iKnowItsDir)
+		{
+			string[] r = new string[paths.Length];
+			for (int i = paths.Length-1 ; i >= 0; --i)
+				r[i] = GetFullPathInternal(paths[i], iKnowItsDir);
+			return r;
 		}
 
 		public static string GetAbsolutePath(string path)
