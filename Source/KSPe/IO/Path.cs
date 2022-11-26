@@ -89,7 +89,7 @@ namespace KSPe.IO
 		public static string GetFullPath(string path, bool iKnowItsDir)
 		{
 			// No, we don't use CurrentDir here, we are confined insided the KSP folder structure, rememeber? ;)
-			if (!SIO.Path.IsPathRooted(path)) return GetFullPath(Combine(SIO.Directory.GetCurrentDirectory(), path), iKnowItsDir);
+			if (!SIO.Path.IsPathRooted(path)) return GetFullPath(Combine(AppRoot(), path), iKnowItsDir);
 			return GetFullPathInternal(path, iKnowItsDir);
 		}
 
@@ -186,8 +186,8 @@ namespace KSPe.IO
 
 			Log.debug("Normalized path {0}", path);
 
-			string currentDir = EnsureTrailingSeparatorOnDir(SIO.Directory.GetCurrentDirectory());
-			process_dir(path, currentDir);
+			string currentDir = EnsureTrailingSeparatorOnDir(path);
+			process_dir(currentDir);
 
 			// SYMLINKS are returned as is, ie, relative symlinks returns "../../something".
 			// Realpaths returns itselves, is, /somedir/somefile
@@ -215,8 +215,7 @@ namespace KSPe.IO
 			app_root = SIO.Path.GetFullPath(global::KSPUtil.ApplicationRootPath);
 			app_root = EnsureTrailingSeparatorOnDir(app_root);
 
-			string currentDir = EnsureTrailingSeparatorOnDir(SIO.Directory.GetCurrentDirectory());
-			process_dir(app_root, currentDir);
+			process_dir(app_root);
 
 			return app_root;
 		}
@@ -233,6 +232,16 @@ namespace KSPe.IO
 						? dir
 						: Combine(path, dir)
 				);
+				register_alias(reparsed, dir);
+			}
+		}
+
+		private static void process_dir(string dir)
+		{
+			Log.debug("process_dir: dir  is {0}", dir);
+			if (Multiplatform.FileSystem.IsReparsePoint(dir))
+			{
+				string reparsed = Multiplatform.FileSystem.ReparsePath(dir);
 				register_alias(reparsed, dir);
 			}
 		}
