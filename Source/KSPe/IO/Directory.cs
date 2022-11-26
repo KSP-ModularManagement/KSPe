@@ -55,7 +55,8 @@ namespace KSPe.IO
 		public static DateTime GetCreationTime (string path)		{ return SIO.Directory.GetCreationTime(RealPath(path)); }
 		public static DateTime GetCreationTimeUtc (string path)		{ return SIO.Directory.GetCreationTimeUtc(RealPath(path)); }
 
-		public static string GetCurrentDirectory ()																{ return Path.GetFullPathInternal(SIO.Directory.GetCurrentDirectory(), true); }
+		public static string GetCurrentDirectory ()																{ return GetCurrentDirectoryInternal(); } // FIXME Gambiarra temporaria enquanto eu nao arrumo a issue #37
+		internal static string GetCurrentDirectoryInternal ()													{ return Path.GetFullPathInternal(SIO.Directory.GetCurrentDirectory(), true); }
 
 		public static string[] GetDirectories (string path)														{ return Path.GetFullPathInternal(SIO.Directory.GetDirectories(RealPath(path)), true); }
 		public static string[] GetDirectories (string path, string searchPattern)								{ return Path.GetFullPathInternal(SIO.Directory.GetDirectories(RealPath(path), searchPattern), true); }
@@ -89,7 +90,7 @@ namespace KSPe.IO
 		public static void SetCreationTime (string path, DateTime creationTime)					{ SIO.Directory.SetCreationTime(RealPath(path), creationTime);}
 		public static void SetCreationTimeUtc (string path, DateTime creationTimeUtc)			{ SIO.Directory.SetCreationTimeUtc(RealPath(path), creationTimeUtc);}
 
-		public static void SetCurrentDirectory (string path)									{ SIO.Directory.SetCurrentDirectory(path); }
+		public static void SetCurrentDirectory (string path)									{ throw new IsolatedStorageException("You are now allowed to change the Current Directory."); }
 
 		public static void SetLastAccessTime (string path, DateTime lastAccessTime)				{ SIO.Directory.SetLastAccessTime(RealPath(path), lastAccessTime); }
 		public static void SetLastAccessTimeUtc (string path, DateTime lastAccessTimeUtc)		{ SIO.Directory.SetLastAccessTimeUtc(RealPath(path), lastAccessTimeUtc);}

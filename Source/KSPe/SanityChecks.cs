@@ -33,7 +33,7 @@ namespace KSPe
 
 		private static void CheckForPwd()
 		{
-			string pwd = KSPe.IO.Path.EnsureTrailingSeparatorOnDir(System.IO.Directory.GetCurrentDirectory(), true);
+			string pwd = KSPe.IO.Directory.GetCurrentDirectory();
 			string origin = KSPe.IO.Path.Origin();
 
 			Log.detail("pwd:                        {0}", pwd);
