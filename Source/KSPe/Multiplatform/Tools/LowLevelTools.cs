@@ -34,6 +34,8 @@ namespace KSPe.Multiplatform.LowLevelTools {
 										|| 128 == (int)System.Environment.OSVersion.Platform
 										|| 6 == (int)System.Environment.OSVersion.Platform
 									;
+		// Reference: https://github.com/mono/mono/blob/5d2e3bc3b3c8184d35b2f7801e88d96470d367c4/mcs/class/corlib/Test/System.Security.AccessControl/MutexSecurityTest.cs
+		public static bool IsThisMacOS => PlatformID.MacOSX == System.Environment.OSVersion.Platform;
     }
 
 	public static class Windows
