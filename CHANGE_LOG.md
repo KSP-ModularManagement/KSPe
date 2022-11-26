@@ -1,10 +1,13 @@
 # KSP API Extensions/L :: Change Log
 
-* 2022-1126: 2.4.2.6 (Lisias) for KSP >= 1.2
+* 2022-1126: 2.4.2.7 (Lisias) for KSP >= 1.2
 	+ Implements `KSPe.IO.Directory.*` calls.
 	+ Implements some missing Use Cases from 2.4.2.4, when AppRoot replaced Origin - but I let code relying on `pwd` pass trough.
-	+ Closes issue:
-		- [#37](https://github.com/net-lisias-ksp/KSPe/issues/37)Dont get screwed by `System.IO.Directory.GetCurrentDirecrtory()` again. 
+		- As well new use cases that I never dreamed about...
+	+ Closes issue (again):
+		- [#37](https://github.com/net-lisias-ksp/KSPe/issues/37) Dont get screwed by `System.IO.Directory.GetCurrentDirecrtory()` again. 
+* 2022-1126: 2.4.2.6 (Lisias) for KSP >= 1.2
+	+ ***ditched yet again*** -- this is getting repetitive, no?
 * 2022-1125: 2.4.2.5 (Lisias) for KSP >= 1.2
 	+ ***ditched***
 * 2022-1114: 2.4.2.4 (Lisias) for KSP >= 1.2
