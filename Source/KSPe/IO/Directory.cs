@@ -55,25 +55,26 @@ namespace KSPe.IO
 		public static DateTime GetCreationTime (string path)		{ return SIO.Directory.GetCreationTime(RealPath(path)); }
 		public static DateTime GetCreationTimeUtc (string path)		{ return SIO.Directory.GetCreationTimeUtc(RealPath(path)); }
 
-		public static string GetCurrentDirectory ()																{ return SIO.Directory.GetCurrentDirectory(); }
-		public static string[] GetDirectories (string path)														{ return SIO.Directory.GetDirectories(RealPath(path)); }
-		public static string[] GetDirectories (string path, string searchPattern)								{ return SIO.Directory.GetDirectories(RealPath(path), searchPattern); }
-		public static string[] GetDirectories (string path, string searchPattern, SIO.SearchOption searchOption) { return SIO.Directory.GetDirectories(RealPath(path), searchPattern, searchOption); }
-		public static string GetDirectoryRoot (string path)														{ return SIO.Directory.GetDirectoryRoot(RealPath(path)); }
+		public static string GetCurrentDirectory ()																{ return Path.GetFullPathInternal(SIO.Directory.GetCurrentDirectory(), true); }
 
-		public static string[] GetFiles (string path)														{ return SIO.Directory.GetFiles(RealPath(path)); }
-		public static string[] GetFiles (string path, string searchPattern)									{ return SIO.Directory.GetFiles(RealPath(path), searchPattern); }
-		public static string[] GetFiles (string path, string searchPattern, SIO.SearchOption searchOption)	{ return SIO.Directory.GetFiles(RealPath(path), searchPattern, searchOption); }
+		public static string[] GetDirectories (string path)														{ return Path.GetFullPathInternal(SIO.Directory.GetDirectories(RealPath(path)), true); }
+		public static string[] GetDirectories (string path, string searchPattern)								{ return Path.GetFullPathInternal(SIO.Directory.GetDirectories(RealPath(path), searchPattern), true); }
+		public static string[] GetDirectories (string path, string searchPattern, SIO.SearchOption searchOption) { return Path.GetFullPathInternal(SIO.Directory.GetDirectories(RealPath(path), searchPattern, searchOption), true); }
+		public static string GetDirectoryRoot (string path)														{ return Path.GetFullPathInternal(Path.GetFullPath(SIO.Directory.GetDirectoryRoot(RealPath(path))), true); }
 
-		public static string[] GetFileSystemEntries (string path)							{ return SIO.Directory.GetFileSystemEntries(RealPath(path)); }
-		public static string[] GetFileSystemEntries (string path, string searchPattern)		{ return SIO.Directory.GetFileSystemEntries(RealPath(path), searchPattern); }
+		public static string[] GetFiles (string path)															{ return Path.GetFullPathInternal(SIO.Directory.GetFiles(RealPath(path)), false); }
+		public static string[] GetFiles (string path, string searchPattern)										{ return Path.GetFullPathInternal(SIO.Directory.GetFiles(RealPath(path), searchPattern), false); }
+		public static string[] GetFiles (string path, string searchPattern, SIO.SearchOption searchOption)		{ return Path.GetFullPathInternal(SIO.Directory.GetFiles(RealPath(path), searchPattern, searchOption), false); }
+
+		public static string[] GetFileSystemEntries (string path)												{ return Path.GetFullPathInternal(SIO.Directory.GetFileSystemEntries(RealPath(path)), false); }
+		public static string[] GetFileSystemEntries (string path, string searchPattern)							{ return Path.GetFullPathInternal(SIO.Directory.GetFileSystemEntries(RealPath(path), searchPattern), false); }
 
 		public static DateTime GetLastAccessTime (string path)		{ return SIO.Directory.GetLastAccessTime(RealPath(path)); }
 		public static DateTime GetLastAccessTimeUtc (string path)	{ return SIO.Directory.GetLastAccessTimeUtc(RealPath(path)); }
 		public static DateTime GetLastWriteTime (string path)		{ return SIO.Directory.GetLastWriteTime(RealPath(path)); }
 		public static DateTime GetLastWriteTimeUtc (string path)	{ return SIO.Directory.GetLastWriteTimeUtc(RealPath(path));}
 
-		public static string[] GetLogicalDrives ()				{ return SIO.Directory.GetLogicalDrives(); }
+		public static string[] GetLogicalDrives ()					{ return Path.GetFullPathInternal(SIO.Directory.GetLogicalDrives(), true); }
 
 		public static SIO.DirectoryInfo GetParent (string path)	{ return SIO.Directory.GetParent(RealPath(path)); }
 
