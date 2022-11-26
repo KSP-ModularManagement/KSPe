@@ -1,5 +1,9 @@
 # KSP API Extensions/L :: Change Log
 
+* 2022-1125: 2.4.2.5 (Lisias) for KSP >= 1.2
+	+ Implements `KSPe.IO.Directory.*` calls.
+	+ Closes issue:
+		- [#37](https://github.com/net-lisias-ksp/KSPe/issues/37)Dont get screwed by `System.IO.Directory.GetCurrentDirecrtory()` again. 
 * 2022-1114: 2.4.2.4 (Lisias) for KSP >= 1.2
 	+ Fixing a regression on 2.4.2.3 about the filesystem sandbox that affected SteamDeck and Steam on Linux. Power MacOS users also affected. 
 	+ Switches the internal pathname resolving from `Origin()` to the new `AppRoot()`, making possible to client add'ons to kinda of keep working even if the `pwd` is set to a different path than `Origin()` - what will still break KSP anyway, but whatever. It's not by job to prevent people from shooting their feet if this is what they really wanna do.
