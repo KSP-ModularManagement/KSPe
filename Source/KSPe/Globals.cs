@@ -94,14 +94,17 @@ namespace KSPe
 		internal static Dictionary<string, Globals> _locals = new Dictionary<string, Globals>();
 		internal static void Init()
 		{
-			if (!System.IO.File.Exists("PluginData/KSPe.cfg"))
+			// KSPe's file system services are not initialized yet by this point!
+			// So, I throwed the towel and I'm relying on KSPUtil for this one. May the Kraken have mercy of me!
+			string config = System.IO.Path.Combine(KSPUtil.ApplicationRootPath, "PluginData/KSPe.cfg");
+			if (!System.IO.File.Exists(config))
 			{
 				LOG.info("KSPe.cfg does not exists. Using defaults.");
 				_default = Globals.createDefault();
 			}
 			else try
 			{
-				ConfigNode node = ConfigNode.Load("PluginData/KSPe.cfg");
+				ConfigNode node = ConfigNode.Load(config);
 				KSPE.ConfigNodeWithSteroids sn = KSPE.ConfigNodeWithSteroids.from(node);
 				sn = sn.GetNode("KSPe");
 				_default = Globals.from(sn);

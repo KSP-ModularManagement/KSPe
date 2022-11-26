@@ -455,7 +455,8 @@ namespace KSPe.Util
 					foreach (string path in CUSTOM_SEARCH_PATHS)
 					{
 						if (verbose) LOG.force("Looking for {0} on {1}...", filename, path);
-						string asmFile = IO.Path.Combine(path,filename);
+						string fullpath = IO.Hierarchy.ROOT.SolveFull(false, path);
+						string asmFile = IO.Path.Combine(fullpath,filename);
 						if (SIO.File.Exists(asmFile)) return asmFile;
 					}
 				return null;
