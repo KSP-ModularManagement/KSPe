@@ -139,6 +139,123 @@
       <Link>Util\Text.cs</Link>
     </Compile>
     <Compile Include="Util\Image.Local.cs" />
+    <Compile Include="..\KSPe\IO\File.cs">
+      <Link>IO\File.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\FileMode.cs">
+      <Link>IO\FileMode.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Asset\FileStream.cs">
+      <Link>IO\Asset\FileStream.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Asset\_PublicFacade.cs">
+      <Link>IO\Asset\_PublicFacade.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Asset\StreamReader.cs">
+      <Link>IO\Asset\StreamReader.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Asset\PluginConfiguration.cs">
+      <Link>IO\Asset\PluginConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Asset\Texture2D.cs">
+      <Link>IO\Asset\Texture2D.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Asset\ConfigNode.cs">
+      <Link>IO\Asset\ConfigNode.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Save\FileStream.cs">
+      <Link>IO\Save\FileStream.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Save\_PublicFacade.cs">
+      <Link>IO\Save\_PublicFacade.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Save\StreamReader.cs">
+      <Link>IO\Save\StreamReader.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Save\StreamWriter.cs">
+      <Link>IO\Save\StreamWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Save\PluginConfiguration.cs">
+      <Link>IO\Save\PluginConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Save\Texture2D.cs">
+      <Link>IO\Save\Texture2D.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Save\ConfigNode.cs">
+      <Link>IO\Save\ConfigNode.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\AbstractConfigNode.cs">
+      <Link>IO\AbstractConfigNode.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\FileT.cs">
+      <Link>IO\FileT.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Data\FileStream.cs">
+      <Link>IO\Data\FileStream.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Data\_PublicFacade.cs">
+      <Link>IO\Data\_PublicFacade.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Data\StreamReader.cs">
+      <Link>IO\Data\StreamReader.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Data\StreamWriter.cs">
+      <Link>IO\Data\StreamWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Data\PluginConfiguration.cs">
+      <Link>IO\Data\PluginConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Data\Texture2D.cs">
+      <Link>IO\Data\Texture2D.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Data\ConfigNode.cs">
+      <Link>IO\Data\ConfigNode.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Local\FileStream.cs">
+      <Link>IO\Local\FileStream.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Local\_PublicFacade.cs">
+      <Link>IO\Local\_PublicFacade.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Local\StreamReader.cs">
+      <Link>IO\Local\StreamReader.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Local\StreamWriter.cs">
+      <Link>IO\Local\StreamWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Local\PluginConfiguration.cs">
+      <Link>IO\Local\PluginConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Local\Texture2D.cs">
+      <Link>IO\Local\Texture2D.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Local\ConfigNode.cs">
+      <Link>IO\Local\ConfigNode.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Temp\FileStream.cs">
+      <Link>IO\Temp\FileStream.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Temp\_PublicFacade.cs">
+      <Link>IO\Temp\_PublicFacade.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Temp\StreamReader.cs">
+      <Link>IO\Temp\StreamReader.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Temp\StreamWriter.cs">
+      <Link>IO\Temp\StreamWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Temp\PluginConfiguration.cs">
+      <Link>IO\Temp\PluginConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Temp\Texture2D.cs">
+      <Link>IO\Temp\Texture2D.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Temp\ConfigNode.cs">
+      <Link>IO\Temp\ConfigNode.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\GameDB\Asset.cs">
+      <Link>GameDB\Asset.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />
