@@ -145,26 +145,12 @@ namespace KSPe.Util.Image {
 		}
 	}
 
-	public static class Screenshot
+	public static partial class Screenshot
 	{
 		public interface Interface
 		{
 			void Capture(string pathname);
 			void Capture(string pathname, int superSampleValue);
-		}
-
-		private class Fallback : Interface
-		{
-			void Interface.Capture(string pathname)
-			{
-				Capture(pathname, 1);
-			}
-
-			void Interface.Capture(string pathname, int superSampleValue)
-			{
-				ScreenMessages.PostScreenMessage ("No KSPe Screenshot support installed.");
-				KSPe.Log.warn("Util.Image.Screenshot: Screenshot support not properly initialized! Screenshot {0} not taken!", pathname);
-			}
 		}
 
 		#region Abstracted Calls
@@ -175,15 +161,6 @@ namespace KSPe.Util.Image {
 		#endregion
 
 		private static readonly Interface INSTANCE;
-		private static Interface GetInstance()
-		{
-			//Interface r = (Interface)Util.SystemTools.Interface.CreateInstanceByInterfaceName("KSPe.Util.Image.Screenshot+Interface");
-			Interface r = (Interface)Util.SystemTools.Interface.CreateInstanceByInterface(typeof(Interface));
-			if (null != r) return r;
-
-			KSPe.Log.warn("Util.Image.Screenshot: No realisation for the abstract Interface found! Using a fallback one!");
-			return (Interface) new Fallback();
-		}
 		static Screenshot()
 		{
 			INSTANCE = GetInstance();
