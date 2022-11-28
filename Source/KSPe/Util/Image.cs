@@ -155,8 +155,16 @@ namespace KSPe.Util.Image {
 
 		#region Abstracted Calls
 
-		public static void Capture(string pathname)								{ INSTANCE.Capture(pathname); }
-		public static void Capture(string pathname, int superSampleValue)		{ INSTANCE.Capture(pathname, superSampleValue); }
+		public static void Capture(string pathname)
+		{
+			pathname = KSPe.IO.Path.AppRoot() + pathname;
+			INSTANCE.Capture(pathname);
+		}
+		public static void Capture(string pathname, int superSampleValue)
+		{
+			pathname = KSPe.IO.Path.AppRoot() + pathname;
+			INSTANCE.Capture(pathname, superSampleValue);
+		}
 
 		#endregion
 
