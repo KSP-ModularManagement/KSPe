@@ -121,6 +121,7 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="IO\Directory.cs" />
     <Compile Include="Util\Text.cs" />
+    <Compile Include="Util\Image.Local.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
