@@ -138,6 +138,7 @@
     <Compile Include="..\KSPe\Util\Text.cs">
       <Link>Util\Text.cs</Link>
     </Compile>
+    <Compile Include="Util\Image.Local.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />
