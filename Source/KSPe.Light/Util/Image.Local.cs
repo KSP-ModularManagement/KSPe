@@ -61,7 +61,7 @@ namespace KSPe.Util.Image
 
 			void Interface.Capture(string pathname)
 			{
-				Capture(pathname, 1);
+				this.method.Invoke(null, new object[] { pathname, 1 });
 			}
 
 			void Interface.Capture(string pathname, int superSampleValue)
