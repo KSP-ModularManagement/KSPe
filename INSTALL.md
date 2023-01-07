@@ -22,7 +22,7 @@ To install, place the GameData folder inside your Kerbal Space Program folder. O
 ### Dependencies
 
 * For KSP >= 1.4
-	+ [Click Through Blocker](https://forum.kerbalspaceprogram.com/index.php?/topic/170747-151-click-through-blocker/) 
+	+ [Click Through Blocker](https://forum.kerbalspaceprogram.com/index.php?/topic/170747-151-click-through-blocker/) **Optional**
 		- Please note than CTB on KSP >= 1.8 also needs [Toolbar Control](https://forum.kerbalspaceprogram.com/index.php?/topic/169509-19x-toolbar-controller-for-modders/) installed! 
 	+ You need to localise and install the best available release for the KSP version you are running.
 		- Don't install the latest version for KSP 1.10 on KSP 1.7, **it will not work**. 
