@@ -29,11 +29,14 @@ namespace KSPe
 	public class ConfigNodeWithSteroids : global::ConfigNode
 	{
 		public ConfigNodeWithSteroids() : base() { }
+		public ConfigNodeWithSteroids(string name) : base(name) { }
+		public ConfigNodeWithSteroids(string name, string vcomment) : base(name, vcomment) { }
 
-		public static ConfigNodeWithSteroids from (global::ConfigNode obj)
+		public static ConfigNodeWithSteroids from(global::ConfigNode obj)
 		{
 			ConfigNodeWithSteroids r = new ConfigNodeWithSteroids();
-			r.CopyFrom(obj);
+			obj.CopyTo(r);
+			//r.CopyFrom(obj);
 			return r;
 		}
 
