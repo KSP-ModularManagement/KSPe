@@ -166,10 +166,23 @@ namespace Tests
 			KSPe.Util.Installation.Check<Dummy>();
 		}
 
+		private static void ConversionTest<T>(string value) => Console.WriteLine(string.Format("{0} ==> {1}", value, (T)Convert.ChangeType(value, typeof(T))));
+
+		private static void ConversionTest()
+		{
+			ConversionTest<bool>("True");
+			ConversionTest<bool>(" True");
+			ConversionTest<bool>("true");
+			ConversionTest<bool>("False");
+			ConversionTest<bool>("false");
+		}
+
 		public static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");
 			Console.WriteLine(Environment.GetCommandLineArgs()[0]);
+
+			ConversionTest();
 
 			TestCase_SymLinks();
 
