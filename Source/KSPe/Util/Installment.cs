@@ -174,11 +174,11 @@ Check {0}'s INSTALL instructions."
 			Check<T>(versionClass, unique);
 		}
 
-		private static readonly String CheckForWrongDirectoy_PLUGINS = string.Format("{0}Plugins{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
-		private static readonly String CheckForWrongDirectoy_PLUGIN = string.Format("{0}Plugins{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
-		private static readonly String CheckForWrongDirectoy_DOT = string.Format("{0}.{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
-		private static readonly String CheckForWrongDirectoy_GAMEDATA = string.Format("{0}GameData{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
-		private static void CheckForWrongDirectoy(Type type, string name, string folder, string vendor)
+		private static readonly string CheckForWrongDirectoy_PLUGINS = string.Format("{0}Plugins{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
+		private static readonly string CheckForWrongDirectoy_PLUGIN = string.Format("{0}Plugins{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
+		private static readonly string CheckForWrongDirectoy_DOT = string.Format("{0}.{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
+		private static readonly string CheckForWrongDirectoy_GAMEDATA = string.Format("{0}GameData{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
+		private static void CheckForWrongDirectoy(Type type, string @namespace, string folder, string vendor)
 		{
 			string intendedPath = IO.Path.Combine(IO.Path.AppRoot(), "GameData");
 			if (null != vendor) intendedPath = IO.Path.Combine(intendedPath, vendor);
