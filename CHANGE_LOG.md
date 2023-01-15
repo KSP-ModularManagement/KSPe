@@ -1,5 +1,10 @@
 # KSP API Extensions/L :: Change Log
 
+* 2023-0115: 2.4.2.9 (Lisias) for KSP >= 1.2
+	+ Bug fixes.
+	+ Closes issues:
+		- [#40](https://github.com/net-lisias-ksp/KSPe/issues/40) Bug on `ConfigNodeWithSteroids.HasNode`
+		- [#18](https://github.com/net-lisias-ksp/KSPe/issues/18) Implement a Installment check for (yet) more bordelines use cases
 * 2022-1128: 2.4.2.8 (Lisias) for KSP >= 1.2
 	+ Implements yet some more missing Use Cases from 2.4.2.4, when AppRoot replaced Origin - but I let code relying on `pwd` pass trough.
 	+ Reworks:
