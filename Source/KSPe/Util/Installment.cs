@@ -180,7 +180,7 @@ Check {0}'s INSTALL instructions."
 		private static readonly string CheckForWrongDirectoy_GAMEDATA = string.Format("{0}GameData{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
 		private static void CheckForWrongDirectoy(Type type, string @namespace, string folder, string vendor)
 		{
-			string intendedPath = IO.Path.Combine(IO.Path.AppRoot(), "GameData");
+			string intendedPath = IO.Hierarchy.GAMEDATA.fullPathName;
 			if (null != vendor) intendedPath = IO.Path.Combine(intendedPath, vendor);
 			intendedPath = IO.Path.Combine(intendedPath, folder);
 			intendedPath = IO.Path.GetFullPath(intendedPath, true);
