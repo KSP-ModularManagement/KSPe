@@ -118,7 +118,7 @@ namespace Tests
 			Console.WriteLine((installedDllPath.StartsWith(intendedPath)));
 		}
 
-		private static void DumbTest()
+		private static void DumbTest<T>()
 		{
 			List<string> names = new List<string>("net.lisias.ksp.test.debug".Split('.'));
 			int i = names.Count - 1;
@@ -127,6 +127,7 @@ namespace Tests
 				string subnamespace = String.Join(".", names.GetRange(0, i).ToArray());
 				Console.WriteLine("* " + subnamespace);
 			}
+			Console.WriteLine("AssemblyName = {0}", typeof(T).Assembly.GetName().Name);
 		}
 
 		private class ActiveState
@@ -168,7 +169,7 @@ namespace Tests
 
 		private static void ConversionTest<T>(string value) => Console.WriteLine(string.Format("{0} ==> {1}", value, (T)Convert.ChangeType(value, typeof(T))));
 
-		private static void ConversionTest()
+		private static void TestCase_Conversion()
 		{
 			ConversionTest<bool>("True");
 			ConversionTest<bool>(" True");
@@ -182,7 +183,7 @@ namespace Tests
 			Console.WriteLine("Hello World!");
 			Console.WriteLine(Environment.GetCommandLineArgs()[0]);
 
-			ConversionTest();
+			TestCase_Conversion();
 
 			TestCase_SymLinks();
 
@@ -193,7 +194,7 @@ namespace Tests
 			TestCase_MiscPaths();
 			//TestCase_Raparsing(Environment.GetCommandLineArgs()[1]);
 
-			DumbTest();
+			DumbTest<KSPe.Startup>();
 
 			TestCase_NumberToText();
 

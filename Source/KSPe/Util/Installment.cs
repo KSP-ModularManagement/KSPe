@@ -135,22 +135,22 @@ Check {0}'s INSTALL instructions."
 			}
 		}
 
-		public static void Check<T>(string name, bool unique = true)
+		public static void Check<T>(string @namespace, bool unique = true)
 		{
-			Check<T>(name, name, null, unique);
+			Check<T>(@namespace, @namespace, null, unique);
 		}
-		public static void Check<T>(string name, string vendor)
+		public static void Check<T>(string @namespace, string vendor)
 		{
-			Check<T>(name, name, vendor, true);
+			Check<T>(@namespace, @namespace, vendor, true);
 		}
-		public static void Check<T>(string name, string folder, string vendor)
+		public static void Check<T>(string @namespace, string folder, string vendor)
 		{
-			Check<T>(name, folder, vendor, true);
+			Check<T>(@namespace, folder, vendor, true);
 		}
-		public static void Check<T>(string name, string folder, string vendor, bool unique)
+		public static void Check<T>(string @namespace, string folder, string vendor, bool unique)
 		{
-			if (unique) CheckForDuplicity(name);
-			CheckForWrongDirectoy(typeof(T), name, folder, vendor);
+			if (unique) CheckForDuplicity(typeof(T).Assembly.GetName().Name);
+			CheckForWrongDirectoy(typeof(T), @namespace, folder, vendor);
 		}
 
 		public static void Check<T>(System.Type versionClass)
@@ -159,9 +159,9 @@ Check {0}'s INSTALL instructions."
 		}
 		public static void Check<T>(System.Type versionClass, bool unique = true)
 		{
-			string name = SystemTools.Reflection.Version.Namespace(versionClass);
+			string @namespace = SystemTools.Reflection.Version.Namespace(versionClass);
 			string vendor = SystemTools.Reflection.Version.Vendor(versionClass);
-			Check<T>(name, name, vendor, unique);
+			Check<T>(@namespace, @namespace, vendor, unique);
 		}
 
 		public static void Check<T>()
@@ -191,7 +191,7 @@ Check {0}'s INSTALL instructions."
 				// get rid of any Plugins or Plugin subdirs, but only inside the GameData
 				int pos;
 				if ((pos = installedDllPath.IndexOf(CheckForWrongDirectoy_GAMEDATA)) < 0)
-					throw new WrongDirectoryInstallationException(name, intendedPath, installedDllPath);
+					throw new WrongDirectoryInstallationException(@namespace, intendedPath, installedDllPath);
 				pos += CheckForWrongDirectoy_GAMEDATA.Length;
 
 				string baseIntendedPath = installedDllPath.Substring(0, pos);
@@ -202,14 +202,14 @@ Check {0}'s INSTALL instructions."
 
 			if (installedDllPath.StartsWith(intendedPath)) return;
 
-			throw new WrongDirectoryInstallationException(name, intendedPath, installedDllPath);
+			throw new WrongDirectoryInstallationException(@namespace, intendedPath, installedDllPath);
 		}
 
-		private static void CheckForDuplicity(string name)
+		private static void CheckForDuplicity(string assemblyName)
 		{
-			IEnumerable<KAssemblyLoader.LoadedAssembly> loaded = AssemblyLoader.Search.ByName(name);
+			IEnumerable<KAssemblyLoader.LoadedAssembly> loaded = AssemblyLoader.Search.ByName(assemblyName);
 
-			if (0 == loaded.Count()) throw new MissingDependencyInstallationException(name);
+			if (0 == loaded.Count()) throw new MissingDependencyInstallationException(assemblyName);
 			if (1 != loaded.Count()) throw new DuplicityInstallationException(loaded.ToList());
 		}
 	}
