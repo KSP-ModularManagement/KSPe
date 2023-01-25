@@ -85,7 +85,7 @@ namespace kspofflinecheck.Checks
 					Console.Write("Ok.");
  					processed.Add(f);
 				}
-				catch (BadImageFormatException e)
+				catch (BadImageFormatException)
 				{
 					Console.Write("Not a C# Assembly.");
  					processed.Add(f);

@@ -96,8 +96,8 @@ namespace KSPe.IO
 				this.pathname = pathname;
 			}
 
-			protected new T GetValue<T>(string key) { throw new System.NotImplementedException(); }
-			protected new T GetValue<T>(string key, T _default) { throw new System.NotImplementedException(); }
+			protected new R GetValue<R>(string key) { throw new System.NotImplementedException(); }
+			protected new R GetValue<R>(string key, R _default) { throw new System.NotImplementedException(); }
 
 			public T GetValue (string key)
 			{

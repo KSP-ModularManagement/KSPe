@@ -255,7 +255,7 @@ namespace KSPe.UI
 		public class ScrollViewScope : UnityEngine.GUI.ScrollViewScope
 		{
 			public new Vector2 scrollPosition => base.scrollPosition;
-			public bool handleScrollWheel {
+			public new bool handleScrollWheel {
 				get => base.handleScrollWheel;
 				set => base.handleScrollWheel = value;
 			}
