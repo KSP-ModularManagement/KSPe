@@ -507,6 +507,20 @@ namespace KSPe.Util
 
 			internal static class Version
 			{
+				internal static string GetNamespace(SType klass)
+				{
+					if (NamespaceAsDirectories(klass))
+					{
+						string[] dirs = Namespace(klass).Split('.');
+						string r = dirs[0];
+						for (int i = 1; i < dirs.Length; ++i)
+							r = SIO.Path.Combine(r, dirs[i]);
+						return r;
+					}
+					else
+						return Namespace(klass);
+				}
+
 				public static string Namespace(SType klass) => GetField<string>(klass, "Namespace", klass.Namespace);
 				public static string Vendor(SType klass) => GetField<string>(klass, "Vendor", null);
 				public static string FriendlyName(SType klass) => GetField<string>(klass, "FriendlyName", klass.Name);
@@ -518,13 +532,15 @@ namespace KSPe.Util
 				public static System.Version V(SType klass) => new System.Version(major(klass), minor(klass), patch(klass), build(klass));
 				public static string Number(SType klass) => GetField<string>(klass, "Number", "0.0.0.0");
 				public static string Text(SType klass) => GetField<string>(klass, "Text", "0.0.0.0");
-				public static string EffectivePath(SType klass) => null == Vendor(klass) ? Namespace(klass) : SIO.Path.Combine(Vendor(klass), Namespace(klass));
+				public static bool NamespaceAsDirectories(SType klass) => GetField<bool>(klass, "NamespaceAsDirectories", false);
+				public static string EffectivePath(SType klass) => null == Vendor(klass) ? GetNamespace(klass) : SIO.Path.Combine(Vendor(klass), GetNamespace(klass));
 			}
 
 			public static class Version<T>
 			{
 				public static SType Class = Type.Find.By(typeof(T).Namespace, "Version");
 				private static Y GetField<Y>(string fieldName, Y defaultValue) => Reflection.GetField<Y>(Class, fieldName, defaultValue);
+				private static string GetNamespace() => Version.GetNamespace(Class);
 
 				public static string Namespace => GetField<string>("Namespace", typeof(T).Namespace);
 				public static string Vendor => GetField<string>("Vendor", null);
@@ -537,7 +553,8 @@ namespace KSPe.Util
 				public static System.Version V => new System.Version(major, minor, patch, build);
 				public static string Number => GetField<string>("Number", "0.0.0.0");
 				public static string Text => GetField<string>("Text", "0.0.0.0");
-				public static string EffectivePath = null == Vendor ? Namespace : SIO.Path.Combine(Vendor, Namespace);
+				public static bool NamespaceAsDirectories => GetField<bool>("NamespaceAsDirectories", false);
+				public static string EffectivePath = null == Vendor ? GetNamespace() : SIO.Path.Combine(Vendor, GetNamespace());
 			}
 
 			internal static class Configuration
