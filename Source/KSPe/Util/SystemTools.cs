@@ -83,12 +83,25 @@ namespace KSPe.Util
 
 		public static class Type
 		{
+			private static readonly Dictionary<string, SType> TYPES = new Dictionary<string, SType>();
+
+			// TODO: Remove this on Version 2.5
+			[Obsolete("SystemTools.TypeFinder is obsolete. Please use Type.Finder instead.")]
 			public static class Finder
 			{
-				private static readonly Dictionary<string, SType> TYPES = new Dictionary<string, SType>();
+				public static bool ExistsBy(string ns, string name) => Exists.By(ns, name);
+				public static bool ExistsByQualifiedName(string qn) => Exists.ByQualifiedName(qn);
+				public static SType FindBy(string ns, string name) => Find.By(ns, name);
+				public static SType FindByQualifiedName(string qn) => Find.ByQualifiedName(qn);
+				public static SType FindByInterface(string ns, string name) => Find.ByInterface(ns, name);
+				public static SType FindByInterfaceName(string qn) => Find.ByInterfaceName(qn);
+				public static SType FindBy(SType ifc) => Find.By(ifc);
+			}
 
-				public static bool ExistsBy(string ns, string name) => ExistsByQualifiedName(ns + "." + name);
-				public static bool ExistsByQualifiedName(string qn)
+			public static class Exists
+			{
+				public static bool By(string ns, string name) => ByQualifiedName(ns + "." + name);
+				public static bool ByQualifiedName(string qn)
 				{
 					lock (TYPES)
 					{
@@ -102,9 +115,12 @@ namespace KSPe.Util
 					}
 					return false;
 				}
+			}
 
-				public static SType FindBy(string ns, string name) => FindByQualifiedName(ns + "." + name);
-				public static SType FindByQualifiedName(string qn)
+			public static class Find
+			{
+				public static SType By(string ns, string name) => ByQualifiedName(ns + "." + name);
+				public static SType ByQualifiedName(string qn)
 				{
 					lock(TYPES)
 					{ 
@@ -119,8 +135,8 @@ namespace KSPe.Util
 					throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing type : " + qn);
 				}
 
-				public static SType FindByInterface(string ns, string name) => FindByInterfaceName(ns + "." + name);
-				public static SType FindByInterfaceName(string qn)
+				public static SType ByInterface(string ns, string name) => ByInterfaceName(ns + "." + name);
+				public static SType ByInterfaceName(string qn)
 				{
 					lock(TYPES)
 					{ 
@@ -136,7 +152,7 @@ namespace KSPe.Util
 					throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing Interface : " + qn);
 				}
 
-				public static SType FindBy(SType ifc)
+				public static SType By(SType ifc)
 				{
 					lock(TYPES)
 					{ 
@@ -177,10 +193,10 @@ namespace KSPe.Util
 		[Obsolete("SystemTools.TypeFinder is obsolete. Please use Type.Finder instead.")]
 		public static class TypeFinder
 		{
-			public static bool ExistsByQualifiedName(string qn) => Type.Finder.ExistsByQualifiedName(qn);
-			public static SType FindByQualifiedName(string qn) => Type.Finder.FindByQualifiedName(qn);
-			public static SType FindByInterfaceName(string qn) => Type.Finder.FindByInterfaceName(qn);
-			public static SType FindByInterface(SType ifc) => Type.Finder.FindBy(ifc);
+			public static bool ExistsByQualifiedName(string qn) => Type.Exists.ByQualifiedName(qn);
+			public static SType FindByQualifiedName(string qn) => Type.Find.ByQualifiedName(qn);
+			public static SType FindByInterfaceName(string qn) => Type.Find.ByInterfaceName(qn);
+			public static SType FindByInterface(SType ifc) => Type.Find.By(ifc);
 		}
 
 		// TODO: Remove this on Version 2.5
@@ -507,7 +523,7 @@ namespace KSPe.Util
 
 			public static class Version<T>
 			{
-				public static SType Class = Type.Finder.FindBy(typeof(T).Namespace, "Version");
+				public static SType Class = Type.Find.By(typeof(T).Namespace, "Version");
 				private static Y GetField<Y>(string fieldName, Y defaultValue) => Reflection.GetField<Y>(Class, fieldName, defaultValue);
 
 				public static string Namespace => GetField<string>("Namespace", typeof(T).Namespace);
@@ -581,8 +597,8 @@ namespace KSPe.Util
 
 			public static class Configuration<T>
 			{
-				public static SType Class = Type.Finder.ExistsBy(typeof(T).Namespace, "Configuration")
-											? Type.Finder.FindBy(typeof(T).Namespace, "Configuration")
+				public static SType Class = Type.Exists.By(typeof(T).Namespace, "Configuration")
+											? Type.Find.By(typeof(T).Namespace, "Configuration")
 											: null
 										;
 				private static Y GetField<Y>(string fieldName, Y defaultValue) =>

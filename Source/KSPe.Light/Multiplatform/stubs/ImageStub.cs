@@ -44,13 +44,13 @@ namespace KSPe.Light.Util.Image
 
 		private static void CaptureOnUnity5(string pathname, int superSampleValue)
 		{
-			Type type = KSPe.Util.SystemTools.Type.Finder.FindByQualifiedName("UnityEngine.Application");
+			Type type = KSPe.Util.SystemTools.Type.Find.ByQualifiedName("UnityEngine.Application");
 			type.GetMethod("CaptureScreenshot", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).Invoke(null, new object[] { pathname, superSampleValue } );
 		}
 
 		private static void CaptureOnUnity2017(string pathname, int superSampleValue)
 		{
-			Type type = KSPe.Util.SystemTools.Type.Finder.FindByQualifiedName("UnityEngine.ScreenCapture");
+			Type type = KSPe.Util.SystemTools.Type.Find.ByQualifiedName("UnityEngine.ScreenCapture");
 			type.GetMethod("CaptureScreenshot", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).Invoke(null, new object[] { pathname, superSampleValue } );
 		}
 	}

@@ -485,9 +485,9 @@ You need to install the Add'On than provides the missing Assembly ""{2}""."
 
 		public static void CheckForConflictTypes<T>(string name, string version, string[] types)
 		{
-			foreach (string s in types) if (SystemTools.Type.Finder.ExistsByQualifiedName(s))
+			foreach (string s in types) if (SystemTools.Type.Exists.ByQualifiedName(s))
 			{
-				System.Type offender = SystemTools.Type.Finder.FindByQualifiedName(s);
+				System.Type offender = SystemTools.Type.Find.ByQualifiedName(s);
 				throw new ConflictTypeException(name, version, offender);
 			}
 		}
@@ -503,7 +503,7 @@ You need to install the Add'On than provides the missing Assembly ""{2}""."
 
 		public static void CheckForDependencyTypes<T>(string name, string version, string[] types)
 		{
-			foreach (string s in types) if (!SystemTools.Type.Finder.ExistsByQualifiedName(s))
+			foreach (string s in types) if (!SystemTools.Type.Exists.ByQualifiedName(s))
 				throw new MissingDependencyTypeException(name, version, s);
 		}
 
