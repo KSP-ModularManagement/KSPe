@@ -135,22 +135,31 @@ Check {0}'s INSTALL instructions."
 			}
 		}
 
+		[Obsolete("The use of Check<T>(namespace, unique?) is strongly disencouraged. Consider using `Namespace` in the `Version` class and then Check<T>() or Check<T>(unique) instead.")]
 		public static void Check<T>(string @namespace, bool unique = true)
 		{
-			Check<T>(@namespace, @namespace, null, unique);
+			Check<T>(@namespace, null, null, unique);
 		}
+		[Obsolete("The use of Check<T>(namespace, vendor) is strongly disencouraged. Consider using `Namespace` and `Vendor` in the `Version` class and then Check<T>() or Check<T>(unique) instead.")]
 		public static void Check<T>(string @namespace, string vendor)
 		{
-			Check<T>(@namespace, @namespace, vendor, true);
+			Check<T>(@namespace, null, vendor, true);
 		}
+		[Obsolete("The use of Check<T>(namespace, folder, vendor) is strongly disencouraged. Consider using `Namespace` , `Vendor` and `NamespaceAsDirectories` in the `Version` class and then Check<T>() or Check<T>(unique) instead.")]
 		public static void Check<T>(string @namespace, string folder, string vendor)
 		{
 			Check<T>(@namespace, folder, vendor, true);
 		}
+		[Obsolete("The use of Check<T>(namespace, folder, vendor, unique) is strongly disencouraged. Consider using `Namespace` , `Vendor` and `NamespaceAsDirectories` in the `Version` class and then Check<T>() or Check<T>(unique) instead.")]
 		public static void Check<T>(string @namespace, string folder, string vendor, bool unique)
 		{
 			if (unique) CheckForDuplicity(typeof(T).Assembly.GetName().Name);
-			CheckForWrongDirectoy(typeof(T), @namespace, folder, vendor);
+
+			string intendedPath = IO.Hierarchy.GAMEDATA.fullPathName;
+			if (null != vendor) intendedPath = IO.Path.Combine(intendedPath, vendor);
+			intendedPath = IO.Path.Combine(intendedPath, folder??@namespace);
+			intendedPath = IO.Path.GetFullPath(intendedPath, true);
+			CheckForWrongDirectoy(typeof(T), intendedPath, @namespace);
 		}
 
 		public static void Check<T>(System.Type versionClass)
@@ -159,9 +168,11 @@ Check {0}'s INSTALL instructions."
 		}
 		public static void Check<T>(System.Type versionClass, bool unique = true)
 		{
+			if (unique) CheckForDuplicity(typeof(T).Assembly.GetName().Name);
+
 			string @namespace = SystemTools.Reflection.Version.Namespace(versionClass);
-			string vendor = SystemTools.Reflection.Version.Vendor(versionClass);
-			Check<T>(@namespace, @namespace, vendor, unique);
+			string intendedPath = SystemTools.Reflection.Version.EffectivePath(versionClass);
+			CheckForWrongDirectoy(typeof(T), intendedPath, @namespace);
 		}
 
 		public static void Check<T>()
@@ -178,13 +189,8 @@ Check {0}'s INSTALL instructions."
 		private static readonly string CheckForWrongDirectoy_PLUGIN = string.Format("{0}Plugins{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
 		private static readonly string CheckForWrongDirectoy_DOT = string.Format("{0}.{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
 		private static readonly string CheckForWrongDirectoy_GAMEDATA = string.Format("{0}GameData{1}", IO.Path.DirectorySeparatorStr, IO.Path.DirectorySeparatorStr);
-		private static void CheckForWrongDirectoy(Type type, string @namespace, string folder, string vendor)
+		private static void CheckForWrongDirectoy(Type type, string intendedPath, string @namespace)
 		{
-			string intendedPath = IO.Hierarchy.GAMEDATA.fullPathName;
-			if (null != vendor) intendedPath = IO.Path.Combine(intendedPath, vendor);
-			intendedPath = IO.Path.Combine(intendedPath, folder);
-			intendedPath = IO.Path.GetFullPath(intendedPath, true);
-
 			string installedDllPath = IO.Path.GetDirectoryName(IO.Path.GetFullPath(type.Assembly.Location));
 
 			{
