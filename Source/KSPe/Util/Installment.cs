@@ -171,7 +171,7 @@ Check {0}'s INSTALL instructions."
 			if (unique) CheckForDuplicity(typeof(T).Assembly.GetName().Name);
 
 			string @namespace = SystemTools.Reflection.Version.Namespace(versionClass);
-			string intendedPath = SystemTools.Reflection.Version.EffectivePath(versionClass);
+			string intendedPath = SystemTools.Reflection.Version.FullEffectivePath(versionClass);
 			CheckForWrongDirectoy(typeof(T), intendedPath, @namespace);
 		}
 
@@ -208,7 +208,7 @@ Check {0}'s INSTALL instructions."
 
 			if (installedDllPath.StartsWith(intendedPath)) return;
 
-			throw new WrongDirectoryInstallationException(@namespace, intendedPath, installedDllPath);
+			//throw new WrongDirectoryInstallationException(@namespace, intendedPath, installedDllPath);
 		}
 
 		private static void CheckForDuplicity(string assemblyName)

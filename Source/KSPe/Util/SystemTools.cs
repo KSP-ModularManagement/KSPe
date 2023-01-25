@@ -320,7 +320,7 @@ namespace KSPe.Util
 
 				public Loader(params string[] subdirs) : base(
 											SystemTools.Reflection.Version<T>.Namespace,
-											SystemTools.Reflection.Version<T>.EffectivePath,
+											SystemTools.Reflection.Version<T>.FullEffectivePath,
 											subdirs)
 				{
 					this.type = typeof(T);
@@ -533,7 +533,8 @@ namespace KSPe.Util
 				public static string Number(SType klass) => GetField<string>(klass, "Number", "0.0.0.0");
 				public static string Text(SType klass) => GetField<string>(klass, "Text", "0.0.0.0");
 				public static bool NamespaceAsDirectories(SType klass) => GetField<bool>(klass, "NamespaceAsDirectories", false);
-				public static string EffectivePath(SType klass) => null == Vendor(klass) ? GetNamespace(klass) : SIO.Path.Combine(Vendor(klass), GetNamespace(klass));
+				internal static string FullEffectivePath(SType klass) => null == Vendor(klass) ? GetNamespace(klass) : SIO.Path.Combine(Vendor(klass), GetNamespace(klass));
+				public static string EffectivePath(SType klass) => IO.Path.GetPath(FullEffectivePath(klass));
 			}
 
 			public static class Version<T>
@@ -553,6 +554,7 @@ namespace KSPe.Util
 				public static string Number => GetField<string>("Number", "0.0.0.0");
 				public static string Text => GetField<string>("Text", "0.0.0.0");
 				public static bool NamespaceAsDirectories => GetField<bool>("NamespaceAsDirectories", false);
+				internal static string FullEffectivePath = Version.FullEffectivePath(Class);
 				public static string EffectivePath = Version.EffectivePath(Class);
 			}
 
