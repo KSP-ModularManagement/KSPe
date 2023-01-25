@@ -540,7 +540,6 @@ namespace KSPe.Util
 			{
 				public static SType Class = Type.Find.By(typeof(T).Namespace, "Version");
 				private static Y GetField<Y>(string fieldName, Y defaultValue) => Reflection.GetField<Y>(Class, fieldName, defaultValue);
-				private static string GetNamespace() => Version.GetNamespace(Class);
 
 				public static string Namespace => GetField<string>("Namespace", typeof(T).Namespace);
 				public static string Vendor => GetField<string>("Vendor", null);
@@ -554,7 +553,7 @@ namespace KSPe.Util
 				public static string Number => GetField<string>("Number", "0.0.0.0");
 				public static string Text => GetField<string>("Text", "0.0.0.0");
 				public static bool NamespaceAsDirectories => GetField<bool>("NamespaceAsDirectories", false);
-				public static string EffectivePath = null == Vendor ? GetNamespace() : SIO.Path.Combine(Vendor, GetNamespace());
+				public static string EffectivePath = Version.EffectivePath(Class);
 			}
 
 			internal static class Configuration
