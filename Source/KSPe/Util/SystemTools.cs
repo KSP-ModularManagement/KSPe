@@ -86,7 +86,7 @@ namespace KSPe.Util
 			private static readonly Dictionary<string, SType> TYPES = new Dictionary<string, SType>();
 
 			// TODO: Remove this on Version 2.5
-			[Obsolete("SystemTools.TypeFinder is obsolete. Please use Type.Finder instead.")]
+			[Obsolete("SystemTools.TypeFinder is obsolete. Please use Type.Find.* or Type.Exists.* instead.")]
 			public static class Finder
 			{
 				public static bool ExistsBy(string ns, string name) => Exists.By(ns, name);
