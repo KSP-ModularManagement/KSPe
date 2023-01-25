@@ -41,6 +41,6 @@ namespace KSPe.IO
 			return c.ContainsKey(".") ? c["."] : (c["."] = calculateTypeRoot());
 		}
 
-		private static string calculateTypeRoot() => Util.SystemTools.Reflection.Version<T>.EffectivePath;
+		private static string calculateTypeRoot() => Util.SystemTools.Reflection.Version<T>.FullEffectivePath;
 	}
 }
