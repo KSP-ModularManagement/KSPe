@@ -209,10 +209,19 @@ namespace KSPe.Util
 
 		public static class Assembly
 		{
+			private static readonly Dictionary<string, SReflection.Assembly> ASSEMBLIES = new Dictionary<string, SReflection.Assembly>();
+
+			// TODO: Remove this on Version 2.5
+			[Obsolete("SystemTools.Assembly.Finder is obsolete. Please use Assembly.Find.* or Assembly.Exists.* instead.")]
 			public static class Finder
 			{
-				private static readonly Dictionary<string, SReflection.Assembly> ASSEMBLIES = new Dictionary<string, SReflection.Assembly>();
-				public static bool ExistsByName(string qn)
+				public static bool ExistsByName(string qn) => Exists.ByName(qn);
+				public static SReflection.Assembly FindByName(string qn) => Find.ByName(qn);
+			}
+
+			public static class Exists
+			{
+				public static bool ByName(string qn)
 				{
 					lock (ASSEMBLIES)
 					{
@@ -225,7 +234,11 @@ namespace KSPe.Util
 					}
 					return false;
 				}
-				public static SReflection.Assembly FindByName(string qn)
+			}
+
+			public static class Find
+			{
+				public static SReflection.Assembly ByName(string qn)
 				{
 					lock(ASSEMBLIES)
 					{ 
