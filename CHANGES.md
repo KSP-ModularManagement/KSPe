@@ -1,5 +1,11 @@
 # KSP API Extensions/L :: Changes
 
+* 2023-0130: 2.4.3.1 (Lisias) for KSP >= 1.2
+	+ Refactoring (should bad been done in the last release!)
+		- Deprecates `KSPe.util.SystemTools.Assembly.Finder`
+		- Substituted by:
+			- `KSPe.util.SystemTools.Assembly.Exists.*`
+			- `KSPe.util.SystemTools.Assenbly.Find.*`
 * 2023-0125: 2.4.3.0 (Lisias) for KSP >= 1.2
 	+ Refactoring.
 		- Deprecates `KSPe.util.SystemTools.Type.Finder`
