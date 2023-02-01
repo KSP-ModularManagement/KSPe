@@ -287,6 +287,7 @@ namespace KSPe.Util
 				{
 					List<string> parms = new List<string>(subdirs);
 					parms.Insert(0, "PluginData");	// FIXME: Rework this on 2.5. The internal loader should be able to load DLLs from anyplace
+													// Only the client side should be restricted into PluginData!
 					string[] sd = parms.ToArray();
 					return this.TryPath("Plugins", sd)
 										?? this.TryPath("Plugin", sd)
@@ -300,7 +301,7 @@ namespace KSPe.Util
 				protected virtual string TryPath(string path, params string[] subdirs)
 				{
 					string t = SIO.Path.Combine(this.@namespace, path);
-					LOG.debug("Assembly TryPath: {0}", t);
+					LOG.debug("Assembly TryPath: {0} {1}", t, subdirs);
 					string p = IO.Hierarchy.GAMEDATA.SolveFull(false, t, subdirs);
 					if (IO.Directory.Exists(p))
 						return IO.Hierarchy.GAMEDATA.Solve(false, t, subdirs);
