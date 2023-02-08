@@ -28,7 +28,7 @@ namespace KSPe
 		public static readonly string KSPE_ROOT_DIR = "000_KSPAPIExtensions";
 		private void Start()
 		{
-			Log.force("Version {0}", Version.Text);
+			Log.force("Version {0}, on KSP {1} under Unity {2}", Version.Text, Versioning.GetVersionStringFull(), UnityEngine.Application.unityVersion);
 			SanityChecks.DoIt();
 		}
 
