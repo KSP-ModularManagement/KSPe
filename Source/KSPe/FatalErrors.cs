@@ -1,22 +1,22 @@
 ﻿/*
-	This file is part of KSPe, a component for KSP API Extensions/L
+	This file is part of KSPe, a component for KSP Enhanced /L
 		© 2018-2023 LisiasT : http://lisias.net <support@lisias.net>
 
-	KSPe API Extensions/L is double licensed, as follows:
+	KSP Enhanced /L is double licensed, as follows:
 		* SKL 1.0 : https://ksp.lisias.net/SKL-1_0.txt
 		* GPL 2.0 : https://www.gnu.org/licenses/gpl-2.0.txt
 
 	And you are allowed to choose the License that better suit your needs.
 
-	KSPe API Extensions/L is distributed in the hope that it will be useful,
+	KSP Enhanced /L is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 	You should have received a copy of the SKL Standard License 1.0
-	along with KSPe API Extensions/L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.
+	along with KSP Enhanced /L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.
 
 	You should have received a copy of the GNU General Public License 2.0
-	along with KSPe API Extensions/L. If not, see <https://www.gnu.org/licenses/>.
+	along with KSP Enhanced /L. If not, see <https://www.gnu.org/licenses/>.
 
 */
 using System;
@@ -162,9 +162,9 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 
 			dlg.Show(
 				MSG,
-				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/11"); Application.Quit(); }
+				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPe/issues/11"); Application.Quit(); }
 			);
-			Log.error("Fatal Error NoGameDataFound was shown. Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/11");
+			Log.error("Fatal Error NoGameDataFound was shown. Please visit https://github.com/net-lisias-ksp/KSPe/issues/11");
 		}
 	}
 
@@ -190,9 +190,9 @@ When this happens, KSP may write files on the wrong place, and you can lost trac
 
 			dlg.Show(
 				string.Format(MSG, pwd, origin),
-				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12"); Application.Quit(); }
+				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPe/issues/12"); Application.Quit(); }
 			);
-			Log.error("Fatal Error PwdIsNotOrigin was shown. pwd = {0} ; origin = {1} . Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12", pwd, origin);
+			Log.error("Fatal Error PwdIsNotOrigin was shown. pwd = {0} ; origin = {1} . Please visit https://github.com/net-lisias-ksp/KSPe/issues/12", pwd, origin);
 		}
 	}
 
@@ -218,9 +218,9 @@ When this happens, KSP may write files on the wrong place, and you can lost trac
 
 			dlg.Show(
 				string.Format(MSG, appRootPath, origin),
-				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12"); Application.Quit(); }
+				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPe/issues/12"); Application.Quit(); }
 			);
-			Log.error("Fatal Error ApplicationRootPathIsNotOrigin was shown. AppRootPath = {0} ; origin = {1} . Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/12", appRootPath, origin);
+			Log.error("Fatal Error ApplicationRootPathIsNotOrigin was shown. AppRootPath = {0} ; origin = {1} . Please visit https://github.com/net-lisias-ksp/KSPe/issues/12", appRootPath, origin);
 		}
 	}
 
@@ -243,9 +243,9 @@ KSPe can't work properly without it, and so anything using it will **NOT** work 
 
 			dlg.Show(
 				string.Format(MSG, e.Message),
-				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/17"); Application.Quit(); }
+				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPe/issues/17"); Application.Quit(); }
 			);
-			Log.error(e, "Fatal Error CriticalComponentsAbsent was shown. e = [{0}]. Please visit https://github.com/net-lisias-ksp/KSPAPIExtensions/issues/17", e.Message);
+			Log.error(e, "Fatal Error CriticalComponentsAbsent was shown. e = [{0}]. Please visit https://github.com/net-lisias-ksp/KSPe/issues/17", e.Message);
 		}
 	}
 } }

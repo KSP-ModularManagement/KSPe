@@ -1,5 +1,5 @@
 ﻿/*
-	This file is part of KSPe, a component for KSP API Extensions/L
+	This file is part of KSPe, a component for KSP Enhanced /L
 		© 2018-2023 LisiasT : http://lisias.net <support@lisias.net>
 
 	THIS FILE is licensed to you under:

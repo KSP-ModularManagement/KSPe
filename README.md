@@ -1,6 +1,6 @@
-# KSP API Extensions /L
+# KSP Enhanced /L
 
-New extensions and utilities for Kerbal Space Program by Lisias.
+New extensions and utilities for Kerbal Space Program by Lisias, formerly known as "KSP API Extensions /L"
 
 
 ## In a Hurry
