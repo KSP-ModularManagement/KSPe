@@ -25,7 +25,7 @@ using KSP;
 
 namespace KSPe.IO.Save
 {
-	// TODO: Eliminate on Vesion 3
+	// TODO: Eliminate on Vesion 2.6
 	[System.Obsolete("KSPe.IO.Save.PluginConfiguration is deprecated, please use KSPe.IO.Data<T>.PluginConfiguration instead.")]
 	public class PluginConfiguration : KSP.IO.PluginConfiguration
 	{

@@ -21,7 +21,7 @@
 */
 namespace KSPe
 {
-	// TODO: Remove on Version 3
+	// TODO: Remove on Version 2.6
 	[System.Obsolete("KSPe.KspConfig is deprecated, please use KSPe.IO.KspConfigNode instead.")]
 	public class KspConfig : AbstractConfig
 	{

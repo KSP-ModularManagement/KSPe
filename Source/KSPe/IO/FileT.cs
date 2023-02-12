@@ -32,12 +32,6 @@ namespace KSPe.IO
 		public static readonly string[] ASSET = { "PluginData", "Assets" };     // ReadOnly data on <KSP_ROOT>/GameData/<plugin_name>/Plugin/{PluginData|Assets|null}/ or whatever the DLL is.
 		private static readonly string RANDOM_TEMP_DIR = Path.GetRandomFileName();
 
-		[System.Obsolete("KSPe.IO.File<T>.CalculateRelativePath is deprecated. There shuold be no need for this anymore.")]
-		public static string CalculateRelativePath(string fullDestinationPath)
-		{
-			return Hierarchy<T>.CalculateRelativePath(fullDestinationPath, Path.GetDirectoryName(Assembly.GetCallingAssembly().Location)); //FIXME: This only works when KSPe is on the GameData/ !!
-		}
-
 		internal static string TempPathName(string filename = null)
 		{
 			filename = filename ?? Path.GetRandomFileName();
@@ -153,12 +147,6 @@ namespace KSPe.IO
 				foreach (string s in fns)
 					path = Path.Combine(path, s);
 				return c.ContainsKey(path) ? c[path] : (c[path] = Solve(path));
-			}
-
-			[System.Obsolete("KSPe.IO.File<T>.Asset.Solve(string, LocalCache) is deprecated, please use Solve(LocalCache, string) instead.")]
-			public static string Solve(string fn, LocalCache<string> cache)
-			{
-				return Solve(cache, fn);
 			}
 
 			public static string[] List(string mask = "*", bool include_subdirs = false, string subdir = null)

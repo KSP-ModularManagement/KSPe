@@ -19,12 +19,10 @@
 	along with KSP Enhanced /L. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using System;
-using SIO = System.IO;
 
 namespace KSPe
 {
-	// TODO: Remove on Version 3
+	// TODO: Remove on Version 2.6
 	[System.Obsolete("KSPe.AssetConfig is deprecated, please use KSPe.IO.Asset.ConfigNode instead.")]
 	public class AssetConfig : AbstractConfig
 	{

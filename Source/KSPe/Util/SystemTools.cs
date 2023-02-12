@@ -85,19 +85,6 @@ namespace KSPe.Util
 		{
 			private static readonly Dictionary<string, SType> TYPES = new Dictionary<string, SType>();
 
-			// TODO: Remove this on Version 2.5
-			[Obsolete("SystemTools.TypeFinder is obsolete. Please use Type.Find.* or Type.Exists.* instead.")]
-			public static class Finder
-			{
-				public static bool ExistsBy(string ns, string name) => Exists.By(ns, name);
-				public static bool ExistsByQualifiedName(string qn) => Exists.ByQualifiedName(qn);
-				public static SType FindBy(string ns, string name) => Find.By(ns, name);
-				public static SType FindByQualifiedName(string qn) => Find.ByQualifiedName(qn);
-				public static SType FindByInterface(string ns, string name) => Find.ByInterface(ns, name);
-				public static SType FindByInterfaceName(string qn) => Find.ByInterfaceName(qn);
-				public static SType FindBy(SType ifc) => Find.By(ifc);
-			}
-
 			public static class Exists
 			{
 				public static bool By(string ns, string name) => ByQualifiedName(ns + "." + name);
@@ -189,35 +176,9 @@ namespace KSPe.Util
 			}
 		}
 
-		// TODO: Remove this on Version 2.5
-		[Obsolete("SystemTools.TypeFinder is obsolete. Please use Type.Finder instead.")]
-		public static class TypeFinder
-		{
-			public static bool ExistsByQualifiedName(string qn) => Type.Exists.ByQualifiedName(qn);
-			public static SType FindByQualifiedName(string qn) => Type.Find.ByQualifiedName(qn);
-			public static SType FindByInterfaceName(string qn) => Type.Find.ByInterfaceName(qn);
-			public static SType FindByInterface(SType ifc) => Type.Find.By(ifc);
-		}
-
-		// TODO: Remove this on Version 2.5
-		[Obsolete("SystemTools.TypeSearch is obsolete. Please use Type.Search instead.")]
-		public static class TypeSearch
-		{
-			public static IEnumerable<SType> ByInterfaceName(string qn) => Type.Search.ByInterfaceName(qn);
-			public static IEnumerable<SType> ByInterface(SType ifc) => Type.Search.By(ifc);
-		}
-
 		public static class Assembly
 		{
 			private static readonly Dictionary<string, SReflection.Assembly> ASSEMBLIES = new Dictionary<string, SReflection.Assembly>();
-
-			// TODO: Remove this on Version 2.5
-			[Obsolete("SystemTools.Assembly.Finder is obsolete. Please use Assembly.Find.* or Assembly.Exists.* instead.")]
-			public static class Finder
-			{
-				public static bool ExistsByName(string qn) => Exists.ByName(qn);
-				public static SReflection.Assembly FindByName(string qn) => Find.ByName(qn);
-			}
 
 			public static class Exists
 			{
@@ -271,7 +232,8 @@ namespace KSPe.Util
 				protected readonly string searchPath;
 
 				internal Loader() { this.@namespace = null; }
-				internal Loader(string @namespace, string effectivePath, params string[] subdirs)
+				[Obsolete("Assembly.AddSearchPath(string, string, string[]) will be made internal on Release 3")]
+				public Loader(string @namespace, string effectivePath, params string[] subdirs)
 				{
 					this.@namespace = @namespace;
 					this.effectivePath = effectivePath;
@@ -279,10 +241,6 @@ namespace KSPe.Util
 					LOG.debug("Assembly searchPath: {0}", this.searchPath);
 					this.EnterCritical();
 				}
-				// TODO: Change this on Version 2.5
-				[Obsolete("Assembly.Loader(string) will be made internal on Release 2.5")]
-				public Loader(string @namespace, params string[] subdirs) : this(@namespace, @namespace, subdirs) { }
-
 				protected string buildSearchPath(params string[] subdirs)
 				{
 					List<string> parms = new List<string>(subdirs);
@@ -360,8 +318,7 @@ namespace KSPe.Util
 			//	from https://weblog.west-wind.com/posts/2016/dec/12/loading-net-assemblies-out-of-seperate-folders
 			//	see also https://docs.microsoft.com/en-us/dotnet/standard/assembly/resolve-loads?redirectedfrom=MSDN
 
-			[Obsolete("Assembly.AddSearchPath(string) will be made internal on Release 2.5")]
-			public static void AddSearchPath(string path)
+			internal static void AddSearchPath(string path)
 			{
 				string fullpath = IO.Hierarchy.ROOT.SolveFull(false, path);
 
@@ -375,8 +332,7 @@ namespace KSPe.Util
 				LOG.debug("CUSTOM_SEARCH_PATHS : {0}", string.Join(":", CUSTOM_SEARCH_PATHS.ToArray()));
 			}
 
-			[Obsolete("Assembly.RemoveSearchPath(string) will be made internal on Release 2.5")]
-			public static void RemoveSearchPath(string path)
+			internal static void RemoveSearchPath(string path)
 			{
 				LOG.debug("RemoveSearchPath {0}", path);
 				lock(CUSTOM_SEARCH_PATHS)
@@ -385,7 +341,7 @@ namespace KSPe.Util
 				LOG.debug("CUSTOM_SEARCH_PATHS : {0}", string.Join(":", CUSTOM_SEARCH_PATHS.ToArray()));
 			}
 
-			[Obsolete("Assembly.LoadAndStartup(string) will be made internal on Release 2.5")]
+			[Obsolete("Assembly.LoadAndStartup(string) will be made internal on Release 2.6")]
 			public static SReflection.Assembly LoadAndStartup(string assemblyName)
 			{
 				SReflection.Assembly assembly = System.AppDomain.CurrentDomain.Load(assemblyName);
