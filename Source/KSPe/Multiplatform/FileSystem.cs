@@ -26,8 +26,7 @@ using SIO = System.IO;
 
 namespace KSPe.Multiplatform
 {
-	[System.Obsolete("This class will be made internal on Version 2.5. **DO NOT** use it outside KSPe.dll.")]
-	public static class FileSystem
+	internal static class FileSystem
 	{
 		internal static readonly bool CASE_SENSITIVE_FILESYSTEM = GetCaseSensitiveFileSystem();
 

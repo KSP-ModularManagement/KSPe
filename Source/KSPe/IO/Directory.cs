@@ -31,7 +31,7 @@ namespace KSPe.IO
 	{
 		public static SIO.DirectoryInfo CreateDirectory (string path)	{ return SIO.Directory.CreateDirectory(path); }
 
-		[Obsolete("[MonoLimitation (DirectorySecurity not implemented")]
+		[Obsolete("[MonoLimitation] DirectorySecurity not implemented")]
 		public static SIO.DirectoryInfo CreateDirectory (string path, DirectorySecurity directorySecurity)	{ return SIO.Directory.CreateDirectory(path, directorySecurity); }
 
 		public static void Delete (string path)

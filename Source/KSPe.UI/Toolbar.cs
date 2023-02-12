@@ -108,13 +108,13 @@ namespace KSPe.UI.Toolbar
 				this.smallItem = smallItem;
 			}
 
-			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 			public static Data Create(Texture2D largeIcon, Texture2D smallIcon)
 			{
 				return new Data(Item.Create(largeIcon), Item.Create(smallIcon));
 			}
 
-			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 			public static Data Create(Item largeItem, Item smallItem)
 			{
 				return new Data(largeItem, smallItem);
@@ -234,10 +234,10 @@ namespace KSPe.UI.Toolbar
 		}
 
 		private readonly Control controller = null;
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public Control Controller => this.controller;
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public State Set(Status value)
 		{
 			Log.debug("State.Data Set from {0} to {1}", this.controller, value);
@@ -252,7 +252,7 @@ namespace KSPe.UI.Toolbar
 			return this;
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public State Clear()
 		{
 			this.controller.Destroy();
@@ -322,7 +322,7 @@ namespace KSPe.UI.Toolbar
 			private static readonly KeyCode[] EMPTY_MODIFIER = new KeyCode[]{};
 			internal MouseEvents() { }
 
-			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 			public MouseEvents Add(Handler handler)
 			{
 				if (this.events.ContainsKey(handler.kind)) this.events.Remove(handler.kind);
@@ -338,37 +338,37 @@ namespace KSPe.UI.Toolbar
 				return this;
 			}
 
-			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 			public MouseEvents Add(MouseEvents.Kind kind, Handler.ClickHandler handler)
 			{
 				Handler h = new Handler(kind, handler, EMPTY_MODIFIER);
 				return this.Add(h);
 			}
 
-			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 			public MouseEvents Add(MouseEvents.Kind kind, Handler.ClickHandler handler, KeyCode[] modifiler)
 			{
 				Handler h = new Handler(kind, handler, modifiler);
 				return this.Add(h);
 			}
 
-			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 			public MouseEvents Add(Handler.ScrollHandler handler)
 			{
 				Handler h = new Handler(MouseEvents.Kind.Scroll, handler, EMPTY_MODIFIER);
 				return this.Add(h);
 			}
 
-			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 			public MouseEvents Add(Handler.ScrollHandler handler, KeyCode[] modifiler)
 			{
 				Handler h = new Handler(MouseEvents.Kind.Scroll, handler, modifiler);
 				return this.Add(h);
 			}
 
-			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 			public Handler this[Kind index] => this.events[index];
-			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 			public bool Has(Kind kind) => this.events.ContainsKey(kind);
 		}
 
@@ -385,7 +385,7 @@ namespace KSPe.UI.Toolbar
 
 			internal ToolbarEvents() {	}
 
-			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 			public ToolbarEvents Add(Kind kind, Event @event)
 			{
 				if (this.events.ContainsKey(kind)) this.events.Remove(kind);
@@ -400,9 +400,9 @@ namespace KSPe.UI.Toolbar
 				return this;
 			}
 
-			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 			public Event this[Kind index] => this.events[index];
-			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 			public bool Has(Kind kind)
 			{
 				return this.events.ContainsKey(kind);
@@ -410,33 +410,33 @@ namespace KSPe.UI.Toolbar
 		}
 
 		public readonly object owner;
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public object Owner => this.owner;
 
 		public readonly string id;
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public string ID => this.id;
 
 		internal readonly ApplicationLauncher.AppScenes visibleInScenes;
 		internal readonly string toolTip;
 
 		private readonly ToolbarEvents toolbarEvents = new ToolbarEvents();
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public ToolbarEvents Toolbar => this.toolbarEvents;
 
 		private readonly MouseEvents mouseEvents = new MouseEvents();
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public MouseEvents Mouse => this.mouseEvents;
 
 		private readonly State state;
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public State State => this.state;
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public State.Status Status { get => this.state.Controller.CurrentStatus; set => this.state.Controller.CurrentStatus = value; }
 
 		private ApplicationLauncherButton stockTolbarController = null;
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public ApplicationLauncherButton ToolbarController => this.stockTolbarController;
 
 		// A bit messy, but I need the classes to use the Toolbar.States stunt!
@@ -487,7 +487,7 @@ namespace KSPe.UI.Toolbar
 			return (int)(this.hash = hash);
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public static Button Create(object owner, string id
 				, ApplicationLauncher.AppScenes visibleInScenes
 				, string toolTip = null
@@ -500,7 +500,7 @@ namespace KSPe.UI.Toolbar
 			return r;
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public static Button Create(object owner, string id,
 				ApplicationLauncher.AppScenes visibleInScenes
 				, UnityEngine.Texture2D largeIconEnabled, UnityEngine.Texture2D largeIconDisabled
@@ -516,7 +516,7 @@ namespace KSPe.UI.Toolbar
 				);
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public static Button Create(object owner, string id
 				, ApplicationLauncher.AppScenes visibleInScenes
 				, State.Data.Item largeActive, State.Data.Item largeInactive
@@ -532,7 +532,7 @@ namespace KSPe.UI.Toolbar
 				);
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public static Button Create(object owner, string id,
 				ApplicationLauncher.AppScenes visibleInScenes
 				, State.Data iconEnabled, State.Data iconDisabled
@@ -547,7 +547,7 @@ namespace KSPe.UI.Toolbar
 			return r;
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public static Button Create(object owner, string id,
 				ApplicationLauncher.AppScenes visibleInScenes
 				, UnityEngine.Texture2D largeIcon
@@ -563,7 +563,7 @@ namespace KSPe.UI.Toolbar
 				);
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public static Button Create(object owner, string id
 				, ApplicationLauncher.AppScenes visibleInScenes
 				, State.Data.Item large
@@ -579,7 +579,7 @@ namespace KSPe.UI.Toolbar
 				);
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public static Button Create(object owner
 				, ApplicationLauncher.AppScenes visibleInScenes
 				, string toolTip = null
@@ -592,7 +592,7 @@ namespace KSPe.UI.Toolbar
 			return r;
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public static Button Create(object owner
 				, ApplicationLauncher.AppScenes visibleInScenes
 				, UnityEngine.Texture2D largeIconActive, UnityEngine.Texture2D largeIconInactive
@@ -608,7 +608,7 @@ namespace KSPe.UI.Toolbar
 				);
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public static Button Create(object owner
 				, ApplicationLauncher.AppScenes visibleInScenes
 				, State.Data.Item largeActive, State.Data.Item largeInactive
@@ -624,7 +624,7 @@ namespace KSPe.UI.Toolbar
 				);
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public static Button Create(object owner
 				, ApplicationLauncher.AppScenes visibleInScenes
 				, UnityEngine.Texture2D largeIcon
@@ -640,7 +640,7 @@ namespace KSPe.UI.Toolbar
 				);
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public static Button Create(object owner
 				, ApplicationLauncher.AppScenes visibleInScenes
 				, State.Data.Item large
@@ -656,7 +656,7 @@ namespace KSPe.UI.Toolbar
 				);
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public bool Active
 		{
 			get { return this.active; }
@@ -669,14 +669,14 @@ namespace KSPe.UI.Toolbar
 			set { this.updateHoverState(value); }
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public bool Enabled
 		{
 			get { return this.enabled; }
 			set { this.updateEnableState(value); }
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public void Add(ToolbarEvents.Kind kind, State.Data iconActive, State.Data iconInactive)
 		{
 			switch (kind)
@@ -707,7 +707,7 @@ namespace KSPe.UI.Toolbar
 			}
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public Vector3 GetAnchor() => this.stockTolbarController.GetAnchor(); // FIXME: What I return when I'm on Blizzy mode?
 
 		internal bool IsReady => null != this.stockTolbarController;
@@ -984,24 +984,24 @@ namespace KSPe.UI.Toolbar
 				b.stop();
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public bool BlizzyActive(bool? useBlizzy = null)
 		{
 			return false;
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public bool StockActive(bool? useStock = null)
 		{
 			return true;
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public void ButtonsActive(bool? useStock, bool? useBlizzy)
 		{
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public Toolbar Add(Button button)
 		{
 			// If we are added twice, just ignore. My previous approach of
@@ -1019,7 +1019,7 @@ namespace KSPe.UI.Toolbar
 			return this;
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public bool Contains(Button button) => this.buttons.Contains(button);
 
 		public override String ToString()
@@ -1054,7 +1054,7 @@ namespace KSPe.UI.Toolbar
 				}
 		}
 
-		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.4.2.0 before using it on your plugins.")]
+		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public bool Register<T>(string displayName = null, bool useBlizzy = false, bool useStock = true, bool NoneAllowed = true)
 		{
 			Log.info("Toolbar is registering {0} with type {1}", displayName??typeof(T).Namespace, typeof(T));

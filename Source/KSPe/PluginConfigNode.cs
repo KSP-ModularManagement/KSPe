@@ -24,7 +24,7 @@ using SIO = System.IO;
 
 namespace KSPe
 {
-	// TODO: Remove on Version 3
+	// TODO: Remove on Version 2.6
 	[System.Obsolete("KSPe.PluginConfig is deprecated, please use KSPe.IO.Data.ConfigNode instead.")]
 	public class PluginConfig: AbstractConfig
 	{

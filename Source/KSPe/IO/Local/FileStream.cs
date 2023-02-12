@@ -23,17 +23,11 @@ using SIO = System.IO;
 
 namespace KSPe.IO.Local
 {
-	// TODO: Eliminate on Vesion 3
+	// TODO: Eliminate on Vesion 2.6
 	[System.Obsolete("KSPe.IO.Local.FileStream is deprecated, please use KSPe.IO.Local<T>.FileStream instead.")]
 	public class FileStream : SIO.FileStream
 	{
 		protected FileStream(string filename, SIO.FileMode filemode) : base(filename, filemode) {}
-
-		[System.Obsolete("KSPe.IO.Local.CreateForType<T>(string, FileMode) is deprecated, please use CreateForType<T>(FileMode, string) instead.")]
-		public static FileStream CreateForType<T>(string filename, FileMode mode)
-		{
-			return CreateForType<T>(mode, filename);
-		}
 
 		public static FileStream CreateForType<T>(FileMode mode, string filename)
 		{

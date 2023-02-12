@@ -19,13 +19,10 @@
 	along with KSP Enhanced /L. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using System;
-using System.Linq;
-using SIO = System.IO;
 
 namespace KSPe
 {
-	// TODO: Remove on Version 3
+	// TODO: Remove on Version 2.6
 	[System.Obsolete("KSPe.AbstractConfig is deprecated, please use KSPe.IO.ReadableConfigNode or KSPe.IO.WritableConfigNode instead.")]
 	public class AbstractConfig : KSPe.IO.ReadableConfigNode
 	{

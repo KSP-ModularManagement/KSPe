@@ -30,7 +30,7 @@ namespace KSPe.Util.Log {
 		private static readonly Encoding ENCODING = new UTF8Encoding(false);
 		private readonly SIO.FileStream fs;
 
-		// TODO: Remove this on Version 2.4
+		// TODO: Remove this on Version 2.6
 		[Obsolete("This method is deprecated. Use FileChainUnityLogger(loogname, skipStackLevels) instead.")]
 		public FileChainUnityLogger(string logname) : base(typeof(T), 0)
 		{
