@@ -227,16 +227,15 @@ namespace KSPe.Util
 			public class Loader : IDisposable
 			{
 				protected static readonly object MUTEX = new object();
-				protected readonly string @namespace;
 				protected readonly string effectivePath;
 				protected readonly string searchPath;
 
-				internal Loader() { this.@namespace = null; }
-				[Obsolete("Assembly.AddSearchPath(string, string, string[]) will be made internal on Release 3")]
-				public Loader(string @namespace, string effectivePath, params string[] subdirs)
+				[Obsolete("Assembly.Loader.ctor() will be made internal on Release 2.6")]
+				public Loader() : this(new string[0]) { }
+				[Obsolete("Assembly.Loader.ctor(params string[]) will be made internal on Release 2.6")]
+				public Loader(params string[] subdirs)
 				{
-					this.@namespace = @namespace;
-					this.effectivePath = effectivePath;
+					this.effectivePath = Reflection.Version.EffectivePathInternal(typeof(KSPe.Version));
 					this.searchPath = this.buildSearchPath(subdirs);
 					LOG.debug("Assembly searchPath: {0}", this.searchPath);
 					this.EnterCritical();
@@ -251,14 +250,14 @@ namespace KSPe.Util
 										?? this.TryPath("Plugin", sd)
 										?? this.TryPath(".", sd)
 										?? throw new DllNotFoundException(
-											string.Format("{0}'s DLL search path does not exists!", this.@namespace)
+											string.Format("{0}'s DLL search path does not exists!", this.effectivePath)
 										)
 							;
 				}
 
 				protected virtual string TryPath(string path, params string[] subdirs)
 				{
-					string t = SIO.Path.Combine(this.@namespace, path);
+					string t = SIO.Path.Combine(this.effectivePath, path);
 					LOG.debug("Assembly TryPath: {0} {1}", t, subdirs);
 					string p = IO.Hierarchy.GAMEDATA.SolveFull(false, t, subdirs);
 					if (IO.Directory.Exists(p))
@@ -290,10 +289,7 @@ namespace KSPe.Util
 			{
 				private readonly SType type;
 
-				public Loader(params string[] subdirs) : base(
-											SystemTools.Reflection.Version<T>.Namespace,
-											SystemTools.Reflection.Version<T>.FullEffectivePath,
-											subdirs)
+				public Loader(params string[] subdirs) : base(subdirs)
 				{
 					this.type = typeof(T);
 				}
@@ -481,16 +477,17 @@ namespace KSPe.Util
 				{
 					if (NamespaceAsDirectories(klass))
 					{
-						string[] dirs = Namespace(klass).Split('.');
+						string[] dirs = (Suffix(klass) + Namespace(klass)).Split('.');
 						string r = dirs[0];
 						for (int i = 1; i < dirs.Length; ++i)
 							r = SIO.Path.Combine(r, dirs[i]);
 						return r;
 					}
 					else
-						return Namespace(klass);
+						return Suffix(klass) + Namespace(klass);
 				}
 
+				public static string Suffix(SType klass) => GetField<string>(klass, "Suffix", "");
 				public static string Namespace(SType klass) => GetField<string>(klass, "Namespace", klass.Namespace);
 				public static string Vendor(SType klass) => GetField<string>(klass, "Vendor", null);
 				public static string FriendlyName(SType klass) => GetField<string>(klass, "FriendlyName", klass.Name);
@@ -503,8 +500,8 @@ namespace KSPe.Util
 				public static string Number(SType klass) => GetField<string>(klass, "Number", "0.0.0.0");
 				public static string Text(SType klass) => GetField<string>(klass, "Text", "0.0.0.0");
 				public static bool NamespaceAsDirectories(SType klass) => GetField<bool>(klass, "NamespaceAsDirectories", false);
-				internal static string FullEffectivePath(SType klass) => null == Vendor(klass) ? GetNamespace(klass) : SIO.Path.Combine(Vendor(klass), GetNamespace(klass));
-				public static string EffectivePath(SType klass) => IO.Path.GetPath(FullEffectivePath(klass));
+				internal static string EffectivePathInternal(SType klass) => null == Vendor(klass) ? GetNamespace(klass) : SIO.Path.Combine(Vendor(klass), GetNamespace(klass));
+				public static string EffectivePath(SType klass) => IO.Path.GetPath(EffectivePathInternal(klass));
 			}
 
 			public static class Version<T>
@@ -512,6 +509,7 @@ namespace KSPe.Util
 				public static SType Class = Type.Find.By(typeof(T).Namespace, "Version");
 				private static Y GetField<Y>(string fieldName, Y defaultValue) => Reflection.GetField<Y>(Class, fieldName, defaultValue);
 
+				public static string Suffix => GetField<string>("Suffix", "");
 				public static string Namespace => GetField<string>("Namespace", typeof(T).Namespace);
 				public static string Vendor => GetField<string>("Vendor", null);
 				public static string FriendlyName => GetField<string>("FriendlyName", typeof(T).Name);
@@ -524,7 +522,7 @@ namespace KSPe.Util
 				public static string Number => GetField<string>("Number", "0.0.0.0");
 				public static string Text => GetField<string>("Text", "0.0.0.0");
 				public static bool NamespaceAsDirectories => GetField<bool>("NamespaceAsDirectories", false);
-				internal static string FullEffectivePath = Version.FullEffectivePath(Class);
+				internal static string EffectivePathInternal = Version.EffectivePathInternal(Class);
 				public static string EffectivePath = Version.EffectivePath(Class);
 			}
 

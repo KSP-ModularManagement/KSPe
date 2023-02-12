@@ -32,12 +32,12 @@ namespace KSPe.UI
 
 		private void Awake()
 		{
-			using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader(KSPe.Startup.KSPE_ROOT_DIR))
+			using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader())
 			{ 
 				// There can be only one! #highlanderFeelings
 				if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,4,0))
 				{
-					if (KSPe.Util.SystemTools.Assembly.Finder.ExistsByName("ClickThroughBlocker"))
+					if (KSPe.Util.SystemTools.Assembly.Exists.ByName("ClickThroughBlocker"))
 						a.LoadAndStartup("KSPe.UI.14");
 					else
 					{

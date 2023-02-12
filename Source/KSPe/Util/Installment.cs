@@ -171,7 +171,7 @@ Check {0}'s INSTALL instructions."
 			if (unique) CheckForDuplicity(typeof(T).Assembly.GetName().Name);
 
 			string @namespace = SystemTools.Reflection.Version.Namespace(versionClass);
-			string intendedPath = SystemTools.Reflection.Version.FullEffectivePath(versionClass);
+			string intendedPath = SystemTools.Reflection.Version.EffectivePathInternal(versionClass);
 			CheckForWrongDirectoy(typeof(T), intendedPath, @namespace);
 		}
 
@@ -500,9 +500,9 @@ You need to install the Add'On than provides the missing Assembly ""{2}""."
 
 		public static void CheckForConflictAssemblies<T>(string name, string version, string[] types)
 		{
-			foreach (string s in types) if (SystemTools.Assembly.Finder.ExistsByName(s))
+			foreach (string s in types) if (SystemTools.Assembly.Exists.ByName(s))
 			{
-				SReflection.Assembly offender = SystemTools.Assembly.Finder.FindByName(s);
+				SReflection.Assembly offender = SystemTools.Assembly.Find.ByName(s);
 				throw new ConflictAssemblyException(name, version, offender);
 			}
 		}
@@ -515,7 +515,7 @@ You need to install the Add'On than provides the missing Assembly ""{2}""."
 
 		public static void CheckForDependencyAssemblies<T>(string name, string version, string[] types)
 		{
-			foreach (string s in types) if (!SystemTools.Assembly.Finder.ExistsByName(s))
+			foreach (string s in types) if (!SystemTools.Assembly.Exists.ByName(s))
 				throw new MissingDependencyAssemblyException(name, version, s);
 		}
 	}

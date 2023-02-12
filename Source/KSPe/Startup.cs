@@ -25,7 +25,6 @@ namespace KSPe
 	[KSPAddon(KSPAddon.Startup.Instantly, true)]
 	public class Startup:MonoBehaviour
 	{
-		public static readonly string KSPE_ROOT_DIR = "000_KSPe";
 		private void Start()
 		{
 			Log.force("Version {0}, on KSP {1} under Unity {2}", Version.Text, Versioning.GetVersionStringFull(), UnityEngine.Application.unityVersion);
@@ -36,7 +35,7 @@ namespace KSPe
 		{
 			try
 			{ 
-				using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader(KSPE_ROOT_DIR))
+				using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader())
 				{ 
 					{
 						int target = KSPe.Util.UnityTools.UnityVersion;

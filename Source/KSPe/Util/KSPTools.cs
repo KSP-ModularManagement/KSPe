@@ -491,7 +491,7 @@ namespace KSPe.Util
 		internal class Loader : SystemTools.Assembly.Loader
 		{
 			protected Loader() : base() { }
-			public Loader(string @namespace, string effectivePath, params string[] subdirs) : base(@namespace, effectivePath, subdirs) { }
+			public Loader(params string[] subdirs) : base(subdirs) { }
 
 			public KAssemblyLoader.LoadedAssembly LoadAndStartup(string asmName, string asmFile)
 			{
