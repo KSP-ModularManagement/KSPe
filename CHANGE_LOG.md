@@ -1,4 +1,4 @@
-# KSP API Extensions/L :: Change Log
+# KSP Enhanced /L :: Change Log
 
 * 2023-0130: 2.4.3.1 (Lisias) for KSP >= 1.2
 	+ Refactoring (should bad been done in the last release!)

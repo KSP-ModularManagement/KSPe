@@ -1,4 +1,4 @@
-# KSP API Extensions/L :: Known Issues
+# KSP Enhanced /L :: Known Issues
 
 * The Toolbar support incepted on 2.4.1.0 is still embryonic.
 	+ Using it on your own add'ons is risky at this moment.
