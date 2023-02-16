@@ -122,6 +122,7 @@
     <Compile Include="IO\Directory.cs" />
     <Compile Include="Util\Text.cs" />
     <Compile Include="Util\Image.Local.cs" />
+    <Compile Include="Util\Stopwatch.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
