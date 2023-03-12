@@ -20,7 +20,7 @@ using KSPe.UI;
 
 namespace KSPe.Common.Dialogs
 {
-	public class WarningAlertBox : AbstractDialog
+	internal class WarningAlertBox : AbstractDialog
 	{
 		private static readonly string aMSG = "close KSP and then fix the problem described above";
 

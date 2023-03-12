@@ -18,7 +18,7 @@ using UnityEngine;
 
 namespace KSPe.Common.Dialogs
 {
-	public class AbstractDialog
+	internal class AbstractDialog
 	{
 
 		private static Texture2D windowTex = null;

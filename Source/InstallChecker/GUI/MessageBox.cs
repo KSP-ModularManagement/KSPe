@@ -20,7 +20,7 @@ using UGUI = UnityEngine.GUI;
 
 namespace KSPe.UI
 {
-	public class MessageBox : MonoBehaviour
+	internal class MessageBox : MonoBehaviour
 	{
 		private string title;
 		private string msg;
