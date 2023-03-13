@@ -1,6 +1,6 @@
 # KSP Enhanced /L :: Change Log
 
-* 2023-0212: 2.5.0.0 (Lisias) for KSP >= 1.2
+* 2023-0313: 2.5.0.1 (Lisias) for KSP >= 1.2
 	+ Rebranding the thing into `KSPe Enhanced /L`, finally decoupling from the `KSPApiExtensions` heritage, now delegated as a secondary (and optional) feature.
 	+ Removes deprecating artefacts marked for removal on 2.5 series
 	+ Makes the thing deliverable on CurseForge **#HURRAY!!**
@@ -8,47 +8,52 @@
 		- `KSPe.InstallChecker` should not be installed under CKAN controlled KSP installments
 	+ **This is a deal breaker release!!**
 		- Add'Ons compiled against 2.4.x and 2.3.x relying on the removed artefacts **will break**. 
-* 2023-0130: 2.4.3.1 (Lisias) for KSP >= 1.2
 	+ Refactoring (should bad been done in the last release!)
 		- Deprecates `KSPe.util.SystemTools.Assembly.Finder`
 		- Substituted by:
 			- `KSPe.util.SystemTools.Assembly.Exists.*`
 			- `KSPe.util.SystemTools.Assenbly.Find.*`
-* 2023-0125: 2.4.3.0 (Lisias) for KSP >= 1.2
 	+ Refactoring.	 
 		- Deprecates `KSPe.util.SystemTools.Type.Finder`
 		- Substituted by:
 			- `KSPe.util.SystemTools.Type.Exists.*`
 			- `KSPe.util.SystemTools.Type.Find.*`
 	+ Reworks the Installment Checks due issue #44.
-	+ Closes issues:
-		- [#44](https://github.com/net-lisias-ksp/KSPe/issues/44) `KSPe.Util.SystemTools.Assembly.Loader<T>()` to cope with TweakScale Companion directory structure.
-* 2023-0115: 2.4.2.9 (Lisias) for KSP >= 1.2
 	+ Bug fixes.
-	+ Closes issues:
-		- [#40](https://github.com/net-lisias-ksp/KSPe/issues/40) Bug on `ConfigNodeWithSteroids.HasNode`
-		- [#18](https://github.com/net-lisias-ksp/KSPe/issues/18) Implement a Installment check for (yet) more bordelines use cases
-* 2022-1128: 2.4.2.8 (Lisias) for KSP >= 1.2
 	+ Implements yet some more missing Use Cases from 2.4.2.4, when AppRoot replaced Origin - but I let code relying on `pwd` pass trough.
-	+ Reworks:
-		- [#37](https://github.com/net-lisias-ksp/KSPe/issues/37) Dont get screwed by `System.IO.Directory.GetCurrentDirecrtory()` again. 
-* 2022-1126: 2.4.2.7 (Lisias) for KSP >= 1.2
 	+ Implements `KSPe.IO.Directory.*` calls.
 	+ Implements some missing Use Cases from 2.4.2.4, when AppRoot replaced Origin - but I let code relying on `pwd` pass trough.
 		- As well new use cases that I never dreamed about...
-	+ Closes issue (again):
-		- [#37](https://github.com/net-lisias-ksp/KSPe/issues/37) Dont get screwed by `System.IO.Directory.GetCurrentDirecrtory()` again. 
-* 2022-1126: 2.4.2.6 (Lisias) for KSP >= 1.2
-	+ ***ditched yet again*** -- this is getting repetitive, no?
-* 2022-1125: 2.4.2.5 (Lisias) for KSP >= 1.2
-	+ ***ditched***
-* 2022-1114: 2.4.2.4 (Lisias) for KSP >= 1.2
 	+ Fixing a regression on 2.4.2.3 about the filesystem sandbox that affected SteamDeck and Steam on Linux. Power MacOS users also affected. 
 	+ Switches the internal pathname resolving from `Origin()` to the new `AppRoot()`, making possible to client add'ons to kinda of keep working even if the `pwd` is set to a different path than `Origin()` - what will still break KSP anyway, but whatever. It's not by job to prevent people from shooting their feet if this is what they really wanna do.
 		+ KSPe current behaviour will not change, it still yells if `pwd` is different from `Origin()`.
 		+ In fact, KSPe now also checks if `AppRoot()` is different from `Origin()` the same, yelling when the check fails.
 		+ Paths will be normalised the same, preventing clients from "jail breaking" the KSP's file system hierarchy.
-	+ Makes some error messages easier to understand, as well fixes some pathnames to be useable on Windows. Thanks, [@Hebarusan](https://github.com/HebaruSan)!
+	+ Reworks:
+		- [#37](https://github.com/net-lisias-ksp/KSPe/issues/37) Dont get screwed by `System.IO.Directory.GetCurrentDirecrtory()` again. 
+	+ Closes issues:
+		- [#44](https://github.com/net-lisias-ksp/KSPe/issues/44) `KSPe.Util.SystemTools.Assembly.Loader<T>()` to cope with TweakScale Companion directory structure.
+		- [#40](https://github.com/net-lisias-ksp/KSPe/issues/40) Bug on `ConfigNodeWithSteroids.HasNode`
+		- [#37](https://github.com/net-lisias-ksp/KSPe/issues/37) Dont get screwed by `System.IO.Directory.GetCurrentDirecrtory()` again. 
+		- [#18](https://github.com/net-lisias-ksp/KSPe/issues/18) Implement a Installment check for (yet) more bordelines use cases
+* 2023-0212: 2.5.0.0 (Lisias) for KSP >= 1.2
+	+ ***DITCHED***  -- yes, this is getting repetitive!!!
+* 2023-0130: 2.4.3.1 (Lisias) for KSP >= 1.2
+	+ ***DITCHED***
+* 2023-0125: 2.4.3.0 (Lisias) for KSP >= 1.2
+	+ ***DITCHED***
+* 2023-0115: 2.4.2.9 (Lisias) for KSP >= 1.2
+	+ ***DITCHED***
+* 2022-1128: 2.4.2.8 (Lisias) for KSP >= 1.2
+	+ ***DITCHED***
+* 2022-1126: 2.4.2.7 (Lisias) for KSP >= 1.2
+	+ ***DITCHED***
+* 2022-1126: 2.4.2.6 (Lisias) for KSP >= 1.2
+	+ ***ditched yet again*** -- this is getting repetitive, no?
+* 2022-1125: 2.4.2.5 (Lisias) for KSP >= 1.2
+	+ ***ditched***
+* 2022-1114: 2.4.2.4 (Lisias) for KSP >= 1.2
+	+ ***DITCHED***
 * 2022-1113: 2.4.2.3 (Lisias) for KSP >= 1.2
 	+ ***DITCHED***
 * 2022-1111: 2.4.2.2 (Lisias) for KSP >= 1.2

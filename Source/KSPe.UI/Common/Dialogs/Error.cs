@@ -29,7 +29,7 @@ namespace KSPe.Common.Dialogs
 	{
 		private static readonly string MSG = @"{0}
 
-It's not wise to keep running KSP, as undesired side effects may happen. Make back-ups now! You may find the S.A.V.E mod helpful for this.
+It's not wise to keep running KSP, as undesired side effects may happen. Make back-ups now!
 
 Your KSP is running from {1}.";
 
