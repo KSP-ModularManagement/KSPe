@@ -33,12 +33,15 @@
     <Reference Include="System" />
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +145,12 @@
     </Compile>
     <Compile Include="..\KSPe.UI\MessageBox.cs">
       <Link>UI\MessageBox.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\Util\CkanTools.cs">
+      <Link>Util\CkanTools.cs</Link>
+    </Compile>
+    <Compile Include="..\InstallChecker\GUI\CkanDetectedAdviseBox.cs">
+      <Link>GUI\CkanDetectedAdviseBox.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

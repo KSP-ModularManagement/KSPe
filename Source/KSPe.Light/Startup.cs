@@ -30,7 +30,9 @@ namespace KSPe
 		[UsedImplicitly]
 		private void Start()
 		{
-			LOG.force("Version {0} for TweakScale /L", Version.Text);
+			LOG.force("Version {0} for <SOMETHING>", Version.Text);
+			if (Util.CkanTools.CheckCkanInstalled())
+				InstallChecker.GUI.Dialogs.CkanDetectedAdviseBox.Show();
 		}
 
 		[UsedImplicitly]
@@ -60,5 +62,30 @@ namespace KSPe
 		}
 
 		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>("KSPe.Light.TweakScale", false, 0);
+	}
+
+	[KSPAddon(KSPAddon.Startup.MainMenu, true)]
+	public class MainMenu:MonoBehaviour
+	{
+		[UsedImplicitly]
+		private void Start()
+		{
+			if (Util.CkanTools.CheckCkanInstalled())
+				InstallChecker.GUI.Dialogs.CkanDetectedAdviseBox.Show();
+		}
+	}
+
+	[KSPAddon(KSPAddon.Startup.SpaceCentre, true)]
+	public class SpaceCentre:MonoBehaviour
+	{
+		[UsedImplicitly]
+		private void Start()
+		{
+			if (Util.CkanTools.CheckCkanInstalled())
+			{ 
+				InstallChecker.GUI.Dialogs.CkanDetectedAdviseBox.Show();
+				InstallChecker.GUI.Dialogs.CkanDetectedAdviseBox.Show();
+			}
+		}
 	}
 }
