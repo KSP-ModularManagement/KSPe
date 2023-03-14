@@ -147,6 +147,7 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 
 	internal static class NoGameDataFound
 	{
+		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/11";
 		private static readonly string MSG = @"KSPe could not find a GameData folder from where you fired up your KSP game.";
 
 		private static bool shown = false;
@@ -164,12 +165,13 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 				MSG,
 				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPe/issues/11"); Application.Quit(); }
 			);
-			Log.error("Fatal Error NoGameDataFound was shown. Please visit https://github.com/net-lisias-ksp/KSPe/issues/11");
+			Log.error("Fatal Error NoGameDataFound was shown. Please visit {0}", URL);
 		}
 	}
 
 	internal static class PwdIsNotOrigin
 	{
+		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/11";
 		private static readonly string MSG = @"The Current Working Directory (pwd on UNIX) doesn't matches the KSPe's origin!
 
 pwd : {0}
@@ -192,12 +194,13 @@ When this happens, KSP may write files on the wrong place, and you can lost trac
 				string.Format(MSG, pwd, origin),
 				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPe/issues/12"); Application.Quit(); }
 			);
-			Log.error("Fatal Error PwdIsNotOrigin was shown. pwd = {0} ; origin = {1} . Please visit https://github.com/net-lisias-ksp/KSPe/issues/12", pwd, origin);
+			Log.error("Fatal Error PwdIsNotOrigin was shown. pwd = {0} ; origin = {1} . Please visit {2}", pwd, origin, URL);
 		}
 	}
 
 	internal static class ApplicationRootPathIsNotOrigin
 	{
+		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/12";
 		private static readonly string MSG = @"The KSP's ApplicationRootPath (`KSPUtil.ApplicationRootPath` on code) doesn't matches the KSPe's origin!
 
 KSPUtil.ApplicationRootPath : {0}
@@ -220,12 +223,13 @@ When this happens, KSP may write files on the wrong place, and you can lost trac
 				string.Format(MSG, appRootPath, origin),
 				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPe/issues/12"); Application.Quit(); }
 			);
-			Log.error("Fatal Error ApplicationRootPathIsNotOrigin was shown. AppRootPath = {0} ; origin = {1} . Please visit https://github.com/net-lisias-ksp/KSPe/issues/12", appRootPath, origin);
+			Log.error("Fatal Error ApplicationRootPathIsNotOrigin was shown. AppRootPath = {0} ; origin = {1} . Please visit {2}", appRootPath, origin, URL);
 		}
 	}
 
 	internal static class CriticalComponentsAbsent
 	{
+		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/17";
 		private static readonly string MSG = @"KSPe got a Fatal Error ""{0}"" while trying to load the KSPe.KSP subsystem.
 
 KSPe can't work properly without it, and so anything using it will **NOT** work neither (what means the game is unusable right now).";
@@ -245,7 +249,7 @@ KSPe can't work properly without it, and so anything using it will **NOT** work 
 				string.Format(MSG, e.Message),
 				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPe/issues/17"); Application.Quit(); }
 			);
-			Log.error(e, "Fatal Error CriticalComponentsAbsent was shown. e = [{0}]. Please visit https://github.com/net-lisias-ksp/KSPe/issues/17", e.Message);
+			Log.error(e, "Fatal Error CriticalComponentsAbsent was shown. e = [{0}]. Please visit {1}", e.Message, URL);
 		}
 	}
 } }
