@@ -32,12 +32,13 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.0\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.0\UnityEngine.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -45,20 +46,11 @@
     <Compile Include="..\KSPe\Properties\Version.cs">
       <Link>Properties\Version.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe.UI\MessageBox.cs">
-      <Link>GUI\MessageBox.cs</Link>
-    </Compile>
     <Compile Include="..\KSPe\ConfigNode.cs">
       <Link>ConfigNode.cs</Link>
     </Compile>
     <Compile Include="..\KSPe\Util\Log.cs">
       <Link>Util\Log.cs</Link>
-    </Compile>
-    <Compile Include="..\KSPe.UI\TimedMessageBox.cs">
-      <Link>GUI\TimedMessageBox.cs</Link>
-    </Compile>
-    <Compile Include="..\KSPe.UI\WindowUtils.cs">
-      <Link>GUI\WindowUtils.cs</Link>
     </Compile>
     <Compile Include="..\KSPe\Util\Image.cs">
       <Link>Util\Image.cs</Link>
@@ -139,6 +131,18 @@
       <Link>Util\Text.cs</Link>
     </Compile>
     <Compile Include="Util\Image.Local.cs" />
+    <Compile Include="..\KSPe.UI\WindowUtils.cs">
+      <Link>Util\WindowUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\Common\Dialogs\CommonBox.cs">
+      <Link>Common\Dialogs\CommonBox.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\TimedMessageBox.cs">
+      <Link>UI\TimedMessageBox.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\MessageBox.cs">
+      <Link>UI\MessageBox.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />
@@ -147,6 +151,7 @@
     <Folder Include="IO\" />
     <Folder Include="Multiplatform\stubs\" />
     <Folder Include="Multiplatform\Tools\" />
+    <Folder Include="UI\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
