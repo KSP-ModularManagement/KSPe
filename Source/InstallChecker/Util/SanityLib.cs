@@ -26,7 +26,7 @@ namespace KSPe.InstallChecker
 		/**
 		 * If you are interested only on assemblies that were properly loaded by KSP, this is the one you want.
 		 */
-		public static IEnumerable<AssemblyLoader.LoadedAssembly> FetchLoadedAssembliesByName(string assemblyName)
+		internal static IEnumerable<AssemblyLoader.LoadedAssembly> FetchLoadedAssembliesByName(string assemblyName)
 		{ 
 			return from a in AssemblyLoader.loadedAssemblies
 					let ass = a.assembly
@@ -54,7 +54,7 @@ namespace KSPe.InstallChecker
 			string sourceFilename = System.IO.Path.Combine(SanityLib.CalcGameData(), ud.sourceFilename);
 			string targetFilename = System.IO.Path.Combine(SanityLib.CalcGameData(), ud.targetFilename);
 
-			Log.dbg("UpdateIfNeeded from {0} to {1}", sourceFilename, targetFilename);
+			Log.debug("UpdateIfNeeded from {0} to {1}", sourceFilename, targetFilename);
 			if (System.IO.File.Exists(sourceFilename))
 			{
 				if (System.IO.File.Exists(targetFilename))
@@ -99,7 +99,7 @@ namespace KSPe.InstallChecker
 
 		private static string Update(string name, string sourceFilename, string targetFilename)
 		{
-			Log.dbg("Update from {0} to {1}", sourceFilename, targetFilename);
+			Log.debug("Update from {0} to {1}", sourceFilename, targetFilename);
 			try
 			{
 				Copy(sourceFilename, targetFilename);
@@ -115,13 +115,13 @@ namespace KSPe.InstallChecker
 
 		private static void Copy(string sourceFilename, string targetFilename)
 		{
-			Log.dbg("Copying {0} to {1}", sourceFilename, targetFilename);
+			Log.debug("Copying {0} to {1}", sourceFilename, targetFilename);
 			System.IO.File.Copy(sourceFilename, targetFilename);
 		}
 
 		private static void Delete(string filename)
 		{
-			Log.dbg("Deleting {0}", filename);
+			Log.debug("Deleting {0}", filename);
 			if (System.IO.File.Exists(filename))
 				System.IO.File.Delete(filename);
 		}
@@ -140,7 +140,7 @@ namespace KSPe.InstallChecker
 					path = System.IO.Path.GetDirectoryName(path);
 					candidate = System.IO.Path.Combine(path, "GameData");
 				}
-				Log.dbg("GameData found on {0}", candidate);
+				Log.debug("GameData found on {0}", candidate);
 				return (GAMEDATA = candidate);
 			}
 			catch (Exception e)

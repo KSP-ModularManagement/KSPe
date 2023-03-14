@@ -17,6 +17,7 @@
 using System;
 using UnityEngine;
 using KSPe.UI;
+using KSPe.Common.Dialogs;
 
 namespace KSPe.Common.Dialogs
 {
@@ -39,7 +40,7 @@ Backup everything *NOW* if you choose to ignore this message and proceed.";
 
 		public static void Show(string errorMessage, string actionMessage, Action lambda)
 		{
-			GameObject go = new GameObject("KSPe.Common.Diallgs.ShowStopperAlertBox");
+			GameObject go = new GameObject(typeof(ShowStopperAlertBox).FullName);
 			MessageBox dlg = go.AddComponent<MessageBox>();
 
 			//GUIStyle win = new GUIStyle(HighLogic.Skin.window)

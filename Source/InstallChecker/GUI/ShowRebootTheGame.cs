@@ -5,8 +5,6 @@
 	KSP Enhanced /L is licensed as follows:
 		* SKL 1.0 : https://ksp.lisias.net/SKL-1_0.txt
 
-	And you are allowed to choose the License that better suit your needs.
-
 	KSP Enhanced /L is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -16,7 +14,7 @@
 */
 using UnityEngine;
 
-namespace KSPe.InstallChecker.GUI
+namespace KSPe.InstallChecker.GUI.Dialogs
 {
 	internal static class ShowRebootTheGame
 	{
@@ -24,7 +22,7 @@ namespace KSPe.InstallChecker.GUI
 
 		internal static void Show(string msg)
 		{
-			KSPe.Common.Dialogs.WarningAlertBox.Show(
+			WarningAlertBox.Show(
 				msg,
 				AMSG,
 				() => { Application.Quit(); },

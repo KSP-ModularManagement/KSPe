@@ -43,15 +43,40 @@
     <Compile Include="..\KSPe\Properties\LegalMamboJambo.cs">
       <Link>Properties\LegalMamboJambo.cs</Link>
     </Compile>
-    <Compile Include="GUI\MessageBox.cs" />
-    <Compile Include="GUI\FatalError.cs" />
     <Compile Include="GUI\ShowRebootTheGame.cs" />
-    <Compile Include="GUI\Abstract.cs" />
-    <Compile Include="GUI\WarningAlertbox.cs" />
     <Compile Include="GUI\ShowStopperAlertBox.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Util\Log.cs" />
     <Compile Include="Util\SanityLib.cs" />
+    <Compile Include="..\KSPe\Util\ModuleManagerTools.cs">
+      <Link>Util\ModuleManagerTools.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\WindowUtils.cs">
+      <Link>Util\WindowUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\Util\CkanTools.cs">
+      <Link>Util\CkanTools.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\Common\Dialogs\Abstract.cs">
+      <Link>Common\Dialogs\Abstract.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\Common\Dialogs\CommonBox.cs">
+      <Link>Common\Dialogs\CommonBox.cs</Link>
+    </Compile>
+    <Compile Include="UI\GUI.cs" />
+    <Compile Include="..\KSPe.UI\MessageBox.cs">
+      <Link>UI\MessageBox.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\TimedMessageBox.cs">
+      <Link>UI\TimedMessageBox.cs</Link>
+    </Compile>
+    <Compile Include="GUI\WarningAlertbox.cs" />
+    <Compile Include="Common\Dialogs\FatalError.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="Common\Dialogs\" />
+    <Folder Include="UI\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

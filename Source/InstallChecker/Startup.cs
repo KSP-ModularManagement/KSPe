@@ -44,12 +44,12 @@ namespace KSPe.InstallChecker
 				String msg = CheckMyself();
 
 				if ( null != msg )
-					GUI.ShowStopperAlertBox.Show(msg);
+					GUI.Dialogs.ShowStopperAlertBox.Show(msg);
 			}
 			catch (Exception e)
 			{
 				Log.error(e.ToString());
-				GUI.ShowStopperAlertBox.Show(e.ToString());
+				GUI.Dialogs.ShowStopperAlertBox.Show(e.ToString());
 			}
 
 			try
@@ -58,19 +58,19 @@ namespace KSPe.InstallChecker
 				string msg;
 				foreach (SanityLib.UpdateData ud in UPDATEABLES)
 				{
-					Log.dbg("Checking {0}", ud.name);
+					Log.debug("Checking {0}", ud.name);
 					msg = SanityLib.UpdateIfNeeded(ud);
 					if (null != msg) msgs.Add(msg);
 				}
 
 				msg = string.Join("\n\n", msgs.ToArray());
 				if ( !string.Empty.Equals(msg) )
-					GUI.ShowRebootTheGame.Show(msg);
+					GUI.Dialogs.ShowRebootTheGame.Show(msg);
 			}
 			catch (Exception e)
 			{
 				Log.error(e.ToString());
-				GUI.ShowStopperAlertBox.Show(e.ToString());
+				GUI.Dialogs.ShowStopperAlertBox.Show(e.ToString());
 			}
 		}
 

@@ -5,8 +5,6 @@
 	KSP Enhanced /L is licensed as follows:
 		* SKL 1.0 : https://ksp.lisias.net/SKL-1_0.txt
 
-	And you are allowed to choose the License that better suit your needs.
-
 	KSP Enhanced /L is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -15,10 +13,13 @@
 	along with KSP Enhanced /L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.
 */
 using System;
-using UnityEngine;
+
+using KSPe.Common.Dialogs;
 using KSPe.UI;
 
-namespace KSPe.Common.Dialogs
+using UnityEngine;
+
+namespace KSPe.InstallChecker.GUI.Dialogs
 {
 	internal class WarningAlertBox : AbstractDialog
 	{
@@ -38,7 +39,7 @@ You <b>should not</b> ignore this message, otherwise some critical features will
 
 		public static void Show(string errorMessage, string actionMessage, Action lambda, bool noCancel = false)
 		{
-			GameObject go = new GameObject("KSPe.Common.Diallgs.ShowStopperAlertBox");
+			GameObject go = new GameObject(typeof(WarningAlertBox).FullName);
 			MessageBox dlg = go.AddComponent<MessageBox>();
 
 			//GUIStyle win = new GUIStyle(HighLogic.Skin.window)

@@ -16,7 +16,7 @@
 */
 using System.Diagnostics;
 
-namespace KSPe.InstallChecker
+namespace KSPe
 {
 	public static class Log
 	{
@@ -41,7 +41,7 @@ namespace KSPe.InstallChecker
 		}
 
 		[ConditionalAttribute("DEBUG")]
-		internal static void dbg(string msg, params object[] @params)
+		internal static void debug(string msg, params object[] @params)
 		{
 			UnityEngine.Debug.LogFormat("[KSPe.InstallChecker] DEBUG: " + msg, @params);
 		}
