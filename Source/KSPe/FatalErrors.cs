@@ -20,6 +20,9 @@
 
 */
 using System;
+
+using KSPe.Util;
+
 using UnityEngine;
 
 namespace KSPe { namespace FatalErrors 
@@ -163,7 +166,7 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 
 			dlg.Show(
 				MSG,
-				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPe/issues/11"); Application.Quit(); }
+				() => { CkanTools.OpenURL(URL); Application.Quit(); }
 			);
 			Log.error("Fatal Error NoGameDataFound was shown. Please visit {0}", URL);
 		}
@@ -192,7 +195,7 @@ When this happens, KSP may write files on the wrong place, and you can lost trac
 
 			dlg.Show(
 				string.Format(MSG, pwd, origin),
-				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPe/issues/12"); Application.Quit(); }
+				() => { CkanTools.OpenURL(URL); Application.Quit(); }
 			);
 			Log.error("Fatal Error PwdIsNotOrigin was shown. pwd = {0} ; origin = {1} . Please visit {2}", pwd, origin, URL);
 		}
@@ -221,7 +224,7 @@ When this happens, KSP may write files on the wrong place, and you can lost trac
 
 			dlg.Show(
 				string.Format(MSG, appRootPath, origin),
-				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPe/issues/12"); Application.Quit(); }
+				() => { CkanTools.OpenURL(URL); Application.Quit(); }
 			);
 			Log.error("Fatal Error ApplicationRootPathIsNotOrigin was shown. AppRootPath = {0} ; origin = {1} . Please visit {2}", appRootPath, origin, URL);
 		}
@@ -247,7 +250,7 @@ KSPe can't work properly without it, and so anything using it will **NOT** work 
 
 			dlg.Show(
 				string.Format(MSG, e.Message),
-				() => { Application.OpenURL("https://github.com/net-lisias-ksp/KSPe/issues/17"); Application.Quit(); }
+				() => { CkanTools.OpenURL(URL); Application.Quit(); }
 			);
 			Log.error(e, "Fatal Error CriticalComponentsAbsent was shown. e = [{0}]. Please visit {1}", e.Message, URL);
 		}

@@ -123,6 +123,7 @@
     <Compile Include="Util\Text.cs" />
     <Compile Include="Util\Image.Local.cs" />
     <Compile Include="Util\Stopwatch.cs" />
+    <Compile Include="Util\CkanTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
