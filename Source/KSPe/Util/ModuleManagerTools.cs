@@ -61,7 +61,7 @@ namespace KSPe.Util
 				{
 					double hours = double.MaxValue;
 					{
-						string path = IO.Path.Combine(KSPUtil.ApplicationRootPath, MMEXPCACHE);
+						string path = SIO.Path.Combine(KSPUtil.ApplicationRootPath, MMEXPCACHE);
 						if (SIO.File.Exists(path))
 						{
 							SIO.FileInfo fi = new SIO.FileInfo(path);
