@@ -72,6 +72,9 @@ namespace KSPe.InstallChecker
 				Log.error(e.ToString());
 				GUI.Dialogs.ShowStopperAlertBox.Show(e.ToString());
 			}
+
+			if (Util.CkanTools.CheckCkanInstalled())
+				Log.force("CKAN WAS DETECTED ON THIS KSP.");
 		}
 
 		private const string ERR_MULTIPLE_TOOL = "There're more than one KSPe Install Checker on this KSP installment! Please delete all but the one on GameData/000_KSPe/Plugins !";
@@ -92,6 +95,16 @@ namespace KSPe.InstallChecker
 				if (1 != loaded.Count()) return ERR_MULTIPLE_TOOL;
 			}
 			return null;
+		}
+	}
+
+	[KSPAddon(KSPAddon.Startup.MainMenu, true)]
+	public class MainMenu:MonoBehaviour
+	{
+		private void Start()
+		{
+			if (Util.CkanTools.CheckCkanInstalled())
+				InstallChecker.GUI.Dialogs.CkanDetectedAdviseBox.Show();
 		}
 	}
 }

@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="GUI\WarningAlertbox.cs" />
     <Compile Include="Common\Dialogs\FatalError.cs" />
+    <Compile Include="GUI\CkanDetectedAdviseBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />
