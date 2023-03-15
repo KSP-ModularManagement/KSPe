@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using KSPe.Util;
+
 namespace Tests
 {
 	public static class MainClass
@@ -178,6 +180,11 @@ namespace Tests
 			ConversionTest<bool>("false");
 		}
 
+		private static void TestCase_CKAN_JSON()
+		{
+			Console.WriteLine(string.Format("TestCase_CKAN_JSON {0}", CkanTools.CheckCkanInstalled()));
+		}
+
 		public static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");
@@ -198,7 +205,9 @@ namespace Tests
 
 			TestCase_NumberToText();
 
-			InstallationTest();
+			//InstallationTest();
+
+			TestCase_CKAN_JSON();
 		}
 	}
 }

@@ -29,6 +29,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="TinyJSON">
+      <HintPath>..\..\..\Tiny-JSON\obj\TinyJSON\Debug\TinyJSON.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -82,13 +85,16 @@
     <Compile Include="Mockups\KSP\Game.cs" />
     <Compile Include="Mockups\KSP\Versioning.cs" />
     <Compile Include="Properties\Version.cs" />
-    <Compile Include="Properties\Configuration.cs" />
     <Compile Include="..\KSPe\Multiplatform\Tools\LowLevelTools.cs">
       <Link>KSPe.Artefacts\Multiplatform\Tools\LowLevelTools.cs</Link>
     </Compile>
     <Compile Include="..\KSPe\Util\Text.cs">
       <Link>KSPe.Artefacts\Util\Text.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe\Util\CkanTools.cs">
+      <Link>Util\CkanTools.cs</Link>
+    </Compile>
+    <Compile Include="Mockups\KSP\Application.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="KSPe.Artefacts\" />
@@ -103,6 +109,7 @@
     <Folder Include="Mockups\KSPe\IO\" />
     <Folder Include="KSPe.Artefacts\Util\" />
     <Folder Include="KSPe.Artefacts\Multiplatform\Tools\" />
+    <Folder Include="Util\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

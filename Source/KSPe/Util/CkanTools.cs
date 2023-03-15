@@ -21,9 +21,11 @@
 
 */
 
-using SIO = System.IO;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
+using Tiny;
+
+using SIO = System.IO;
 
 namespace KSPe.Util
 {
@@ -62,11 +64,11 @@ namespace KSPe.Util
 			is_ckan_installed = SIO.Directory.Exists(path);
 			path = SIO.Path.Combine(path, "registry.json");
 			is_ckan_installed &= SIO.File.Exists(path);
-#if false
+
 			if ((bool)is_ckan_installed)
 			{
 				string text = SIO.File.ReadAllText(path);
-				Registry registry = JsonUtility.FromJson<Registry>(text);
+				Registry registry = Json.Decode<Registry>(text);
 				is_ckan_installed = registry.sorted_repositories.ContainsKey("default");
 				if (!(bool)is_ckan_installed) return false;
 
@@ -75,7 +77,7 @@ namespace KSPe.Util
 
 				is_ckan_installed = registry.sorted_repositories["default"].uri.StartsWith("https://github.com/KSP-CKAN/");
 			}
-#endif
+
 			return (bool)is_ckan_installed;
 		}
 

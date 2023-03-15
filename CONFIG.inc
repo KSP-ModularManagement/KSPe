@@ -24,7 +24,7 @@ GD_PRIORITY="000"
 LIB_DLLS="KSPe ${DLLS}"
 
 # External Libs from the LIB directory
-EXT_DLLS=""
+EXT_DLLS="TinyJSON"
 
 
 PROJECT_BRANCH=`git branch | grep \* | cut -d ' ' -f2`

@@ -24,7 +24,9 @@ namespace KSPe.InstallChecker.GUI.Dialogs
 	{
 		private static readonly string MSG = @"CKAN was detected in your KSP, but from March 2023 CKAN is not supported anymore by TweakScale, KSP-Recall et all.
 
-Any problems related to TweakScale, KSP-Recall and any other Add'On authored or maintained by LisiasT (and a few others) should be reported to CKAN's maintainers directly.
+Any problems related to TweakScale, KSP-Recall and some other Add'Ons authored or maintained by a few authors should be reported to CKAN's maintainers directly.
+
+The KSP.log will mention the Add'Ons currently without support.
 
 Visit {0} for details.";
 
