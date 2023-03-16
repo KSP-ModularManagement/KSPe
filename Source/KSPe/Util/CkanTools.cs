@@ -64,26 +64,38 @@ namespace KSPe.Util
 			is_ckan_installed = SIO.Directory.Exists(path);
 			path = SIO.Path.Combine(path, "registry.json");
 			is_ckan_installed &= SIO.File.Exists(path);
-
-			if ((bool)is_ckan_installed)
-			{
-				string text = SIO.File.ReadAllText(path);
-				Registry registry = Json.Decode<Registry>(text);
-				is_ckan_installed = registry.sorted_repositories.ContainsKey("default");
-				if (!(bool)is_ckan_installed) return false;
-
-				is_ckan_installed = null != registry.sorted_repositories["default"].uri;
-				if (!(bool)is_ckan_installed) return false;
-
-				is_ckan_installed = registry.sorted_repositories["default"].uri.StartsWith("https://github.com/KSP-CKAN/");
-			}
-
 			return (bool)is_ckan_installed;
 		}
 
+		private static bool? is_ckan_repository = null;
+		public static bool CheckCkanRepository()
+		{
+			if (null != is_ckan_repository) return (bool)is_ckan_repository;
+
+			is_ckan_repository = CheckCkanInstalled();
+			if ((bool)is_ckan_repository)
+			{
+				string path = SIO.Path.Combine(KSPUtil.ApplicationRootPath, "CKAN");
+				path = SIO.Path.Combine(path, "registry.json");
+
+				string text = SIO.File.ReadAllText(path);
+				Registry registry = Json.Decode<Registry>(text);
+				is_ckan_repository = registry.sorted_repositories.ContainsKey("default");
+				if (!(bool)is_ckan_repository) return false;
+
+				is_ckan_repository = null != registry.sorted_repositories["default"].uri;
+				if (!(bool)is_ckan_repository) return false;
+
+				is_ckan_repository = registry.sorted_repositories["default"].uri.StartsWith("https://github.com/KSP-CKAN/");
+			}
+
+			return (bool)is_ckan_repository;
+		}
+
+
 		public static void OpenURL(string url)
 		{
-			Application.OpenURL(CheckCkanInstalled() ? CKAN_URL : url);
+			Application.OpenURL(CheckCkanRepository() ? CKAN_URL : url);
 		}
 
 	}

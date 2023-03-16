@@ -38,6 +38,10 @@
       <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="TinyJSON">
+      <HintPath>..\..\..\..\..\..\LIB\plugins\TinyJSON.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
