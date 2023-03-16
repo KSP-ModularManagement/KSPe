@@ -1,5 +1,11 @@
 # KSP Enhanced /L :: Change Log
 
+* 2023-0317: 2.5.1.1 (Lisias) for KSP >= 1.2
+	+ Adding a library to easily handle JSONs (Tiny-JSON) into the toolset.
+	+ Incepting tools to handle installers.
+	+ A few helpers for `KSP.UI`
+* 2023-0316: 2.5.1.0 (Lisias) for KSP >= 1.2
+	+ ***DITCHED*** due an incredibly lame mistake!
 * 2023-0313: 2.5.0.1 (Lisias) for KSP >= 1.2
 	+ Rebranding the thing into `KSPe Enhanced /L`, finally decoupling from the `KSPApiExtensions` heritage, now delegated as a secondary (and optional) feature.
 	+ Removes deprecating artefacts marked for removal on 2.5 series
