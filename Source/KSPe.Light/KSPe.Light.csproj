@@ -16,7 +16,7 @@
     <Optimize>false</Optimize>
     <BaseIntermediateOutputPath>..\..\obj\KSPeLight</BaseIntermediateOutputPath>
     <OutputPath>..\..\bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>KSPeLight;DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -25,6 +25,7 @@
     <Optimize>true</Optimize>
     <BaseIntermediateOutputPath>..\..\obj\KSPeLight</BaseIntermediateOutputPath>
     <OutputPath>..\..\bin\Release</OutputPath>
+    <DefineConstants>KSPeLight;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -149,18 +150,48 @@
     <Compile Include="..\KSPe\Util\CkanTools.cs">
       <Link>Util\CkanTools.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\Tiny-JSON\Source\Tiny-JSON\DefaultDecoder.cs">
+      <Link>Tiny\JSON\DefaultDecoder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Tiny-JSON\Source\Tiny-JSON\DefaultEncoder.cs">
+      <Link>Tiny\JSON\DefaultEncoder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Tiny-JSON\Source\Tiny-JSON\Extensions.cs">
+      <Link>Tiny\JSON\Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Tiny-JSON\Source\Tiny-JSON\Json.cs">
+      <Link>Tiny\JSON\Json.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Tiny-JSON\Source\Tiny-JSON\JsonAttributes.cs">
+      <Link>Tiny\JSON\JsonAttributes.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Tiny-JSON\Source\Tiny-JSON\JsonBuilder.cs">
+      <Link>Tiny\JSON\JsonBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Tiny-JSON\Source\Tiny-JSON\JsonMapper.cs">
+      <Link>Tiny\JSON\JsonMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Tiny-JSON\Source\Tiny-JSON\JsonParser.cs">
+      <Link>Tiny\JSON\JsonParser.cs</Link>
+    </Compile>
     <Compile Include="..\InstallChecker\GUI\CkanDetectedAdviseBox.cs">
-      <Link>GUI\CkanDetectedAdviseBox.cs</Link>
+      <Link>InstallChecker\GUI\CkanDetectedAdviseBox.cs</Link>
+    </Compile>
+    <Compile Include="..\InstallChecker\Globals.cs">
+      <Link>InstallChecker\Globals.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GUI\" />
     <Folder Include="Util\" />
     <Folder Include="Util\log\" />
     <Folder Include="IO\" />
     <Folder Include="Multiplatform\stubs\" />
     <Folder Include="Multiplatform\Tools\" />
     <Folder Include="UI\" />
+    <Folder Include="Tiny\" />
+    <Folder Include="Tiny\JSON\" />
+    <Folder Include="InstallChecker\" />
+    <Folder Include="InstallChecker\GUI\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

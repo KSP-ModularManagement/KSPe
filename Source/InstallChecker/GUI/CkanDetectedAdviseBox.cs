@@ -12,6 +12,8 @@
 	You should have received a copy of the SKL Standard License 1.0
 	along with KSP Enhanced /L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.
 */
+using System;
+
 using KSPe.Common.Dialogs;
 using KSPe.UI;
 using KSPe.Util;
@@ -30,19 +32,27 @@ The KSP.log will mention the Add'Ons currently without support.
 
 Visit {0} for details.";
 
+#if KSPeLight
+		// This stunt is needed because there can be various KSPe.Light around, and we don't want all of the showing messages!
 		private static GameObject flag;
+#endif
 		internal static void Show()
 		{
+#if KSPeLight
 			flag = GameObject.Find(typeof(CkanDetectedAdviseBox).FullName);
 			Debug.LogFormat("CkanDetectedAdviseBox = {0}", flag);
 			if (null != flag) return;
 
 			flag = new GameObject(typeof(CkanDetectedAdviseBox).FullName);
+			flag.SetActive(false);
 			DontDestroyOnLoad(flag);
+#endif
 
-			if (!ModuleManagerTools.IsLoadedFromCache)
-			{ 
-				GameObject go = new GameObject(flag.name);
+			TimeSpan deltaT = DateTime.Now - Globals.Instance.LastCkanMessage;
+			if (!ModuleManagerTools.IsLoadedFromCache && deltaT.TotalDays > 15)
+			{
+				Globals.Instance.HitCkanMessage();
+				GameObject go = new GameObject(typeof(CkanDetectedAdviseBox).FullName);
 				TimedMessageBox dlg = go.AddComponent<TimedMessageBox>();
 
 				GUIStyle win = createWinStyle(Color.white);
@@ -53,8 +63,10 @@ Visit {0} for details.";
 					30, 0, 0,
 					win, text
 				);
+				Log.force("An Announcement about CKAN being present was displayed.");
 			}
-			Log.force("An Announcement about CKAN being present was {0}.", ModuleManagerTools.IsLoadedFromCache ? "omitted" : "displayed");
+			else
+				Log.force("An Announcement about CKAN being present was ommited.");
 		}
 	}
 }

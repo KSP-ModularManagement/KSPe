@@ -208,6 +208,8 @@ namespace Tests
 			//InstallationTest();
 
 			TestCase_CKAN_JSON();
+
+			Console.WriteLine(DateTime.Parse("1900-01-01 00:00:00Z").ToUniversalTime().ToString("u"));
 		}
 	}
 }

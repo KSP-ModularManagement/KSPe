@@ -30,9 +30,9 @@ namespace KSPe
 		[UsedImplicitly]
 		private void Start()
 		{
-			LOG.force("Version {0} for <SOMETHING>", Version.Text);
-			if (Util.CkanTools.CheckCkanInstalled())
-				InstallChecker.GUI.Dialogs.CkanDetectedAdviseBox.Show();
+			LOG.force("Version {0} for <SOMETHING>. {1}", Version.Text, Util.CkanTools.CheckCkanRepository() ? "**UNSUPPORTED** due CKAN" : "");
+			if (Util.CkanTools.CheckCkanInstalled() && !Util.CkanTools.CheckCkanRepository())
+				Log.force("CKAN was detected on this KSP instalment.");
 		}
 
 		[UsedImplicitly]
@@ -70,22 +70,8 @@ namespace KSPe
 		[UsedImplicitly]
 		private void Start()
 		{
-			if (Util.CkanTools.CheckCkanInstalled())
+			if (Util.CkanTools.CheckCkanRepository())
 				InstallChecker.GUI.Dialogs.CkanDetectedAdviseBox.Show();
-		}
-	}
-
-	[KSPAddon(KSPAddon.Startup.SpaceCentre, true)]
-	public class SpaceCentre:MonoBehaviour
-	{
-		[UsedImplicitly]
-		private void Start()
-		{
-			if (Util.CkanTools.CheckCkanInstalled())
-			{ 
-				InstallChecker.GUI.Dialogs.CkanDetectedAdviseBox.Show();
-				InstallChecker.GUI.Dialogs.CkanDetectedAdviseBox.Show();
-			}
 		}
 	}
 }

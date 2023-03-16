@@ -37,6 +37,9 @@
       <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="TinyJSON">
+      <HintPath>..\..\..\Tiny-JSON\obj\TinyJSON\Debug\TinyJSON.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +76,7 @@
     <Compile Include="GUI\WarningAlertbox.cs" />
     <Compile Include="Common\Dialogs\FatalError.cs" />
     <Compile Include="GUI\CkanDetectedAdviseBox.cs" />
+    <Compile Include="Globals.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

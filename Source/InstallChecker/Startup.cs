@@ -74,7 +74,7 @@ namespace KSPe.InstallChecker
 			}
 
 			if (Util.CkanTools.CheckCkanInstalled())
-				Log.force("CKAN WAS DETECTED ON THIS KSP.");
+				Log.force("CKAN was detected on this KSP instalment.");
 		}
 
 		private const string ERR_MULTIPLE_TOOL = "There're more than one KSPe Install Checker on this KSP installment! Please delete all but the one on GameData/000_KSPe/Plugins !";
@@ -103,8 +103,8 @@ namespace KSPe.InstallChecker
 	{
 		private void Start()
 		{
-			if (Util.CkanTools.CheckCkanInstalled())
-				InstallChecker.GUI.Dialogs.CkanDetectedAdviseBox.Show();
+			if (Util.CkanTools.CheckCkanRepository())
+				GUI.Dialogs.CkanDetectedAdviseBox.Show();
 		}
 	}
 }
