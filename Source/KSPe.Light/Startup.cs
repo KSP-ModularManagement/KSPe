@@ -30,7 +30,7 @@ namespace KSPe
 		[UsedImplicitly]
 		private void Start()
 		{
-			LOG.force("Version {0} for <SOMETHING>. {1}", Version.Text, Util.CkanTools.CheckCkanRepository() ? "**UNSUPPORTED** due CKAN" : "");
+			LOG.force("Version {0} for {1}. {2}", Version.Text, Light.Target.AddOn, Util.CkanTools.CheckCkanRepository() ? "**UNSUPPORTED** due CKAN" : "");
 			if (Util.CkanTools.CheckCkanInstalled() && !Util.CkanTools.CheckCkanRepository())
 				Log.force("CKAN was detected on this KSP instalment.");
 		}
@@ -61,7 +61,7 @@ namespace KSPe
 			}
 		}
 
-		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>("KSPe.Light.TweakScale", false, 0);
+		private static readonly Util.Log.Logger LOG = Util.Log.Logger.CreateForType<Startup>(string.Format("KSPe.Light.{0}",Light.Target.AddOn), false, 0);
 	}
 
 	[KSPAddon(KSPAddon.Startup.MainMenu, true)]
