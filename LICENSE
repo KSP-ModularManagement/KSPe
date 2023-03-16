@@ -7,6 +7,9 @@ Except where explicitly stated, KSP Enhanced (KSPe) is double licensed as follow
 KSPe embeds KSP API Extensions, © 2014-2018 swamp_ig and licensed as follows:
 	* CC BY-SA 3.0U (https://creativecommons.org/licenses/by-sa/3.0/)
 
+KSPe embeds Tiny-JSON /L, © 2023 LisiasT; © 2015-2018 Robert Gering and licensed as follows:
+	* Licensed under the MIT (Expat)
+
 This work containts derivatives from works from Damien Guard <https://github.com/damieng> on the following files:
 	* [Source/CSharpEmulator/System/EnumT.cs](./Source/CSharpEmulator/System/EnumT.cs)
 		+ Licensed under Apache 2.0
