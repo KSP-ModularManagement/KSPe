@@ -35,6 +35,11 @@ namespace KSPe
 			UnityEngine.Debug.LogFormat("[KSPe.InstallChecker] DETAIL: " + msg, @params);
 		}
 
+		internal static void trace(string msg, params object[] @params)
+		{
+			UnityEngine.Debug.LogFormat("[KSPe.InstallChecker] TRACE: " + msg, @params);
+		}
+
 		internal static void error(string msg, params object[] @params)
 		{
 			UnityEngine.Debug.LogErrorFormat("[KSPe.InstallChecker] ERROR: " + msg, @params);
@@ -43,7 +48,7 @@ namespace KSPe
 		[ConditionalAttribute("DEBUG")]
 		internal static void debug(string msg, params object[] @params)
 		{
-			UnityEngine.Debug.LogFormat("[KSPe.InstallChecker] DEBUG: " + msg, @params);
+			UnityEngine.Debug.LogFormat("[KSPe.InstallChecker] TRACE: " + msg, @params);
 		}
 	}
 }

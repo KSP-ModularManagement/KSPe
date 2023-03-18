@@ -95,7 +95,9 @@ namespace KSPe.Util
 
 		public static void OpenURL(string url)
 		{
-			Application.OpenURL(CheckCkanRepository() ? CKAN_URL : url);
+			url = CheckCkanRepository() ? CKAN_URL : url;
+			KSPe.Log.trace("Opening URL: {0}", url);
+			Application.OpenURL(url);
 		}
 
 	}

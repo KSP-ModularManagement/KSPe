@@ -54,7 +54,7 @@ namespace KSPe.UI
 
 		public void Show(string title, string msg, Action action, GUIStyle win_style, GUIStyle text_style)
 		{
-			Show(title, msg, null, win_style, text_style, false);
+			Show(title, msg, action, win_style, text_style, false);
 		}
 
 		public void Show(string title, string msg, Action action, GUIStyle win_style, GUIStyle text_style, bool noCancel)
