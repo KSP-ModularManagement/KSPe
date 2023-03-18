@@ -139,25 +139,36 @@ namespace KSPe.Util
 					throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing Interface : " + qn);
 				}
 
-				public static SType By(SType ifc)
+				public static SType By(SType t)
 				{
 					lock(TYPES)
-					{ 
-						if (TYPES.ContainsKey(ifc.FullName)) return TYPES[ifc.ToString()];
-						foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
-							foreach (SType type in assembly.GetTypes())
-								foreach (SType i in type.GetInterfaces()) if (i.Equals(ifc))
-								{
-									TYPES.Add(ifc.ToString(), type);
-									return type;
-								}
+					{
+						if (TYPES.ContainsKey(t.FullName)) return TYPES[t.ToString()];
+						SType r = t.IsInterface ? ByInterface(t) : ByType(t);
+						TYPES.Add(r.ToString(), t);
+						return r;
 					}
+					throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing Interface : " + t.FullName);
+				}
+
+				private static SType ByType(SType type)
+				{
+					throw new ArgumentException(string.Format("Makes no sense to Find a type that it's already loaded and useable as {0}!", type.Name)); 
+				}
+
+				private static SType ByInterface(SType ifc)
+				{
+					foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+						foreach (SType type in assembly.GetTypes())
+							foreach (SType i in type.GetInterfaces()) if (i.Equals(ifc))
+								return type;
 					throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing Interface : " + ifc.FullName);
 				}
 			}
 
 			public static class Search
 			{
+				public static IEnumerable<SType> ByInterface(string ns, string name) => ByInterfaceName(ns + "." + name);
 				public static IEnumerable<SType> ByInterfaceName(string qn)
 				{
 					foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
@@ -166,7 +177,17 @@ namespace KSPe.Util
 								yield return type;
 				}
 
-				public static IEnumerable<SType> By(SType ifc)
+				public static IEnumerable<SType> By(SType t)
+				{
+					return t.IsInterface ? ByInterface(t) : ByType(t);
+				}
+
+				private static IEnumerable<SType> ByType(SType type)
+				{
+					throw new ArgumentException(string.Format("Makes no sense to Search for a type that it's already loaded and useable as {0}!", type.Name)); 
+				}
+
+				private static IEnumerable<SType> ByInterface(SType ifc)
 				{
 					foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 						foreach (SType type in assembly.GetTypes())
