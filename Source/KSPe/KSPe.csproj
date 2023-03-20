@@ -38,10 +38,6 @@
       <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="TinyJSON">
-      <HintPath>..\..\..\..\..\..\LIB\plugins\TinyJSON.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -127,7 +123,7 @@
     <Compile Include="Util\Text.cs" />
     <Compile Include="Util\Image.Local.cs" />
     <Compile Include="Util\Stopwatch.cs" />
-    <Compile Include="Util\CkanTools.cs" />
+    <Compile Include="Util\UrlTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">

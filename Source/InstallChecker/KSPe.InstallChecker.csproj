@@ -57,9 +57,6 @@
     <Compile Include="..\KSPe.UI\WindowUtils.cs">
       <Link>Util\WindowUtils.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\CkanTools.cs">
-      <Link>Util\CkanTools.cs</Link>
-    </Compile>
     <Compile Include="..\KSPe.UI\Common\Dialogs\Abstract.cs">
       <Link>Common\Dialogs\Abstract.cs</Link>
     </Compile>
@@ -77,6 +74,10 @@
     <Compile Include="Common\Dialogs\FatalError.cs" />
     <Compile Include="GUI\CkanDetectedAdviseBox.cs" />
     <Compile Include="Globals.cs" />
+    <Compile Include="..\KSPe.External\Util\CkanTools.cs">
+      <Link>Util\CkanTools.cs</Link>
+    </Compile>
+    <Compile Include="Util\UrlTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

@@ -1,5 +1,5 @@
 ﻿/*
-	This file is part of KSPe, a component for KSP Enhanced /L
+	This file is part of KSPe.External, a component for KSP Enhanced /L
 	unless when specified otherwise below this code is:
 		© 2018-2023 LisiasT : http://lisias.net <support@lisias.net>
 
@@ -32,6 +32,19 @@ namespace KSPe.Util
 	public static class CkanTools
 	{
 		public const string CKAN_URL = "https://ksp.lisias.net/blogs/rants/on-CKAN/";
+
+		internal class MyUrlHandler : UrlTools.OpenAndExitHandler
+		{
+			public override void OpenURL(string url)
+			{
+				url = CkanTools.CheckCkanRepository() ? CKAN_URL : url;
+				base.OpenURL(url);
+			}
+		}
+		static CkanTools()
+		{ 
+			UrlTools.Register(new MyUrlHandler());
+		}
 
 		[System.Serializable]
 		public class Registry
@@ -92,7 +105,7 @@ namespace KSPe.Util
 			return (bool)is_ckan_repository;
 		}
 
-
+		[System.Obsolete("KSPe.CkanTools.OpenURL is deprecated, please use KSPe.UrlTools.OpenURL instead.")]
 		public static void OpenURL(string url)
 		{
 			url = CheckCkanRepository() ? CKAN_URL : url;

@@ -7,7 +7,7 @@ TARGETBINDIR="$TARGETDIR/Plugins"
 PROJECTSDIR="Source/$PACKAGE/"
 VERSIONFILE="KSPe.version"
 
-DLLS="KSPe KSPe.UI KSPe.HMI KSPe.System KSPe.InstallChecker KSPAPIExtensions"
+DLLS="KSPe KSPe.UI KSPe.HMI KSPe.System KSPe.InstallChecker KSPe.External KSPAPIExtensions"
 # PluginData DLLs
 PD_DLLS="KSPe.KSP.11 KSPe.KSP.12 KSPe.KSP.13 KSPe.KSP.14 KSPe.KSP.15 KSPe.KSP.16 KSPe.KSP.17 KSPe.KSP.18 KSPe.KSP.19 KSPe.KSP.110 KSPe.KSP.111 KSPe.KSP.112 KSPe.Unity.5 KSPe.Unity.2017 KSPe.Unity.2019 KSPe.UI.12 KSPe.UI.14"
 # Rule oriented deployoment for PluginData
