@@ -147,9 +147,6 @@
     <Compile Include="..\KSPe.UI\MessageBox.cs">
       <Link>UI\MessageBox.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\CkanTools.cs">
-      <Link>Util\CkanTools.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\Tiny-JSON\Source\Tiny-JSON\DefaultDecoder.cs">
       <Link>Tiny\JSON\DefaultDecoder.cs</Link>
     </Compile>
@@ -181,6 +178,15 @@
       <Link>InstallChecker\Globals.cs</Link>
     </Compile>
     <Compile Include="Properties\Target.cs" />
+    <Compile Include="..\KSPe.External\Util\CkanTools.cs">
+      <Link>Util\CkanTools.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.External\Util\AddOnVersionChecker.cs">
+      <Link>Util\AddOnVersionChecker.cs</Link>
+    </Compile>
+    <Compile Include="..\InstallChecker\Util\UrlTools.cs">
+      <Link>Util\UrlTools.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Util\" />
