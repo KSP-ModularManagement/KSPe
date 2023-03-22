@@ -1,5 +1,9 @@
 # KSP Enhanced /L :: Changes
 
+* 2023-0321: 2.5.2.0 (Lisias) for KSP >= 1.2
+	+ Moving CkanTools to a external library (KSPe.External) where 3rd party support will be implemented, avoiding cluttering the main Assembly with non core business stuff
+	+ Incepting support for KSP-AVC version files.
+	+ Preventing idiots like me from trying to find a `Type` by using itself as parameter on `KSPe.Util.SystemTools.Type.Find.By` :P
 * 2023-0317: 2.5.1.1 (Lisias) for KSP >= 1.2
 	+ Adding a library to easily handle JSONs (Tiny-JSON) into the toolset.
 	+ Incepting tools to handle installers.
