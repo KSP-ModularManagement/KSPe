@@ -187,6 +187,9 @@
     <Compile Include="..\InstallChecker\Util\UrlTools.cs">
       <Link>Util\UrlTools.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe.UI\Common\Dialogs\Error.cs">
+      <Link>Common\Dialogs\Error.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Util\" />
