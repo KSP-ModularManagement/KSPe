@@ -142,7 +142,7 @@ namespace KSPe.Util.Image {
 					throw new Error("Invalid content while reading file {0}", fileNamePath);
 				}
 			}
-
+			tex.name = fileNamePath;
 			return tex;
 		}
 
@@ -167,6 +167,7 @@ namespace KSPe.Util.Image {
 				throw new Error("DDS: TextureFormat {0} File {1} is not supported!", tf, fileNamePath);
 
 			tex = LoadDXT(bytes, tf, mipmap);
+			tex.name = fileNamePath;
 		}
 
 		private static UTexture2D LoadDXT(byte[] ddsBytes, TextureFormat textureFormat, bool mipmap)
@@ -189,6 +190,7 @@ namespace KSPe.Util.Image {
 			texture.LoadRawTextureData(dxtBytes);
 			texture.Apply();
 
+			texture.name = string.Format("{0} mipmap:{1}", textureFormat.ToString(), mipmap);
 			return (texture);
 		}
 
