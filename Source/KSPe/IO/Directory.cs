@@ -27,6 +27,7 @@ using AccessControlSections =  System.Security.AccessControl.AccessControlSectio
 
 namespace KSPe.IO
 {
+	[System.Obsolete("KSPe.IO.Directory is disencouraged.")]
 	public static class Directory
 	{
 		public static SIO.DirectoryInfo CreateDirectory (string path)	{ return SIO.Directory.CreateDirectory(path); }
