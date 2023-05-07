@@ -31,6 +31,11 @@ namespace KSPe.Util
 
 	public static class SystemTools
 	{
+		public abstract class Exception:AbstractException
+		{
+			protected Exception(string message, params object[] @params) : base(message, @params) { }
+		}
+
 		public static class Interface
 		{
 			public static object CreateInstanceByInterface(SType iifc)
@@ -201,6 +206,15 @@ namespace KSPe.Util
 		{
 			private static readonly Dictionary<string, SReflection.Assembly> ASSEMBLIES = new Dictionary<string, SReflection.Assembly>();
 
+			public class Exception : SystemTools.Exception
+			{
+				public readonly string offendingAssembly;
+				protected Exception(string message, string assemblyName) : base(message, assemblyName)
+				{
+					this.offendingAssembly = assemblyName;
+				}
+			}
+
 			public static class Exists
 			{
 				public static bool ByName(string qn)
@@ -247,6 +261,11 @@ namespace KSPe.Util
 
 			public class Loader : IDisposable
 			{
+				public class Exception : Assembly.Exception
+				{
+					protected Exception(string message, string assemblyName) : base(message, assemblyName) { }
+				}
+
 				protected static readonly object MUTEX = new object();
 				protected readonly string effectivePath;
 				protected readonly string searchPath;
