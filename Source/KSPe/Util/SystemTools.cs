@@ -266,6 +266,12 @@ namespace KSPe.Util
 					protected Exception(string message, string assemblyName) : base(message, assemblyName) { }
 				}
 
+				public class AlreadyLoadedException : Exception
+				{
+					private static readonly string MESSAGE = "The Assembly {0} is already loaded!";
+					internal AlreadyLoadedException(string assemblyName) : base(MESSAGE, assemblyName) { }
+				}
+
 				protected static readonly object MUTEX = new object();
 				protected readonly string effectivePath;
 				protected readonly string searchPath;
@@ -321,6 +327,8 @@ namespace KSPe.Util
 
 				public SReflection.Assembly LoadAndStartup(string assemblyName)
 				{
+					if (Assembly.Exists.ByName(assemblyName))
+						throw new AlreadyLoadedException(assemblyName); 
 					return Assembly.LoadAndStartup(assemblyName);
 				}
 			}
