@@ -59,6 +59,13 @@
     <Compile Include="Toolbar.cs" />
     <Compile Include="Common\Dialogs\Error.cs" />
     <Compile Include="Common\Dialogs\CommonBox.cs" />
+    <Compile Include="Common\Dialogs\ExceptionHandler.cs" />
+    <Compile Include="Common\Dialogs\ErrorHandling\FaultyInstallationErrorBox.cs" />
+    <Compile Include="Common\Dialogs\ErrorHandling\MissingDependencyErrortBox.cs" />
+    <Compile Include="Common\Dialogs\ErrorHandling\MissingDLLErrorBox.cs" />
+    <Compile Include="Common\Dialogs\ErrorHandling\UnhandledErrorBox.cs" />
+    <Compile Include="Common\Dialogs\ErrorHandling\AlreadyLoadedAlertBox.cs" />
+    <Compile Include="Common\Dialogs\ErrorHandling\FaultyCompatibilityException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KSPe\KSPe.csproj">

@@ -229,10 +229,10 @@ Check {0}'s INSTALL instructions."
 
 		public class IncompatibleUnityException : Exception
 		{
-			private static readonly string message = @"Unfortunately {0} {1} is not compatible with currently running Unity {2}!
+			private static readonly string message = @"Unfortunately {0} {1} is not known to be compatible with currently running Unity {2}!
 
-It will only run on the following Unity Versions [ {3} ] ! Install {0} on a KSP with a compatible Unity runtime : {4}.";
-			private static readonly string shortMessage = "{0} {1} is incompatible  with Unity in use.";
+It will only run on the following Unity Versions [ {3} ] ! It's safer to use {0} on a KSP with a compatible Unity runtime : {4}.";
+			private static readonly string shortMessage = "{0} {1} is not known to be compatible  with Unity in use.";
 
 			public readonly string name;
 			public readonly string version;

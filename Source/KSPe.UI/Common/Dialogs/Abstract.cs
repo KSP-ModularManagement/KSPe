@@ -25,7 +25,6 @@ namespace KSPe.Common.Dialogs
 {
 	public class AbstractDialog
 	{
-
 		private static Texture2D windowTex = null;
 		protected static void SetWindowBackground(GUIStyle style)
 		{

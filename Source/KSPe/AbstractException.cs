@@ -27,9 +27,19 @@ namespace KSPe.Util
 	{
 		private readonly object[] parms;
 
+		public Action lambda { get; set; }
+		public string actionMessage { get; set; }
+		public string customPreamble { get; set; }
+		public string customEpilogue { get; set; }
+		public string offendedName { get; set; }
+
 		protected AbstractException(string message, params object[] @params):base(message)
 		{
 			this.parms = @params;
+			this.lambda = null;
+			this.actionMessage = null;
+			this.customPreamble = null;
+			this.customEpilogue = null;
 		}
 
 		public override string Message => this.ToString();

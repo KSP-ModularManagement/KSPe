@@ -25,21 +25,24 @@ using KSPe.UI;
 
 namespace KSPe.Common.Dialogs
 {
-	public class ShowStopperAlertBox : AbstractDialog
+	// TODO: Remove on Version 2.7
+	[System.Obsolete("KSPe.Common.Dialogs.ShowStopperAlertBox is deprecated, please use KSPe.Common.Dialogs.ShowStopperAlertBox instead.")]
+	public class ShowStopperAlertBox : ShowStopperErrorBox { }
+
+	public class ShowStopperErrorBox : AbstractDialog
 	{
 		private static readonly string aMSG = "close KSP and then fix the problem described above";
 
 		private static readonly string MSG = @"{0}
 
-This is a Show Stopper problem. Your best line of action is to click the OK button to {1}.
-
-If you choose to ignore this message and click Cancel to proceed, be advised that your savegames can get corrupted at any time, even when things appear to work by now. Backup everything *NOW* if you choose to ignore this message and proceed.
+This is a Show Stopper problem. Your best line of action is to click the OK button to {1}. If you choose to ignore this message and click Cancel to proceed, be advised that your savegames can get corrupted at any time, even when things appear to work by now. Backup everything *NOW* if you choose to ignore this message and proceed.
 
 Your KSP is running from {2}.";
 
 		public static void Show(KSPe.Util.AbstractException ex)
 		{
-			Show(ex.ToLongMessage());
+			if (null != ex.lambda)	Show(ex, ex.actionMessage??aMSG, ex.lambda);
+			else					Show(ex, ex.actionMessage??aMSG, () => { Application.Quit(); });
 		}
 
 		public static void Show(KSPe.Util.AbstractException ex, string actionMessage, Action lambda)
