@@ -28,7 +28,7 @@ namespace KSPe.Common.Dialogs.ErrorHandling
 	{
 		private static readonly string MSG = @"Unfortunately {0} didn't found a(some) DLL(s) it needs.
 
-Reason reported: {2}";
+Reason reported: <i>{2}</i>";
 
 		private static readonly string AMSG = @"reinstall {0} and its dependencies from a trusted Distribution Channel (KSP will close)";
 

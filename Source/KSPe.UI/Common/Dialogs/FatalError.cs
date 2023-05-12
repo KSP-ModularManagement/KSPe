@@ -35,9 +35,10 @@ namespace KSPe.Common.Dialogs
 
 		private static readonly string MSG = @"{0}
 
-This is a Show Stopper problem. Your best line of action is to click the OK button to {1}. If you choose to ignore this message and click Cancel to proceed, be advised that your savegames can get corrupted at any time, even when things appear to work by now. Backup everything *NOW* if you choose to ignore this message and proceed.
+This is a Show Stopper problem. Your best line of action is to click the OK button to {1}. If you choose to ignore this message and click Cancel to proceed, be advised that your savegames can get corrupted at any time, even when things appear to work by now. Backup everything <b>NOW</b> if you choose to ignore this message and proceed.
 
-Your KSP is running from {2}.";
+Your KSP is running from:
+<b>{2}<b/>.";
 
 		public static void Show(KSPe.Util.AbstractException ex)
 		{
@@ -79,7 +80,8 @@ Your KSP is running from {2}.";
 				fontSize = 18,
 				fontStyle = FontStyle.Normal,
 				alignment = TextAnchor.MiddleLeft,
-				wordWrap = true
+				wordWrap = true,
+				richText = true
 			};
 			text.normal.textColor = Color.white;
 			text.padding.top = 8;

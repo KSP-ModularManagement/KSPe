@@ -28,7 +28,7 @@ namespace KSPe.Common.Dialogs.ErrorHandling
 	{
 		private static readonly string MSG = @"{0}Unfortunately {1} didn't found {2} installed.
 
-{3}Reason reported: {4}";
+{3}Reason reported: <i>{4}</i>";
 
 		private static readonly string AMSG = @"reinstall {0} from a trusted Distribution Channel (KSP will close)";
 

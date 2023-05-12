@@ -30,7 +30,7 @@ namespace KSPe.Common.Dialogs.ErrorHandling
 
 		KSPe prevented the mishap, but this suggests that {1} is borked and in need of maintenance.
 
-		{3}File a bug report to the Maintainer.";
+		{3}File a bug report to the {1}'s Maintainer.";
 
 		internal static void Show(Util.SystemTools.Assembly.Loader.AlreadyLoadedException ex)
 		{

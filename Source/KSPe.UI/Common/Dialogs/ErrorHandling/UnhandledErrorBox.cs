@@ -30,11 +30,11 @@ namespace KSPe.Common.Dialogs.ErrorHandling
 
 		private static readonly string MSG = @"This is hairy: an uncaught Exception was detected.
 
-		This may or may not be a serious problem, there's no way to know at this point. Unless this is a known problem and this Exception is already know to be harmless, it's safer to stop now and ask for help on a Support Channel. The KSP.log will have a full StackDump pinpoint exactly where the Exception was thrown.
+		This may or may not be a serious problem, there's no way to know at this point. Unless this is a known problem and this Exception is already know to be harmless, it's safer to stop now and ask for help on a Support Channel. The <i>KSP.log</i> will have a full StackDump pinpoint exactly where the Exception was thrown.
 
-		If you choose to proceed, be advised that your savegames may be ruined if this is a new and serious problem. Backup everything *NOW* just in case.
+		If you choose to proceed, be advised that your savegames may be ruined if this is a new and serious problem. Backup everything <b>NOW</b> just in case.
 
-		Reason reported: {0}.";
+		Reason reported: <i>{0}</i>.";
 
 		internal static void Show(System.Exception ex, string offendedName)
 		{

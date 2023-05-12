@@ -28,7 +28,7 @@ namespace KSPe.Common.Dialogs.ErrorHandling
 	{
 		private static readonly string MSG = @"{0}{1}
 
-It's not certain that it will not work fine, it's **NOT KNOWN** and KSP may inject bad information on your savegames, ruining them, if anything goes south.
+It's not certain that it will not work fine, it's <b>NOT KNOWN</b> and KSP may inject bad information on your savegames (ruining them), if anything goes south.
 
 {3}Please proceed with caution - backup anything valuable (as your savegames!).";
 

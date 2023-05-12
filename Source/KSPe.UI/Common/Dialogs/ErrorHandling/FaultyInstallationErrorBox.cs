@@ -28,7 +28,7 @@ namespace KSPe.Common.Dialogs.ErrorHandling
 	{
 		private static readonly string MSG = @"{0}{1}
 
-{2}Reason reported: {3}";
+{2}Reason reported: <i>{3}</i>";
 
 		private static readonly string AMSG = @"close KSP, then reinstall {0}";
 

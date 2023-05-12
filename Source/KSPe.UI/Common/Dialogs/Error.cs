@@ -72,7 +72,8 @@ Your KSP is running from {1}.";
 				fontSize = 18,
 				fontStyle = FontStyle.Normal,
 				alignment = TextAnchor.MiddleLeft,
-				wordWrap = true
+				wordWrap = true,
+				richText = true
 			};
 			text.normal.textColor = Color.white;
 			text.padding.top = 8;
