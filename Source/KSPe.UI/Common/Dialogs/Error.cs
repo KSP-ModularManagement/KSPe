@@ -36,7 +36,8 @@ namespace KSPe.Common.Dialogs
 
 It's not wise to keep running KSP, as undesired side effects may happen. Make back-ups now!
 
-Your KSP is running from {1}.";
+Your KSP is running from:
+<i>{1}</i>.";
 
 		public static void Show(KSPe.Util.AbstractException ex)
 		{

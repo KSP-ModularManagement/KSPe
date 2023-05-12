@@ -24,7 +24,7 @@ using KSPe.UI;
 
 namespace KSPe.Common.Dialogs.ErrorHandling
 {
-	internal class FaultyCompatibility:TimedCommonBox
+	internal class FaultyCompatibilityAdviceBox:TimedCommonBox
 	{
 		private static readonly string MSG = @"{0}{1}
 

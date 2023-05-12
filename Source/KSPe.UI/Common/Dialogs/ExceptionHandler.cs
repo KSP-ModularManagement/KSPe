@@ -28,31 +28,31 @@ namespace KSPe.Common.Dialogs
 	{
 		public static void Show<T>(ST.Assembly.Loader.AlreadyLoadedException ex)
 		{
-			ex.offendedName ??= ST.Reflection.Version<T>.FriendlyName;
+			ex.offendedName = ex.offendedName ?? ST.Reflection.Version<T>.FriendlyName;
 			ErrorHandling.AlreadyLoadedAlertBox.Show(ex);
 		}
 
 		public static void Show<T>(ST.Assembly.Exception ex)
 		{
-			ex.offendedName ??= ST.Reflection.Version<T>.FriendlyName;
+			ex.offendedName = ex.offendedName ?? ST.Reflection.Version<T>.FriendlyName;
 			ErrorHandling.MissingDependencyErrorBox.Show(ex);
 		}
 
 		public static void Show<T>(Util.Compatibility.Exception ex)
 		{
-			ex.offendedName ??= ST.Reflection.Version<T>.FriendlyName;
-			ErrorHandling.FaultyCompatibility.Show(ex);
+			ex.offendedName = ex.offendedName ?? ST.Reflection.Version<T>.FriendlyName;
+			ErrorHandling.FaultyCompatibilityAdviceBox.Show(ex);
 		}
 
 		public static void Show<T>(Util.Installation.Exception ex)
 		{
-			ex.offendedName ??= ST.Reflection.Version<T>.FriendlyName;
+			ex.offendedName = ex.offendedName ?? ST.Reflection.Version<T>.FriendlyName;
 			ErrorHandling.FaultyInstallationErrorBox.Show(ex);
 		}
 
 		public static void Show<T>(Util.AbstractException ex)
 		{
-			ex.offendedName ??= ST.Reflection.Version<T>.FriendlyName;
+			ex.offendedName = ex.offendedName ?? ST.Reflection.Version<T>.FriendlyName;
 			ErrorHandling.UnhandledAlertBox.Show(ex);
 		}
 

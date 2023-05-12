@@ -91,10 +91,11 @@
     <Compile Include="..\KSPe\Util\Text.cs">
       <Link>KSPe.Artefacts\Util\Text.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\CkanTools.cs">
+    <Compile Include="Mockups\KSP\Application.cs" />
+    <Compile Include="..\KSPe.External\Util\CkanTools.cs">
       <Link>Util\CkanTools.cs</Link>
     </Compile>
-    <Compile Include="Mockups\KSP\Application.cs" />
+    <Compile Include="Mockups\KSPe\Util\UrlTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="KSPe.Artefacts\" />

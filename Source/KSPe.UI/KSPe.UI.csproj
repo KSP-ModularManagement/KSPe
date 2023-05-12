@@ -65,7 +65,7 @@
     <Compile Include="Common\Dialogs\ErrorHandling\MissingDLLErrorBox.cs" />
     <Compile Include="Common\Dialogs\ErrorHandling\UnhandledErrorBox.cs" />
     <Compile Include="Common\Dialogs\ErrorHandling\AlreadyLoadedAlertBox.cs" />
-    <Compile Include="Common\Dialogs\ErrorHandling\FaultyCompatibilityException.cs" />
+    <Compile Include="Common\Dialogs\ErrorHandling\FaultyCompatibilityExceptionAdviceBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KSPe\KSPe.csproj">

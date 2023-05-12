@@ -8,15 +8,17 @@ namespace KSPe
 			Console.WriteLine(string.Format(msg, @params));
 		}
 
-		internal static void debug(string msg, params object[] @params)
-		{
-			Console.WriteLine(string.Format(msg, @params));
-		}
-
 		internal static void detail(string msg, params object[] @params)
 		{
 			Console.WriteLine(string.Format(msg, @params));
 		}
+
+		internal static void trace(string msg, params object[] @params)
+		{
+			Console.WriteLine(string.Format(msg, @params));
+		}
+
+		internal static void debug(string msg, params object[] @params) => trace(msg, @params);
 
 		internal static void error(string msg, params object[] @params)
 		{

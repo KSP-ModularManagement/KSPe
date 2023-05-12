@@ -95,7 +95,7 @@ namespace KSPe.UI
 		private void WindowFunc(int windowID)
 		{
 			int border = (int)Math.Floor(10 * GameSettings.UI_SCALE);
-			int width = (int)Math.Floor(500 * GameSettings.UI_SCALE);
+			int width = (int)Math.Floor(50 * GameSettings.UI_SCALE);
 			int height = (int)Math.Floor(25 * GameSettings.UI_SCALE);
 			int spacing = (int)Math.Floor(10 * GameSettings.UI_SCALE);
 
