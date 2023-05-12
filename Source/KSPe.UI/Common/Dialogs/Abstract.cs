@@ -37,10 +37,10 @@ namespace KSPe.Common.Dialogs
 				windowTex = new Texture2D(1, 1);
 				windowTex.SetPixel(0, 0, new Color(0f, 0f, 0f, 0.45f));
 				windowTex.Apply();
-				style.active.background =
-					style.focused.background =
-					style.normal.background = windowTex;
 			}
+			style.active.background =
+				style.focused.background =
+				style.normal.background = windowTex;
 		}
 
 		private static Texture2D textTex = null;
@@ -53,9 +53,9 @@ namespace KSPe.Common.Dialogs
 				textTex.SetPixel(0, 0, new Color(0f, 0f, 0f, 0.45f));
 				textTex.Apply();
 			}
-				style.active.background =
-					style.focused.background =
-					style.normal.background = textTex;
+			style.active.background =
+				style.focused.background =
+				style.normal.background = textTex;
 		}
 
 	}
