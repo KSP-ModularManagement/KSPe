@@ -53,13 +53,13 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KSPe\KSPe.csproj">
-      <Project>{1DCC1744-4EEF-49DF-961C-A73F3ADCC6C5}</Project>
-      <Name>KSPe</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KSPe.UI\KSPe.UI.csproj">
       <Project>{93F4C3CA-722B-47C2-80D8-B5F7204E1EC8}</Project>
       <Name>KSPe.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KSPe.Main\KSPe.Main.csproj">
+      <Project>{1DCC1744-4EEF-49DF-961C-A73F3ADCC6C5}</Project>
+      <Name>KSPe.Main</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

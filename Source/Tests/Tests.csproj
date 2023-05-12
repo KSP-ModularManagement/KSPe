@@ -36,14 +36,14 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\KSPe\Multiplatform\Shell.cs">
+    <Compile Include="..\KSPe.Main\Multiplatform\Shell.cs">
       <Link>KSPe.Artefacts\Multiplatform\Shell.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Multiplatform\FileSystem.cs">
+    <Compile Include="..\KSPe.Main\Multiplatform\FileSystem.cs">
       <Link>KSPe.Artefacts\Multiplatform\FileSystem.cs</Link>
     </Compile>
     <Compile Include="Mockups\UnityEngine\Debug.cs" />
-    <Compile Include="..\KSPe\IO\Path.cs">
+    <Compile Include="..\KSPe.Main\IO\Path.cs">
       <Link>KSPe.Artefacts\IO\Path.cs</Link>
     </Compile>
     <Compile Include="Mockups\KSP\KSPUtil.cs" />
@@ -51,44 +51,44 @@
     <Compile Include="Mockups\KSPe\Util\Log.cs" />
     <Compile Include="Mockups\Startup.cs" />
     <Compile Include="Mockups\Log.cs" />
-    <Compile Include="..\KSPe\IO\Directory.cs">
+    <Compile Include="..\KSPe.Main\IO\Directory.cs">
       <Link>KSPe.Artefacts\IO\Directory.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\Installment.cs">
+    <Compile Include="..\KSPe.Main\Util\Installment.cs">
       <Link>KSPe.Artefacts\Util\Installment.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\SystemTools.cs">
+    <Compile Include="..\KSPe.Main\Util\SystemTools.cs">
       <Link>KSPe.Artefacts\Util\SystemTools.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\AbstractException.cs">
+    <Compile Include="..\KSPe.Main\AbstractException.cs">
       <Link>KSPe.Artefacts\AbstractException.cs</Link>
     </Compile>
     <Compile Include="Mockups\KSP\AssemblyLoader.cs" />
-    <Compile Include="..\KSPe\Util\UnityTools.cs">
+    <Compile Include="..\KSPe.Main\Util\UnityTools.cs">
       <Link>KSPe.Artefacts\Util\UnityTools.cs</Link>
     </Compile>
     <Compile Include="Mockups\UnityEngine\Application.cs" />
-    <Compile Include="..\KSPe\Util\KSPTools.cs">
+    <Compile Include="..\KSPe.Main\Util\KSPTools.cs">
       <Link>KSPe.Artefacts\Util\KSPTools.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\IO\Hierarchy.cs">
+    <Compile Include="..\KSPe.Main\IO\Hierarchy.cs">
       <Link>KSPe.Artefacts\IO\Hierarchy.cs</Link>
     </Compile>
     <Compile Include="Mockups\KSP\ConfigNode.cs" />
-    <Compile Include="..\KSPe\IO\HierarchyT.cs">
+    <Compile Include="..\KSPe.Main\IO\HierarchyT.cs">
       <Link>KSPe.Artefacts\IO\HierarchyT.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\LocalCache.cs">
+    <Compile Include="..\KSPe.Main\LocalCache.cs">
       <Link>KSPe.Artefacts\LocalCache.cs</Link>
     </Compile>
     <Compile Include="Mockups\KSP\HighLogic.cs" />
     <Compile Include="Mockups\KSP\Game.cs" />
     <Compile Include="Mockups\KSP\Versioning.cs" />
     <Compile Include="Properties\Version.cs" />
-    <Compile Include="..\KSPe\Multiplatform\Tools\LowLevelTools.cs">
+    <Compile Include="..\KSPe.Main\Multiplatform\Tools\LowLevelTools.cs">
       <Link>KSPe.Artefacts\Multiplatform\Tools\LowLevelTools.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\Text.cs">
+    <Compile Include="..\KSPe.Main\Util\Text.cs">
       <Link>KSPe.Artefacts\Util\Text.cs</Link>
     </Compile>
     <Compile Include="..\KSPe\Util\CkanTools.cs">

@@ -41,14 +41,13 @@
     <Compile Include="System\Extensions\Enum.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KSPe\KSPe.csproj">
-      <Project>{1DCC1744-4EEF-49DF-961C-A73F3ADCC6C5}</Project>
-      <Name>KSPe</Name>
-      <Private>False</Private>
-    </ProjectReference>
+    <Folder Include="System\Extensions\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="System\Extensions\" />
+    <ProjectReference Include="..\KSPe.Main\KSPe.Main.csproj">
+      <Project>{1DCC1744-4EEF-49DF-961C-A73F3ADCC6C5}</Project>
+      <Name>KSPe.Main</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -47,91 +47,91 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\KSPe\Properties\Version.cs">
+    <Compile Include="..\KSPe.Main\Properties\Version.cs">
       <Link>Properties\Version.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\ConfigNode.cs">
+    <Compile Include="..\KSPe.Main\ConfigNode.cs">
       <Link>ConfigNode.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\Log.cs">
+    <Compile Include="..\KSPe.Main\Util\Log.cs">
       <Link>Util\Log.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\Image.cs">
+    <Compile Include="..\KSPe.Main\Util\Image.cs">
       <Link>Util\Image.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\ImageTex.cs">
+    <Compile Include="..\KSPe.Main\Util\ImageTex.cs">
       <Link>Util\ImageTex.cs</Link>
     </Compile>
     <Compile Include="..\KSPe.UI\Common\Dialogs\FatalError.cs">
       <Link>Common\Dialogs\FatalError.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\AbstractException.cs">
+    <Compile Include="..\KSPe.Main\AbstractException.cs">
       <Link>AbstractException.cs</Link>
     </Compile>
     <Compile Include="..\KSPe.UI\Common\Dialogs\Abstract.cs">
       <Link>Common\Dialogs\Abstract.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\KSPTools.cs">
+    <Compile Include="..\KSPe.Main\Util\KSPTools.cs">
       <Link>Util\KSPTools.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\UnityTools.cs">
+    <Compile Include="..\KSPe.Main\Util\UnityTools.cs">
       <Link>Util\UnityTools.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\Installment.cs">
+    <Compile Include="..\KSPe.Main\Util\Installment.cs">
       <Link>Util\Installment.cs</Link>
     </Compile>
     <Compile Include="Util\log\UnityStub.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="..\KSPe\Util\ModuleManagerTools.cs">
+    <Compile Include="..\KSPe.Main\Util\ModuleManagerTools.cs">
       <Link>Util\ModuleManagerTools.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\IO\Path.cs">
+    <Compile Include="..\KSPe.Main\IO\Path.cs">
       <Link>IO\Path.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Multiplatform\FileSystem.cs">
+    <Compile Include="..\KSPe.Main\Multiplatform\FileSystem.cs">
       <Link>Multiplatform\FileSystem.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Multiplatform\Shell.cs">
+    <Compile Include="..\KSPe.Main\Multiplatform\Shell.cs">
       <Link>Multiplatform\Shell.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Globals.cs">
+    <Compile Include="..\KSPe.Main\Globals.cs">
       <Link>Globals.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\IO\Hierarchy.cs">
+    <Compile Include="..\KSPe.Main\IO\Hierarchy.cs">
       <Link>IO\Hierarchy.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Properties\LegalMamboJambo.cs">
+    <Compile Include="..\KSPe.Main\Properties\LegalMamboJambo.cs">
       <Link>Properties\LegalMamboJambo.cs</Link>
     </Compile>
     <Compile Include="Util\log\Unity.cs" />
     <Compile Include="Multiplatform\stubs\ImageStub.cs" />
     <Compile Include="Multiplatform\Tools.cs" />
     <Compile Include="Util\log\UnityUiThreadSafeStub.cs" />
-    <Compile Include="..\KSPe\FatalErrors.cs">
+    <Compile Include="..\KSPe.Main\FatalErrors.cs">
       <Link>FatalErrors.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Log.cs">
+    <Compile Include="..\KSPe.Main\Log.cs">
       <Link>Log.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\SystemTools.cs">
+    <Compile Include="..\KSPe.Main\Util\SystemTools.cs">
       <Link>Util\SystemTools.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\IO\HierarchyT.cs">
+    <Compile Include="..\KSPe.Main\IO\HierarchyT.cs">
       <Link>IO\HierarchyT.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\LocalCache.cs">
+    <Compile Include="..\KSPe.Main\LocalCache.cs">
       <Link>LocalCache.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\IO\Directory.cs">
+    <Compile Include="..\KSPe.Main\IO\Directory.cs">
       <Link>IO\Directory.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Properties\Annotations.cs">
+    <Compile Include="..\KSPe.Main\Properties\Annotations.cs">
       <Link>Properties\Annotations.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Multiplatform\Tools\LowLevelTools.cs">
+    <Compile Include="..\KSPe.Main\Multiplatform\Tools\LowLevelTools.cs">
       <Link>Multiplatform\Tools\LowLevelTools.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe\Util\Text.cs">
+    <Compile Include="..\KSPe.Main\Util\Text.cs">
       <Link>Util\Text.cs</Link>
     </Compile>
     <Compile Include="Util\Image.Local.cs" />

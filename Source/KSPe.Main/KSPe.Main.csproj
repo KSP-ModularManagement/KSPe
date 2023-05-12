@@ -1,0 +1,147 @@
+﻿<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1DCC1744-4EEF-49DF-961C-A73F3ADCC6C5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>KSPe</RootNamespace>
+    <AssemblyName>KSPe.Main</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <BaseIntermediateOutputPath>..\..\obj\KSPe</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <BaseIntermediateOutputPath>..\..\obj\KSPe</BaseIntermediateOutputPath>
+    <OutputPath>..\..\bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <BaseIntermediateOutputPath>..\..\obj\KSPe</BaseIntermediateOutputPath>
+    <OutputPath>..\..\bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\..\..\LIB\managed\1.2.2\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IO\FileT.cs" />
+    <Compile Include="IO\FileMode.cs" />
+    <Compile Include="IO\Asset\FileStream.cs" />
+    <Compile Include="IO\Asset\PluginConfiguration.cs" />
+    <Compile Include="IO\Asset\StreamReader.cs" />
+    <Compile Include="IO\Local\FileStream.cs" />
+    <Compile Include="IO\Local\PluginConfiguration.cs" />
+    <Compile Include="IO\Local\StreamReader.cs" />
+    <Compile Include="IO\Local\StreamWriter.cs" />
+    <Compile Include="IO\Data\FileStream.cs" />
+    <Compile Include="IO\Data\PluginConfiguration.cs" />
+    <Compile Include="IO\Data\StreamReader.cs" />
+    <Compile Include="IO\Data\StreamWriter.cs" />
+    <Compile Include="IO\Temp\FileStream.cs" />
+    <Compile Include="IO\Temp\PluginConfiguration.cs" />
+    <Compile Include="IO\Temp\StreamReader.cs" />
+    <Compile Include="IO\Temp\StreamWriter.cs" />
+    <Compile Include="Util\Log.cs" />
+    <Compile Include="GameDB\Asset.cs" />
+    <Compile Include="IO\Asset\ConfigNode.cs" />
+    <Compile Include="IO\Data\ConfigNode.cs" />
+    <Compile Include="IO\KspConfigNode.cs" />
+    <Compile Include="IO\Local\ConfigNode.cs" />
+    <Compile Include="IO\Temp\ConfigNode.cs" />
+    <Compile Include="AssetConfig.cs" />
+    <Compile Include="KspConfigNode.cs" />
+    <Compile Include="PluginConfigNode.cs" />
+    <Compile Include="AbstractConfigNode.cs" />
+    <Compile Include="IO\AbstractConfigNode.cs" />
+    <Compile Include="ConfigNode.cs" />
+    <Compile Include="LocalCache.cs" />
+    <Compile Include="Util\ImageTex.cs" />
+    <Compile Include="Util\Image.cs" />
+    <Compile Include="AbstractException.cs" />
+    <Compile Include="Util\KSPTools.cs" />
+    <Compile Include="Util\UnityTools.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="Util\Installment.cs" />
+    <Compile Include="IO\Simple.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="IO\Asset\Texture2D.cs" />
+    <Compile Include="IO\Asset\_PublicFacade.cs" />
+    <Compile Include="IO\Local\_PublicFacade.cs" />
+    <Compile Include="IO\Data\_PublicFacade.cs" />
+    <Compile Include="IO\Temp\_PublicFacade.cs" />
+    <Compile Include="IO\Data\Texture2D.cs" />
+    <Compile Include="IO\Local\Texture2D.cs" />
+    <Compile Include="IO\Temp\Texture2D.cs" />
+    <Compile Include="IO\Hierarchy.cs" />
+    <Compile Include="IO\HierarchyT.cs" />
+    <Compile Include="IO\File.cs" />
+    <Compile Include="Util\log\Unity.cs" />
+    <Compile Include="Util\SystemTools.cs" />
+    <Compile Include="Util\ModuleManagerTools.cs" />
+    <Compile Include="IO\Path.cs" />
+    <Compile Include="Multiplatform\Shell.cs" />
+    <Compile Include="Multiplatform\FileSystem.cs" />
+    <Compile Include="Globals.cs" />
+    <Compile Include="Properties\Version.cs">
+      <DependentUpon>Version.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Util\log\UnityLogDecorator.cs" />
+    <Compile Include="ModuleManagerSupport.cs" />
+    <Compile Include="Util\log\FileChainUnityLogger.cs" />
+    <Compile Include="Util\log\UnityUiThreadSafe.cs" />
+    <Compile Include="IO\Save\_PublicFacade.cs" />
+    <Compile Include="IO\Save\ConfigNode.cs" />
+    <Compile Include="IO\Save\FileStream.cs" />
+    <Compile Include="IO\Save\PluginConfiguration.cs" />
+    <Compile Include="IO\Save\StreamReader.cs" />
+    <Compile Include="IO\Save\StreamWriter.cs" />
+    <Compile Include="IO\Save\Texture2D.cs" />
+    <Compile Include="Multiplatform\Tools\LowLevelTools.cs" />
+    <Compile Include="FatalErrors.cs" />
+    <Compile Include="SanityChecks.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="IO\Directory.cs" />
+    <Compile Include="Util\Text.cs" />
+    <Compile Include="Util\Image.Local.cs" />
+    <Compile Include="Util\Stopwatch.cs" />
+    <Compile Include="Util\UrlTools.cs" />
+    <Compile Include="Properties\LegalMamboJambo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Version.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Version.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="IO\Asset\" />
+    <Folder Include="IO\Data\" />
+    <Folder Include="IO\Local\" />
+    <Folder Include="IO\Temp\" />
+    <Folder Include="Util\" />
+    <Folder Include="GameDB\" />
+    <Folder Include="Util\log\" />
+    <Folder Include="Multiplatform\" />
+    <Folder Include="IO\Save\" />
+    <Folder Include="Multiplatform\Tools\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

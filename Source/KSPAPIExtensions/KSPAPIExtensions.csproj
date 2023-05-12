@@ -65,7 +65,7 @@
     <Compile Include="Utils\KSPUtils.cs" />
     <Compile Include="Utils\SystemUtils.cs" />
     <Compile Include="Utils\UnityUtils.cs" />
-    <Compile Include="..\KSPe\Properties\Version.cs">
+    <Compile Include="..\KSPe.Main\Properties\Version.cs">
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="PartMessage\PartMessageService.cs" />

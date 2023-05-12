@@ -2,7 +2,7 @@
 	This file is part of KSPe.InstallChecker, a component for KSP Enhanced /L
 		© 2018-2023 LisiasT : http://lisias.net <support@lisias.net>
 
-	KSP Enhanced /L is licensed as follows:
+	KSPe.InstallChecker is licensed as follows:
 		* SKL 1.0 : https://ksp.lisias.net/SKL-1_0.txt
 
 	And you are allowed to choose the License that better suit your needs.
