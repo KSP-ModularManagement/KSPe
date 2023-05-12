@@ -72,8 +72,8 @@ namespace KSPe.UI
 
 		private Rect calculateWindow()
 		{
-			const int maxWidth = 640;
-			const int maxHeight = 480;
+			int maxWidth = (int)Math.Floor(640 * GameSettings.UI_SCALE);
+			int maxHeight = (int)Math.Floor(480 * GameSettings.UI_SCALE);
 
 			int width = Mathf.Min(maxWidth, Screen.width - 20);
 			int height = Mathf.Min(maxHeight, Screen.height - 20);
@@ -94,10 +94,10 @@ namespace KSPe.UI
 
 		private void WindowFunc(int windowID)
 		{
-			const int border = 10;
-			const int width = 50;
-			const int height = 25;
-			const int spacing = 10;
+			int border = (int)Math.Floor(10 * GameSettings.UI_SCALE);
+			int width = (int)Math.Floor(500 * GameSettings.UI_SCALE);
+			int height = (int)Math.Floor(25 * GameSettings.UI_SCALE);
+			int spacing = (int)Math.Floor(10 * GameSettings.UI_SCALE);
 
 			Rect l = new Rect(
 					border, border + spacing,

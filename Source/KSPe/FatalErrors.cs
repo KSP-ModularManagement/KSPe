@@ -25,20 +25,25 @@ using KSPe.Util;
 
 using UnityEngine;
 
-namespace KSPe { namespace FatalErrors 
+namespace KSPe.FatalErrors 
 {
 	// Copy & Paste from KSPe.UI.
 	// KSPe must be autonomous without any dependency, as the source of the problem can be one of them!
 	internal class FatalErrorMsgBox : MonoBehaviour
 	{
+		private const float TITTLE_TEXT_SIZE = 26;
+		private const float TITTLE_TEXT_PADDING = -5;
+		private const float BODY_TEXT_SIZE = 18;
+		private const float BODY_TEXT_PADDING = 8;
+
 		private const string TITTLE = "KSPe Fatal Error";
-		private const string MSG = @"This is a **FATAL ERROR** from KSPe!
+		private const string MSG = @"This is a <b>FATAL ERROR</b> from KSPe!
 
 {0}
 
-This is a *installment error*, not a bug on KSP, KSPe or any other Add'On. KSPe just can't proceed, KSP cannot be executed as is.
+This is a <b>installation error</b>, not a bug on KSP, KSPe or any other Add'On. KSPe just can't proceed, KSP cannot be executed as is.
 
-A page where you can ask for Support will be called. Read the instructions on that page, we will try to help fixing your problem.
+A page where you can ask for Support will be opened. Read the instructions on that page, we will try to help fixing your problem.
 
 KSP will close now, and an Internet Site where you can ask for help will be shown.";
 		private string msg;
@@ -69,27 +74,28 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 
 			this.win = new GUIStyle("Window")
 			{
-				fontSize = 26,
+				fontSize = (int)Math.Floor(TITTLE_TEXT_SIZE * GameSettings.UI_SCALE),
 				fontStyle = FontStyle.Bold,
 				alignment = TextAnchor.UpperCenter,
 				wordWrap = false
 			};
 			this.win.normal.textColor = Color.red;
 			this.win.border.top = 0;
-			this.win.padding.top = -5;
+			this.win.padding.top = (int)Math.Floor(TITTLE_TEXT_PADDING * GameSettings.UI_SCALE);
 			this.win.active.background =
 				this.win.focused.background =
 				this.win.normal.background = textTex;
 
 			this.text = new GUIStyle("Label")
 			{
-				fontSize = 18,
+				fontSize = (int)Math.Floor(BODY_TEXT_SIZE * GameSettings.UI_SCALE),
 				fontStyle = FontStyle.Normal,
 				alignment = TextAnchor.MiddleLeft,
-				wordWrap = true
+				wordWrap = true,
+				richText = true
 			};
 			this.text.normal.textColor = Color.white;
-			this.text.padding.top = 8;
+			this.text.padding.top = (int)Math.Floor(BODY_TEXT_PADDING * GameSettings.UI_SCALE);
 			this.text.padding.bottom = text.padding.top;
 			this.text.padding.left = text.padding.top;
 			this.text.padding.right = text.padding.top;
@@ -100,8 +106,8 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 
 		private Rect calculateWindow()
 		{
-			const int maxWidth = 640;
-			const int maxHeight = 480;
+			int maxWidth = (int)Math.Floor(640 * GameSettings.UI_SCALE);
+			int maxHeight = (int)Math.Floor(480 * GameSettings.UI_SCALE);
 
 			int width = Mathf.Min(maxWidth, Screen.width - 20);
 			int height = Mathf.Min(maxHeight, Screen.height - 20);
@@ -120,10 +126,10 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 
 		private void WindowFunc(int windowID)
 		{
-			const int border = 10;
-			const int width = 100;
-			const int height = 25;
-			const int spacing = 10;
+			int border = (int)Math.Floor(10 * GameSettings.UI_SCALE);
+			int width = (int)Math.Floor(100 * GameSettings.UI_SCALE);
+			int height = (int)Math.Floor(25 * GameSettings.UI_SCALE);
+			int spacing = (int)Math.Floor(10 * GameSettings.UI_SCALE);
 
 			Rect l = new Rect(
 					border, border + spacing,
@@ -177,8 +183,8 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/11";
 		private static readonly string MSG = @"The Current Working Directory (pwd on UNIX) doesn't matches the KSPe's origin!
 
-pwd : {0}
-origin : {1}
+pwd : <i>{0}</i>
+origin : <i>{1}</i>
 
 When this happens, KSP may write files on the wrong place, and you can lost track of saves (if KSP manages to startup at all!).";
 
@@ -206,8 +212,8 @@ When this happens, KSP may write files on the wrong place, and you can lost trac
 		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/12";
 		private static readonly string MSG = @"The KSP's ApplicationRootPath (`KSPUtil.ApplicationRootPath` on code) doesn't matches the KSPe's origin!
 
-KSPUtil.ApplicationRootPath : {0}
-origin                      : {1}
+KSPUtil.ApplicationRootPath : <i>{0}</i>
+origin                      : <i>{1}</i>
 
 When this happens, KSP may write files on the wrong place, and you can lost track of saves (if KSP manages to startup at all!).";
 
@@ -235,7 +241,7 @@ When this happens, KSP may write files on the wrong place, and you can lost trac
 		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/17";
 		private static readonly string MSG = @"KSPe got a Fatal Error ""{0}"" while trying to load the KSPe.KSP subsystem.
 
-KSPe can't work properly without it, and so anything using it will **NOT** work neither (what means the game is unusable right now).";
+KSPe can't work properly without it, and so anything using it will <b>NOT</b> work neither (what means the game is unusable right now).";
 
 		private static bool shown = false;
 		internal static void Show(Exception e)
@@ -255,4 +261,4 @@ KSPe can't work properly without it, and so anything using it will **NOT** work 
 			Log.error(e, "Fatal Error CriticalComponentsAbsent was shown. e = [{0}]. Please visit {1}", e.Message, URL);
 		}
 	}
-} }
+}

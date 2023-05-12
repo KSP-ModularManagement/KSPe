@@ -24,7 +24,7 @@ namespace KSPe
 {
 	[KSPAddon(KSPAddon.Startup.Instantly, true)]
 	public class Startup:MonoBehaviour
-	{
+	{		
 		private void Start()
 		{
 			Log.force("Version {0}, on KSP {1} under Unity {2}", Version.Text, Versioning.GetVersionStringFull(), UnityEngine.Application.unityVersion);

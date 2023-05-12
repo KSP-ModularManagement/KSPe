@@ -31,6 +31,11 @@ namespace KSPe.Common.Dialogs
 
 	public class ShowStopperErrorBox : AbstractDialog
 	{
+		private const float TITTLE_TEXT_SIZE = 26;
+		private const float TITTLE_TEXT_PADDING = -5;
+		private const float BODY_TEXT_SIZE = 18;
+		private const float BODY_TEXT_PADDING = 8;
+
 		private static readonly string aMSG = "close KSP and then fix the problem described above";
 
 		private static readonly string MSG = @"{0}
@@ -64,27 +69,27 @@ Your KSP is running from:
 			//GUIStyle win = new GUIStyle(HighLogic.Skin.window)
 			GUIStyle win = new GUIStyle("Window")
 			{
-				fontSize = 26,
+				fontSize = (int)Math.Floor(TITTLE_TEXT_SIZE * GameSettings.UI_SCALE),
 				fontStyle = FontStyle.Bold,
 				alignment = TextAnchor.UpperCenter,
 				wordWrap = false
 			};
 			win.normal.textColor = Color.red;
 			win.border.top = 0;
-			win.padding.top = -5;
+			win.padding.top = (int)Math.Floor(TITTLE_TEXT_PADDING * GameSettings.UI_SCALE);
 			SetWindowBackground(win);
 			win.active.background =	win.focused.background = win.normal.background;
 
 			GUIStyle text = new GUIStyle("Label")
 			{
-				fontSize = 18,
+				fontSize = (int)Math.Floor(BODY_TEXT_SIZE * GameSettings.UI_SCALE),
 				fontStyle = FontStyle.Normal,
 				alignment = TextAnchor.MiddleLeft,
 				wordWrap = true,
 				richText = true
 			};
 			text.normal.textColor = Color.white;
-			text.padding.top = 8;
+			text.padding.top = (int)Math.Floor(BODY_TEXT_PADDING * GameSettings.UI_SCALE);
 			text.padding.bottom = text.padding.top;
 			text.padding.left = text.padding.top;
 			text.padding.right = text.padding.top;

@@ -19,6 +19,7 @@
 	along with KSP Enhanced /L. If not, see <https://www.gnu.org/licenses/>.
 
 */
+using System;
 using UnityEngine;
 using KSPe.UI;
 
@@ -26,13 +27,18 @@ namespace KSPe.Common.Dialogs
 {
 	public class TimedCommonBox : TimedMessageBox
 	{
+		private const float TITTLE_TEXT_SIZE = 22;
+		private const float TITTLE_BORDER = 5;
+		private const float BODY_TEXT_SIZE = 14;
+		private const float BODY_TEXT_PADDING = 8;
+
 		public static GUIStyle createWinStyle(Color titlebarColor)
 		{
 			GUIStyle winStyle;
 			{
 				winStyle = new GUIStyle("Window")
 				{
-					fontSize = 22,
+					fontSize = (int)Math.Floor(TITTLE_TEXT_SIZE * GameSettings.UI_SCALE),
 					fontStyle = FontStyle.Bold,
 					alignment = TextAnchor.UpperCenter,
 					wordWrap = false
@@ -41,7 +47,7 @@ namespace KSPe.Common.Dialogs
 					winStyle.normal.textColor =
 					winStyle.active.textColor =
 					winStyle.hover.textColor = titlebarColor;
-				winStyle.border.top = 5;
+				winStyle.border.top = (int)Math.Floor(TITTLE_BORDER * GameSettings.UI_SCALE);
 				{
 					Texture2D tex = new Texture2D(1, 1);
 					tex.SetPixel(0, 0, new Color(0f, 0f, 0f, 0.45f));
@@ -59,7 +65,7 @@ namespace KSPe.Common.Dialogs
 			{
 				textStyle = new GUIStyle("Label")
 				{
-					fontSize = 14,
+					fontSize = (int)Math.Floor(BODY_TEXT_SIZE * GameSettings.UI_SCALE),
 					fontStyle = FontStyle.Normal,
 					alignment = TextAnchor.MiddleLeft,
 					wordWrap = true
@@ -68,7 +74,7 @@ namespace KSPe.Common.Dialogs
 					textStyle.normal.textColor =
 					textStyle.active.textColor =
 					textStyle.hover.textColor = Color.white;
-				textStyle.padding.top = 8;
+				textStyle.padding.top = (int)Math.Floor(BODY_TEXT_PADDING * GameSettings.UI_SCALE);
 				textStyle.padding.bottom = textStyle.padding.top;
 				textStyle.padding.left = textStyle.padding.top;
 				textStyle.padding.right = textStyle.padding.top;
