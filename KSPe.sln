@@ -61,11 +61,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ksp-tool", "Source\ksp-offl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSPe.InstallChecker", "Source\InstallChecker\KSPe.InstallChecker.csproj", "{4F4F960B-ADC6-4F96-94AD-BD7F6DD8513C}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "TestsKSP", "Source\Testing\TestsKSP.csproj", "{D8E1F067-994B-40AD-A591-77FBE2BE8D2B}"
-EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Tests", "Source\Tests\Tests.csproj", "{B11D00A9-99BF-4F4A-8BD3-4A274D6B911B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSPe.External", "Source\KSPe.External\KSPe.External.csproj", "{F9551793-B6C2-4B90-84FA-F8CE5CCA9875}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Source\Tests\Tests.csproj", "{6AD0ED57-6AA6-459C-B287-C263DFF5B3FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestsKSP", "Source\Testing\TestsKSP.csproj", "{19A93A39-6C1C-42F9-8AF8-C1B96C558065}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSPe", "Source\KSPe\KSPe.csproj", "{FCB1A201-ED3C-4256-A3C7-B18448F6E2BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -161,7 +163,6 @@ Global
 		{490051BB-CB2E-407F-A12B-03F0708CDFC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{490051BB-CB2E-407F-A12B-03F0708CDFC7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{490051BB-CB2E-407F-A12B-03F0708CDFC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{490051BB-CB2E-407F-A12B-03F0708CDFC7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{356A56A0-3D70-4324-BFA2-FF00EAD875C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{356A56A0-3D70-4324-BFA2-FF00EAD875C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{356A56A0-3D70-4324-BFA2-FF00EAD875C3}.Release|Any CPU.Build.0 = Release|Any CPU
@@ -193,6 +194,16 @@ Global
 		{F9551793-B6C2-4B90-84FA-F8CE5CCA9875}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9551793-B6C2-4B90-84FA-F8CE5CCA9875}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9551793-B6C2-4B90-84FA-F8CE5CCA9875}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AD0ED57-6AA6-459C-B287-C263DFF5B3FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AD0ED57-6AA6-459C-B287-C263DFF5B3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AD0ED57-6AA6-459C-B287-C263DFF5B3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19A93A39-6C1C-42F9-8AF8-C1B96C558065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19A93A39-6C1C-42F9-8AF8-C1B96C558065}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19A93A39-6C1C-42F9-8AF8-C1B96C558065}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCB1A201-ED3C-4256-A3C7-B18448F6E2BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCB1A201-ED3C-4256-A3C7-B18448F6E2BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCB1A201-ED3C-4256-A3C7-B18448F6E2BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCB1A201-ED3C-4256-A3C7-B18448F6E2BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

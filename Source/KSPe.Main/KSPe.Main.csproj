@@ -5,7 +5,7 @@
     <ProjectGuid>{1DCC1744-4EEF-49DF-961C-A73F3ADCC6C5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>KSPe</RootNamespace>
-    <AssemblyName>KSPe.Main</AssemblyName>
+    <AssemblyName>KSPe</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>..\..\obj\KSPe</BaseIntermediateOutputPath>
   </PropertyGroup>
@@ -99,9 +99,6 @@
     <Compile Include="Multiplatform\Shell.cs" />
     <Compile Include="Multiplatform\FileSystem.cs" />
     <Compile Include="Globals.cs" />
-    <Compile Include="Properties\Version.cs">
-      <DependentUpon>Version.tt</DependentUpon>
-    </Compile>
     <Compile Include="Util\log\UnityLogDecorator.cs" />
     <Compile Include="ModuleManagerSupport.cs" />
     <Compile Include="Util\log\FileChainUnityLogger.cs" />
@@ -124,12 +121,9 @@
     <Compile Include="Util\Stopwatch.cs" />
     <Compile Include="Util\UrlTools.cs" />
     <Compile Include="Properties\LegalMamboJambo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\Version.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Version.cs</LastGenOutput>
-    </None>
+    <Compile Include="..\KSPe\Properties\Version.cs">
+      <Link>Properties\Version.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="IO\Asset\" />

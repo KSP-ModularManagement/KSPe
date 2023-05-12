@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\KSPe.Main\Properties\Version.cs">
+    <Compile Include="..\KSPe\Properties\Version.cs">
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="..\KSPe.Main\ConfigNode.cs">

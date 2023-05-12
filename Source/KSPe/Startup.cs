@@ -20,7 +20,8 @@
 
 */
 using UnityEngine;
-namespace KSPe
+using Dialog = KSPe.Loader.Dialogs;
+namespace KSPe.Loader
 {
 	[KSPAddon(KSPAddon.Startup.Instantly, true)]
 	public class Startup:MonoBehaviour
@@ -28,36 +29,9 @@ namespace KSPe
 		private void Start()
 		{
 			Log.force("Version {0}, on KSP {1} under Unity {2}", Version.Text, Versioning.GetVersionStringFull(), UnityEngine.Application.unityVersion);
-			SanityChecks.DoIt();
 		}
 
-		private void Awake()
-		{
-			try
-			{ 
-				using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader())
-				{ 
-					{
-						int target = KSPe.Util.UnityTools.UnityVersion;
-						target = (0 == target) ? 2019 : target;
-						Log.dbg("Trying to load KSPe.Unity.{0}...", target);
-						a.LoadAndStartup(string.Format("KSPe.Unity.{0}", target));
-					}
-
-					for (int i = KSPe.Util.KSP.Version.Current.MINOR; i > 0; --i)
-						if (KSPe.Util.KSP.Version.Current >= KSPe.Util.KSP.Version.GetVersion(1,i,0))
-						{
-							Log.dbg("Trying to load KSPe.KSP.1{0}...", i);
-							if ( null != a.LoadAndStartup(string.Format("KSPe.KSP.1{0}",i)) ) break;
-						}
-				}
-			}
-			catch (System.Exception e)
-			{
-				FatalErrors.CriticalComponentsAbsent.Show(e);
-			}
-		}
-
+		internal static bool quitOnDestroy = false;
 		private void OnDestroy()
 		{
 			if (!quitOnDestroy) return;
@@ -66,23 +40,5 @@ namespace KSPe
 			Log.force("Quitting KSP due an unrecoverable error.");
 			UnityEngine.Application.Quit();
 		}
-
-		// Be *REALLY* cautious with this one!
-		// This is used as a fallback in the case the user don't click on the FatalError MsgBox
-		private static bool quitOnDestroy = false;
-		public static bool QuitOnDestroy
-		{
-			set
-			{
-				if (value)
-				{
-					Log.fatal(1, "I was told to quit the game. Stackdump of the caller follows.");
-					Log.stack(typeof(Startup), true);
-					quitOnDestroy = value;
-				}
-			}
-		}
-
-		private static readonly Util.Log.Logger Log = Util.Log.Logger.CreateForType<Startup>();
 	}
 }

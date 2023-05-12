@@ -37,7 +37,7 @@
     <Compile Include="..\KSPe.Main\Properties\LegalMamboJambo.cs">
       <Link>Properties\LegalMamboJambo.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe.Main\Properties\Version.cs">
+    <Compile Include="..\KSPe\Properties\Version.cs">
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="util\Misc.cs" />
