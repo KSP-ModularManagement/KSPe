@@ -73,11 +73,11 @@ namespace KSPe.IO
 
 		public static string GetPath(string path)
 		{
-			UnityEngine.Debug.LogFormat("*** {0}", path);
+			Log.debug("*** GetPath {0}", path);
 			path = GetFullPath(path);
-			UnityEngine.Debug.LogFormat("*** {0}", path);
+			Log.debug("*** {0}", path);
 			path = path.Replace(AppRoot(), "");
-			UnityEngine.Debug.LogFormat("*** {0} || {1}", path, AppRoot());
+			Log.debug("*** {0} || {1}", path, AppRoot());
 			return path;
 		}
 
