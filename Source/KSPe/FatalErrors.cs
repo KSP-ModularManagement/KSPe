@@ -20,12 +20,13 @@
 
 */
 using System;
-
-using KSPe.Util;
+using System.Linq;
 
 using UnityEngine;
 
-namespace KSPe { namespace FatalErrors 
+using KSPe.Util;
+
+namespace KSPe.FatalErrors 
 {
 	// Copy & Paste from KSPe.UI.
 	// KSPe must be autonomous without any dependency, as the source of the problem can be one of them!
@@ -56,6 +57,9 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 		// MessageBox("SNAFU", "Situation Normal... All F* Up!", () => { Application.Quit() });
 		public void Show(string msg, Action action)
 		{
+			// If we have more than one KSPe loaded, KSPe.InstallChecker will need the Modal Window to ask the user to reboot.
+			if (SystemTools.Assembly.Exists.ByName("KSPe.InstallChecker") && 1 != Util.AssemblyLoader.Search.ByName("KSPe").Count()) return;
+
 			this.msg = string.Format(MSG, msg);
 			this.action = action;
 			this.window_id = (int)-1;
@@ -255,4 +259,4 @@ KSPe can't work properly without it, and so anything using it will **NOT** work 
 			Log.error(e, "Fatal Error CriticalComponentsAbsent was shown. e = [{0}]. Please visit {1}", e.Message, URL);
 		}
 	}
-} }
+}
