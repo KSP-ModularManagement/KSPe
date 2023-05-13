@@ -1,11 +1,14 @@
 # KSP Enhanced /L :: Changes
 
-* 2023-0513: 2.5.2.1 (Lisias) for KSP >= 1.2
+* 2023-0513: 2.5.2.2 (Lisias) for KSP >= 1.2
 	+ Fixes a design flaw on the `KSPe.InstallChecker`'s update mechanism that wasn't being able to tell the user to restart KSP due an updated `000_KSPe.dll`
 		- This fix is mandatory for CurseForge users, otherwise future KSPe updates will be troublesome for them.
 		- Everybody else should not be affected. 
+	+ Fixes another flaw on the thing, working around the KSP >= 1.8 `Assembly Loader/Resolver` major screw up.
 	+ Closes issues:
 		- [#54](https://github.com/net-lisias-ksp/KSPe/issues/54) `KSPe.InstallChecker` is not being able to show its Modals.
+* 2023-0513: 2.5.2.1 (Lisias) for KSP >= 1.2
+	+ ***DITCHED*** as I forgot an important fix. 
 * 2023-0321: 2.5.2.0 (Lisias) for KSP >= 1.2
 	+ Moving CkanTools to a external library (KSPe.External) where 3rd party support will be implemented, avoiding cluttering the main Assembly with non core business stuff
 	+ Incepting support for KSP-AVC version files.
