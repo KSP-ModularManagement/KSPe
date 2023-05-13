@@ -24,7 +24,9 @@ namespace KSPe
 {
 	[KSPAddon(KSPAddon.Startup.Instantly, true)]
 	public class Startup:MonoBehaviour
-	{		
+	{
+		private static GameObject myGameObject = GameObject.Find("/"+typeof(Startup).AssemblyQualifiedName);
+
 		private void Start()
 		{
 			Log.force("Version {0}, on KSP {1} under Unity {2}", Version.Text, Versioning.GetVersionStringFull(), UnityEngine.Application.unityVersion);
@@ -33,6 +35,12 @@ namespace KSPe
 
 		private void Awake()
 		{
+			if (null != myGameObject)
+			{
+				Log.warn("Whoopsy... It looks KSPe was loaded twice. Aborting the redundant initialisation.");
+				return;
+			}
+			myGameObject = new GameObject(typeof(Startup).AssemblyQualifiedName);
 			try
 			{ 
 				using (KSPe.Util.SystemTools.Assembly.Loader a = new KSPe.Util.SystemTools.Assembly.Loader())
