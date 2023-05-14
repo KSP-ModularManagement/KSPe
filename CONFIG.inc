@@ -17,11 +17,14 @@ PD_SUB_DLLS=`{ for K in "${!PD_SUB_RULES[@]}"; do echo $(basename ${PD_SUB_RULES
 PD_SUB_DIRS=`{ for K in "${!PD_SUB_RULES[@]}"; do echo $(dirname ${PD_SUB_RULES[$K]}); done } | sort -u | tr '\n' ' '`
 
 # GameData deployed DLLs
+GD_PRIORITY="001"
 GD_DLLS="KSPe"
-GD_PRIORITY="000"
+declare -A GD_SUB_RULES=( ["000_KSPe"]="./KSPe.InstallChecker")
+GD_SRC_DLLS=`{ for K in "${!GD_SUB_RULES[@]}"; do echo $(basename ${GD_SUB_RULES[$K]}); done } | sort -u | tr '\n' ' '`
+GD_TGT_DLLS=`{ for K in "${!GD_SUB_RULES[@]}"; do echo $K; done } | sort -u | tr '\n' ' '`
 
 # Dev LIB deployed DLLs
-LIB_DLLS="KSPe ${DLLS}"
+LIB_DLLS="${DLLS/KSPe.InstallChecker/}"
 
 # External Libs from the LIB directory
 EXT_DLLS="TinyJSON"

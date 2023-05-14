@@ -60,22 +60,31 @@ deploy_plugindata() {
 	fi
 }
 
-deploy_gamedata() {
-	local PLACE=$1
-	local DLL=$2.dll
 
-	if [ -f "./bin/Release/$DLL" ] ; then
-		cp "./bin/Release/$DLL" "./GameData/${PLACE}_$DLL"
+deploy_gamedata_rule() {
+	local SOURCE=$1.dll
+	local TARGET=$2.dll
+
+	if [ -f "./bin/Release/${SOURCE}" ] ; then
+		cp "./bin/Release/${SOURCE}" "./GameData/${TARGET}"
 		if [ -d "${KSP_DEV}/GameData/" ] ; then
-			cp "./bin/Release/$DLL" "${KSP_DEV/}GameData/${PLACE}_$DLL"
+			cp "./bin/Release/${SOURCE}" "${KSP_DEV}GameData/${TARGET}"
 		fi
 	fi
-	if [ -f "./bin/Debug/$DLL" ] ; then
+	if [ -f "./bin/Debug/${SOURCE}" ] ; then
 		if [ -d "${KSP_DEV}/GameData/" ] ; then
-			cp "./bin/Debug/$DLL" "${KSP_DEV}GameData/${PLACE}_$DLL"
+			cp "./bin/Debug/${SOURCE}" "${KSP_DEV}GameData/${TARGET}"
 		fi
 	fi
 }
+
+deploy_gamedata() {
+	local PLACE=$1
+	local DLL=$2
+
+	deploy_gamedata_rule ${DLL} ${PLACE}_${DLL}
+}
+
 
 deploy_ext() {
 	local DLL=$1.dll
@@ -96,21 +105,24 @@ cp LICENSE* "./GameData/$TARGETDIR"
 cp NOTICE "./GameData/$TARGETDIR"
 
 for dll in $GD_DLLS ; do
-    deploy_dev $dll
-    deploy_gamedata $GD_PRIORITY $dll
+	deploy_gamedata $GD_PRIORITY $dll
+done
+
+for dll in $GD_TGT_DLLS ; do
+	deploy_gamedata_rule ${GD_SUB_RULES[$dll]} $dll
 done
 
 for dll in $PD_DLLS ; do
-    deploy_plugindata $dll
+	deploy_plugindata $dll
 done
 
 for dll in $DLLS ; do
-    deploy_dev $dll
-    deploy $dll
+	deploy_dev $dll
+	deploy $dll
 done
 
 for dll in $EXT_DLLS ; do
-    deploy_ext $dll
+	deploy_ext $dll
 done
 
 echo "${VERSION} Deployed into ${KSP_DEV}"

@@ -14,36 +14,15 @@
 	You should have received a copy of the SKL Standard License 1.0
 	along with KSP Enhanced /L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.
 */
-using UnityEngine;
-
+using System;
 namespace KSPe.InstallChecker
 {
-	[KSPAddon(KSPAddon.Startup.Instantly, true)]
-	internal class Startup : MonoBehaviour
+	public static class ModuleInitializer
 	{
-		private void Start()
+		public static void Initialize()
 		{
-			Log.force("Version {0}", typeof(Startup).Assembly.GetName().Version);
-		}
-
-		internal static bool quitOnDestroy = false;
-		private void OnDestroy()
-		{
-			if (!quitOnDestroy) return;
-
-			// Someone, probably a FatalError, told us to quit the game.
-			Log.force("Quitting KSP due an unrecoverable error.");
-			UnityEngine.Application.Quit();
-		}
-	}
-
-	[KSPAddon(KSPAddon.Startup.MainMenu, true)]
-	public class MainMenu:MonoBehaviour
-	{
-		private void Start()
-		{
-			if (Util.CkanTools.CheckCkanRepository())
-				GUI.Dialogs.CkanDetectedAdviseBox.Show();
+			Checker o = new Checker();
+			o.CheckKSPe();
 		}
 	}
 }

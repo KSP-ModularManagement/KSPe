@@ -15,7 +15,7 @@
 	along with KSP Enhanced /L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.
 */
 using System;
-
+using SIO = System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -51,17 +51,19 @@ namespace KSPe.InstallChecker
 		}
 		internal static string UpdateIfNeeded(UpdateData ud)
 		{
-			string sourceFilename = System.IO.Path.Combine(SanityLib.CalcGameData(), ud.sourceFilename);
-			string targetFilename = System.IO.Path.Combine(SanityLib.CalcGameData(), ud.targetFilename);
+			string sourceFilename = SIO.Path.Combine(SanityLib.CalcGameData(), ud.sourceFilename);
+			string targetFilename = SIO.Path.Combine(SanityLib.CalcGameData(), ud.targetFilename);
 
 			Log.debug("UpdateIfNeeded from {0} to {1}", sourceFilename, targetFilename);
-			if (System.IO.File.Exists(sourceFilename))
+			if (SIO.File.Exists(sourceFilename))
 			{
-				if (System.IO.File.Exists(targetFilename))
+				if (SIO.File.Exists(targetFilename))
 				{
 					{ 
 						System.Diagnostics.FileVersionInfo sourceVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(sourceFilename);
 						System.Diagnostics.FileVersionInfo targetVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(targetFilename);
+
+						Log.debug("src:{0} ; tgt:{1}", sourceVersionInfo, targetVersionInfo);
 
 						bool sane = sourceVersionInfo.ProductName.Equals(targetVersionInfo.ProductName);
 						sane &= sourceVersionInfo.LegalCopyright.Equals(targetVersionInfo.LegalCopyright);
@@ -75,26 +77,50 @@ namespace KSPe.InstallChecker
 							return Update(ud.name, sourceFilename, targetFilename);
 						}
 					}
+
+					if (ShouldUpdate(sourceFilename, targetFilename))
+					{ 
+						Log.info("File {0} is older then {1}. This is going to cause trouble, updating it!", targetFilename, ud.name);
+						Delete(targetFilename);	// Remove the file or the update will not work.
+						return Update(ud.name, sourceFilename, targetFilename);
+					}
+					else
 					{
-						System.Reflection.Assembly sourceAsm = System.Reflection.Assembly.LoadFile(sourceFilename);
-						System.Reflection.Assembly targetAsm = System.Reflection.Assembly.LoadFile(targetFilename);
-						if (!sourceAsm.GetName().Version.Equals(targetAsm.GetName().Version))
-						{ 
-							Log.info("File {0} is older then {1}. This is going to cause trouble, updating it!", targetFilename, ud.name);
-							Delete(targetFilename);	// Remove the file or the update will not work.
-							return Update(ud.name, sourceFilename, targetFilename);
-						}
-						else
-						{
-							Delete(sourceFilename);
-							return null;
-						}
+						Delete(sourceFilename);
+						return null;
 					}
 				}
 				else return SanityLib.Update(ud.name, sourceFilename, targetFilename);
 			}
 			// Nothing to do. If this is an error, someone else will yell about.
 			return null;
+		}
+
+		private static bool ShouldUpdate(string srcfn, string tgtfn)
+		{
+			// Squad, In your endless eagerness to do anything but the technically correct solution, royally screwed up the
+			// Assembly Loader/Resolver defeating any attempt to check for the Assemblies' metadata.
+			//
+			// You can load the Asm into a byte array if you want, the thing will be shortcircuited no matter what somewhere
+			// in the loading process to whatever was loaded first.
+			//
+			// So we will rely on file versions, what's semantically incorrect but it should work as long no one forks KSPe e changes something.
+			if (1 == Versioning.version_major && Versioning.version_minor >= 8)
+			{
+				System.Diagnostics.FileVersionInfo sourceVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(srcfn);
+				System.Diagnostics.FileVersionInfo targetVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(tgtfn);
+
+				Log.debug("1.12.x src:{0} ; tgt:{1}", sourceVersionInfo, targetVersionInfo);
+				// We already know the files are "sane", otherwise we would not be here. So let's check only the version:
+				return 0 != sourceVersionInfo.FileVersion.CompareTo(targetVersionInfo.FileVersion);
+			}
+
+			System.Reflection.Assembly sourceAsm = System.Reflection.Assembly.ReflectionOnlyLoad(SIO.File.ReadAllBytes(srcfn));
+			System.Reflection.Assembly targetAsm = System.Reflection.Assembly.ReflectionOnlyLoad(SIO.File.ReadAllBytes(tgtfn));
+
+			Log.debug("src:{0} ; tgt:{1}", sourceAsm, targetAsm);
+
+			return !sourceAsm.GetName().Version.Equals(targetAsm.GetName().Version);
 		}
 
 		private static string Update(string name, string sourceFilename, string targetFilename)
@@ -116,14 +142,14 @@ namespace KSPe.InstallChecker
 		private static void Copy(string sourceFilename, string targetFilename)
 		{
 			Log.debug("Copying {0} to {1}", sourceFilename, targetFilename);
-			System.IO.File.Copy(sourceFilename, targetFilename);
+			SIO.File.Copy(sourceFilename, targetFilename);
 		}
 
 		private static void Delete(string filename)
 		{
 			Log.debug("Deleting {0}", filename);
-			if (System.IO.File.Exists(filename))
-				System.IO.File.Delete(filename);
+			if (SIO.File.Exists(filename))
+				SIO.File.Delete(filename);
 		}
 
 		private static string GAMEDATA = null;
@@ -131,14 +157,14 @@ namespace KSPe.InstallChecker
 		{
 			if (null != GAMEDATA) return GAMEDATA;
 			System.Reflection.Assembly asm = System.Reflection.Assembly.GetAssembly(typeof(UnityEngine.MonoBehaviour));
-			string path = System.IO.Path.GetDirectoryName(asm.Location);
-			string candidate = System.IO.Path.Combine(path, "GameData");
+			string path = SIO.Path.GetDirectoryName(asm.Location);
+			string candidate = SIO.Path.Combine(path, "GameData");
 			try
 			{
-				while (!System.IO.Directory.Exists(candidate))
+				while (!SIO.Directory.Exists(candidate))
 				{
-					path = System.IO.Path.GetDirectoryName(path);
-					candidate = System.IO.Path.Combine(path, "GameData");
+					path = SIO.Path.GetDirectoryName(path);
+					candidate = SIO.Path.Combine(path, "GameData");
 				}
 				Log.debug("GameData found on {0}", candidate);
 				return (GAMEDATA = candidate);
