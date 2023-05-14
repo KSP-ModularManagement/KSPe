@@ -9,6 +9,7 @@ To install, place the GameData folder inside your Kerbal Space Program folder. O
 
 * **REMOVE ANY OLD VERSIONS OF THE PRODUCT BEFORE INSTALLING**, including any other fork:
 	+ Delete `<KSP_ROOT>/GameData/000_KSPe.dll`
+	+ Delete `<KSP_ROOT>/GameData/001_KSPe.dll`
 	+ Delete `<KSP_ROOT>/GameData/000_KSPe`
 	+ Delete `<KSP_ROOT>/GameData/000_KSPAPIExtensions`
 		- If this thing still exists on your `GameData`! 
@@ -42,6 +43,7 @@ The following file layout must be present after installation:
 		[ModuleManagerWatchDog]
 			...
 		000_KSPe.dll
+		001_KSPe.dll
 		ModuleManager.dll
 		ModuleManagerWatchDog.dll
 		...
