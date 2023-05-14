@@ -22,6 +22,7 @@ namespace KSPe.InstallChecker.GUI.Dialogs
 
 		internal static void Show(string msg)
 		{
+			Startup.quitOnDestroy = true;
 			WarningAlertBox.Show(
 				msg,
 				AMSG,

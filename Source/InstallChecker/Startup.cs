@@ -25,6 +25,16 @@ namespace KSPe.InstallChecker
 		{
 			Log.force("Version {0}", typeof(Startup).Assembly.GetName().Version);
 		}
+
+		internal static bool quitOnDestroy = false;
+		private void OnDestroy()
+		{
+			if (!quitOnDestroy) return;
+
+			// Someone, probably a FatalError, told us to quit the game.
+			Log.force("Quitting KSP due an unrecoverable error.");
+			UnityEngine.Application.Quit();
+		}
 	}
 
 	[KSPAddon(KSPAddon.Startup.MainMenu, true)]
