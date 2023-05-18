@@ -185,11 +185,8 @@ namespace Tests
 			Console.WriteLine(string.Format("TestCase_CKAN_JSON {0}", CkanTools.CheckCkanInstalled()));
 		}
 
-		public static void Main(string[] args)
+		public static void TestSession1()
 		{
-			Console.WriteLine("Hello World!");
-			Console.WriteLine(Environment.GetCommandLineArgs()[0]);
-
 			TestCase_Conversion();
 
 			TestCase_SymLinks();
@@ -210,6 +207,64 @@ namespace Tests
 			TestCase_CKAN_JSON();
 
 			Console.WriteLine(DateTime.Parse("1900-01-01 00:00:00Z").ToUniversalTime().ToString("u"));
+		}
+
+		private static TimeSpan OpenFile(string fn, int i)
+		{
+			System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
+			stopWatch.Start();
+			for (; i > 0 ; --i)
+				using (System.IO.FileStream fileStream = new System.IO.FileStream(fn, System.IO.FileMode.Open))
+					;
+			stopWatch.Stop();
+			return stopWatch.Elapsed;
+		}
+
+		private static TimeSpan OpenFileWithRead(string fn, int i)
+		{
+			System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
+			stopWatch.Start();
+			for (; i > 0 ; --i)
+				using (System.IO.FileStream fileStream = new System.IO.FileStream(fn, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+					;
+			stopWatch.Stop();
+			return stopWatch.Elapsed;
+		}
+
+		private static TimeSpan OpenFileWithReadWrite(string fn, int i)
+		{
+			System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
+			stopWatch.Start();
+			for (; i > 0 ; --i)
+				using (System.IO.FileStream fileStream = new System.IO.FileStream(fn, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+					;
+			stopWatch.Stop();
+			return stopWatch.Elapsed;
+		}
+
+		public static void TestSession_OpenRead()
+		{
+			const string fn = "./Tests.exe";
+			const int iters = 100000;
+			{
+				TimeSpan ts = OpenFileWithReadWrite(fn, iters);
+				Console.WriteLine(string.Format("OpenFileWithReadWrite {0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10));
+			}
+			{
+				TimeSpan ts = OpenFileWithRead(fn, iters);
+				Console.WriteLine(string.Format("OpenFileWithRead {0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10));
+			}
+			{
+				TimeSpan ts = OpenFile(fn, iters);
+				Console.WriteLine(string.Format("OpenFile {0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10));
+			}
+		}
+
+		public static void Main(string[] args)
+		{
+			Console.WriteLine("Hello World!");
+			Console.WriteLine(Environment.GetCommandLineArgs()[0]);
+			TestSession_OpenRead();
 		}
 	}
 }
