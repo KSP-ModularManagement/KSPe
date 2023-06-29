@@ -26,7 +26,7 @@ using KSPe.UI;
 namespace KSPe.Common.Dialogs
 {
 	// TODO: Remove on Version 2.7
-	[System.Obsolete("KSPe.Common.Dialogs.ShowStopperAlertBox is deprecated, please use KSPe.Common.Dialogs.ShowStopperAlertBox instead.")]
+	[System.Obsolete("KSPe.Common.Dialogs.ShowStopperAlertBox is deprecated, please use KSPe.Common.Dialogs.ShowStopperErrorBox instead.")]
 	public class ShowStopperAlertBox : ShowStopperErrorBox { }
 
 	public class ShowStopperErrorBox : AbstractDialog
