@@ -1,5 +1,22 @@
 # KSP Enhanced /L :: Changes
 
+* 2023-0629: 2.5.3.0 (Lisias) for KSP >= 1.2
+	+ New Standard Error Handler for the lazy developer! ;) 
+		- With new Standard Error/Alert/Warning Dialogs too!
+	+ Refactorings on the `Exception` hierarchy, making easier to create standard handlers
+	+ Small enhancements:
+		- Stack dump method on the Log
+		- Allowing rich text on the KSPe.UI's Message Boxes
+		- Allowing the Message Boxes to be scalable by User Settings
+	+ Small fixes:
+		- Adding names to the loaded textures (for better debuggability)
+		- Throwing an error if trying to load the same Assembly again.
+		- Stupid mistakes galore fixed
+	+ Related issues:
+		- [TSCF#6](https://github.com/TweakScale/Companion_Frameworks/issues?q=is%3Aissue+is%3Aclosed) Crash to desktop with version 2023.03.28.3
+	+ Closes issues:
+		- [#54](https://github.com/net-lisias-ksp/KSPe/issues/54) `KSPe.InstallChecker` is not being able to show its Modals .
+		- [#51](https://github.com/net-lisias-ksp/KSPe/issues/51) Prevent KSPe from initialising itself twice.
 * 2023-0514: 2.5.2.3 (Lisias) for KSP >= 1.2
 	+ Fixes a design flaw on the `KSPe.InstallChecker`'s update mechanism that wasn't being able to tell the user to restart KSP due an updated `000_KSPe.dll`
 		- This fix is mandatory for CurseForge users, otherwise future KSPe updates will be troublesome for them.
