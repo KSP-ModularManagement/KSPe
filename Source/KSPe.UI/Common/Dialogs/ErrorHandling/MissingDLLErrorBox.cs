@@ -26,20 +26,22 @@ namespace KSPe.Common.Dialogs.ErrorHandling
 {
 	internal static class MissingDLLErrorBox
 	{
-		private static readonly string MSG = @"Unfortunately {0} didn't found a(some) DLL(s) it needs.
+		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/55";
+
+		private static readonly string MSG = @"Unfortunately {0} didn't found a(some) DLL(s) it needs. It may be due a faulty installation, but also due the (in)famous <i>Assembly Loader/Resolver</i> bug.
 
 Reason reported: <i>{2}</i>";
 
-		private static readonly string AMSG = @"reinstall {0} and its dependencies from a trusted Distribution Channel (KSP will close)";
+		private static readonly string AMSG = @"check {0} and its dependencies, installing them again from a trusted Distribution Channel if missing. Or fix your KSP. (KSP will close and the Support Page will open)";
 
 		internal static void Show(System.DllNotFoundException ex, string offendedName) {
 			string actionMessage = string.Format(AMSG, offendedName);
 			ShowStopperErrorBox.Show(
 				string.Format(MSG, offendedName, ex.Message),
 				string.Format(actionMessage, offendedName),
-				() => { Application.Quit(); }
+				() => { Util.UrlTools.OpenURL(URL); Application.Quit(); }
 			);
-			Log.force("\"Houston, we have a Problem!\" about Missing DLLs on {0} was displayed. Reason reported: {1}", offendedName, ex.Message);
+			Log.force("\"Houston, we have a Problem!\" about Missing DLLs on {0} was displayed. Reason reported: {1}. URL handled: {2}.", offendedName, ex.Message, URL);
 		}
 	}
 }
