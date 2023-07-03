@@ -1,9 +1,12 @@
 # KSP Enhanced /L :: Changes
 
-* 2023-0703: 2.5.3.1 (Lisias) for KSP >= 1.2
+* 2023-0703: 2.5.3.2 (Lisias) for KSP >= 1.2
 	+ More sensible updating mechanism, coping with how Windows handles DLL files once they are loaded.
+	+ Fixes some mishaps on some Standard Dialogs.
 	+ Fixes a bug on the KSPe's Install Checker/Update Tool
 		- **You need to manually remove the older `<KSP-ROOT>/GameData/000_KSPe.dll` file if existent!** 
+* 2023-0703: 2.5.3.1 (Lisias) for KSP >= 1.2
+	+ ***Dithed*** as a new release were made in less than 24 hours. 
 * 2023-0629: 2.5.3.0 (Lisias) for KSP >= 1.2
 	+ New Standard Error Handler for the lazy developer! ;) 
 		- With new Standard Error/Alert/Warning Dialogs too!
