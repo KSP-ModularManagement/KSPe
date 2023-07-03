@@ -94,7 +94,7 @@ namespace KSPe.InstallChecker
 			// The previous, minimalistic, check was hurting the update process, when a new DLL would be, in fact, in the KSPe's diretory.
 			// So we ignore these copies when the effectivelly loaded on is the one named 000_KSPe.dll .
 			{
-				IEnumerable<AssemblyLoader.LoadedAssembly> loaded = SanityLib.FetchLoadedAssembliesByName("KSPe.InstallChecker");
+				IEnumerable<AssemblyLoader.LoadedAssembly> loaded = SanityLib.FetchLoadedAssembliesByName(this.GetType().Assembly.GetName().Name);
 				// Obviously, would be pointless to check for it not being installed! (0 == count). :)
 				if (loaded.Count() > 1
 					&& !"000_KSPe.dll".Equals(System.IO.Path.GetFileName(loaded.First().assembly.Location), StringComparison.InvariantCultureIgnoreCase)
