@@ -24,6 +24,7 @@ namespace KSPe.InstallChecker.GUI.Dialogs
 {
 	internal class CkanDetectedAdviseBox:TimedCommonBox
 	{
+		private const int DAYS_BETWEEN_DIALOGS = 30;
 		private static readonly string MSG = @"CKAN was detected in your KSP, but from March 2023 CKAN is not supported anymore by TweakScale, KSP-Recall et all.
 
 Any problems related to TweakScale, KSP-Recall and some other Add'Ons authored or maintained by a few authors should be reported to CKAN's maintainers directly.
@@ -49,7 +50,7 @@ Visit {0} for details.";
 #endif
 
 			TimeSpan deltaT = DateTime.Now - Globals.Instance.LastCkanMessage;
-			if (!ModuleManagerTools.IsLoadedFromCache && deltaT.TotalDays > 15)
+			if (!ModuleManagerTools.IsLoadedFromCache && deltaT.TotalDays > DAYS_BETWEEN_DIALOGS)
 			{
 				Globals.Instance.HitCkanMessage();
 				GameObject go = new GameObject(typeof(CkanDetectedAdviseBox).FullName);
