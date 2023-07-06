@@ -109,6 +109,9 @@ namespace KSPe.UI.Toolbar
 			}
 
 			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
+			public static Data Create() => Create(UI.Toolbar.Controller.defaultButton, UI.Toolbar.Controller.defaultButtonSmall);
+
+			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 			public static Data Create(Texture2D largeIcon, Texture2D smallIcon) => new Data(Item.Create(largeIcon), Item.Create(smallIcon));
 
 			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
@@ -1023,6 +1026,7 @@ namespace KSPe.UI.Toolbar
 		private readonly Dictionary<Type, Toolbar> toolbars = new Dictionary<Type, Toolbar>();
 
 		internal static Texture2D defaultButton = null;
+		internal static Texture2D defaultButtonSmall = null;
 		private Controller()
 		{
 			if (null == defaultButton) try
@@ -1032,6 +1036,12 @@ namespace KSPe.UI.Toolbar
 						Byte[] data = new System.IO.BinaryReader(si).ReadBytes(int.MaxValue);
 						if (!KSPe.Util.Image.File.Load(out defaultButton, data))
 							throw new NullReferenceException("KSPe.UI.Resources.launchicon");   // Screw the best practices, I will not rework ths just because of them.
+					}
+					{ 
+						Texture2D defaultButtonSmall = new Texture2D(defaultButton.width, defaultButton.height);
+						defaultButtonSmall.SetPixels(defaultButton.GetPixels());
+						defaultButtonSmall.Apply();
+						defaultButtonSmall.Resize(defaultButton.width/3, defaultButton.height/3, TextureFormat.ARGB32, false);
 					}
 				}
 				catch (Exception e)
