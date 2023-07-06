@@ -109,16 +109,10 @@ namespace KSPe.UI.Toolbar
 			}
 
 			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
-			public static Data Create(Texture2D largeIcon, Texture2D smallIcon)
-			{
-				return new Data(Item.Create(largeIcon), Item.Create(smallIcon));
-			}
+			public static Data Create(Texture2D largeIcon, Texture2D smallIcon) => new Data(Item.Create(largeIcon), Item.Create(smallIcon));
 
 			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
-			public static Data Create(Item largeItem, Item smallItem)
-			{
-				return new Data(largeItem, smallItem);
-			}
+			public static Data Create(Item largeItem, Item smallItem) => new Data(largeItem, smallItem);
 		}
 
 		public class Control
@@ -403,10 +397,7 @@ namespace KSPe.UI.Toolbar
 			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 			public Event this[Kind index] => this.events[index];
 			[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
-			public bool Has(Kind kind)
-			{
-				return this.events.ContainsKey(kind);
-			}
+			public bool Has(Kind kind) => this.events.ContainsKey(kind);
 		}
 
 		public readonly object owner;
@@ -585,11 +576,10 @@ namespace KSPe.UI.Toolbar
 				, string toolTip = null
 			)
 		{
-			Button r = new Button(owner, owner.GetType().Name
+			return Create(owner, owner.GetType().Name
 					, visibleInScenes
 					, toolTip
 				);
-			return r;
 		}
 
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
@@ -728,8 +718,8 @@ namespace KSPe.UI.Toolbar
 
 			//// Prevents the button from being displayed if the ApplicationLauncher was already initialized!
 			applicationLauncherButton.Enable(!ApplicationLauncher.Instance.DetermineVisibility(applicationLauncherButton));
+			//applicationLauncherButton.enabled = this.IsVisibleOnCurrentScene();
 
-				//applicationLauncherButton.enabled = this.IsVisibleOnCurrentScene();
 			this.state.init();
 		}
 
@@ -1022,10 +1012,7 @@ namespace KSPe.UI.Toolbar
 		[Obsolete("Toobar Support is still alpha. Be aware that interfaces and contracts can break between releases. KSPe suggests to wait until v2.6.0.0 before using it on your plugins.")]
 		public bool Contains(Button button) => this.buttons.Contains(button);
 
-		public override String ToString()
-		{
-			return string.Format("{0}({1})", this.GetType().Name, this.displayName);
-		}
+		public override String ToString() => string.Format("{0}({1})", this.GetType().Name, this.displayName);
 	}
 
 	public class Controller
