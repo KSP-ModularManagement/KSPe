@@ -35,6 +35,12 @@ namespace KSPe
 
 		private void Awake()
 		{
+			if (Multiplatform.LowLevelTools.Security.isElevated)
+			{
+				FatalErrors.RunningAsPrivilegedUser.Show();
+				return;
+			}
+
 			if (null != myGameObject)
 			{
 				Log.warn("Whoopsy... It looks KSPe was loaded twice. Aborting the redundant initialisation.");

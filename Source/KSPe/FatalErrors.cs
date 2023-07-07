@@ -261,4 +261,32 @@ KSPe can't work properly without it, and so anything using it will <b>NOT</b> wo
 			Log.error(e, "Fatal Error CriticalComponentsAbsent was shown. e = [{0}]. Please visit {1}", e.Message, URL);
 		}
 	}
+
+	internal static class RunningAsPrivilegedUser
+	{
+		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/56";
+		private static readonly string MSG = @"KSPe detected you are running KSP on an Priviledged Account (<b>Administrator</b> on Windows, <b>root</b> on UNIX).
+
+<B>THIS IS A SECURITY NIGHTMARE</B>, you are putting youself in serious risk and KSPe urges you to reach us for help and fix whatever is the underlying issue that made you do this stunt.
+
+Really, really, <b>never</b> run <b>anything</b> under a Priviledged Account. It just doesn't worth it.";
+
+		private static bool shown = false;
+		internal static void Show()
+		{
+			if (shown) return;
+
+			Startup.QuitOnDestroy = shown = true;
+			if (null != GameObject.Find("KSPe.FatalError.RunningAsPrivilegedUser")) return; // Already being shown.
+
+			GameObject go = new GameObject("KSPe.FatalError.RunningAsPrivilegedUser");
+			FatalErrorMsgBox dlg = go.AddComponent<FatalErrorMsgBox>();
+
+			dlg.Show(
+				string.Format(MSG),
+				() => { UrlTools.OpenURL(URL); }
+			);
+			Log.error("Fatal Error RunningAsPrivilegedUser was shown. Please visit {0}", URL);
+		}
+	}
 }

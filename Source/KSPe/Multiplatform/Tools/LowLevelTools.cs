@@ -24,6 +24,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Security.Principal;
 
 namespace KSPe.Multiplatform.LowLevelTools {
 
@@ -105,6 +106,22 @@ namespace KSPe.Multiplatform.LowLevelTools {
 			finally
 			{
 				CloseHandle(h);
+			}
+		}
+	}
+
+	public static class Security
+	{
+		// Source : https://stackoverflow.com/questions/5953240/check-for-administrator-privileges-in-c-sharp
+		public static bool isElevated
+		{
+			get
+			{
+				using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+				{
+					WindowsPrincipal principal = new WindowsPrincipal(identity);
+					return principal.IsInRole(WindowsBuiltInRole.Administrator);
+				}
 			}
 		}
 	}
