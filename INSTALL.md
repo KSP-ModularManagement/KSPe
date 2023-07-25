@@ -29,8 +29,6 @@ The following file layout must be present after installation:
 		[000_KSPe]
 			[Plugins]
 				...
-			[patches]
-				...
 			CHANGE_LOG.md
 			LICENSE
 			LICENSE.3rdParties
@@ -40,12 +38,9 @@ The following file layout must be present after installation:
 			NOTICE
 			README.md
 			KSPe.version
-		[ModuleManagerWatchDog]
-			...
 		000_KSPe.dll
 		001_KSPe.dll
 		ModuleManager.dll
-		ModuleManagerWatchDog.dll
 		...
 	KSP.log
 	PastDatabase.cfg
@@ -60,3 +55,9 @@ The following file layout must be present after installation:
 	+ You need to localise and install the best available release for the KSP version you are running.
 		- Don't install the latest version for KSP 1.10 on KSP 1.7, **it will not work**.
 * There're no dependencies for [1.2 <= KSP <= 1.3.1]
+
+### Suggested Tools
+
+* Module Manager Watch Dog
+	+ Checks if Module Manager is correctly installed on your rig, preventing you from running older or improperly installed ones.
+	+ Download it [here](https://github.com/net-lisias-ksp/ModuleManagerWatchDog/releases). 
