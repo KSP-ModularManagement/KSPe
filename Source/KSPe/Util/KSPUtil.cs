@@ -26,8 +26,12 @@ namespace KSPe
 	/***
 	 * Brute force replacement for global::KSPUtil from Squad, allowing it to work outside the UnityEngine (sometimes arbitrary
 	 * and useless) limitations.
+	 * 
+	 * Currently `internal`, as I'm unsure if I really should mangle so deep in the stack and bring over me so much responsability. KSPe.IO
+	 * already have more than adequated ways to get the same information, so I need a strong reason that `ApplicationRootPath` to go
+	 * down this rabbit role.
 	 */
-	public static class KSPUtil
+	internal static class KSPUtil
 	{
 		private static string __ApplicationRootPath = null;
 		public static string ApplicationRootPath => __ApplicationRootPath ?? (__ApplicationRootPath = calculateApplicationRootPath());
