@@ -82,6 +82,9 @@
     <Compile Include="ModuleInitializer.cs" />
     <Compile Include="InstallChecker.cs" />
     <Compile Include="Properties\MyVersion.cs" />
+    <Compile Include="..\KSPe\Util\KSPUtil.cs">
+      <Link>Util\KSPUtil.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

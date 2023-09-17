@@ -213,7 +213,7 @@ namespace KSPe.IO
 		{
 			if (null != app_root) return app_root;
 			Origin();	// Forces the calcultation of the unreparsing stuff!
-			app_root = SIO.Path.GetFullPath(Multiplatform.FileSystem.GetRealPathname(global::KSPUtil.ApplicationRootPath));
+			app_root = SIO.Path.GetFullPath(Multiplatform.FileSystem.GetRealPathname(KSPUtil.ApplicationRootPath));
 			app_root = EnsureTrailingSeparatorOnDir(app_root);
 
 			process_dir(app_root);

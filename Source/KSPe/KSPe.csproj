@@ -124,6 +124,7 @@
     <Compile Include="Util\Image.Local.cs" />
     <Compile Include="Util\Stopwatch.cs" />
     <Compile Include="Util\UrlTools.cs" />
+    <Compile Include="Util\KSPUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
