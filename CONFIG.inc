@@ -27,7 +27,7 @@ GD_TGT_DLLS=`{ for K in "${!GD_SUB_RULES[@]}"; do echo $K; done } | sort -u | tr
 LIB_DLLS="${DLLS/KSPe.InstallChecker/}"
 
 # External Libs from the LIB directory
-EXT_DLLS="TinyJSON"
+EXT_DLLS="KSPAPIExtensions TinyJSON"
 
 
 PROJECT_BRANCH=`git branch | grep \* | cut -d ' ' -f2`

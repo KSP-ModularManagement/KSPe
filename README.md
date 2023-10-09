@@ -1,6 +1,6 @@
 # KSP Enhanced /L
 
-New extensions and utilities for Kerbal Space Program by Lisias, formerly known as "KSP API Extensions /L"
+New extensions and utilities for Kerbal Space Program by Lisias.
 
 
 ## In a Hurry
@@ -33,7 +33,7 @@ See [the respective Manual](https://github.com/net-lisias-ksp/KSPe/blob/mestre/D
 
 Offer a compatibility layer to older Add'Ons that relies on the (now) legacy API from KSP API Extensions.
 
-See [the respective Manual](https://github.com/net-lisias-ksp/KSPe/blob/mestre/Docs/KSP-API-Extensions.md) for more information.
+See [the Manual](https://github.com/net-lisias-ksp/KSPAPIExtensions/blob/master/Docs/KSP-API-Extensions.md) for more information.
 
 
 ## Installation
@@ -41,15 +41,8 @@ See [the respective Manual](https://github.com/net-lisias-ksp/KSPe/blob/mestre/D
 Detailed installation instructions are now on its own file (see the [In a Hurry](#in-a-hurry) section) and on the distribution file.
 
 ### Licensing
-* KSPAPIExtensions.dll
-	+ [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). See [here](./LICENSE.KSPAPIExtensions).
-		+ You are free to:
-			- Share : copy and redistribute the material in any medium or format
-			- Adapt : remix, transform, and build upon the material for any purpose, even commercially. 
-		+ Under the following terms:
-			- Attribution : You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
-			- ShareAlike : If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
-* KSPe.dll is double licensed at user discretion:
+
+* KSPe is double licensed at user discretion:
 	+ [SKL 1.0](https://ksp.lisias.net/SKL-1_0.txt). See [here](./LICENSE.KSPe.SKL-1_0)
 		+ You are free to:
 			- Use : unpack and use the material in any computer or device
@@ -73,7 +66,9 @@ Detailed installation instructions are now on its own file (see the [In a Hurry]
 				- Please note that upgrading the license to GPLv3 **IS NOT ALLOWED** for this work, as the author **DID NOT** added the "or (at your option) any later version" on the license.
 			- You don't mix your work with GPL incompatible works.
 	* If by some reason the GPL would be invalid for you, rest assured that you still retain the right to Use the Work under SKL 1.0. 
-* See [3rd Parties License](./LICENSE.3rdParties) for additional licenses for Thirt Parties material used with permission (implicit or explicit).
+* `KSPAPIExtensions.dll` are distributed under [its own license](LICENSE.KSPAPIExtensions).
+* `TinyJSON.dll` are distributed under [its own license](LICENSE.TINYJSON).
+* See [3rd Parties License](./LICENSE.3rdParties) for additional licenses for Third Parties material used with permission (implicit or explicit).
 
 Please note the copyrights and trademarks in [NOTICE](./NOTICE).
 
@@ -82,6 +77,10 @@ Please note the copyrights and trademarks in [NOTICE](./NOTICE).
 
 KSPe use, embed or reference previous works by:
 
+* KSP API Extensions /L
+	+ [GitHub](https://github.com/net-lisias-ksp/KSPAPIExtensions) 
+* Tiny.JSON /L
+	+ [GitHub](https://github.com/net-lisias-ksp/Tiny-JSON) 
 * [Rémi Gillig](https://github.com/speps)
 	+ [XInputDotNet](https://github.com/speps/XInputDotNet)
 * Microsoft
@@ -92,8 +91,4 @@ KSPe use, embed or reference previous works by:
 
 ## UPSTREAM
 
-* [swamp_ig](https://forum.kerbalspaceprogram.com/index.php?/profile/85299-pellinor/): ROOT
-	+ [Forum](https://forum.kerbalspaceprogram.com/index.php?/topic/73648-104-kspapiextensions-v175-utilities-for-shared-mod-use-25-jun/)
-	+ [GitHub](https://github.com/Swamp-Ig/KSPe)
-* [toadicus](https://forum.kerbalspaceprogram.com/index.php?/profile/67745-toadicus/): Parallel Fork
-	+ [GitHub](https://github.com/toadicus/KSPe)
+There's no upstream, **I am (g)ROOT** :)
