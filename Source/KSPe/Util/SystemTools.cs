@@ -414,7 +414,6 @@ namespace KSPe.Util
 					fs.Read(rawAssembly, 0, rawAssembly.Length);
 				}
 				return System.AppDomain.CurrentDomain.Load(rawAssembly);
-				//return Reflection.Assembly.LoadFrom(pathname);
 			}
 
 			[Obsolete("This call doesn't loads the Assembly on the same context as the caller. Unexpected cast problems (among others) can happen. Consider using KSPe.Util.SystemTools.Assembly.AddSearchPath(path) to register a folder and using KSPe.Util.SystemTools.Assembly.LoadAndStartup(name) instead.")]
