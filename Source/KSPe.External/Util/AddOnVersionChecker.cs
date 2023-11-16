@@ -196,7 +196,7 @@ namespace KSPe.Util
 			);
 		}
 
-		public static Version LoadVersion(string pathname)
+		public static Version LoadVersionFromFile(string pathname)
 		{
 			string text = SIO.File.ReadAllText(pathname);
 			Version r = Json.Decode<Version>(text);
