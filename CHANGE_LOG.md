@@ -1,14 +1,27 @@
 # KSP Enhanced /L :: Change Log
 
+* 2023-1116: 2.5.3.4 (Lisias) for KSP >= 1.2
+	+ Warns user if he is running KSP as a privileged user - seriously, guys, don't do it!
+	+ More robust `ApplicationRootPath` calculation.
+	+ Removes `KSPApiExtensions` from the main codebase, as this thing is not being properly maintained and it's there just to keep old things running while I don't update them.
+	+ Fixes a very stupid decision on creating a new helper on `KSPe.External.AddOnVersionChecker`.
+	+ Closes issues:
+		- [#63](https://github.com/net-lisias-ksp/KSPe/issues/63) KSPe.External.AddOnVersionChecker method `LoadFrom(string)` royally screwed the `LoadFrom(string, string =null)` .
+		- [#60](https://github.com/net-lisias-ksp/KSPe/issues/60) Remove KSPAPIExtensions from this repository, moving it ao another one as I did with TinyJSON .
+		- [#58](https://github.com/net-lisias-ksp/KSPe/issues/58) get_dataPath is not allowed to be called from a MonoBehaviour constructor .
+		- [#54](https://github.com/net-lisias-ksp/KSPe/issues/54) KSP **should not** be run as Privileged User (Administrator on Windows, root on UNIX) .
+	+ Related issues:
+		- [TS#318](https://github.com/TweakScale/TweakScale/issues/318) TweakScale cannot check the presens of TweakScaleCompanion .
+		- [TS#304](https://github.com/TweakScale/TweakScale/discussions/304) Possible fix for the Tweakscale Hierarchy bug .
 * 2023-0704: 2.5.3.3 (Lisias) for KSP >= 1.2
 	+ More sensible updating mechanism, coping with how Windows handles DLL files once they are loaded.
 	+ Fixes some mishaps on some Standard Dialogs.
 	+ Fixes a bug on the KSPe's Install Checker/Update Tool
 		- **You need to manually remove the older `<KSP-ROOT>/GameData/000_KSPe.dll` file if existent!** 
 * 2023-0703: 2.5.3.2 (Lisias) for KSP >= 1.2
-	+ ***Dithed*** because I marvellously borked the packaging of this one. (sigh)
+	+ ***Ditched*** because I marvellously borked the packaging of this one. (sigh)
 * 2023-0703: 2.5.3.1 (Lisias) for KSP >= 1.2
-	+ ***Dithed*** as a new release were made in less than 24 hours. 
+	+ ***Ditched*** as a new release were made in less than 24 hours. 
 * 2023-0629: 2.5.3.0 (Lisias) for KSP >= 1.2
 	+ New Standard Error Handler for the lazy developer! ;) 
 		- With new Standard Error/Alert/Warning Dialogs too!
