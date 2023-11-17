@@ -57,8 +57,8 @@ namespace KSPe
 			}
 #if DEBUG
 			UnityEngine.Debug.LogFormat("Calculated ApplicationRootPath {0}.", r);
-			return r;
 #endif
+			return r;
 		}
 	}
 }
