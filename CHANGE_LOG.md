@@ -1,14 +1,27 @@
 # KSP Enhanced /L :: Change Log
 
+* 2023-1116: 2.5.3.4 (Lisias) for KSP >= 1.2
+	+ Warns user if he is running KSP as a privileged user - seriously, guys, don't do it!
+	+ More robust `ApplicationRootPath` calculation.
+	+ Removes `KSPApiExtensions` from the main codebase, as this thing is not being properly maintained and it's there just to keep old things running while I don't update them.
+	+ Fixes a very stupid decision on creating a new helper on `KSPe.External.AddOnVersionChecker`.
+	+ Closes issues:
+		- [#63](https://github.com/net-lisias-ksp/KSPe/issues/63) KSPe.External.AddOnVersionChecker method `LoadFrom(string)` royally screwed the `LoadFrom(string, string =null)` .
+		- [#60](https://github.com/net-lisias-ksp/KSPe/issues/60) Remove KSPAPIExtensions from this repository, moving it ao another one as I did with TinyJSON .
+		- [#58](https://github.com/net-lisias-ksp/KSPe/issues/58) get_dataPath is not allowed to be called from a MonoBehaviour constructor .
+		- [#54](https://github.com/net-lisias-ksp/KSPe/issues/54) KSP **should not** be run as Privileged User (Administrator on Windows, root on UNIX) .
+	+ Related issues:
+		- [TS#318](https://github.com/TweakScale/TweakScale/issues/318) TweakScale cannot check the presens of TweakScaleCompanion .
+		- [TS#304](https://github.com/TweakScale/TweakScale/discussions/304) Possible fix for the Tweakscale Hierarchy bug .
 * 2023-0704: 2.5.3.3 (Lisias) for KSP >= 1.2
 	+ More sensible updating mechanism, coping with how Windows handles DLL files once they are loaded.
 	+ Fixes some mishaps on some Standard Dialogs.
 	+ Fixes a bug on the KSPe's Install Checker/Update Tool
 		- **You need to manually remove the older `<KSP-ROOT>/GameData/000_KSPe.dll` file if existent!** 
 * 2023-0703: 2.5.3.2 (Lisias) for KSP >= 1.2
-	+ ***Dithed*** because I marvellously borked the packaging of this one. (sigh)
+	+ ***Ditched*** because I marvellously borked the packaging of this one. (sigh)
 * 2023-0703: 2.5.3.1 (Lisias) for KSP >= 1.2
-	+ ***Dithed*** as a new release were made in less than 24 hours. 
+	+ ***Ditched*** as a new release were made in less than 24 hours. 
 * 2023-0629: 2.5.3.0 (Lisias) for KSP >= 1.2
 	+ New Standard Error Handler for the lazy developer! ;) 
 		- With new Standard Error/Alert/Warning Dialogs too!
@@ -430,3 +443,50 @@
 		- KSPe.IO.PluginConfiguration
 		- KSPe.KspConfig
 		- KSPe.PluginConfig 
+* 2015-0625: 1.7.5 (Swamp-Ig) for KSP 1.0.4
+	+ Recompile for KSP 1.0.4
+* 2015-0502: 1.7.4 (Swamp-Ig) for KSP 1.0
+	+ Compatible with KSP 1.0.2
+* 2015-0427: 1.7.3 (Swamp-Ig) for KSP 1.0
+	+ Fixed for 1.0, thanks to @taniwha-qf  (as usual)
+* 2014-1216: 1.7.2 (Swamp-Ig) for KSP 0.90
+	+ Recompiled for KSP 0.90
+* 2014-1009: 1.7.1 (Swamp-Ig) for KSP 0.25
+	+ Compiled for KSP 0.25
+* 2014-0802: 1.7.0 (Swamp-Ig) for KSP 0.24.2
+	+ Fix multiple version handling.
+	+ Note that for this to work properly, all mods using KSPAPIExtensions need to be updated. After that, they should be free to drift again.
+* 2014-0725: 1.6.3 (Swamp-Ig) for KSP 0.24.2
+	+ Update to KSP 0.24.2
+* 2014-0725: 1.6.2 (Swamp-Ig) for KSP 0.24.1
+	+ Update checker for .24.1
+* 2014-0724: 1.6.1 (Swamp-Ig) for KSP 0.24
+	+ More fixes from taniwha:
+		- Avoid NRE in OutputLocksModified
+		- Avoid a divide-by-zero
+		- Avoid recursive value change events.
+* 2014-0720: 1.6.0 (Swamp-Ig) for KSP 0.24
+	+ fix by taniwha to part resource tweaker code for .24
+	+ update CompatibilityChecker for .24 and to latest code from Majiir
+* 2014-0612: 1.5.1 (Swamp-Ig) for KSP 0.23.5
+	+ Bugfix #6. Needed for some things to work with Alt-Click in VAB.
+* 2014-0607: 1.5.0 (Swamp-Ig) for KSP 0.23.5
+	+ Added ConfigNodeUtils - adds some extra methods to ConfigNodes, and ParseUtils for parsing various types.
+	+ Thanks for stupid_chris for the submission.
+* 2014-0601: 1.4.5 (Swamp-Ig) for KSP 0.23.5
+	+ Small improvement to RegisterOnUpdateEditor
+* 2014-0521: 1.4.4 (Swamp-Ig) for KSP 0.23.5
+	+ Bugfixes and improvements
+* 2014-0518: 1.4.3 (Swamp-Ig) for KSP 0.23.5
+	+ New messages for root part adding / removing
+	+ FormatMass in MathUtils
+* 2014-0517: 1.4.2 (Swamp-Ig) for KSP 0.23.5
+	+ Fixed some issues with multiple copies of the same dll being present.
+* 2014-0514: 1.4.1 (Swamp-Ig) for KSP 0.23.5
+	+ Multiple loads of the exact same KSPAddon when several copies of the same version dll present
+* 2014-0503: 1.4.0 (Swamp-Ig) for KSP 0.23.5
+	+ A number of updates
+* 2014-0428: 1.3.4 (Swamp-Ig) for KSP 0.23.5
+	+ Released with [ProceduralParts v0.9.4](https://github.com/Swamp-Ig/ProceduralParts/releases/tag/v0.9.4)
+* 2014-0421: 1.3.1 (Swamp-Ig) for KSP 0.23.5
+	+ Released with v0.9.2 of ProceduralParts.
