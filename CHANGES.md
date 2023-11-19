@@ -1,5 +1,9 @@
 # KSP Enhanced /L :: Changes
 
+* 2023-1118: 2.5.3.5 (Lisias) for KSP >= 1.2
+	+ Deactivating the Elevated Privileges checking, as there's something fishy on the C# Libraries that handle it (as usual)
+	+ Related issues:
+		- [#64](https://github.com/net-lisias-ksp/KSPe/issues/64) Error on KSP launch .
 * 2023-1116: 2.5.3.4 (Lisias) for KSP >= 1.2
 	+ Warns user if he is running KSP as a privileged user - seriously, guys, don't do it!
 	+ More robust `ApplicationRootPath` calculation.
