@@ -117,6 +117,8 @@ namespace KSPe.Multiplatform.LowLevelTools {
 		{
 			get
 			{
+				if (Windows.IsThisWindows) return false;
+
 				using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
 				{
 					WindowsPrincipal principal = new WindowsPrincipal(identity);
