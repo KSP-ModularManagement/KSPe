@@ -187,7 +187,7 @@ namespace KSPe.Util
 		public static Version LoadVersion<T>() => LoadVersion(IO.Hierarchy<T>.GAMEDATA.Solve(typeof(T).Namespace));
 		public static Version LoadVersion(string addonName, string vendor = null)
 		{
-			return LoadVersion(
+			return LoadVersionFromFile(
 				(
 					(null != vendor)
 						? IO.Hierarchy.GAMEDATA.Solve(vendor, addonName)
