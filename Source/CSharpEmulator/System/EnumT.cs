@@ -1,6 +1,6 @@
 ﻿/*
 	This file is part of CSharpEmulator, a component for KSP Enhanced /L
-		© 2018-2023 LisiasT : http://lisias.net <support@lisias.net>
+		© 2018-2024 LisiasT : http://lisias.net <support@lisias.net>
 
 	This file is based on previous work by Damien Guard, licensed under Apache 2.0 at
 	https://github.com/damieng/DamienGKit/blob/master/CSharp/DamienG.Library/System/EnumT.cs

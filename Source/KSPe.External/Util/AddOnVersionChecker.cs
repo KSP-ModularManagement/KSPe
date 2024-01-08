@@ -1,7 +1,7 @@
 ﻿/*
 	This file is part of KSPe.External, a component for KSP Enhanced /L
 	unless when specified otherwise below this code is:
-		© 2018-2023 LisiasT : http://lisias.net <support@lisias.net>
+		© 2018-2024 LisiasT : http://lisias.net <support@lisias.net>
 
 	KSP Enhanced /L is double licensed, as follows:
 		* SKL 1.0 : https://ksp.lisias.net/SKL-1_0.txt
@@ -14,7 +14,7 @@
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 	You should have received a copy of the SKL Standard License 1.0
-    along with KSP Enhanced /L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.
+	along with KSP Enhanced /L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.
 
 	You should have received a copy of the GNU General Public License 2.0
 	along with KSP Enhanced /L. If not, see <https://www.gnu.org/licenses/>.
@@ -192,7 +192,7 @@ namespace KSPe.Util
 					(null != vendor)
 						? IO.Hierarchy.GAMEDATA.Solve(vendor, addonName)
 						: IO.Hierarchy.GAMEDATA.Solve(addonName)
-				) + ".version"
+				) + addonName + ".version"
 			);
 		}
 

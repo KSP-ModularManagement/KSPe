@@ -1,6 +1,6 @@
 ﻿// /*
 // 	This file is part of KSPe.Unity2019, a component for KSP Enhanced /L
-// 	© 2018-2023 LisiasT : http://lisias.net <support@lisias.net>
+// 	© 2018-2024 LisiasT : http://lisias.net <support@lisias.net>
 //
 // 	KSP Enhanced /L is double licensed, as follows:
 //

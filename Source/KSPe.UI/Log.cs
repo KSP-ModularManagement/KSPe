@@ -1,6 +1,6 @@
 ﻿/*
 	This file is part of KSPe.UI, a component for KSP Enhanced /L
-		© 2018-2023 LisiasT : http://lisias.net <support@lisias.net>
+		© 2018-2024 LisiasT : http://lisias.net <support@lisias.net>
 
 	THIS FILE is licensed to you under:
 
