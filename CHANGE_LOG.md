@@ -1,9 +1,11 @@
 # KSP Enhanced /L :: Change Log
 
-* 2024-0106: 2.5.3.6 (Lisias) for KSP >= 1.2
+* 2024-0107: 2.5.3.7 (Lisias) for KSP >= 1.2
 	+ Fixes a regression due a badly executed job on [issue #63](https://github.com/net-lisias-ksp/KSPe/issues/63).	 
 	+ Reworks issues:
 		- [#63](https://github.com/net-lisias-ksp/KSPe/issues/63) KSPe.External.AddOnVersionChecker method `LoadFrom(string)` royally screwed the `LoadFrom(string, string =null)` .
+* 2024-0106: 2.5.3.6 (Lisias) for KSP >= 1.2
+	+ ***DITCHED*** as I issued a new release less than 24 hours after releasing this.
 * 2023-1118: 2.5.3.5 (Lisias) for KSP >= 1.2
 	+ Deactivating the Elevated Privileges checking, as there's something fishy on the C# Libraries that handle it (as usual)
 	+ Related issues:
