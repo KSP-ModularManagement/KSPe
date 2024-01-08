@@ -184,14 +184,25 @@ namespace KSPe.Util
 			public Versioning KSP_VERSION_MAX;
 		}
 
-		public static Version LoadVersion<T>() => LoadVersion(IO.Hierarchy<T>.GAMEDATA.Solve(typeof(T).Namespace));
-		public static Version LoadVersion(string addonName, string vendor = null)
+		public static Version LoadVersion<T>() => LoadVersionFromFile(
+				IO.Path.Combine(
+					SystemTools.Reflection.Version<T>.EffectivePath
+					, SystemTools.Reflection.Version<T>.Namespace + ".version"
+				)
+			);
+
+		public static Version LoadVersion(string addonName, string vendor = null) => LoadVersion(addonName, false, vendor);
+		public static Version LoadVersion(string addonName, bool nameSpaceAsDirectory, string vendor = null)
 		{
 			return LoadVersionFromFile(
 				(
-					(null != vendor)
-						? IO.Hierarchy.GAMEDATA.Solve(vendor, addonName)
-						: IO.Hierarchy.GAMEDATA.Solve(addonName)
+					nameSpaceAsDirectory
+						?	IO.Hierarchy.GAMEDATA.Solve(vendor??".", addonName.Split('.')) // Dirty Hack from Hell! the Path.Combine will get rid of the "." later!
+						:	(
+								(null != vendor)
+									? IO.Hierarchy.GAMEDATA.Solve(vendor, addonName)
+									: IO.Hierarchy.GAMEDATA.Solve(addonName)
+							)
 				) + addonName + ".version"
 			);
 		}
