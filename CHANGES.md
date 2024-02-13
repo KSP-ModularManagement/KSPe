@@ -1,5 +1,7 @@
 # KSP Enhanced /L :: Changes
 
+* 2024-0213: 2.5.3.8 (Lisias) for KSP >= 1.2
+	+ More friendly approach on handling issues when CKAN is present.
 * 2024-0107: 2.5.3.7 (Lisias) for KSP >= 1.2
 	+ Fixes a regression due a badly executed job on [issue #63](https://github.com/net-lisias-ksp/KSPe/issues/63).	 
 	+ Reworks issues:
