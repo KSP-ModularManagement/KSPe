@@ -30,9 +30,14 @@ namespace KSPe
 		[UsedImplicitly]
 		private void Start()
 		{
-			LOG.force("Version {0} for {1}. {2}", Version.Text, Light.Target.AddOn, Util.CkanTools.CheckCkanRepository() ? "**UNSUPPORTED** due CKAN" : "");
-			if (Util.CkanTools.CheckCkanInstalled() && !Util.CkanTools.CheckCkanRepository())
-				Log.force("CKAN was detected on this KSP instalment.");
+			LOG.force("Version {0} for {1}", Version.Text, Light.Target.AddOn);
+			if (Util.CkanTools.CheckCkanInstalled())
+				Log.force(
+					"CKAN was detected on this KSP instalment using {0} dataset.",
+					Util.CkanTools.CheckCkanRepository()
+						? "KSP-CKAN"
+						: "alternative"
+				);
 		}
 
 		[UsedImplicitly]

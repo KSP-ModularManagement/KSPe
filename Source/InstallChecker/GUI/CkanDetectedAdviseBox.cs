@@ -50,6 +50,7 @@ Visit {0} for details.";
 #endif
 
 			TimeSpan deltaT = DateTime.Now - Globals.Instance.LastCkanMessage;
+			deltaT = TimeSpan.Zero; // Deactivate the Dialog by brute force.
 			if (!ModuleManagerTools.IsLoadedFromCache && deltaT.TotalDays > DAYS_BETWEEN_DIALOGS)
 			{
 				Globals.Instance.HitCkanMessage();

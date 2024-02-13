@@ -31,7 +31,7 @@ namespace KSPe.Util
 {
 	public static class CkanTools
 	{
-		public const string CKAN_URL = "https://ksp.lisias.net/blogs/rants/on-CKAN/";
+		public const string CKAN_URL = "https://ksp.lisias.netblogs/tech-support/CKAN/";
 
 		internal class MyUrlHandler : UrlTools.OpenAndExitHandler
 		{
