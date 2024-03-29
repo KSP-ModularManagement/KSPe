@@ -23,7 +23,7 @@ namespace KSPe.InstallChecker
 		{
 			if (!SanityLib.CheckInstalled("000_KSPe"))
 			{
-				Log.warn("KSPe's directory was removed. The bootstrap is removing itself from the Loading System, but you will need to delete manually some `*.delete-me` files in your `GameData`. Nothing bad will happen by leaving them there, however.");
+				Log.warn("KSPe's directory was removed. The bootstrap is removing itself from the Loading System, but you may need to delete manually some `*.delete-me` files in your `GameData`. Nothing bad will happen by leaving them there, however.");
 				if (!SanityLib.KillMyself("001_KSPe.dll"))
 					SanityLib.KillMyself("000_KSPe.dll");
 				return;
