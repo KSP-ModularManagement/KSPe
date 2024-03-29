@@ -30,6 +30,11 @@ namespace KSPe
 			UnityEngine.Debug.LogFormat("[KSPe.InstallChecker] INFO: " + msg, @params);
 		}
 
+		internal static void warn(string msg, params object[] @params)
+		{
+			UnityEngine.Debug.LogWarningFormat("[KSPe.InstallChecker] WARNING: " + msg, @params);
+		}
+
 		internal static void detail(string msg, params object[] @params)
 		{
 			UnityEngine.Debug.LogFormat("[KSPe.InstallChecker] DETAIL: " + msg, @params);

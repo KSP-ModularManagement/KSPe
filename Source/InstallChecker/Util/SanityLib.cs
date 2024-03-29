@@ -103,6 +103,25 @@ namespace KSPe.InstallChecker
 			return null;
 		}
 
+		internal static bool CheckInstalled(string directory)
+		{
+			string pathname = System.IO.Path.Combine(CalcGameData(), directory);
+			return SIO.Directory.Exists(pathname);
+		}
+
+		internal static bool KillMyself(string dllName)
+		{
+			string pathname = System.IO.Path.Combine(CalcGameData(), dllName);
+			bool r = System.IO.File.Exists(pathname);
+			if (r) Delete(pathname);
+			else
+			{
+				string tempname = pathname + DELETEME;
+				if (SIO.File.Exists(tempname)) SIO.File.Delete(tempname);
+			}
+			return r;
+		}
+
 		private static bool ShouldUpdate(string srcfn, string tgtfn)
 		{
 			// Squad, In your endless eagerness to do anything but the technically correct solution, royally screwed up the
