@@ -104,5 +104,181 @@ namespace KSPe.Util
 			public static UnityEngine.QuaternionD from(UnityEngine.Quaternion v) => new UnityEngine.QuaternionD(v.x, v.y, v.z, v.w);
 			public static UnityEngine.QuaternionD from(UnityEngine.QuaternionD v) => new UnityEngine.QuaternionD(v.x, v.y, v.z, v.w);
 		}
+		public static class Matrix4x4
+		{ 
+			public static UnityEngine.Matrix4x4 from(int[] array)
+			{
+				UnityEngine.Matrix4x4 r = new UnityEngine.Matrix4x4();
+				for (int i = 0; i < array.Length; ++i) r[i] = array[i];
+				return r;
+			}
+
+			public static UnityEngine.Matrix4x4 from(long[] array)
+			{
+				UnityEngine.Matrix4x4 r = new UnityEngine.Matrix4x4();
+				for (int i = 0; i < array.Length; ++i) r[i] = array[i];
+				return r;
+			}
+
+			public static UnityEngine.Matrix4x4 from(float[] array)
+			{
+				UnityEngine.Matrix4x4 r = new UnityEngine.Matrix4x4();
+				for (int i = 0; i < array.Length; ++i) r[i] = array[i];
+				return r;
+			}
+
+			public static UnityEngine.Matrix4x4 from(double[] array)
+			{
+				UnityEngine.Matrix4x4 r = new UnityEngine.Matrix4x4();
+				for (int i = 0; i < array.Length; ++i) r[i] = (float)array[i];
+				return r;
+			}
+
+			public static UnityEngine.Matrix4x4 from(UnityEngine.Matrix4x4 v)
+			{
+				UnityEngine.Matrix4x4 r = new UnityEngine.Matrix4x4();
+				for (int i = 0; i < 16; ++i) r[i] = v[i];
+				return r;
+			}
+
+			public static UnityEngine.Matrix4x4 from(global::Matrix4x4D v)
+			{
+				UnityEngine.Matrix4x4 r = new UnityEngine.Matrix4x4();
+				int i = 0;
+				r[i++] = (float)v.m00;
+				r[i++] = (float)v.m01;
+				r[i++] = (float)v.m02;
+				r[i++] = (float)v.m03;
+				r[i++] = (float)v.m10;
+				r[i++] = (float)v.m11;
+				r[i++] = (float)v.m12;
+				r[i++] = (float)v.m13;
+				r[i++] = (float)v.m20;
+				r[i++] = (float)v.m21;
+				r[i++] = (float)v.m22;
+				r[i++] = (float)v.m23;
+				r[i++] = (float)v.m30;
+				r[i++] = (float)v.m31;
+				r[i++] = (float)v.m32;
+				r[i++] = (float)v.m33;
+				return r;
+			}
+		}
+		public static class Matrix4x4d
+		{ 
+			public static global::Matrix4x4D from(int[] array)
+			{
+				global::Matrix4x4D r = new global::Matrix4x4D();
+				int i = 0;
+				r.m00 = array[i++];
+				r.m01 = array[i++];
+				r.m02 = array[i++];
+				r.m03 = array[i++];
+				r.m10 = array[i++];
+				r.m11 = array[i++];
+				r.m12 = array[i++];
+				r.m13 = array[i++];
+				r.m20 = array[i++];
+				r.m21 = array[i++];
+				r.m22 = array[i++];
+				r.m23 = array[i++];
+				r.m30 = array[i++];
+				r.m31 = array[i++];
+				r.m32 = array[i++];
+				r.m33 = array[i++];
+				return r;
+			}
+
+			public static global::Matrix4x4D from(long[] array)
+			{
+				global::Matrix4x4D r = new global::Matrix4x4D();
+				int i = 0;
+				r.m00 = array[i++];
+				r.m01 = array[i++];
+				r.m02 = array[i++];
+				r.m03 = array[i++];
+				r.m10 = array[i++];
+				r.m11 = array[i++];
+				r.m12 = array[i++];
+				r.m13 = array[i++];
+				r.m20 = array[i++];
+				r.m21 = array[i++];
+				r.m22 = array[i++];
+				r.m23 = array[i++];
+				r.m30 = array[i++];
+				r.m31 = array[i++];
+				r.m32 = array[i++];
+				r.m33 = array[i++];
+				return r;
+			}
+
+			public static global::Matrix4x4D from(float[] array)
+			{
+				global::Matrix4x4D r = new global::Matrix4x4D();
+				int i = 0;
+				r.m00 = array[i++];
+				r.m01 = array[i++];
+				r.m02 = array[i++];
+				r.m03 = array[i++];
+				r.m10 = array[i++];
+				r.m11 = array[i++];
+				r.m12 = array[i++];
+				r.m13 = array[i++];
+				r.m20 = array[i++];
+				r.m21 = array[i++];
+				r.m22 = array[i++];
+				r.m23 = array[i++];
+				r.m30 = array[i++];
+				r.m31 = array[i++];
+				r.m32 = array[i++];
+				r.m33 = array[i++];
+				return r;
+			}
+
+			public static global::Matrix4x4D from(double[] array)
+			{
+				global::Matrix4x4D r = new global::Matrix4x4D();
+				int i = 0;
+				r.m00 = array[i++];
+				r.m01 = array[i++];
+				r.m02 = array[i++];
+				r.m03 = array[i++];
+				r.m10 = array[i++];
+				r.m11 = array[i++];
+				r.m12 = array[i++];
+				r.m13 = array[i++];
+				r.m20 = array[i++];
+				r.m21 = array[i++];
+				r.m22 = array[i++];
+				r.m23 = array[i++];
+				r.m30 = array[i++];
+				r.m31 = array[i++];
+				r.m32 = array[i++];
+				r.m33 = array[i++];
+				return r;
+			}
+
+			public static global::Matrix4x4D from(global::Matrix4x4D v)
+			{
+				global::Matrix4x4D r = new global::Matrix4x4D();
+				r.m00 = (float)v.m00;
+				r.m01 = (float)v.m01;
+				r.m02 = (float)v.m02;
+				r.m03 = (float)v.m03;
+				r.m10 = (float)v.m10;
+				r.m11 = (float)v.m11;
+				r.m12 = (float)v.m12;
+				r.m13 = (float)v.m13;
+				r.m20 = (float)v.m20;
+				r.m21 = (float)v.m21;
+				r.m22 = (float)v.m22;
+				r.m23 = (float)v.m23;
+				r.m30 = (float)v.m30;
+				r.m31 = (float)v.m31;
+				r.m32 = (float)v.m32;
+				r.m33 = (float)v.m33;
+				return r;
+			}
+		}
 	}
 }

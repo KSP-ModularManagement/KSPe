@@ -190,6 +190,9 @@
     <Compile Include="..\KSPe.UI\Common\Dialogs\Error.cs">
       <Link>Common\Dialogs\Error.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe\Util\Creators.cs">
+      <Link>Util\Creators.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Util\" />
