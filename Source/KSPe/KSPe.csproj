@@ -125,6 +125,7 @@
     <Compile Include="Util\Stopwatch.cs" />
     <Compile Include="Util\UrlTools.cs" />
     <Compile Include="Util\KSPUtil.cs" />
+    <Compile Include="Util\Creators.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Version.tt">
