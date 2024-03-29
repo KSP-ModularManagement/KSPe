@@ -264,7 +264,7 @@ KSPe can't work properly without it, and so anything using it will <b>NOT</b> wo
 
 	internal static class RunningAsPrivilegedUser
 	{
-		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/56";
+		private const string URL = "http://ksp.lisias.net/add-ons/KSPe/Support/running-KSP-as-privileged-user";
 		private static readonly string MSG = @"KSPe detected you are running KSP on an Priviledged Account (<b>Administrator</b> on Windows, <b>root</b> on UNIX).
 
 <B>THIS IS A SECURITY NIGHTMARE</B>, you are putting youself in serious risk and KSPe urges you to reach us for help and fix whatever is the underlying issue that made you do this stunt.
@@ -278,6 +278,11 @@ Really, really, <b>never</b> run <b>anything</b> under a Priviledged Account. It
 
 			Startup.QuitOnDestroy = shown = true;
 			if (null != GameObject.Find("KSPe.FatalError.RunningAsPrivilegedUser")) return; // Already being shown.
+			if (OPTIONS.AllowRunningAsPrivilegedUser)
+			{
+				Log.error("Fatal Error RunningAsPrivilegedUser was omitted. You really should visit {0}", URL);
+				return;
+			}
 
 			GameObject go = new GameObject("KSPe.FatalError.RunningAsPrivilegedUser");
 			FatalErrorMsgBox dlg = go.AddComponent<FatalErrorMsgBox>();

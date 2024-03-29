@@ -31,6 +31,8 @@ namespace KSPe
 		{
 			Log.force("Version {0}, on KSP {1} under Unity {2}", Version.Text, Versioning.GetVersionStringFull(), UnityEngine.Application.unityVersion);
 			SanityChecks.DoIt();
+			if (OPTIONS.SuicidalMode)
+				Log.force("You configured KSP to run in Suicidal Mode. Good luck!");
 		}
 
 		private void Awake()
@@ -38,7 +40,7 @@ namespace KSPe
 			if (Multiplatform.LowLevelTools.Security.isElevated)
 			{
 				FatalErrors.RunningAsPrivilegedUser.Show();
-				return;
+				if (!OPTIONS.AllowRunningAsPrivilegedUser) return;
 			}
 
 			if (null != myGameObject)
@@ -46,6 +48,7 @@ namespace KSPe
 				Log.warn("Whoopsy... It looks KSPe was loaded twice. Aborting the redundant initialisation.");
 				return;
 			}
+
 			myGameObject = new GameObject(typeof(Startup).AssemblyQualifiedName);
 			try
 			{ 
@@ -90,6 +93,14 @@ namespace KSPe
 			{
 				if (value)
 				{
+					if (OPTIONS.SuicidalMode)
+					{
+						Log.force("I was told to quit the game, but you are in Suicidal Mode and so it will be ignored.");
+						Log.force("**BE ADVISED**: your savegames are at risk and any tragedy that follows will be your own fault!");
+						Log.error("Stackdump of the caller follows.");
+						Log.stack(typeof(Startup), true);
+						return;
+					}
 					Log.fatal(1, "I was told to quit the game. Stackdump of the caller follows.");
 					Log.stack(typeof(Startup), true);
 					quitOnDestroy = value;

@@ -21,11 +21,12 @@
 */
 using System;
 using System.Collections.Generic;
+
 using KSPE = KSPe;
 
 namespace KSPe
 {
-	// CAUTION! This class CAN NOT use the KSPe Logging Facilities, as it's a dependency from it!!
+	// CAUTION! This class CAN NOT use the KSPe Logging Facilities, as it's a dependency for it!!
 	public class Globals
 	{
 		public class LogConfig
@@ -187,6 +188,18 @@ namespace KSPe
 		internal static void info(string msg, params object[] @params)
 		{
 			UnityEngine.Debug.LogFormat("[KSPe.Globals] INFO: " + msg, @params);
+		}
+	}
+
+	public static class OPTIONS
+	{
+		public static readonly bool SuicidalMode;
+		public static readonly bool AllowRunningAsPrivilegedUser;
+
+		static OPTIONS()
+		{
+			SuicidalMode = -1 != Environment.GetCommandLineArgs().IndexOf("-i-am-suicidal");
+			AllowRunningAsPrivilegedUser = SuicidalMode && -1 != Environment.GetCommandLineArgs().IndexOf("-allows-running-as-privileged-user");
 		}
 	}
 
