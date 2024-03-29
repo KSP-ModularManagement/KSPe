@@ -21,31 +21,54 @@
 */
 using System;
 using System.Linq;
-using System.Reflection;
+
+using KSPe.Util;
 
 namespace KSPe
 {
 	// FIXME: Implementar todas as chamadas, e não apenas o GetNode! Tornar a abstração 100% transparente!
 	public class ConfigNodeWithSteroids : global::ConfigNode
 	{
+		private delegate object GetValueCall(ConfigNodeWithSteroids cns, string name);
+		private static readonly DictionaryValueList<Type, GetValueCall> CUSTOM_TYPES = new DictionaryValueList<Type, GetValueCall>();
+		private readonly global::ConfigNode source;
+
 		public ConfigNodeWithSteroids() : base() { }
 		public ConfigNodeWithSteroids(string name) : base(name) { }
 		public ConfigNodeWithSteroids(string name, string vcomment) : base(name, vcomment) { }
 
-		public static ConfigNodeWithSteroids from(global::ConfigNode obj)
+		static ConfigNodeWithSteroids()
 		{
-			ConfigNodeWithSteroids r = new ConfigNodeWithSteroids();
-			obj.CopyTo(r);
-			//r.CopyFrom(obj);
+			CUSTOM_TYPES[typeof(UnityEngine.Vector2)] = GetValueVector2;
+			CUSTOM_TYPES[typeof(UnityEngine.Vector2d)] = GetValueVector2d;
+			CUSTOM_TYPES[typeof(UnityEngine.Vector3)] = GetValueVector3;
+			CUSTOM_TYPES[typeof(global::Vector3d)] = GetValueVector3d;
+			CUSTOM_TYPES[typeof(UnityEngine.Vector4)] = GetValueVector4;
+			CUSTOM_TYPES[typeof(UnityEngine.Vector4d)] = GetValueVector4d;
+			CUSTOM_TYPES[typeof(UnityEngine.Quaternion)] = GetValueQuaternion;
+			CUSTOM_TYPES[typeof(UnityEngine.QuaternionD)] = GetValueQuaternionD;
+		}
+
+		private ConfigNodeWithSteroids(global::ConfigNode source) : base()
+		{
+			this.source = source;
+			this.Rollback();
+		}
+
+		public static ConfigNodeWithSteroids from(global::ConfigNode scn)
+		{
+			ConfigNodeWithSteroids r = new ConfigNodeWithSteroids(scn);
 			return r;
 		}
 
 		public T GetValue<T>(string name)
 		{
+			if (CUSTOM_TYPES.Contains(typeof(T)))
+				return (T)CUSTOM_TYPES[typeof(T)](this, name);
+
 			string value = base.GetValue(name);
 			return (T)Convert.ChangeType(value, typeof(T));
 		}
-
 		public T GetValue<T>(string name, T defaultValue)
 		{
 			return base.HasValue(name) ? this.GetValue<T>(name) : defaultValue;
@@ -56,7 +79,6 @@ namespace KSPe
 			string value = string.Join(", ", values.Select(s => s.ToString()).ToArray());
 			return base.SetValue(name, value);
 		}
-
 		public T[] GetArrayOf<T>(string name, T[] defaultValue) => GetArrayOf<T>(name)??defaultValue;
 		public T[] GetArrayOf<T>(string name)
 		{
@@ -80,6 +102,60 @@ namespace KSPe
 			return ConfigNodeWithSteroids.from(base.GetNode(name));
 		}
 
+		public void Commit()		{ this.source.ClearData(); this.CopyTo(this.source); }
+		public void Rollback()		{ this.ClearData(); this.source.CopyTo(this); }
+
+		private static object GetValueVector2(ConfigNodeWithSteroids cns, string name)
+		{
+			float[] array = cns.GetArrayOf<float>(name);
+			return Create.Vector2.from(array);
+		}
+
+		private static object GetValueVector2d(ConfigNodeWithSteroids cns, string name)
+		{
+			double[] array = cns.GetArrayOf<double>(name);
+			return Create.Vector2d.from(array);
+		}
+
+		private static object GetValueVector3(ConfigNodeWithSteroids cns, string name)
+		{
+			float[] array = cns.GetArrayOf<float>(name);
+			return Create.Vector3.from(array);
+		}
+
+		private static object GetValueVector3d(ConfigNodeWithSteroids cns, string name)
+		{
+			double[] array = cns.GetArrayOf<double>(name);
+			return Create.Vector3d.from(array);
+		}
+
+		private static object GetValueVector4(ConfigNodeWithSteroids cns, string name)
+		{
+			float[] array = cns.GetArrayOf<float>(name);
+			return Create.Vector4.from(array);
+		}
+
+		private static object GetValueVector4d(ConfigNodeWithSteroids cns, string name)
+		{
+			double[] array = cns.GetArrayOf<double>(name);
+			return Create.Vector4d.from(array);
+		}
+
+		private static object GetValueQuaternion(ConfigNodeWithSteroids cns, string name)
+		{
+			float[] array = cns.GetArrayOf<float>(name);
+			return Create.Quaternion.from(array);
+		}
+
+		private static object GetValueQuaternionD(ConfigNodeWithSteroids cns, string name)
+		{
+			double[] array = cns.GetArrayOf<double>(name);
+			return Create.QuaternionD.from(array);
+		}
+
+#if false
+		// Old code, preserved here for sentimental reasons. :)
+		// I discovered ConfigNode.CopyTo later.
 		private void CopyFrom(Object source)
 		{
 			Type sourceType = source.GetType();
@@ -92,5 +168,6 @@ namespace KSPe
 					destinationField.SetValue(this, sourceField.GetValue(source));
 			}
 		}
+#endif
 	}
 }
