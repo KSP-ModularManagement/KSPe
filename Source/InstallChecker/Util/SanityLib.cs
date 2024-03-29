@@ -105,14 +105,14 @@ namespace KSPe.InstallChecker
 
 		internal static bool CheckInstalled(string directory)
 		{
-			string pathname = System.IO.Path.Combine(CalcGameData(), directory);
+			string pathname = SIO.Path.Combine(CalcGameData(), directory);
 			return SIO.Directory.Exists(pathname);
 		}
 
 		internal static bool KillMyself(string dllName)
 		{
-			string pathname = System.IO.Path.Combine(CalcGameData(), dllName);
-			bool r = System.IO.File.Exists(pathname);
+			string pathname = SIO.Path.Combine(CalcGameData(), dllName);
+			bool r = SIO.File.Exists(pathname);
 			if (r) Delete(pathname);
 			else
 			{
