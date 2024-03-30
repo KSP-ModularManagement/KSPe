@@ -1,7 +1,12 @@
 # KSP Enhanced /L :: Change Log
 
-* 2024-0213: 2.5.3.8 (Lisias) for KSP >= 1.2
-	+ 
+* 2024-0330: 2.5.4.0 (Lisias) for KSP >= 1.2
+	+ More UnityEnding and KSP data types serialization/deserialization support for `ConfigNodeWithSteroids`.
+		- Proper support for **writting** nodes implemented.
+	+ Some copy constructors for the mentioned data types.
+	+ Closes issues:
+		- [#65](https://github.com/net-lisias-ksp/KSPe/issues/65) Instrument the KSPe Install Checker to detect when the user deleted the Add'On Directory and kill yourself from `GameData` .
+		- [#56](https://github.com/net-lisias-ksp/KSPe/issues/56) KSP **should not** be run as Privileged User (Administrator on Windows, root on UNIX) .
 * 2024-0107: 2.5.3.7 (Lisias) for KSP >= 1.2
 	+ Fixes a regression due a badly executed job on [issue #63](https://github.com/net-lisias-ksp/KSPe/issues/63).	 
 	+ Reworks issues:
