@@ -1,7 +1,7 @@
 # KSP Enhanced /L :: Change Log
 
 * 2024-0330: 2.5.4.0 (Lisias) for KSP >= 1.2
-	+ More UnityEnding and KSP data types serialization/deserialization support for `ConfigNodeWithSteroids`.
+	+ More UnityEngine and KSP data types serialization/deserialization support for `ConfigNodeWithSteroids`.
 		- Proper support for **writting** nodes implemented.
 	+ Some copy constructors for the mentioned data types.
 	+ Closes issues:
