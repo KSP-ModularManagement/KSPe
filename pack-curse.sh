@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+echo "CurseForge packaging is not needed anymore, this thing is being redistributed in 'Modular Management' there."
+exit 0
+
 # see http://redsymbol.net/articles/unofficial-bash-strict-mode/
 set -euo pipefail
 IFS=$'\n\t'
