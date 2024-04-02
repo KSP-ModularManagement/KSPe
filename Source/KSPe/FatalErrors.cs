@@ -156,7 +156,7 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 
 	internal static class NoGameDataFound
 	{
-		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/11";
+		private const string URL = "https://github.com/KSP-ModularManagement/KSPe/issues/11";
 		private static readonly string MSG = @"KSPe could not find a GameData folder from where you fired up your KSP game.";
 
 		private static bool shown = false;
@@ -180,7 +180,7 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 
 	internal static class PwdIsNotOrigin
 	{
-		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/11";
+		private const string URL = "https://github.com/KSP-ModularManagement/KSPe/issues/11";
 		private static readonly string MSG = @"The Current Working Directory (pwd on UNIX) doesn't matches the KSPe's origin!
 
 pwd : <i>{0}</i>
@@ -209,7 +209,7 @@ When this happens, KSP may write files on the wrong place, and you can lost trac
 
 	internal static class ApplicationRootPathIsNotOrigin
 	{
-		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/12";
+		private const string URL = "https://github.com/KSP-ModularManagement/KSPe/issues/12";
 		private static readonly string MSG = @"The KSP's ApplicationRootPath (`KSPUtil.ApplicationRootPath` on code) doesn't matches the KSPe's origin!
 
 KSPUtil.ApplicationRootPath : <i>{0}</i>
@@ -238,7 +238,7 @@ When this happens, KSP may write files on the wrong place, and you can lost trac
 
 	internal static class CriticalComponentsAbsent
 	{
-		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/17";
+		private const string URL = "https://github.com/KSP-ModularManagement/KSPe/issues/17";
 		private static readonly string MSG = @"KSPe got a Fatal Error ""{0}"" while trying to load the KSPe.KSP subsystem.
 
 KSPe can't work properly without it, and so anything using it will <b>NOT</b> work neither (what means the game is unusable right now).";

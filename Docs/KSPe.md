@@ -88,9 +88,9 @@ You can use the `!` operator do restrict versions. For example, `:NEEDS[KSP-1.3,
 
 Besides not being as convenient and straight forwarded as MM [Issue #116](https://github.com/sarbian/ModuleManager/issues/116), it does the trick **now** while MM is way behind schedule on it.
 
-And, of course, **IT WORKS WITH "OFFICIAL" Module Manager** - including older versions downto [4.0.2](https://github.com/net-lisias-ksp/ModuleManager/commit/c43268f5d4ece8ef2f5c5c55537cd12db081c6cf). :)
+And, of course, **IT WORKS WITH "OFFICIAL" Module Manager** - including older versions downto [4.0.2](https://github.com/KSP-ModularManagement/ModuleManager/commit/c43268f5d4ece8ef2f5c5c55537cd12db081c6cf). :)
 
-Of course, you may want to use [Module Manager /L Experimental](https://github.com/net-lisias-ksp/ModuleManager/releases) in order to get full MM current features down to KSP 1.2.2 (the older supported by now). Yes, it uses KSPe. :)
+Of course, you may want to use [Module Manager /L Experimental](https://github.com/KSP-ModularManagement/ModuleManager/releases) in order to get full MM current features down to KSP 1.2.2 (the older supported by now). Yes, it uses KSPe. :)
 
 ### Module Manager Patch Cache detection
 

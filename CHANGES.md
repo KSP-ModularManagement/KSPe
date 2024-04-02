@@ -5,30 +5,30 @@
 		- Proper support for **writting** nodes implemented.
 	+ Some copy constructors for the mentioned data types.
 	+ Closes issues:
-		- [#65](https://github.com/net-lisias-ksp/KSPe/issues/65) Instrument the KSPe Install Checker to detect when the user deleted the Add'On Directory and kill yourself from `GameData` .
-		- [#56](https://github.com/net-lisias-ksp/KSPe/issues/56) KSP **should not** be run as Privileged User (Administrator on Windows, root on UNIX) .
+		- [#65](https://github.com/KSP-ModularManagement/KSPe/issues/65) Instrument the KSPe Install Checker to detect when the user deleted the Add'On Directory and kill yourself from `GameData` .
+		- [#56](https://github.com/KSP-ModularManagement/KSPe/issues/56) KSP **should not** be run as Privileged User (Administrator on Windows, root on UNIX) .
 * 2024-0213: 2.5.3.8 (Lisias) for KSP >= 1.2
 	+ More friendly approach on handling issues when CKAN is present.
 * 2024-0107: 2.5.3.7 (Lisias) for KSP >= 1.2
-	+ Fixes a regression due a badly executed job on [issue #63](https://github.com/net-lisias-ksp/KSPe/issues/63).	 
+	+ Fixes a regression due a badly executed job on [issue #63](https://github.com/KSP-ModularManagement/KSPe/issues/63).	 
 	+ Reworks issues:
-		- [#63](https://github.com/net-lisias-ksp/KSPe/issues/63) KSPe.External.AddOnVersionChecker method `LoadFrom(string)` royally screwed the `LoadFrom(string, string =null)` .
+		- [#63](https://github.com/KSP-ModularManagement/KSPe/issues/63) KSPe.External.AddOnVersionChecker method `LoadFrom(string)` royally screwed the `LoadFrom(string, string =null)` .
 * 2024-0106: 2.5.3.6 (Lisias) for KSP >= 1.2
 	+ ***DITCHED*** as I issued a new release less than 24 hours after releasing this.
 * 2023-1118: 2.5.3.5 (Lisias) for KSP >= 1.2
 	+ Deactivating the Elevated Privileges checking, as there's something fishy on the C# Libraries that handle it (as usual)
 	+ Related issues:
-		- [#64](https://github.com/net-lisias-ksp/KSPe/issues/64) Error on KSP launch .
+		- [#64](https://github.com/KSP-ModularManagement/KSPe/issues/64) Error on KSP launch .
 * 2023-1116: 2.5.3.4 (Lisias) for KSP >= 1.2
 	+ Warns user if he is running KSP as a privileged user - seriously, guys, don't do it!
 	+ More robust `ApplicationRootPath` calculation.
 	+ Removes `KSPApiExtensions` from the main codebase, as this thing is not being properly maintained and it's there just to keep old things running while I don't update them.
 	+ Fixes a very stupid decision on creating a new helper on `KSPe.External.AddOnVersionChecker`.
 	+ Closes issues:
-		- [#63](https://github.com/net-lisias-ksp/KSPe/issues/63) KSPe.External.AddOnVersionChecker method `LoadFrom(string)` royally screwed the `LoadFrom(string, string =null)` .
-		- [#60](https://github.com/net-lisias-ksp/KSPe/issues/60) Remove KSPAPIExtensions from this repository, moving it ao another one as I did with TinyJSON .
-		- [#58](https://github.com/net-lisias-ksp/KSPe/issues/58) get_dataPath is not allowed to be called from a MonoBehaviour constructor .
-		- [#54](https://github.com/net-lisias-ksp/KSPe/issues/54) KSP **should not** be run as Privileged User (Administrator on Windows, root on UNIX) .
+		- [#63](https://github.com/KSP-ModularManagement/KSPe/issues/63) KSPe.External.AddOnVersionChecker method `LoadFrom(string)` royally screwed the `LoadFrom(string, string =null)` .
+		- [#60](https://github.com/KSP-ModularManagement/KSPe/issues/60) Remove KSPAPIExtensions from this repository, moving it ao another one as I did with TinyJSON .
+		- [#58](https://github.com/KSP-ModularManagement/KSPe/issues/58) get_dataPath is not allowed to be called from a MonoBehaviour constructor .
+		- [#54](https://github.com/KSP-ModularManagement/KSPe/issues/54) KSP **should not** be run as Privileged User (Administrator on Windows, root on UNIX) .
 	+ Related issues:
 		- [TS#318](https://github.com/TweakScale/TweakScale/issues/318) TweakScale cannot check the presens of TweakScaleCompanion .
 		- [TS#304](https://github.com/TweakScale/TweakScale/discussions/304) Possible fix for the Tweakscale Hierarchy bug .
@@ -56,15 +56,15 @@
 	+ Related issues:
 		- [TSCF#6](https://github.com/TweakScale/Companion_Frameworks/issues?q=is%3Aissue+is%3Aclosed) Crash to desktop with version 2023.03.28.3
 	+ Closes issues:
-		- [#54](https://github.com/net-lisias-ksp/KSPe/issues/54) `KSPe.InstallChecker` is not being able to show its Modals .
-		- [#51](https://github.com/net-lisias-ksp/KSPe/issues/51) Prevent KSPe from initialising itself twice.
+		- [#54](https://github.com/KSP-ModularManagement/KSPe/issues/54) `KSPe.InstallChecker` is not being able to show its Modals .
+		- [#51](https://github.com/KSP-ModularManagement/KSPe/issues/51) Prevent KSPe from initialising itself twice.
 * 2023-0514: 2.5.2.3 (Lisias) for KSP >= 1.2
 	+ Fixes a design flaw on the `KSPe.InstallChecker`'s update mechanism that wasn't being able to tell the user to restart KSP due an updated `000_KSPe.dll`
 		- This fix is mandatory for CurseForge users, otherwise future KSPe updates will be troublesome for them.
 		- Everybody else should not be affected. 
 	+ Fixes another flaw on the thing, working around the KSP >= 1.8 `Assembly Loader/Resolver` major screw up.
 	+ Closes issues:
-		- [#54](https://github.com/net-lisias-ksp/KSPe/issues/50) Rework the Loading Mechanism.
+		- [#54](https://github.com/KSP-ModularManagement/KSPe/issues/50) Rework the Loading Mechanism.
 * 2023-0513: 2.5.2.2 (Lisias) for KSP >= 1.2
 	+ ***DITCHED***
 * 2023-0513: 2.5.2.1 (Lisias) for KSP >= 1.2
@@ -109,11 +109,11 @@
 		+ In fact, KSPe now also checks if `AppRoot()` is different from `Origin()` the same, yelling when the check fails.
 		+ Paths will be normalised the same, preventing clients from "jail breaking" the KSP's file system hierarchy.
 	+ Reworks:
-		- [#37](https://github.com/net-lisias-ksp/KSPe/issues/37) Dont get screwed by `System.IO.Directory.GetCurrentDirecrtory()` again. 
+		- [#37](https://github.com/KSP-ModularManagement/KSPe/issues/37) Dont get screwed by `System.IO.Directory.GetCurrentDirecrtory()` again. 
 	+ Closes issues:
-		- [#44](https://github.com/net-lisias-ksp/KSPe/issues/44) `KSPe.Util.SystemTools.Assembly.Loader<T>()` to cope with TweakScale Companion directory structure.
-		- [#40](https://github.com/net-lisias-ksp/KSPe/issues/40) Bug on `ConfigNodeWithSteroids.HasNode`
-		- [#37](https://github.com/net-lisias-ksp/KSPe/issues/37) Dont get screwed by `System.IO.Directory.GetCurrentDirecrtory()` again. 
-		- [#18](https://github.com/net-lisias-ksp/KSPe/issues/18) Implement a Installment check for (yet) more bordelines use cases
+		- [#44](https://github.com/KSP-ModularManagement/KSPe/issues/44) `KSPe.Util.SystemTools.Assembly.Loader<T>()` to cope with TweakScale Companion directory structure.
+		- [#40](https://github.com/KSP-ModularManagement/KSPe/issues/40) Bug on `ConfigNodeWithSteroids.HasNode`
+		- [#37](https://github.com/KSP-ModularManagement/KSPe/issues/37) Dont get screwed by `System.IO.Directory.GetCurrentDirecrtory()` again. 
+		- [#18](https://github.com/KSP-ModularManagement/KSPe/issues/18) Implement a Installment check for (yet) more bordelines use cases
 * 2023-0212: 2.5.0.0 (Lisias) for KSP >= 1.2
 	+ ***DITCHED***

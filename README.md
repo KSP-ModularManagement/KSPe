@@ -5,20 +5,20 @@ New extensions and utilities for Kerbal Space Program by Lisias.
 
 ## In a Hurry
 
-* [Latest Release](https://github.com/net-lisias-ksp/KSPe/releases)
-    + [Binaries](https://github.com/net-lisias-ksp/KSPe/tree/Archive)
-* [Source](https://github.com/net-lisias-ksp/KSPe)
-* [Issue Tracker](https://github.com/net-lisias-ksp/KSPe/issues)
+* [Latest Release](https://github.com/KSP-ModularManagement/KSPe/releases)
+    + [Binaries](https://github.com/KSP-ModularManagement/KSPe/tree/Archive)
+* [Source](https://github.com/KSP-ModularManagement/KSPe)
+* [Issue Tracker](https://github.com/KSP-ModularManagement/KSPe/issues)
 * Documentation	
 	+ [Homepage](http://ksp.lisias.net/add-ons/KSPe) on L Aerospace KSP Division
-	+ [Project's README](https://github.com/net-lisias-ksp/KSPe/blob/mestre/README.md)
-	+ [Install Instructions](https://github.com/net-lisias-ksp/KSPe/blob/mestre/INSTALL.md)
+	+ [Project's README](https://github.com/KSP-ModularManagement/KSPe/blob/mestre/README.md)
+	+ [Install Instructions](https://github.com/KSP-ModularManagement/KSPe/blob/mestre/INSTALL.md)
 	+ [Change Log](./CHANGE_LOG.md)
 	+ [Known Issues](./KNOWN_ISSUES.md)
 	+ [TODO](./TODO.md) list
 * Official Distribution Channels:
 	+ [Homepage](http://ksp.lisias.net/add-ons/KSPe) on L Aerospace
-	+ [Source and Binaries](https://github.com/net-lisias-ksp/KSPe) on GitHub.
+	+ [Source and Binaries](https://github.com/KSP-ModularManagement/KSPe) on GitHub.
 
 
 ## Description
@@ -27,13 +27,13 @@ New extensions and utilities for Kerbal Space Program by Lisias.
 
 Offer standardised, KSP version abstracted features, utilities and helpers to help the fellow KSP Add'On Author to seamless support part, present and (hopefully) future versions of KSP without needing even a recompile.
 
-See [the respective Manual](https://github.com/net-lisias-ksp/KSPe/blob/mestre/Docs/KSPe.md) for more information.
+See [the respective Manual](https://github.com/KSP-ModularManagement/KSPe/blob/mestre/Docs/KSPe.md) for more information.
 
 ### KSP API Extension
 
 Offer a compatibility layer to older Add'Ons that relies on the (now) legacy API from KSP API Extensions.
 
-See [the Manual](https://github.com/net-lisias-ksp/KSPAPIExtensions/blob/master/Docs/KSP-API-Extensions.md) for more information.
+See [the Manual](https://github.com/KSP-ModularManagement/KSPAPIExtensions/blob/master/Docs/KSP-API-Extensions.md) for more information.
 
 
 ## Installation
@@ -78,9 +78,9 @@ Please note the copyrights and trademarks in [NOTICE](./NOTICE).
 KSPe use, embed or reference previous works by:
 
 * KSP API Extensions /L
-	+ [GitHub](https://github.com/net-lisias-ksp/KSPAPIExtensions) 
+	+ [GitHub](https://github.com/KSP-ModularManagement/KSPAPIExtensions) 
 * Tiny.JSON /L
-	+ [GitHub](https://github.com/net-lisias-ksp/Tiny-JSON) 
+	+ [GitHub](https://github.com/KSP-ModularManagement/Tiny-JSON) 
 * [Rémi Gillig](https://github.com/speps)
 	+ [XInputDotNet](https://github.com/speps/XInputDotNet)
 * Microsoft

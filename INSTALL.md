@@ -60,4 +60,4 @@ The following file layout must be present after installation:
 
 * Module Manager Watch Dog
 	+ Checks if Module Manager is correctly installed on your rig, preventing you from running older or improperly installed ones.
-	+ Download it [here](https://github.com/net-lisias-ksp/ModuleManagerWatchDog/releases). 
+	+ Download it [here](https://github.com/KSP-ModularManagement/ModuleManagerWatchDog/releases). 

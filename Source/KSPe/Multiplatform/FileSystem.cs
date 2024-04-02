@@ -211,7 +211,7 @@ namespace KSPe.Multiplatform
 
 		// FIXME: Must be a smarter way to do this.
 		// CMD, PowerShell and even CygWin does it, right?
-		// See https://github.com/net-lisias-ksp/KSPe/issues/37
+		// See https://github.com/KSP-ModularManagement/KSPe/issues/37
 		public static string GetRealPathname(string path)
 		{
 			if (CASE_SENSITIVE_FILESYSTEM) return path;

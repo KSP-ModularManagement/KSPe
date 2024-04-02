@@ -26,7 +26,7 @@ namespace KSPe.Common.Dialogs.ErrorHandling
 {
 	internal static class MissingDLLErrorBox
 	{
-		private const string URL = "https://github.com/net-lisias-ksp/KSPe/issues/55";
+		private const string URL = "https://github.com/KSP-ModularManagement/KSPe/issues/55";
 
 		private static readonly string MSG = @"Unfortunately {0} didn't found a(some) DLL(s) it needs. It may be due a faulty installation, but also due the (in)famous <i>Assembly Loader/Resolver</i> bug.
 
