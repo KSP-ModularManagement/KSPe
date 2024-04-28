@@ -89,6 +89,7 @@ namespace KSPe.Util
 		public static class Type
 		{
 			private static readonly Dictionary<string, SType> TYPES = new Dictionary<string, SType>();
+			private static readonly Dictionary<SType, SType> REALIZATIONS = new Dictionary<SType, SType>();
 
 			public static class Exists
 			{
@@ -130,14 +131,19 @@ namespace KSPe.Util
 				public static SType ByInterface(string ns, string name) => ByInterfaceName(ns + "." + name);
 				public static SType ByInterfaceName(string qn)
 				{
-					lock(TYPES)
+					lock(REALIZATIONS)
 					{ 
-						if (TYPES.ContainsKey(qn)) return TYPES[qn];
+						if (TYPES.ContainsKey(qn) && REALIZATIONS.ContainsKey(TYPES[qn])) return REALIZATIONS[TYPES[qn]];
 						foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 							foreach (SType type in assembly.GetTypes())
 								foreach (SType ifc in type.GetInterfaces()) if (qn.Equals(string.Format("{0}.{1}", ifc.Namespace, ifc.Name)))
 								{
-									TYPES.Add(qn, type);
+									lock(TYPES)
+									{
+										if (!TYPES.ContainsKey(qn))
+											TYPES.Add(qn, ifc);
+									}
+									REALIZATIONS.Add(ifc, type);
 									return type;
 								}
 					}
@@ -146,11 +152,11 @@ namespace KSPe.Util
 
 				public static SType By(SType t)
 				{
-					lock(TYPES)
+					lock(REALIZATIONS)
 					{
-						if (TYPES.ContainsKey(t.FullName)) return TYPES[t.ToString()];
+						if (REALIZATIONS.ContainsKey(t)) return REALIZATIONS[t];
 						SType r = t.IsInterface ? ByInterface(t) : ByType(t);
-						TYPES.Add(r.ToString(), t);
+						REALIZATIONS.Add(t, r);
 						return r;
 					}
 					throw new DllNotFoundException("An Add'On Support DLL was not loaded. Missing Interface : " + t.FullName);
