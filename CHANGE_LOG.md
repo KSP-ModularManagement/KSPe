@@ -1,8 +1,10 @@
 # KSP Enhanced /L :: Change Log
 
-* ????-????: 2.5.?.? (Lisias) for KSP >= 1.2
+* 2024-0428: 2.5.4.1 (Lisias) for KSP >= 1.2
 	+ We have moved!
 		- The Official Repository is now on https://github.com/KSP-ModularManagement/KSPe
+	+ Fixes a incredibly stupid mistake on `KSPe.Util.SystemTools.Find.ByInterfaceName`
+		- Not one of my brightest moments, no doubt...
 * 2024-0330: 2.5.4.0 (Lisias) for KSP >= 1.2
 	+ More UnityEngine and KSP data types serialization/deserialization support for `ConfigNodeWithSteroids`.
 		- Proper support for **writting** nodes implemented.
