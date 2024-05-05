@@ -24,7 +24,7 @@ namespace KSPe
 {
 	public static class LegalMamboJambo
 	{
-		public const string Company = "L Aerospace KSP Division";
+		public const string Company = "L Aerospace/KSP Division";
 		public const string Product = "KSP Extensions";
 		public const string Copyright = "©2018-24 Lisias";
 		public const string Trademark = "KSPe";
