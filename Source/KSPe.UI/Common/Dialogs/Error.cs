@@ -65,6 +65,7 @@ Your KSP is running from:
 				fontSize = (int)Math.Floor(TITTLE_TEXT_SIZE * GameSettings.UI_SCALE),
 				fontStyle = FontStyle.Bold,
 				alignment = TextAnchor.UpperCenter,
+				richText = true,
 				wordWrap = false
 			};
 			win.normal.textColor = Color.red;

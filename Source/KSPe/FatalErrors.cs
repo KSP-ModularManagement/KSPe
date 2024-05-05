@@ -77,6 +77,7 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 				fontSize = (int)Math.Floor(TITTLE_TEXT_SIZE * GameSettings.UI_SCALE),
 				fontStyle = FontStyle.Bold,
 				alignment = TextAnchor.UpperCenter,
+				richText = true,
 				wordWrap = false
 			};
 			this.win.normal.textColor = Color.red;
@@ -91,8 +92,8 @@ KSP will close now, and an Internet Site where you can ask for help will be show
 				fontSize = (int)Math.Floor(BODY_TEXT_SIZE * GameSettings.UI_SCALE),
 				fontStyle = FontStyle.Normal,
 				alignment = TextAnchor.MiddleLeft,
+				richText = true,
 				wordWrap = true,
-				richText = true
 			};
 			this.text.normal.textColor = Color.white;
 			this.text.padding.top = (int)Math.Floor(BODY_TEXT_PADDING * GameSettings.UI_SCALE);

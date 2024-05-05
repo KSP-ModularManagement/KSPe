@@ -48,6 +48,7 @@ You <b>should not</b> ignore this message, otherwise some critical features will
 				fontSize = 26,
 				fontStyle = FontStyle.Bold,
 				alignment = TextAnchor.UpperCenter,
+				richText = true,
 				wordWrap = false
 			};
 			win.normal.textColor = Color.yellow;
@@ -61,6 +62,7 @@ You <b>should not</b> ignore this message, otherwise some critical features will
 				fontSize = 18,
 				fontStyle = FontStyle.Normal,
 				alignment = TextAnchor.MiddleLeft,
+				richText = true,
 				wordWrap = true
 			};
 			text.normal.textColor = Color.white;

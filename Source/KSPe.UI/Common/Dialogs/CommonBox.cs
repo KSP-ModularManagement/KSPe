@@ -41,6 +41,7 @@ namespace KSPe.Common.Dialogs
 					fontSize = (int)Math.Floor(TITTLE_TEXT_SIZE * GameSettings.UI_SCALE),
 					fontStyle = FontStyle.Bold,
 					alignment = TextAnchor.UpperCenter,
+					richText = true,
 					wordWrap = false
 				};
 				winStyle.focused.textColor =
@@ -68,6 +69,7 @@ namespace KSPe.Common.Dialogs
 					fontSize = (int)Math.Floor(BODY_TEXT_SIZE * GameSettings.UI_SCALE),
 					fontStyle = FontStyle.Normal,
 					alignment = TextAnchor.MiddleLeft,
+					richText = true,
 					wordWrap = true
 				};
 				textStyle.focused.textColor =

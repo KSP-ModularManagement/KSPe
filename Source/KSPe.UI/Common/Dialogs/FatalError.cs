@@ -43,7 +43,7 @@ namespace KSPe.Common.Dialogs
 This is a Show Stopper problem. Your best line of action is to click the OK button to {1}. If you choose to ignore this message and click Cancel to proceed, be advised that your savegames can get corrupted at any time, even when things appear to work by now. Backup everything <b>NOW</b> if you choose to ignore this message and proceed.
 
 Your KSP is running from:
-<b>{2}<b/>.";
+<b>{2}</b>.";
 
 		public static void Show(KSPe.Util.AbstractException ex)
 		{
@@ -72,6 +72,7 @@ Your KSP is running from:
 				fontSize = (int)Math.Floor(TITTLE_TEXT_SIZE * GameSettings.UI_SCALE),
 				fontStyle = FontStyle.Bold,
 				alignment = TextAnchor.UpperCenter,
+				richText = true,
 				wordWrap = false
 			};
 			win.normal.textColor = Color.red;
@@ -85,8 +86,8 @@ Your KSP is running from:
 				fontSize = (int)Math.Floor(BODY_TEXT_SIZE * GameSettings.UI_SCALE),
 				fontStyle = FontStyle.Normal,
 				alignment = TextAnchor.MiddleLeft,
+				richText = true,
 				wordWrap = true,
-				richText = true
 			};
 			text.normal.textColor = Color.white;
 			text.padding.top = (int)Math.Floor(BODY_TEXT_PADDING * GameSettings.UI_SCALE);

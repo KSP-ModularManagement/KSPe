@@ -49,6 +49,7 @@ Backup everything *NOW* if you choose to ignore this message and proceed.";
 				fontSize = 26,
 				fontStyle = FontStyle.Bold,
 				alignment = TextAnchor.UpperCenter,
+				richText = true,
 				wordWrap = false
 			};
 			win.normal.textColor = Color.red;
@@ -62,6 +63,7 @@ Backup everything *NOW* if you choose to ignore this message and proceed.";
 				fontSize = 18,
 				fontStyle = FontStyle.Normal,
 				alignment = TextAnchor.MiddleLeft,
+				richText = true,
 				wordWrap = true
 			};
 			text.normal.textColor = Color.white;
