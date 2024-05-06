@@ -1,5 +1,7 @@
 # KSP Enhanced /L :: Change Log
 
+* 2024-0505: 2.5.4.2 (Lisias) for KSP >= 1.2
+	+ I **Finally** remembered to activate `richText` on the dialogs boxes! #facePalm
 * 2024-0428: 2.5.4.1 (Lisias) for KSP >= 1.2
 	+ We have moved!
 		- The Official Repository is now on https://github.com/KSP-ModularManagement/KSPe
