@@ -150,9 +150,9 @@ namespace KSPe.Util
 				this.MINOR = MINOR;
 				this.PATCH = PATCH;
 				this.RELEASED_AT = DateTime.Now;		// Fake a release date as being today
-				this.UNITY_VERSION = 2019;				// Hope we are using 2019.2, as this is probably a newer KSP version still unknown.
-				this.UNITY_VERSION_MINOR = 4;			// Hope we are using 2019.2, as this is probably a newer KSP version still unknown.
-				this.UNITY_VERSION_STRING = "2019";		// Hope we are using 2019.2, as this is probably a newer KSP version still unknown.
+				this.UNITY_VERSION = 2019;				// Hope we are using 2019.4 as this is probably a newer KSP version still unknown.
+				this.UNITY_VERSION_MINOR = 4;			// Hope we are using 2019.4, as this is probably a newer KSP version still unknown.
+				this.UNITY_VERSION_STRING = "2019";		// Hope we are using 2019.4, as this is probably a newer KSP version still unknown.
 				this.CSHARP_VERSION = 46;				// Ditto
 			}
 
