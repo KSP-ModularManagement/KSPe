@@ -36,7 +36,9 @@ namespace KSPe.IO
 		public static readonly char AltDirectorySeparatorChar = SIO.Path.AltDirectorySeparatorChar;
 		public static readonly char DirectorySeparatorChar = SIO.Path.DirectorySeparatorChar;
 		public static readonly string AltDirectorySeparatorStr = ""+SIO.Path.AltDirectorySeparatorChar;
+		public static readonly string AltDirectorySeparatorRegex = '\\' == SIO.Path.AltDirectorySeparatorChar ? AltDirectorySeparatorStr + AltDirectorySeparatorStr : AltDirectorySeparatorStr;
 		public static readonly string DirectorySeparatorStr = ""+SIO.Path.DirectorySeparatorChar;
+		public static readonly string DirectorySeparatorRegex = '\\' == SIO.Path.DirectorySeparatorChar ? DirectorySeparatorStr + DirectorySeparatorStr : DirectorySeparatorStr;
 
 		[System.Obsolete ("see GetInvalidPathChars and GetInvalidFileNameChars methods.")]
 		public static readonly char[] InvalidPathChars = SIO.Path.InvalidPathChars;

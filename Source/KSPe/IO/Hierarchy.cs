@@ -107,7 +107,7 @@ namespace KSPe.IO
 			if ("SAVE" == this.name) // Tremenda gambiarra dos infernos... Caracas... :P
 					partialPathname = Regex.Replace(
 						partialPathname
-						, "^saves" + Path.DirectorySeparatorChar
+						, "^saves" + Path.DirectorySeparatorRegex
 						, "saves" + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE_SANDBOX)", "") + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
 					)
 				;
@@ -119,7 +119,7 @@ namespace KSPe.IO
 			if ("SAVE" == this.name) // Gambiarras, gambiarras, gambiarras everywhere!! :P (using the voice of Hermes from Disney's Hercules
 				this_fullPathNameMangled = Regex.Replace( 
 							this.fullPathName
-							, Path.DirectorySeparatorChar + "saves" + Path.DirectorySeparatorChar
+							, Path.DirectorySeparatorChar + "saves" + Path.DirectorySeparatorRegex
 							, Path.DirectorySeparatorChar + "saves" + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE)", "") + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
 						);
 
