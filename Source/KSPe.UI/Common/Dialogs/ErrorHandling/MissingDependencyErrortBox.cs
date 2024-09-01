@@ -26,7 +26,7 @@ namespace KSPe.Common.Dialogs.ErrorHandling
 {
 	internal static class MissingDependencyErrorBox
 	{
-		private static readonly string MSG = @"{0}Unfortunately {1} didn't found {2} installed.
+		private static readonly string MSG = @"{0}Unfortunately {1} didn't found {2}. It may be due a faulty installation, but also due the (in)famous <i>Assembly Loader/Resolver</i> bug.
 
 {3}Reason reported: <i>{4}</i>";
 
