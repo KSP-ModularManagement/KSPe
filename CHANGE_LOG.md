@@ -1,5 +1,7 @@
 # KSP Enhanced /L :: Change Log
 
+* 2024-0831: 2.5.4.4 (Lisias) for KSP >= 1.2
+	+ Somewhat better error messages, in a (futile, probably) attempt to prevent this [kind of crap](https://www.reddit.com/r/KerbalAcademy/comments/1ejaf9b/houstonerror_contradiction/).
 * 2024-0803: 2.5.4.3 (Lisias) for KSP >= 1.2
 	+ Fix a stupid mistake on handling `Regex` on Windows pathnames.
 		- Embarrassing... :(
