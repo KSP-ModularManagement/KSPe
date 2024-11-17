@@ -7,6 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>KSPe.Light</RootNamespace>
     <AssemblyName>KSPe.Light.Something</AssemblyName>
+    <AssemblyName>KSPe.Light.KourageousTourists</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>..\..\obj\KSPeLight</BaseIntermediateOutputPath>
   </PropertyGroup>
@@ -195,6 +196,7 @@
     </Compile>
     <Compile Include="..\KSPe.UI\UID.cs">
       <Link>UI\UID.cs</Link>
+    </Compile>
     <Compile Include="..\KSPe\IO\Asset\_PublicFacade.cs">
       <Link>IO\Asset\_PublicFacade.cs</Link>
     </Compile>
