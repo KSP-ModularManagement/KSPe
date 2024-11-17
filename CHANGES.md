@@ -1,5 +1,7 @@
 # KSP Enhanced /L :: Changes
 
+* 2024-1117: 2.5.4.5 (Lisias) for KSP >= 1.2
+	+ Fixed dumb mistake while solving paths from `IO.Hierarchy.GAMEDATA` 
 * 2024-0831: 2.5.4.4 (Lisias) for KSP >= 1.2
 	+ Somewhat better error messages, in a (futile, probably) attempt to prevent this [kind of crap](https://www.reddit.com/r/KerbalAcademy/comments/1ejaf9b/houstonerror_contradiction/).
 * 2024-0803: 2.5.4.3 (Lisias) for KSP >= 1.2
