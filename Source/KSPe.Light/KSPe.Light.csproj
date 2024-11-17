@@ -7,6 +7,8 @@
     <OutputType>Library</OutputType>
     <RootNamespace>KSPe.Light</RootNamespace>
     <AssemblyName>KSPe.Light.Something</AssemblyName>
+    <AssemblyName>KSPe.Light.DOE</AssemblyName>
+    <AssemblyName>KSPe.Light.KAX</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>..\..\obj\KSPeLight</BaseIntermediateOutputPath>
   </PropertyGroup>
