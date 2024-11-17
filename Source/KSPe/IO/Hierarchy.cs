@@ -115,6 +115,8 @@ namespace KSPe.IO
 			if (Path.IsPathRooted(partialPathname))
 				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
 
+			partialPathname = IO.Path.EnsureTrailingSeparatorOnDir(partialPathname, false);
+
 			string this_fullPathNameMangled = this.fullPathName;
 			if ("SAVE" == this.name) // Gambiarras, gambiarras, gambiarras everywhere!! :P (using the voice of Hermes from Disney's Hercules
 				this_fullPathNameMangled = Regex.Replace( 
