@@ -80,7 +80,7 @@ namespace KSPe.IO
 			foreach (string s in fnames)
 				combinedFnames = Path.Combine(combinedFnames, s);
 
-			string resultRelativePathName,resultFullPathName;
+			string resultRelativePathName, resultFullPathName;
 
 			this.Calculate(createDirs, combinedFnames, out resultRelativePathName, out resultFullPathName);
 
@@ -103,15 +103,15 @@ namespace KSPe.IO
 		private const string ADDONS_FOLDER = "AddOns";
 		private void Calculate(bool createDirs, string fname, out string partialPathname, out string fullPathname)
 		{
-			if (SAVE.name == this.name && null == HighLogic.CurrentGame)
-				throw new IsolatedStorageException(String.Format("Savegames can only be solved after loading or creating a game!!"));
-
 			partialPathname = Path.Combine(this.relativePathName, fname);
 			if (SAVE.name == this.name) // Tremenda gambiarra dos infernos... Caracas... :P
+				if (!SaveGameMonitor.Instance.IsValid)
+					throw new IsolatedStorageException(String.Format("Savegames can only be solved after loading or creating a game!!"));
+
 					partialPathname = Regex.Replace(
 						partialPathname
 						, "^" + SAVE.dirName + Path.DirectorySeparatorRegex
-						, SAVE.dirName + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE_SANDBOX)", "") + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
+						, SAVE.dirName + Path.DirectorySeparatorChar + SaveGameMonitor.Instance.saveDirName + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
 					)
 				;
 
@@ -125,9 +125,9 @@ namespace KSPe.IO
 				this_fullPathNameMangled = Regex.Replace( 
 							this.fullPathName
 							, Path.DirectorySeparatorChar + SAVE.dirName + Path.DirectorySeparatorRegex
-							, Path.DirectorySeparatorChar + SAVE.dirName + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE)", "") + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
-						);
-
+							, Path.DirectorySeparatorChar + SAVE.dirName + Path.DirectorySeparatorChar + SaveGameMonitor.Instance.saveDirName + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
+						)
+				;
 			string fn = Path.Combine(this_fullPathNameMangled, fname);
 			fullPathname = Path.GetFullPath(fn); // Checks against a series of ".." trying to escape the intended sandbox
 
@@ -142,7 +142,6 @@ namespace KSPe.IO
 					System.IO.Directory.CreateDirectory(d);
 			}
 			Log.debug("Hierarchy Calculate {0} {1} {2}", this.name, partialPathname, fullPathname);
-			Log.debug("CurrentGame: {0}", null == HighLogic.CurrentGame ? "NULL" : HighLogic.CurrentGame.linkURL);
 		}
 
 		internal static string CalculateRelativePath(string fullDestinationPath, string rootPath)

@@ -193,6 +193,9 @@
     <Compile Include="..\KSPe\Util\Creators.cs">
       <Link>Util\Creators.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe\IO\SaveGameMonitor.cs">
+      <Link>IO\SaveGameMonitor.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Util\" />

@@ -96,6 +96,7 @@
       <Link>Util\CkanTools.cs</Link>
     </Compile>
     <Compile Include="Mockups\KSPe\Util\UrlTools.cs" />
+    <Compile Include="KSPe.Artefacts\IO\SaveGameMonitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="KSPe.Artefacts\" />
