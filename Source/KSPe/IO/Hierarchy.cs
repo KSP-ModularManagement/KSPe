@@ -37,12 +37,14 @@ namespace KSPe.IO
 		public static readonly Hierarchy SAVE = new Hierarchy("SAVE", "saves");
 		public static readonly Hierarchy THUMB = new Hierarchy("THUMB", "thumbs");
 
-		private readonly string name;
+		internal readonly string name;
+		internal readonly string dirName;
 		internal readonly string fullPathName;
 		internal readonly string relativePathName;
 		protected Hierarchy(string name)
 		{
 			this.name = name;
+			this.dirName = null;
 			this.relativePathName = Path.EnsureTrailingSeparatorOnDir(".", true);
 			this.fullPathName = Path.EnsureTrailingSeparatorOnDir(
 				Path.GetFullPath(Path.Combine(ROOTPATH, relativePathName)) // Ensures any path shenanigans are resolved.
@@ -51,6 +53,7 @@ namespace KSPe.IO
 		protected Hierarchy(string name, string dirName)
 		{
 			this.name = name;
+			this.dirName = dirName;
 			this.fullPathName = Path.EnsureTrailingSeparatorOnDir(
 				Path.GetFullPath(Path.Combine(ROOTPATH, dirName)) // Ensures any path shenanigans are resolved.
 				, true);
