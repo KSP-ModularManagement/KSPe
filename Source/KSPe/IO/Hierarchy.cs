@@ -34,7 +34,7 @@ namespace KSPe.IO
 		public static readonly Hierarchy PLUGINDATA = new Hierarchy("PLUGINDATA", "PluginData");
 		public static readonly Hierarchy LOCALDATA = new Hierarchy("LOCALDATA", Path.Combine(GAMEDATA.relativePathName, "__LOCAL"));
 		public static readonly Hierarchy SCREENSHOT = new Hierarchy("SCREENSHOT", "Screenshots");
-		public static readonly Hierarchy SAVE = new Hierarchy("SAVE", "saves");
+		public static readonly Hierarchy SAVE = new HierarchySave();
 		public static readonly Hierarchy THUMB = new Hierarchy("THUMB", "thumbs");
 
 		internal readonly string name;
@@ -100,39 +100,18 @@ namespace KSPe.IO
 			return resultFullPathName;
 		}
 
-		private const string ADDONS_FOLDER = "AddOns";
-		private void Calculate(bool createDirs, string fname, out string partialPathname, out string fullPathname)
+		protected virtual void Calculate(bool createDirs, string fname, out string partialPathname, out string fullPathname)
 		{
 			partialPathname = Path.Combine(this.relativePathName, fname);
-			if (SAVE.name == this.name) // Tremenda gambiarra dos infernos... Caracas... :P
-				if (!SaveGameMonitor.Instance.IsValid)
-					throw new IsolatedStorageException(String.Format("Savegames can only be solved after loading or creating a game!!"));
-
-					partialPathname = Regex.Replace(
-						partialPathname
-						, "^" + SAVE.dirName + Path.DirectorySeparatorRegex
-						, SAVE.dirName + Path.DirectorySeparatorChar + SaveGameMonitor.Instance.saveDirName + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
-					)
-				;
 
 			if (Path.IsPathRooted(partialPathname))
 				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
 
 			partialPathname = IO.Path.EnsureTrailingSeparatorOnDir(partialPathname, false);
-
-			string this_fullPathNameMangled = this.fullPathName;
-			if (SAVE.name == this.name) // Gambiarras, gambiarras, gambiarras everywhere!! :P (using the voice of Hermes from Disney's Hercules
-				this_fullPathNameMangled = Regex.Replace( 
-							this.fullPathName
-							, Path.DirectorySeparatorChar + SAVE.dirName + Path.DirectorySeparatorRegex
-							, Path.DirectorySeparatorChar + SAVE.dirName + Path.DirectorySeparatorChar + SaveGameMonitor.Instance.saveDirName + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
-						)
-				;
-			string fn = Path.Combine(this_fullPathNameMangled, fname);
+			string fn = Path.Combine(this.fullPathName, fname);
 			fullPathname = Path.GetFullPath(fn); // Checks against a series of ".." trying to escape the intended sandbox
 
-			Log.debug("IsolatedStorageCheck full {0} ; mangled {1}", fullPathname, this_fullPathNameMangled);
-			if (!fullPathname.StartsWith(this_fullPathNameMangled, StringComparison.Ordinal))
+			if (!fullPathname.StartsWith(this.fullPathName, StringComparison.Ordinal))
 				throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the sandboxed file system! [{0}]", partialPathname));
 
 			if (createDirs)
@@ -177,6 +156,58 @@ namespace KSPe.IO
 
 			//From now on, we **want** the trailling "/" on every pathname that it's a directory.
 			return Path.EnsureTrailingSeparatorOnDir(relativePath.ToString(), imSureItsDir);
+		}
+	}
+
+	public class HierarchySave: Hierarchy
+	{
+		internal new string fullPathName;
+		internal new string relativePathName;
+		internal HierarchySave() : base("SAVE", "saves") { }
+
+		new public String ToString() { return this.name; }
+
+		private const string ADDONS_FOLDER = "AddOns";
+		protected override void Calculate(bool createDirs, string fname, out string partialPathname, out string fullPathname)
+		{
+			if (!SaveGameMonitor.Instance.IsValid)
+				throw new IsolatedStorageException(String.Format("Savegames can only be solved after loading or creating a game!!"));
+
+			partialPathname = Path.Combine(this.relativePathName, fname);
+			partialPathname = Regex.Replace(
+					partialPathname
+					, "^" + SAVE.dirName + Path.DirectorySeparatorRegex
+					, SAVE.dirName + Path.DirectorySeparatorChar + SaveGameMonitor.Instance.saveDirName + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
+				)
+			;
+
+			if (Path.IsPathRooted(partialPathname))
+				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
+
+			partialPathname = IO.Path.EnsureTrailingSeparatorOnDir(partialPathname, false);
+
+			string this_fullPathNameMangled = this.fullPathName;
+			this_fullPathNameMangled = Regex.Replace( 
+					this.fullPathName
+					, Path.DirectorySeparatorChar + SAVE.dirName + Path.DirectorySeparatorRegex
+					, Path.DirectorySeparatorChar + SAVE.dirName + Path.DirectorySeparatorChar + SaveGameMonitor.Instance.saveDirName + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
+				)
+			;
+
+			string fn = Path.Combine(this_fullPathNameMangled, fname);
+			fullPathname = Path.GetFullPath(fn); // Checks against a series of ".." trying to escape the intended sandbox
+
+			Log.debug("IsolatedStorageCheck full {0} ; mangled {1}", fullPathname, this_fullPathNameMangled);
+			if (!fullPathname.StartsWith(this_fullPathNameMangled, StringComparison.Ordinal))
+				throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the sandboxed file system! [{0}]", partialPathname));
+
+			if (createDirs)
+			{
+				string d = System.IO.Path.GetDirectoryName(fullPathname);
+				if (!Directory.Exists(d))
+					System.IO.Directory.CreateDirectory(d);
+			}
+			Log.debug("HierarchySave Calculate {0} {1} {2}", this.name, partialPathname, fullPathname);
 		}
 	}
 }
