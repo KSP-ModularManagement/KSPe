@@ -27,6 +27,8 @@ using AccessControlSections =  System.Security.AccessControl.AccessControlSectio
 
 namespace KSPe.IO
 {
+	// TODO: Make the whole thing **Internal** as soon as possible.
+	// NOTE: Ignore the Obsolete Warning inside this project until there.
 	[System.Obsolete("KSPe.IO.Directory is disencouraged.")]
 	public static class Directory
 	{

@@ -100,15 +100,15 @@ namespace KSPe.IO
 		private const string ADDONS_FOLDER = "AddOns";
 		private void Calculate(bool createDirs, string fname, out string partialPathname, out string fullPathname)
 		{
-			if ("SAVE" == this.name && null == HighLogic.CurrentGame)
+			if (SAVE.name == this.name && null == HighLogic.CurrentGame)
 				throw new IsolatedStorageException(String.Format("Savegames can only be solved after loading or creating a game!!"));
 
 			partialPathname = Path.Combine(this.relativePathName, fname);
-			if ("SAVE" == this.name) // Tremenda gambiarra dos infernos... Caracas... :P
+			if (SAVE.name == this.name) // Tremenda gambiarra dos infernos... Caracas... :P
 					partialPathname = Regex.Replace(
 						partialPathname
-						, "^saves" + Path.DirectorySeparatorRegex
-						, "saves" + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE_SANDBOX)", "") + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
+						, "^" + SAVE.dirName + Path.DirectorySeparatorRegex
+						, SAVE.dirName + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE_SANDBOX)", "") + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
 					)
 				;
 
@@ -118,11 +118,11 @@ namespace KSPe.IO
 			partialPathname = IO.Path.EnsureTrailingSeparatorOnDir(partialPathname, false);
 
 			string this_fullPathNameMangled = this.fullPathName;
-			if ("SAVE" == this.name) // Gambiarras, gambiarras, gambiarras everywhere!! :P (using the voice of Hermes from Disney's Hercules
+			if (SAVE.name == this.name) // Gambiarras, gambiarras, gambiarras everywhere!! :P (using the voice of Hermes from Disney's Hercules
 				this_fullPathNameMangled = Regex.Replace( 
 							this.fullPathName
-							, Path.DirectorySeparatorChar + "saves" + Path.DirectorySeparatorRegex
-							, Path.DirectorySeparatorChar + "saves" + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE)", "") + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
+							, Path.DirectorySeparatorChar + SAVE.dirName + Path.DirectorySeparatorRegex
+							, Path.DirectorySeparatorChar + SAVE.dirName + Path.DirectorySeparatorChar + HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE)", "") + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
 						);
 
 			string fn = Path.Combine(this_fullPathNameMangled, fname);
@@ -177,5 +177,4 @@ namespace KSPe.IO
 			return Path.EnsureTrailingSeparatorOnDir(relativePath.ToString(), imSureItsDir);
 		}
 	}
-
 }
