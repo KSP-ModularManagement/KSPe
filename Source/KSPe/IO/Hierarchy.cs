@@ -23,6 +23,8 @@ using System;
 using System.IO.IsolatedStorage;
 using System.Text.RegularExpressions;
 
+using SIO = System.IO;
+
 namespace KSPe.IO
 {
 	public class Hierarchy
@@ -100,27 +102,30 @@ namespace KSPe.IO
 			return resultFullPathName;
 		}
 
-		protected virtual void Calculate(bool createDirs, string fname, out string partialPathname, out string fullPathname)
+		protected virtual void Calculate(bool createDirs, string fname, out string partialPathNameResult, out string fullPathNameResult)
 		{
-			partialPathname = Path.Combine(this.relativePathName, fname);
+			partialPathNameResult = Path.Combine(this.relativePathName, fname);
 
-			if (Path.IsPathRooted(partialPathname))
-				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
+			if (Path.IsPathRooted(partialPathNameResult))
+				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathNameResult));
 
-			partialPathname = IO.Path.EnsureTrailingSeparatorOnDir(partialPathname, false);
-			string fn = Path.Combine(this.fullPathName, fname);
-			fullPathname = Path.GetFullPath(fn); // Checks against a series of ".." trying to escape the intended sandbox
+			partialPathNameResult = IO.Path.EnsureTrailingSeparatorOnDir(partialPathNameResult, false);
+			fullPathNameResult = Path.Combine(this.fullPathName, fname);
 
-			if (!fullPathname.StartsWith(this.fullPathName, StringComparison.Ordinal))
-				throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the sandboxed file system! [{0}]", partialPathname));
+			{  // Checks against a series of ".." trying to escape the intended sandbox
+				string normalizedFullPathNameResult = Path.GetFullPath(fullPathNameResult);
+				string normalizedFullPathName = Path.GetFullPath(this.fullPathName);
 
+				if (!normalizedFullPathNameResult.StartsWith(normalizedFullPathName, StringComparison.Ordinal))
+					throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the sandboxed file system! [{0}]", partialPathNameResult));
+			}
 			if (createDirs)
 			{
-				string d = System.IO.Path.GetDirectoryName(fullPathname);
+				string d = System.IO.Path.GetDirectoryName(fullPathNameResult);
 				if (!Directory.Exists(d))
 					System.IO.Directory.CreateDirectory(d);
 			}
-			Log.debug("Hierarchy Calculate {0} {1} {2}", this.name, partialPathname, fullPathname);
+			Log.debug("Hierarchy Calculate {0} {1} {2}", this.name, partialPathNameResult, fullPathNameResult);
 		}
 
 		internal static string CalculateRelativePath(string fullDestinationPath, string rootPath)
@@ -161,53 +166,55 @@ namespace KSPe.IO
 
 	public class HierarchySave: Hierarchy
 	{
-		internal new string fullPathName;
-		internal new string relativePathName;
 		internal HierarchySave() : base("SAVE", "saves") { }
+		internal static readonly string ADDONS_DIR = "AddOns";
 
 		new public String ToString() { return this.name; }
 
-		private const string ADDONS_FOLDER = "AddOns";
-		protected override void Calculate(bool createDirs, string fname, out string partialPathname, out string fullPathname)
+		protected override void Calculate(bool createDirs, string fname, out string partialPathNameResult, out string fullPathNameResult)
 		{
 			if (!SaveGameMonitor.Instance.IsValid)
 				throw new IsolatedStorageException(String.Format("Savegames can only be solved after loading or creating a game!!"));
 
-			partialPathname = Path.Combine(this.relativePathName, fname);
-			partialPathname = Regex.Replace(
-					partialPathname
+			partialPathNameResult = Path.Combine(this.relativePathName, fname);
+			partialPathNameResult = Regex.Replace(
+					partialPathNameResult
 					, "^" + SAVE.dirName + Path.DirectorySeparatorRegex
-					, SAVE.dirName + Path.DirectorySeparatorChar + SaveGameMonitor.Instance.saveDirName + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
+					, SAVE.dirName + Path.DirectorySeparatorChar + SaveGameMonitor.Instance.saveDirName + Path.DirectorySeparatorChar + ADDONS_DIR + Path.DirectorySeparatorChar
 				)
 			;
 
-			if (Path.IsPathRooted(partialPathname))
-				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathname));
+			if (Path.IsPathRooted(partialPathNameResult))
+				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathNameResult));
 
-			partialPathname = IO.Path.EnsureTrailingSeparatorOnDir(partialPathname, false);
+			partialPathNameResult = IO.Path.EnsureTrailingSeparatorOnDir(partialPathNameResult, false);
 
-			string this_fullPathNameMangled = this.fullPathName;
-			this_fullPathNameMangled = Regex.Replace( 
+			string fullPathNameMangled = Regex.Replace( 
 					this.fullPathName
 					, Path.DirectorySeparatorChar + SAVE.dirName + Path.DirectorySeparatorRegex
-					, Path.DirectorySeparatorChar + SAVE.dirName + Path.DirectorySeparatorChar + SaveGameMonitor.Instance.saveDirName + Path.DirectorySeparatorChar + ADDONS_FOLDER + Path.DirectorySeparatorChar
+					, Path.DirectorySeparatorChar + SAVE.dirName + Path.DirectorySeparatorChar + SaveGameMonitor.Instance.saveDirName + Path.DirectorySeparatorChar + ADDONS_DIR + Path.DirectorySeparatorChar
 				)
 			;
 
-			string fn = Path.Combine(this_fullPathNameMangled, fname);
-			fullPathname = Path.GetFullPath(fn); // Checks against a series of ".." trying to escape the intended sandbox
+			fullPathNameResult = Path.Combine(fullPathNameMangled, fname);
 
-			Log.debug("IsolatedStorageCheck full {0} ; mangled {1}", fullPathname, this_fullPathNameMangled);
-			if (!fullPathname.StartsWith(this_fullPathNameMangled, StringComparison.Ordinal))
-				throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the sandboxed file system! [{0}]", partialPathname));
+			// Checks against a series of ".." trying to escape the intended sandbox{
+			{
+				Log.debug("IsolatedStorageCheck full {0} ; mangled {1}", fullPathNameResult, fullPathNameMangled);
+				string normalizedFullPathname = Path.GetFullPath(fullPathNameResult);
+				string normalizedFullPathNameMangled = Path.GetFullPath(fullPathNameMangled);
+				Log.debug("IsolatedStorageCheck Normalized full {0} ; mangled {1}", normalizedFullPathname, normalizedFullPathNameMangled);
+				if (!normalizedFullPathname.StartsWith(normalizedFullPathNameMangled, StringComparison.Ordinal))
+					throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the sandboxed file system! [{0}]", partialPathNameResult));
+			}
 
 			if (createDirs)
 			{
-				string d = System.IO.Path.GetDirectoryName(fullPathname);
+				string d = System.IO.Path.GetDirectoryName(fullPathNameResult);
 				if (!Directory.Exists(d))
 					System.IO.Directory.CreateDirectory(d);
 			}
-			Log.debug("HierarchySave Calculate {0} {1} {2}", this.name, partialPathname, fullPathname);
+			Log.debug("HierarchySave Calculate {0} {1} {2}", this.name, partialPathNameResult, fullPathNameResult);
 		}
 	}
 }
