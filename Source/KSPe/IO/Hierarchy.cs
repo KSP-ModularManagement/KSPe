@@ -31,17 +31,18 @@ namespace KSPe.IO
 	{
 		internal static readonly string ROOTPATH = Path.AppRoot();
 
-		public static readonly Hierarchy ROOT = new Hierarchy("ROOT");
-		public static readonly Hierarchy GAMEDATA = new Hierarchy("GAMEDATA", "GameData");
-		public static readonly Hierarchy PLUGINDATA = new Hierarchy("PLUGINDATA", "PluginData");
-		public static readonly Hierarchy LOCALDATA = new Hierarchy("LOCALDATA", Path.Combine(GAMEDATA.relativePathName, "__LOCAL"));
-		public static readonly Hierarchy SCREENSHOT = new Hierarchy("SCREENSHOT", "Screenshots");
-		public static readonly Hierarchy SAVE = new HierarchySave();
-		public static readonly Hierarchy THUMB = new Hierarchy("THUMB", "thumbs");
+		public static readonly Hierarchy ROOT = new HierarchyCommon("ROOT");
+		public static readonly Hierarchy GAMEDATA = new HierarchyCommon("GAMEDATA", "GameData");
+		public static readonly Hierarchy PLUGINDATA = new HierarchyCommon("PLUGINDATA", "PluginData");
+		public static readonly Hierarchy LOCALDATA = new HierarchyCommon("LOCALDATA", Path.Combine(GAMEDATA.relativePathName, "__LOCAL"));
+		public static readonly Hierarchy SCREENSHOT = new HierarchyCommon("SCREENSHOT", "Screenshots");
+		public static readonly Hierarchy SAVE = new HierarchySave("SAVE", "saves");
+		public static readonly Hierarchy THUMB = new HierarchyCommon("THUMB", "thumbs");
 
 		internal readonly string name;
 		internal readonly string dirName;
 		internal readonly string fullPathName;
+
 		internal readonly string relativePathName;
 		protected Hierarchy(string name)
 		{
@@ -102,31 +103,14 @@ namespace KSPe.IO
 			return resultFullPathName;
 		}
 
-		protected virtual void Calculate(bool createDirs, string fname, out string partialPathNameResult, out string fullPathNameResult)
-		{
-			partialPathNameResult = Path.Combine(this.relativePathName, fname);
+		// I can't turn this into abstract, because it would break existing binaries!
+		protected void Calculate(bool createDirs, string fname, out string partialPathNameResult, out string fullPathNameResult)
+			=> this.CalculateGambiarra(createDirs, fname, out partialPathNameResult, out fullPathNameResult);
 
-			if (Path.IsPathRooted(partialPathNameResult))
-				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathNameResult));
-
-			partialPathNameResult = IO.Path.EnsureTrailingSeparatorOnDir(partialPathNameResult, false);
-			fullPathNameResult = Path.Combine(this.fullPathName, fname);
-
-			{  // Checks against a series of ".." trying to escape the intended sandbox
-				string normalizedFullPathNameResult = Path.GetFullPath(fullPathNameResult);
-				string normalizedFullPathName = Path.GetFullPath(this.fullPathName);
-
-				if (!normalizedFullPathNameResult.StartsWith(normalizedFullPathName, StringComparison.Ordinal))
-					throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the sandboxed file system! [{0}]", partialPathNameResult));
-			}
-			if (createDirs)
-			{
-				string d = System.IO.Path.GetDirectoryName(fullPathNameResult);
-				if (!Directory.Exists(d))
-					System.IO.Directory.CreateDirectory(d);
-			}
-			Log.debug("Hierarchy Calculate {0} {1} {2}", this.name, partialPathNameResult, fullPathNameResult);
-		}
+		// This indirection was necessary to avoid changing the ABI, as I can't turn this class into `abstract` without screwing
+		// current compiled binaries. So, yeah... Another gambiarra. :(
+		internal virtual void CalculateGambiarra(bool createDirs, string fname, out string partialPathNameResult, out string fullPathNameResult)
+			=> throw new NotImplementedException("Hierarchy.CalculateGambiarra");
 
 		internal static string CalculateRelativePath(string fullDestinationPath, string rootPath)
 		{
@@ -164,19 +148,61 @@ namespace KSPe.IO
 		}
 	}
 
+	public class HierarchyCommon : Hierarchy
+	{
+		internal HierarchyCommon(string name) : base(name) { }
+		internal HierarchyCommon(string name, string dirName) : base(name, dirName) { }
+
+		internal override void CalculateGambiarra(bool createDirs, string fname, out string partialPathNameResult, out string fullPathNameResult)
+		{
+			Calculate(this.name, this.relativePathName, this.fullPathName, createDirs, fname, out partialPathNameResult, out fullPathNameResult);
+		}
+
+		internal static void Calculate(string name, string relativePathName, string fullPathName, bool createDirs, string fname, out string partialPathNameResult, out string fullPathNameResult)
+		{
+			Log.debug("HierarchyCommon.Calculate()");
+			partialPathNameResult = Path.Combine(relativePathName, fname);
+
+			if (Path.IsPathRooted(partialPathNameResult))
+				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathNameResult));
+
+			partialPathNameResult = IO.Path.EnsureTrailingSeparatorOnDir(partialPathNameResult, false);
+			fullPathNameResult = Path.Combine(fullPathName, fname);
+
+			{  // Checks against a series of ".." trying to escape the intended sandbox
+				string normalizedFullPathNameResult = Path.GetFullPath(fullPathNameResult);
+				string normalizedFullPathName = Path.GetFullPath(fullPathName);
+
+				if (!normalizedFullPathNameResult.StartsWith(normalizedFullPathName, StringComparison.Ordinal))
+					throw new IsolatedStorageException(String.Format("partialPathname cannot have relative paths leading outside the sandboxed file system! [{0}]", partialPathNameResult));
+			}
+			if (createDirs)
+			{
+				string d = System.IO.Path.GetDirectoryName(fullPathNameResult);
+				if (!Directory.Exists(d))
+					System.IO.Directory.CreateDirectory(d);
+			}
+			Log.debug("Hierarchy Calculate {0} {1} {2}", name, partialPathNameResult, fullPathNameResult);
+		}
+	}
+
 	public class HierarchySave: Hierarchy
 	{
-		internal HierarchySave() : base("SAVE", "saves") { }
+		internal HierarchySave(string name, string dirName) : base(name, dirName) { }
 		internal static readonly string ADDONS_DIR = "AddOns";
 
-		new public String ToString() { return this.name; }
-
-		protected override void Calculate(bool createDirs, string fname, out string partialPathNameResult, out string fullPathNameResult)
+		internal override void CalculateGambiarra(bool createDirs, string fname, out string partialPathNameResult, out string fullPathNameResult)
 		{
+			Calculate(this.name, this.relativePathName, this.fullPathName, createDirs, fname, out partialPathNameResult, out fullPathNameResult);
+		}
+
+		internal static void Calculate(string name, string relativePathName, string fullPathName, bool createDirs, string fname, out string partialPathNameResult, out string fullPathNameResult)
+		{
+			Log.debug("HierarchySave.Calculate()");
 			if (!SaveGameMonitor.Instance.IsValid)
 				throw new IsolatedStorageException(String.Format("Savegames can only be solved after loading or creating a game!!"));
 
-			partialPathNameResult = Path.Combine(this.relativePathName, fname);
+			partialPathNameResult = Path.Combine(relativePathName, fname);
 			partialPathNameResult = Regex.Replace(
 					partialPathNameResult
 					, "^" + SAVE.dirName + Path.DirectorySeparatorRegex
@@ -190,7 +216,7 @@ namespace KSPe.IO
 			partialPathNameResult = IO.Path.EnsureTrailingSeparatorOnDir(partialPathNameResult, false);
 
 			string fullPathNameMangled = Regex.Replace( 
-					this.fullPathName
+					fullPathName
 					, Path.DirectorySeparatorChar + SAVE.dirName + Path.DirectorySeparatorRegex
 					, Path.DirectorySeparatorChar + SAVE.dirName + Path.DirectorySeparatorChar + SaveGameMonitor.Instance.saveDirName + Path.DirectorySeparatorChar + ADDONS_DIR + Path.DirectorySeparatorChar
 				)
@@ -212,9 +238,9 @@ namespace KSPe.IO
 			{
 				string d = System.IO.Path.GetDirectoryName(fullPathNameResult);
 				if (!Directory.Exists(d))
-					System.IO.Directory.CreateDirectory(d);
+					SIO.Directory.CreateDirectory(d);
 			}
-			Log.debug("HierarchySave Calculate {0} {1} {2}", this.name, partialPathNameResult, fullPathNameResult);
+			Log.debug("HierarchySave Calculate {0} {1} {2}", name, partialPathNameResult, fullPathNameResult);
 		}
 	}
 }
