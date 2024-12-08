@@ -23,6 +23,7 @@ using UnityEngine;
 
 namespace KSPe.IO
 {
+	// Why in hell KSP is, now, instantiating this thing twice?
 	[KSPAddon(KSPAddon.Startup.Instantly, true)]
 	internal class SaveGameMonitor : MonoBehaviour
 	{
@@ -31,11 +32,15 @@ namespace KSPe.IO
 
 		public bool IsValid => (null != this.saveName && null != this.saveDirName);
 
-		// Why in hell KSP is, now, instantiating this thing twice?
-		internal static SaveGameMonitor Instance { get => instance; } 
-		private static SaveGameMonitor instance = null;
+		internal static SaveGameMonitor instance = null;
+		private static readonly SaveGameMonitor fakeInstance = new SaveGameMonitor(true);
+		internal static SaveGameMonitor Instance => instance ?? fakeInstance;
 
-		private bool HadMigrated = false;
+		private SaveGameMonitor()
+		{
+			Log.debug("SaveGameMonitor instantiated.");
+		}
+		private SaveGameMonitor(bool isFake) { }
 
 		private void Awake()
 		{
@@ -45,15 +50,15 @@ namespace KSPe.IO
 				return;
 			}
 			Log.debug("SaveGameMonitor.OnAwake");
-			GameObject.DontDestroyOnLoad(this);
+			GameObject.DontDestroyOnLoad(this.gameObject);
 			GameEvents.onGameSceneLoadRequested.Add(this.OnGameSceneLoadRequested);
 			instance = this;
+			this.enabled = false;
 		}
 
 		private void Start()
 		{
 			Log.debug("SaveGameMonitor.Start");
-			this.enabled = false;
 		}
 
 		private void OnDestroy()
@@ -65,21 +70,22 @@ namespace KSPe.IO
 		private void OnGameSceneLoadRequested(GameScenes data)
 		{
 			Log.debug("SaveGameMonitor.data = {0}; HighLogic.fetch.GameSaveFolder = {1}", data, HighLogic.fetch.GameSaveFolder);
-			//this.enabled = true;
-			this.Update();
+			this.enabled = true;
 		}
 
 		private void Update()
 		{
-			this.saveName = null;
-			this.saveDirName = null;
-			if (HighLogic.LoadedScene >= GameScenes.SPACECENTER)
+			Log.debug("SaveGameMonitor.Update @ {0}", HighLogic.LoadedScene);
+			this.enabled = false;
+			if (HighLogic.LoadedScene >= GameScenes.SPACECENTER && !this.IsValid)
 			{
 				this.saveName = HighLogic.CurrentGame.Title;
 				this.saveDirName = HighLogic.fetch.GameSaveFolder;
 				Log.detail("SaveGameMonitor.saveName = {0}; SaveGameMonitor.saveDirName = {1}", this.saveName, this.saveDirName);
+				return;
 			}
-			this.enabled = false;
+			this.saveName = null;
+			this.saveDirName = null;
 		}
 	}
 }
