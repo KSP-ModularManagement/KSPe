@@ -31,5 +31,10 @@ namespace KSPe
 			Console.WriteLine(ex.ToString());
 			Console.WriteLine(ex.StackTrace);
 		}
+
+		internal static void error(System.Exception ex, object offended)
+		{
+			Console.WriteLine(ex.StackTrace);
+		}
 	}
 }

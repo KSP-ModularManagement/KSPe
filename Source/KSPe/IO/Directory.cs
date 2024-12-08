@@ -112,5 +112,77 @@ namespace KSPe.IO
 			// So Symlinks to directories are not recognized as a directory. So I need to do the job myself.
 			return Multiplatform.FileSystem.IsReparsePoint(path) ? Multiplatform.FileSystem.ReparsePath(path) : path;
 		}
+
+		internal static void Migrate(string fromDir, string toDir)
+		{
+			if(!SIO.Directory.Exists(fromDir)) return; // nothing to do!
+
+			migrate(fromDir, toDir);
+
+			// If we get here without exceptions
+			Log.detail("Old directory {0} migrated to {1}.", fromDir, toDir);
+
+			try
+			{	// Cleaning up
+				SIO.Directory.Delete(fromDir, true);
+
+				// Normalize the pathnames to guarantee we can compare them below
+				fromDir = SIO.Path.GetFullPath(fromDir);
+				toDir = SIO.Path.GetFullPath(toDir);
+
+				// Let's play safe: as soon as any of the path above reaches this one, it stops.
+				// Should never happens, but better safer than sorrier.
+				string limit = SIO.Path.GetFullPath(Hierarchy.SAVE.fullPathName);
+
+				Log.debug("Directory.Migrate.limit = {0}", limit);
+				// Now clean up parents if they are empty
+				while (!fromDir.Equals(toDir))
+				{ 
+					if (limit.Equals(fromDir) || limit.Equals(toDir)) break; // Better safe than sorry
+
+					fromDir = SIO.Directory.GetParent(fromDir).FullName;
+					toDir = SIO.Directory.GetParent(toDir).FullName;
+					Log.debug("Directory.Migrate.fromDir = {0}; toDir = ", fromDir, toDir);
+
+					if ( SIO.Directory.Exists(fromDir) &&
+							(0 == SIO.Directory.GetDirectories(fromDir).Length && 0 == SIO.Directory.GetFiles(fromDir).Length)
+						)
+						SIO.Directory.Delete(fromDir);
+					else
+						break;
+				}
+			}
+			catch (Exception e)
+			{	// Whoops. Something got wrong.
+				// But since we managed to migrate the directory, let's eat the Exception and let the caller carry on.
+				// Next boot the migration code will try to run again, but older files don't overwrite new ones, so we
+				// will just waste some I/O and, with a bit of luck the older diretory will be able to be deleted by then.
+				Log.error(e, fromDir);
+			}
+		}
+
+		private static void migrate(string fromDir, string toDir)
+		{
+			Log.debug("Migrating {0} to {1}.", fromDir, toDir);
+
+			SIO.DirectoryInfo dir = new SIO.DirectoryInfo(fromDir);
+			SIO.DirectoryInfo[] dirs = dir.GetDirectories();
+			SIO.Directory.CreateDirectory(toDir);
+
+			foreach (SIO.FileInfo file in dir.GetFiles())
+			{
+				string toFile = SIO.Path.Combine(toDir, file.Name);
+				if ( SIO.File.Exists(toFile) )
+				{ 
+					if (file.LastWriteTimeUtc <= SIO.File.GetLastWriteTimeUtc(toFile)) continue;
+					SIO.File.Delete(toFile);
+				}
+				file.CopyTo(toFile);
+			}
+
+			foreach (SIO.DirectoryInfo subDir in dirs)
+				migrate(subDir.FullName, SIO.Path.Combine(toDir, subDir.Name));
+		}
+
 	}
 }
