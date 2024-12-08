@@ -27,7 +27,10 @@ namespace KSPe.IO
 		internal static readonly LocalCache<string> CACHE = new LocalCache<string>();
 		private Hierarchy(Hierarchy hierarchy) : base(hierarchy.ToString(), Path.Combine(hierarchy.relativePathName, CalculateTypeRoot())) {}
 
+		// TODO: Remove on Version 2.6
+		[System.Obsolete("KSPe.IO.Hierarchy<T>.ROOT is deprecated, and will be removed next version. Use KSPe.IO.Hierarchy.ROOT instead.")]
 		new public static readonly Hierarchy<T> ROOT = new Hierarchy<T>(Hierarchy.ROOT);
+
 		new public static readonly Hierarchy<T> GAMEDATA = new Hierarchy<T>(Hierarchy.GAMEDATA);
 		new public static readonly Hierarchy<T> PLUGINDATA = new Hierarchy<T>(Hierarchy.PLUGINDATA);
 		new public static readonly Hierarchy<T> LOCALDATA = new Hierarchy<T>(Hierarchy.LOCALDATA);
