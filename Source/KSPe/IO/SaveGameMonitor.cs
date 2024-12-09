@@ -61,9 +61,9 @@ namespace KSPe.IO
 			this.singleShotListeners.Clear();
 		}
 
-		public bool AddSingleShot(SaveGameLoadedListener listener) => this.singleShotListeners.Add(listener);
-		public bool Add(SaveGameLoadedListener listener) => this.listeners.Add(listener);
-		public bool Remove(SaveGameLoadedListener listener) => this.listeners.Remove(listener);
+		public bool AddSingleShot(SaveGameLoadedListener listener)	{ lock(this.singleShotListeners) return this.singleShotListeners.Add(listener); }
+		public bool Add(SaveGameLoadedListener listener)			{ lock(this.listeners) return this.listeners.Add(listener); }
+		public bool Remove(SaveGameLoadedListener listener)			{ lock(this.listeners) return this.listeners.Remove(listener); }
 
 		private void Awake()
 		{
@@ -88,8 +88,10 @@ namespace KSPe.IO
 		{
 			Log.debug("SaveGameMonitor.OnDestroy");
 			GameEvents.onGameSceneLoadRequested.Remove(this.OnGameSceneLoadRequested);
-			this.listeners.Clear();
-			this.singleShotListeners.Clear();
+			lock (this.listeners) lock (this.singleShotListeners) {
+				this.listeners.Clear();
+				this.singleShotListeners.Clear();
+			}
 		}
 
 		private void OnGameSceneLoadRequested(GameScenes data)
@@ -118,9 +120,17 @@ namespace KSPe.IO
 		private void NotifyListeners(bool isLoaded)
 		{
 			HashSet<SaveGameLoadedListener> listeners = new HashSet<SaveGameLoadedListener>();
-			listeners.UnionWith(this.listeners);
-			listeners.UnionWith(this.singleShotListeners);
-			this.singleShotListeners.Clear();
+
+			// Kraken forbids me, but I'm pissed with how things go south on this game due race conditions.
+			// So, yeah. I'm going to lock the update thread and call it a day.
+			lock (this.listeners)
+				listeners.UnionWith(this.listeners);
+			lock (this.singleShotListeners)
+			{ 
+				listeners.UnionWith(this.singleShotListeners);
+				this.singleShotListeners.Clear();
+			}
+			// And in the hands of our Lord, I trust my soul in the hopes of being welcome in the Land where Science is abundant and Snacks are plenty.
 			Log.debug("SaveGameMonitor.NotifyListeners({0}) {1} listeners", isLoaded, listeners.Count);
 			StartCoroutine(NotifyListeners(isLoaded, listeners));
 		}
