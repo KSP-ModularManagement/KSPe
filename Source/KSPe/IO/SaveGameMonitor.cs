@@ -102,7 +102,7 @@ namespace KSPe.IO
 		{
 			Log.debug("SaveGameMonitor.Update @ {0}", HighLogic.LoadedScene);
 			this.enabled = false;
-			if (HighLogic.LoadedScene >= GameScenes.SPACECENTER && !this.IsValid)
+			if (HighLogic.LoadedSceneIsGame && !this.IsValid)
 			{
 				this.saveName = HighLogic.CurrentGame.Title;
 				this.saveDirName = HighLogic.fetch.GameSaveFolder;

@@ -165,7 +165,7 @@ namespace KSPe.IO
 			if (Path.IsPathRooted(partialPathNameResult))
 				throw new IsolatedStorageException(String.Format("partialPathname cannot be a full pathname! [{0}]", partialPathNameResult));
 
-			partialPathNameResult = IO.Path.EnsureTrailingSeparatorOnDir(partialPathNameResult, false);
+			partialPathNameResult = Path.EnsureTrailingSeparatorOnDir(partialPathNameResult, false);
 			fullPathNameResult = Path.Combine(fullPathName, fname);
 
 			{  // Checks against a series of ".." trying to escape the intended sandbox
