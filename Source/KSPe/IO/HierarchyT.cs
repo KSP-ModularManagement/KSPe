@@ -21,7 +21,6 @@
 */
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 using SIO = System.IO;
 
@@ -113,10 +112,11 @@ namespace KSPe.IO
 
 		private void Migrate(string targetFullPathName)
 		{
-			string oldFullPathnameMangled = Regex.Replace( 
-						Hierarchy.SAVE.fullPathName
-						, Path.DirectorySeparatorRegex + Hierarchy.SAVE.dirName + Path.DirectorySeparatorRegex
-						, Path.DirectorySeparatorChar + Hierarchy.SAVE.dirName + Path.DirectorySeparatorChar + SaveGameMonitor.Instance.saveDirName + Path.DirectorySeparatorChar + HierarchySave.ADDONS_DIR + Path.DirectorySeparatorChar
+			string oldFullPathname = Path.Combine(
+						Hierarchy.SAVE.fullPathName, 
+						HighLogic.CurrentGame.Title.Replace(" (SANDBOX)","").Replace(" (CAREER)", "").Replace(" (SCIENCE_SANDBOX)", ""),
+						HierarchySave.ADDONS_DIR,
+						CalculateTypeRoot()
 					);
 
 			Log.debug("HierarchySave<{0}>.Migrate() {1} {2}", typeof(T).FullName, oldFullPathname, targetFullPathName);
