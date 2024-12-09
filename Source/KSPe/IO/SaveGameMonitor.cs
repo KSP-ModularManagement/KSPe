@@ -19,28 +19,51 @@
 	along with KSP Enhanced /L. If not, see <https://www.gnu.org/licenses/>.
 
 */
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace KSPe.IO
 {
 	// Why in hell KSP is, now, instantiating this thing twice?
 	[KSPAddon(KSPAddon.Startup.Instantly, true)]
-	internal class SaveGameMonitor : MonoBehaviour
+	public class SaveGameMonitor : MonoBehaviour
 	{
+		public interface SaveGameLoadedListener
+		{
+			void OnSaveGameLoaded(string name);
+			void OnSaveGameClosed();
+		}
+
 		internal string saveName = null;
 		internal string saveDirName = null;
 
 		public bool IsValid => (null != this.saveName && null != this.saveDirName);
 
 		internal static SaveGameMonitor instance = null;
-		private static readonly SaveGameMonitor fakeInstance = new SaveGameMonitor(true);
-		internal static SaveGameMonitor Instance => instance ?? fakeInstance;
+		internal static readonly SaveGameMonitor fakeInstance = new SaveGameMonitor(true);
+		public static SaveGameMonitor Instance => instance ?? fakeInstance;
+
+		private readonly HashSet<SaveGameLoadedListener> listeners = new HashSet<SaveGameLoadedListener>();
+		private readonly HashSet<SaveGameLoadedListener> singleShotListeners = new HashSet<SaveGameLoadedListener>();
 
 		private SaveGameMonitor()
 		{
 			Log.debug("SaveGameMonitor instantiated.");
 		}
 		private SaveGameMonitor(bool isFake) { }
+
+		~SaveGameMonitor()
+		{	// Better safer then sorrier!
+			this.listeners.Clear();
+			this.singleShotListeners.Clear();
+		}
+
+		public bool AddSingleShot(SaveGameLoadedListener listener) => this.singleShotListeners.Add(listener);
+		public bool Add(SaveGameLoadedListener listener) => this.listeners.Add(listener);
+		public bool Remove(SaveGameLoadedListener listener) => this.listeners.Remove(listener);
 
 		private void Awake()
 		{
@@ -65,6 +88,8 @@ namespace KSPe.IO
 		{
 			Log.debug("SaveGameMonitor.OnDestroy");
 			GameEvents.onGameSceneLoadRequested.Remove(this.OnGameSceneLoadRequested);
+			this.listeners.Clear();
+			this.singleShotListeners.Clear();
 		}
 
 		private void OnGameSceneLoadRequested(GameScenes data)
@@ -82,10 +107,33 @@ namespace KSPe.IO
 				this.saveName = HighLogic.CurrentGame.Title;
 				this.saveDirName = HighLogic.fetch.GameSaveFolder;
 				Log.detail("SaveGameMonitor.saveName = {0}; SaveGameMonitor.saveDirName = {1}", this.saveName, this.saveDirName);
+				this.NotifyListeners(true);
 				return;
 			}
 			this.saveName = null;
 			this.saveDirName = null;
+			this.NotifyListeners(false);
+		}
+
+		private void NotifyListeners(bool isLoaded)
+		{
+			HashSet<SaveGameLoadedListener> listeners = new HashSet<SaveGameLoadedListener>();
+			listeners.UnionWith(this.listeners);
+			listeners.UnionWith(this.singleShotListeners);
+			this.singleShotListeners.Clear();
+			Log.debug("SaveGameMonitor.NotifyListeners({0}) {1} listeners", isLoaded, listeners.Count);
+			StartCoroutine(NotifyListeners(isLoaded, listeners));
+		}
+
+		private IEnumerator NotifyListeners(bool isLoaded, HashSet<SaveGameLoadedListener> listeners)
+		{
+			foreach (SaveGameLoadedListener l in listeners)
+			{
+				if (isLoaded) l.OnSaveGameLoaded(this.saveName);
+				else l.OnSaveGameClosed();
+
+				yield return null;
+			}
 		}
 	}
 }
