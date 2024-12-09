@@ -40,7 +40,15 @@ namespace KSPe.IO
 		new public static readonly Hierarchy<T> SAVE = new HierarchySave<T>(Hierarchy.SAVE);
 		new public static readonly Hierarchy<T> THUMB = new HierarchyCommon<T>(Hierarchy.THUMB);
 
-		internal static readonly LocalCache<string> CACHE = new LocalCache<string>();
+		// FSCKING UNBELIEVABLE!!
+		// The loading of this class is not happening atomically, a client is being able to call CalculateTypeRoot indirectly **BEFORE**
+		// the runtime is being abble to create the readonly static objects, what **should** be happening after loading the class and before
+		// unlocking the class to be used by anyone else!
+		//
+		// Bellow the original code - thanks God it's a `internal`, will not break the ABI
+		//internal static readonly LocalCache<string> CACHE = new LocalCache<string>();
+		private static LocalCache<string> __CACHE = null;
+		internal static LocalCache<string> CACHE => (__CACHE ?? (__CACHE = new LocalCache<string>()));
 
 		protected readonly Hierarchy hierarchy;
 		protected Hierarchy(Hierarchy hierarchy) : base(hierarchy.ToString(), Path.Combine(hierarchy.relativePathName, CalculateTypeRoot()))
@@ -56,6 +64,7 @@ namespace KSPe.IO
 
 		internal static string CalculateTypeRoot()
 		{
+			Log.debug("CalculateTypeRoot {0} cache {1}", typeof(T), CACHE);
 			LocalCache<string>.Dictionary c = CACHE[typeof(T)];
 			return c.ContainsKey(".") ? c["."] : (c["."] = calculateTypeRoot());
 		}
