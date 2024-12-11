@@ -189,7 +189,7 @@ namespace KSPe.InstallChecker
 		}
 
 		private static string GAMEDATA = null;
-		private static string CalcGameData()
+		internal static string CalcGameData()
 		{
 			if (null != GAMEDATA) return GAMEDATA;
 			System.Reflection.Assembly asm = System.Reflection.Assembly.GetAssembly(typeof(UnityEngine.MonoBehaviour));

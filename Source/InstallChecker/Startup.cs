@@ -24,6 +24,7 @@ namespace KSPe.InstallChecker
 		private void Start()
 		{
 			Log.force("Version {0}", typeof(Startup).Assembly.GetName().Version);
+			Checks.GameData.Checker.Execute();
 		}
 
 		internal static bool quitOnDestroy = false;

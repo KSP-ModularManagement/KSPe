@@ -85,11 +85,13 @@
     <Compile Include="..\KSPe\Util\KSPUtil.cs">
       <Link>Util\KSPUtil.cs</Link>
     </Compile>
+    <Compile Include="Checks\GameDataChecker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />
     <Folder Include="Common\Dialogs\" />
     <Folder Include="UI\" />
+    <Folder Include="Checks\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
