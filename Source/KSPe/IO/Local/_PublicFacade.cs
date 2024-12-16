@@ -33,6 +33,7 @@ namespace KSPe.IO
 			protected ConfigNode(string name, string fn): base(name)
 			{
 				this.Path = fn;
+				this.checkParentDir();
 			}
 
 			public new ConfigNode Load()

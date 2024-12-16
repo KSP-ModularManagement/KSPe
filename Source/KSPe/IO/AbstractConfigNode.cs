@@ -174,6 +174,20 @@ namespace KSPe.IO
 				SIO.File.Delete(this.Path);
 			this.Clear();
 		}
+
+		/**
+		 * Ensures the parent directory of the host file is available for when a Save command is issued.
+		 * 
+		 * Should be called, when pertinent, from the extending classes' constructors.
+		 */
+		protected void checkParentDir()
+		{
+			if (!SIO.File.Exists(this.Path))
+			{
+				string dir = SIO.Directory.GetParent(this.Path).FullName;
+				SIO.Directory.CreateDirectory(dir);
+			}
+		}
 	}
 
 }
