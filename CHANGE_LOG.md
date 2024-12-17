@@ -1,5 +1,7 @@
 # KSP Enhanced /L :: Change Log
 
+* 2024-1217: 2.5.5.1 (Lisias) for KSP >= 1.2
+	+ Missing use case on handling ConfigNodes on an hirarchy
 * 2024-1211: 2.5.5.0 (Lisias) for KSP >= 1.2
 	+ Some serious (long due) refactorings on `IO.Hierarchy.*GAMEDATA*`
 		+ Adds `KSPe.IO.SaveGameMonitor` - the only reliable way, from this point, to known when a savegame is ready to be used from `KSPe` point of view.
