@@ -196,6 +196,51 @@
     <Compile Include="..\KSPe\IO\SaveGameMonitor.cs">
       <Link>IO\SaveGameMonitor.cs</Link>
     </Compile>
+    <Compile Include="..\KSPe\IO\Asset\_PublicFacade.cs">
+      <Link>IO\Asset\_PublicFacade.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Asset\Texture2D.cs">
+      <Link>IO\Asset\Texture2D.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Data\_PublicFacade.cs">
+      <Link>IO\Data\_PublicFacade.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Data\Texture2D.cs">
+      <Link>IO\Data\Texture2D.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Local\_PublicFacade.cs">
+      <Link>IO\Local\_PublicFacade.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Local\Texture2D.cs">
+      <Link>IO\Local\Texture2D.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Save\_PublicFacade.cs">
+      <Link>IO\Save\_PublicFacade.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Save\Texture2D.cs">
+      <Link>IO\Save\Texture2D.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Temp\_PublicFacade.cs">
+      <Link>IO\Temp\_PublicFacade.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Temp\Texture2D.cs">
+      <Link>IO\Temp\Texture2D.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\File.cs">
+      <Link>IO\File.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\FileT.cs">
+      <Link>IO\FileT.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\FileMode.cs">
+      <Link>IO\FileMode.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\Simple.cs">
+      <Link>IO\Simple.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\IO\AbstractConfigNode.cs">
+      <Link>IO\AbstractConfigNode.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Util\" />
