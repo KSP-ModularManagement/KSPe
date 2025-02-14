@@ -1,6 +1,6 @@
 ﻿/*
 	This file is part of KSPe.UI, a component for KSP Enhanced /L
-		© 2018-2024 LisiasT : http://lisias.net <support@lisias.net>
+		© 2018-2025 LisiasT : http://lisias.net <support@lisias.net>
 
 	KSP Enhanced /L is double licensed, as follows:
 		* SKL 1.0 : https://ksp.lisias.net/SKL-1_0.txt
@@ -20,6 +20,9 @@
 
 */
 using System;
+
+using KSPe.Annotations;
+
 using UnityEngine;
 using UGUI = UnityEngine.GUI;
 
@@ -35,8 +38,13 @@ namespace KSPe.UI
 		private int pos_vertical;   // -1 Top ; 0 Center ; +1 Bottom
 		private GUIStyle win_style;
 		private GUIStyle text_style;
-		private int window_id;
+		private readonly int window_id = UID.Get();
 		private Rect windowRect;
+
+		~TimedMessageBox()
+		{
+			UID.Release(this.window_id);
+		}
 
 		public void Show(string title, string msg)
 		{
@@ -62,7 +70,6 @@ namespace KSPe.UI
 			this.pos_vertical = pos_vertical;
 			this.win_style = win_style;
 			this.text_style = text_style;
-			this.window_id = (int)WindowUtils.window_id_seed;
 
 			this.windowRect = this.calculateWindow();
 		}

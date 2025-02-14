@@ -49,7 +49,6 @@
     <Compile Include="MessageBox.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TimedMessageBox.cs" />
-    <Compile Include="WindowUtils.cs" />
     <Compile Include="Common\Dialogs\FatalError.cs" />
     <Compile Include="Common\Dialogs\Abstract.cs" />
     <Compile Include="Startup.cs" />
@@ -66,6 +65,7 @@
     <Compile Include="Common\Dialogs\ErrorHandling\UnhandledErrorBox.cs" />
     <Compile Include="Common\Dialogs\ErrorHandling\AlreadyLoadedAlertBox.cs" />
     <Compile Include="Common\Dialogs\ErrorHandling\FaultyCompatibilityExceptionAdviceBox.cs" />
+    <Compile Include="UID.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KSPe\KSPe.csproj">
