@@ -19,6 +19,8 @@
 	along with KSP Enhanced /L. If not, see <https://www.gnu.org/licenses/>.
 
 */
+using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace KSPe.UI

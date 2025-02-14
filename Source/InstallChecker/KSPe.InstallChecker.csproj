@@ -55,16 +55,12 @@
     <Compile Include="..\KSPe\Util\ModuleManagerTools.cs">
       <Link>Util\ModuleManagerTools.cs</Link>
     </Compile>
-    <Compile Include="..\KSPe.UI\WindowUtils.cs">
-      <Link>Util\WindowUtils.cs</Link>
-    </Compile>
     <Compile Include="..\KSPe.UI\Common\Dialogs\Abstract.cs">
       <Link>Common\Dialogs\Abstract.cs</Link>
     </Compile>
     <Compile Include="..\KSPe.UI\Common\Dialogs\CommonBox.cs">
       <Link>Common\Dialogs\CommonBox.cs</Link>
     </Compile>
-    <Compile Include="UI\GUI.cs" />
     <Compile Include="..\KSPe.UI\MessageBox.cs">
       <Link>UI\MessageBox.cs</Link>
     </Compile>
@@ -86,6 +82,12 @@
       <Link>Util\KSPUtil.cs</Link>
     </Compile>
     <Compile Include="Checks\GameDataChecker.cs" />
+    <Compile Include="..\KSPe.UI\UID.cs">
+      <Link>UI\UID.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe\Properties\Annotations.cs">
+      <Link>Properties\Annotations.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

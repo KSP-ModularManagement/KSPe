@@ -135,9 +135,6 @@
       <Link>Util\Text.cs</Link>
     </Compile>
     <Compile Include="Util\Image.Local.cs" />
-    <Compile Include="..\KSPe.UI\WindowUtils.cs">
-      <Link>Util\WindowUtils.cs</Link>
-    </Compile>
     <Compile Include="..\KSPe.UI\Common\Dialogs\CommonBox.cs">
       <Link>Common\Dialogs\CommonBox.cs</Link>
     </Compile>
@@ -195,6 +192,9 @@
     </Compile>
     <Compile Include="..\KSPe\IO\SaveGameMonitor.cs">
       <Link>IO\SaveGameMonitor.cs</Link>
+    </Compile>
+    <Compile Include="..\KSPe.UI\UID.cs">
+      <Link>UI\UID.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
