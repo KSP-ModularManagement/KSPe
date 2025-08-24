@@ -38,7 +38,8 @@ namespace KSPe.Util
 
 		public static class Interface
 		{
-			public static object CreateInstanceByInterface(SType iifc)
+			public static object CreateInstanceByInterface(SType iifc) => CreateInstanceByInterface(iifc, null);
+			public static object CreateInstanceByInterface(SType iifc, object[] @params)
 			{
 				Log.debug("Looking for {0}", iifc.FullName);
 				foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
@@ -53,13 +54,14 @@ namespace KSPe.Util
 							if (iifc.ToString() == ifc.ToString()) // Don't ask. This works...
 							{
 								Log.debug("Found one! {0}", ifc);
-								return CreateInstance(type);
+								return null == CreateInstance(type, @params);
 							}
 						}
 				return null;
 			}
 
-			public static object CreateInstanceByInterfaceName(string ifcName)
+			public static object CreateInstanceByInterfaceName(string ifcName) => CreateInstanceByInterfaceName(ifcName, null);
+			public static object CreateInstanceByInterfaceName(string ifcName, object[] @params)
 			{
 				Log.debug("Looking for {0}", ifcName);
 				foreach (SReflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
@@ -70,15 +72,17 @@ namespace KSPe.Util
 							if (ifcName == ifc.ToString())
 							{
 								Log.debug("Found one! {0}", ifc);
-								return CreateInstance(type);
+								return CreateInstance(type, @params);
 							}
 						}
 				return null;
 			}
 
-			internal static object CreateInstance(System.Type type)
+			internal static object CreateInstance(System.Type type, object[] @params)
 			{
-				object r = System.Activator.CreateInstance(type);
+				object r = null == @params
+					? System.Activator.CreateInstance(type)
+					: System.Activator.CreateInstance(type, @params);
 				Log.debug("Type of result {0}", r.GetType());
 				return r;
 			}
