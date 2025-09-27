@@ -103,18 +103,25 @@ namespace KSPe.IO
 		private void Update()
 		{
 			Log.debug("SaveGameMonitor.Update @ {0}", HighLogic.LoadedScene);
-			this.enabled = false;
+
 			if (HighLogic.LoadedSceneIsGame && !this.IsValid)
 			{
+				this.enabled = false;
 				this.saveName = HighLogic.CurrentGame.Title;
 				this.saveDirName = HighLogic.fetch.GameSaveFolder;
 				Log.detail("SaveGameMonitor.saveName = {0}; SaveGameMonitor.saveDirName = {1}", this.saveName, this.saveDirName);
 				this.NotifyListeners(true);
 				return;
 			}
+
+			if (!HighLogic.LoadedSceneIsGame)
+			{
+				if (this.IsValid) this.NotifyListeners(false);
+				this.enabled = false;
+			}
+
 			this.saveName = null;
 			this.saveDirName = null;
-			this.NotifyListeners(false);
 		}
 
 		private void NotifyListeners(bool isLoaded)
