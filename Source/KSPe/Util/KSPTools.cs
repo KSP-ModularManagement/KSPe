@@ -95,7 +95,7 @@ namespace KSPe.Util
 			new Version(1,1,1,  "2016-0429", 5,		2, "5.2.4f1", 30),
 			new Version(1,1,2,  "2016-0430", 5,		2, "5.2.4f1", 30),	// Last release before HarvesteR (Felipe Falanghe) quits
 			new Version(1,1,3,  "2016-0621", 5,		2, "5.2.4f1", 30),	// First release after HarvesteR (Felipe Falanghe) had leaved
-			new Version(1,2,0,  "2016-1011", 5,		4, "5.4.0p4", 30),	// C# used on compiling is 3.0.40818
+			new Version(1,2,0,  "2016-1011", 5,		4, "5.4.0p4", 30),	// C# used on compiling is 3.0.40818; Most of the Original Team before the release.
 			new Version(1,2,1,  "2016-1101", 5,		4, "5.4.0p4", 30),
 			new Version(1,2,2,  "2016-1206", 5, 	4, "5.4.0p4", 30),
 			new Version(1,3,0,  "2017-0525", 5, 	4, "5.4.0p4", 30),	// First release after TTI acquired KSP.
