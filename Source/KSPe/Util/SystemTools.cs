@@ -54,7 +54,7 @@ namespace KSPe.Util
 							if (iifc.ToString() == ifc.ToString()) // Don't ask. This works...
 							{
 								Log.debug("Found one! {0}", ifc);
-								return null == CreateInstance(type, @params);
+								return CreateInstance(type, @params);
 							}
 						}
 				return null;
@@ -87,7 +87,7 @@ namespace KSPe.Util
 				return r;
 			}
 
-			private static readonly KSPe.Util.Log.Logger Log = KSPe.Util.Log.Logger.CreateForType<Startup>("KSPe.SystemTools", "Type", 0);
+			private static readonly KSPe.Util.Log.Logger Log = KSPe.Util.Log.Logger.CreateForType<Startup>("KSPe.SystemTools", "Interface", 0);
 		}
 
 		public static class Type
