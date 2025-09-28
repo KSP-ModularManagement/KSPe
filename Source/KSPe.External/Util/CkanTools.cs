@@ -32,6 +32,10 @@ namespace KSPe.Util
 	public static class CkanTools
 	{
 		public const string CKAN_URL = "https://ksp.lisias.netblogs/tech-support/CKAN/";
+		private const string CKAN_DIR = "CKAN";
+		private const string CKAN_REGISTRY_FILE = "registry.json";
+		private const string CKAN_REGISTRY_LOCK = "registry.locked";
+		private const string CKAN_CONFIG_FILE = "GUIConfig.xml";
 
 		internal class MyUrlHandler : UrlTools.OpenAndExitHandler
 		{
@@ -68,15 +72,27 @@ namespace KSPe.Util
 			//public Dictionary<string,Module> available_modules;
 		}
 
+		// CKAN only writes the `registry.json` file when something is installed but the first time, so this file will not be
+		// available if the user fires KSP without installing anything first (what includes having manually installed some add'ons
+		// previsouly).
+		//
+		// The solution implemented below is to assume "the worst case scenario" - if any of the registry or lock file is/are
+		// present, then a default CKAN repository is assumed.
+		//
+		// If both are missing, then CKAN is installed but the default repository is not in use.
+
 		private static bool? is_ckan_installed = null;
 		public static bool CheckCkanInstalled()
 		{
 			if (null != is_ckan_installed) return (bool)is_ckan_installed;
 
-			string path = SIO.Path.Combine(KSPUtil.ApplicationRootPath, "CKAN");
-			is_ckan_installed = SIO.Directory.Exists(path);
-			path = SIO.Path.Combine(path, "registry.json");
-			is_ckan_installed &= SIO.File.Exists(path);
+			string ckan_path = SIO.Path.Combine(KSPUtil.ApplicationRootPath, CKAN_DIR);
+			is_ckan_installed = SIO.Directory.Exists(ckan_path);
+			if (!(bool)is_ckan_installed) return false;
+
+			string config_path = SIO.Path.Combine(ckan_path, CKAN_CONFIG_FILE);
+			is_ckan_installed = SIO.File.Exists(config_path);
+
 			return (bool)is_ckan_installed;
 		}
 
@@ -88,10 +104,17 @@ namespace KSPe.Util
 			is_ckan_repository = CheckCkanInstalled();
 			if ((bool)is_ckan_repository)
 			{
-				string path = SIO.Path.Combine(KSPUtil.ApplicationRootPath, "CKAN");
-				path = SIO.Path.Combine(path, "registry.json");
+				string ckan_path = SIO.Path.Combine(KSPUtil.ApplicationRootPath, "CKAN");
+				string registry_path = SIO.Path.Combine(ckan_path, "registry.json");
 
-				string text = SIO.File.ReadAllText(path);
+				if (!SIO.File.Exists(registry_path))
+				{
+					string lock_file = SIO.Path.Combine(ckan_path, "registry.locked");
+					is_ckan_repository = SIO.File.Exists(lock_file); // Assume the worst case.
+					return (bool)is_ckan_repository;
+				}
+
+				string text = SIO.File.ReadAllText(registry_path);
 				Registry registry = Json.Decode<Registry>(text);
 				is_ckan_repository = registry.sorted_repositories.ContainsKey("default");
 				if (!(bool)is_ckan_repository) return false;
