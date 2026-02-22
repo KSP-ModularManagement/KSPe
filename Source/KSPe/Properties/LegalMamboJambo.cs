@@ -1,6 +1,6 @@
 ﻿/*
 	This file is part of KSPe, a component for KSP Enhanced /L
-		© 2018-2025 LisiasT : http://lisias.net <support@lisias.net>
+		© 2018-2026 LisiasT : http://lisias.net <support@lisias.net>
 
 	KSP Enhanced /L is double licensed, as follows:
 		* SKL 1.0 : https://ksp.lisias.net/SKL-1_0.txt
@@ -26,7 +26,7 @@ namespace KSPe
 	{
 		public const string Company = "L Aerospace/KSP Division";
 		public const string Product = "KSP Extensions";
-		public const string Copyright = "©2018-24 Lisias";
-		public const string Trademark = "KSPe";
+		public const string Copyright = "©2018-2026 Lisias";
+		public const string Trademark = "KSPe™ by Lisias";
 	}
 }
