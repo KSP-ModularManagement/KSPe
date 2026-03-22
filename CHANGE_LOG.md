@@ -1,7 +1,14 @@
 # KSP Enhanced /L :: Change Log
 
+* 2026-0321: 2.5.5.2 (Lisias) for KSP >= 1.2
+	+ Adding a "dummy" logger - for that moments in which you **really** don't want to log anything...
+	+ **Finally** solving a problem that was bitting my sorry arse for years on the `SaveGameMonitor` feature!
+	+ Some new `CreateInstanceByInterface` helpers.
+	+ Some dumbass that I don't know who I am thought it would be a good idea to use a thingy called `SIO.DriveInfo.GetDrives()` available only on Unity 2019 and newer, **completely** defeating the main purpose of this damned KSPe gadget: to allow seamless multi KSP version support!
+		- Not one of my brightest moments, I say...
+		- Thanks for the [tip](https://forum.kerbalspaceprogram.com/topic/230007-placing-parts-breaks-entire-vab/#findComment-4505659), [SomeoneOK](https://forum.kerbalspaceprogram.com/profile/205857-someoneok/)!
 * 2024-1217: 2.5.5.1 (Lisias) for KSP >= 1.2
-	+ Missing use case on handling ConfigNodes on an hirarchy
+	+ Missing use case on handling ConfigNodes on an hierarchy
 * 2024-1211: 2.5.5.0 (Lisias) for KSP >= 1.2
 	+ Some serious (long due) refactorings on `IO.Hierarchy.*GAMEDATA*`
 		+ Adds `KSPe.IO.SaveGameMonitor` - the only reliable way, from this point, to known when a savegame is ready to be used from `KSPe` point of view.
