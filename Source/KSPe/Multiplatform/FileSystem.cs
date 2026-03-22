@@ -231,14 +231,14 @@ namespace KSPe.Multiplatform
 			if (!(SIO.File.Exists(path) || SIO.Directory.Exists(path))) return path;
 
 			string[] parcels = path.Split(SIO.Path.DirectorySeparatorChar);
-			string r = "/";
+			string r = ""+SIO.Path.DirectorySeparatorChar;
 			if (LowLevelTools.Windows.IsThisWindows)
 			{
-				Log.debug("getRealPathname on Windows");
 				r = parcels[0] + KSPe.IO.Path.DirectorySeparatorStr;
-				foreach (SIO.DriveInfo di in SIO.DriveInfo.GetDrives()) if (di.Name.Equals(r, System.StringComparison.OrdinalIgnoreCase))
+				foreach (string di in SIO.Directory.GetLogicalDrives()) if (di.Equals(r, System.StringComparison.OrdinalIgnoreCase))
 				{
-					r = di.Name;
+					Log.debug("getRealPathname on Windows : {0}", di);
+					r = di;
 					break;
 				}
 			}
