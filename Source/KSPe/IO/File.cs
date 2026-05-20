@@ -38,6 +38,44 @@ namespace KSPe.IO
 		[System.Obsolete("KSPe.IO.File.GAMEDATA is deprecated, please use KSPe.IO.Hierarchy.LOCALDATA instead.")]
 		public static string LOCALDATA => Path.Combine(GAMEDATA, "__LOCAL");      // Custom runtime generated parts on <KSP_ROO>/GameData/__LOCAL/<plugin_name> (specially made for UbioWeldingLtd)
 
+		private static readonly string RANDOM_TEMP_DIR = Path.GetRandomFileName();
+		private static readonly string TEMP_DIR_ROOT = "ksp";
+
+		static File()
+		{
+			AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+		}
+		private static void OnProcessExit(object sender, EventArgs e)
+		{
+			string fn = Path.GetTempPath();
+			fn = Path.Combine(fn, TEMP_DIR_ROOT);
+			if (!Directory.Exists(fn))
+			{
+				Log.detail("Deleting temp files at {1}", fn);
+				SIO.Directory.Delete(fn, true);
+			}
+		}
+
+		internal static string TempPathName(string filename = null, params string[] fns)
+		{
+			filename = filename ?? Path.GetRandomFileName();
+			if (!string.IsNullOrEmpty(Path.GetDirectoryName(filename)))
+				throw new SIO.IsolatedStorage.IsolatedStorageException(String.Format("filename cannot have subdirectories! [{0}]", filename));
+
+			string fn = Path.GetTempPath();
+			fn = Path.Combine(fn, TEMP_DIR_ROOT);
+			fn = Path.Combine(fn, RANDOM_TEMP_DIR);
+			foreach (string s in fns)
+				fn = Path.Combine(fn, s);
+			fn = Path.Combine(fn, Path.GetFileName(filename));
+			{
+				string d = Path.GetDirectoryName(fn);
+				if (!Directory.Exists(d))
+					SIO.Directory.CreateDirectory(d);
+			}
+			return Path.GetFullPath(fn);
+		}
+
 		internal static string[] List(string rawdir, string mask = "*", bool include_subdirs = false)
 		{
 			if (!Directory.Exists(rawdir))

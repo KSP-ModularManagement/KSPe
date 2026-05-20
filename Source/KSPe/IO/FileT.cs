@@ -30,26 +30,9 @@ namespace KSPe.IO
 	public static class File<T>
 	{
 		public static readonly string[] ASSET = { "PluginData", "Assets" };     // ReadOnly data on <KSP_ROOT>/GameData/<plugin_name>/Plugin/{PluginData|Assets|null}/ or whatever the DLL is.
-		private static readonly string RANDOM_TEMP_DIR = Path.GetRandomFileName();
 
-		internal static string TempPathName(string filename = null)
-		{
-			filename = filename ?? Path.GetRandomFileName();
-			if (!string.IsNullOrEmpty(Path.GetDirectoryName(filename)))
-				throw new IsolatedStorageException(String.Format("filename cannot have subdirectories! [{0}]", filename));
-
-			string fn = Path.GetTempPath();
-			fn = Path.Combine(fn, "ksp");
-			fn = Path.Combine(fn, RANDOM_TEMP_DIR);
-			fn = Path.Combine(fn, Hierarchy<T>.CalculateTypeRoot());
-			fn = Path.Combine(fn, Path.GetFileName(filename));
-			{
-				string d = Path.GetDirectoryName(fn);
-				if (!Directory.Exists(d))
-					SIO.Directory.CreateDirectory(d);
-			}
-			return Path.GetFullPath(fn);
-		}
+		internal static string TempPathName(string filename = null) =>
+			File.TempPathName(filename, Hierarchy<T>.CalculateTypeRoot());
 
 		public static class Asset
 		{
