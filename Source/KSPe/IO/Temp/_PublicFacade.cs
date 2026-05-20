@@ -65,6 +65,8 @@ namespace KSPe.IO
 			protected FileStream(string filename) : base(filename, SIO.FileMode.Open, SIO.FileAccess.Read, SIO.FileShare.Read) {}
 			protected FileStream(string filename, SIO.FileMode filemode) : base(filename, filemode, SIO.FileAccess.ReadWrite, SIO.FileShare.None) {}
 
+			public static FileStream CreateFor(string filename) => CreateFor(FileMode.ReadOnly, filename);
+
 			public static FileStream CreateFor(FileMode mode, string filename)
 			{
 				string path = File<T>.Temp.FullPathName(filename);
