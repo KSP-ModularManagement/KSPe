@@ -111,7 +111,7 @@ namespace kspofflinecheck.Checks
 		{
 			Dictionary<string,Dictionary<Type, string>> r = new Dictionary<string, Dictionary<Type, string>>();
 			byte[] rawAssembly;
-			using (FileStream fs = new System.IO.FileStream(pathname, System.IO.FileMode.Open))
+			using (System.IO.FileStream fs = new System.IO.FileStream(pathname, System.IO.FileMode.Open, FileAccess.Read, FileShare.Read))
 			{
 				rawAssembly = new byte[(int)fs.Length];
 				fs.Read(rawAssembly, 0, rawAssembly.Length);

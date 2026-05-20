@@ -418,7 +418,7 @@ namespace KSPe.Util
 			public static SReflection.Assembly LoadFromFile(string pathname)
 			{
 				byte[] rawAssembly;
-				using (SIO.FileStream fs = new SIO.FileStream(pathname, SIO.FileMode.Open))
+				using (SIO.FileStream fs = new SIO.FileStream(pathname, SIO.FileMode.Open, SIO.FileAccess.Read, SIO.FileShare.Read))
 				{
 					rawAssembly = new byte[(int)fs.Length];
 					fs.Read(rawAssembly, 0, rawAssembly.Length);
