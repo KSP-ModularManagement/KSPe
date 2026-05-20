@@ -25,7 +25,6 @@ using UTexture2D = UnityEngine.Texture2D;
 
 namespace KSPe.IO
 {
-	// New Public interface for KSPe 2.1.
 	public static class Asset<T>
 	{
 		public class ConfigNode : ReadableConfigNode

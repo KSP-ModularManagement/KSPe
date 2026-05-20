@@ -28,6 +28,8 @@ using DDSHeaders;
 using System.Diagnostics;
 
 namespace KSPe.Util.Image {
+	// TODO: Make this internal on Vesion 2.6
+	[System.Obsolete("KSPe.Util.Image.Texture2D is deprecated, please use KSPe.IO.[hierarchy]<T>.FileStream instead, where [hierarchy] can be Asset, Data, Local, Save or Temp. Please report use cases not covered by them on https://github.com/KSP-ModularManagement/KSPe/discussions .")]
 	public static class Texture2D {
 	// This class is derivative work from:
 		// Copyright (c) 2013-2016, Maik Schreiber
