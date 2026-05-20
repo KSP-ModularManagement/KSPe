@@ -34,6 +34,8 @@ namespace KSPe.IO
 		CreateNew = SIO.FileMode.CreateNew,
 		Open = SIO.FileMode.Open,
 		OpenOrCreate = SIO.FileMode.OpenOrCreate,
-		Truncate = SIO.FileMode.Truncate
+		Truncate = SIO.FileMode.Truncate,
+
+		ReadOnly = -1	// Same as Open, but flags the IO Subsystem to open and share it in Read mode only. Anything else is ReadWrite/No sharing.
 	}
 }

@@ -27,7 +27,7 @@ namespace KSPe.IO.Asset
 	[System.Obsolete("KSPe.IO.Asset.FileStream is deprecated, please use KSPe.IO.Asset<T>.FileStream instead.")]
 	public class FileStream : SIO.FileStream
 	{
-		protected FileStream(string filename, SIO.FileMode filemode) : base(filename, filemode) {}
+		protected FileStream(string filename) : base(filename, SIO.FileMode.Open, SIO.FileAccess.Read, SIO.FileShare.Read) {}
 
 		public static FileStream CreateForType<T>(string filename, FileMode mode) // To favor easy replacement from the System one
 		{
@@ -37,13 +37,13 @@ namespace KSPe.IO.Asset
 		public static FileStream CreateForType<T>(FileMode mode, string filename) // To favor conformity
 		{
 			string path = File<T>.Asset.FullPathName(filename);
-			return new FileStream(path, (SIO.FileMode)mode);
+			return new FileStream(path);
 		}
 
 		public static FileStream CreateForType<T>(FileMode mode, string fn, params string[] fns)
 		{
 			string path = File<T>.Asset.FullPathName(fn, fns);
-			return new FileStream(path, (SIO.FileMode)mode);
+			return new FileStream(path);
 		}
 	}
 }

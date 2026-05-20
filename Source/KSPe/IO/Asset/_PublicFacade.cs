@@ -73,19 +73,31 @@ namespace KSPe.IO
 
 		public class FileStream : SIO.FileStream
 		{
-			protected FileStream(string filename, SIO.FileMode filemode) : base(filename, filemode) {}
+			protected FileStream(string filename) : base(filename, SIO.FileMode.Open, SIO.FileAccess.Read, SIO.FileShare.Read) {}
+
+			public static FileStream CreateFor(string filename) => CreateFor(FileMode.ReadOnly, filename);
+			public static FileStream CreateFor(string fn, params string[] fns) => CreateFor(FileMode.ReadOnly, fn, fns);
 
 			public static FileStream CreateFor(FileMode mode, string filename) // To favor conformity
 			{
 				string path = File<T>.Asset.FullPathName(filename);
-				return new FileStream(path, (SIO.FileMode)mode);
+				return mode == FileMode.ReadOnly
+						? new FileStream(path)
+						: throwIsolatedStorageException(mode, path)
+					;
 			}
 
 			public static FileStream CreateFor(FileMode mode, string fn, params string[] fns)
 			{
 				string path = File<T>.Asset.FullPathName(fn, fns);
-				return new FileStream(path, (SIO.FileMode)mode);
+				return mode == FileMode.ReadOnly
+						? new FileStream(path)
+						: throwIsolatedStorageException(mode, path)
+					;
 			}
+
+			private static FileStream throwIsolatedStorageException(FileMode mode, string filename) =>
+				throw new NotImplementedException(string.Format("File {0} can't be opened in mode {1}", filename, mode.ToString()));
 		}
 
 		public class PluginConfiguration : KSP.IO.PluginConfiguration
@@ -221,6 +233,5 @@ namespace KSPe.IO
 				return KSPe.IO.Asset.Texture2D<T>.LoadFromFile(width, height, mipmap, fn, fns);
 			}
 		}
-
 	}
 }

@@ -68,18 +68,25 @@ namespace KSPe.IO
 
 		public class FileStream : SIO.FileStream
 		{
-			protected FileStream(string filename, SIO.FileMode filemode) : base(filename, filemode) {}
+			protected FileStream(string filename) : base(filename, SIO.FileMode.Open, SIO.FileAccess.Read, SIO.FileShare.Read) {}
+			protected FileStream(string filename, SIO.FileMode filemode) : base(filename, filemode, SIO.FileAccess.ReadWrite, SIO.FileShare.None) {}
 
 			public static FileStream CreateFor(FileMode mode, string filename)
 			{
 				string path = File<T>.Local.FullPathName(true, filename);
-				return new FileStream(path, (SIO.FileMode)mode);
+				return mode == FileMode.ReadOnly
+						? new FileStream(path)
+						: new FileStream(path, (SIO.FileMode)mode)
+					;
 			}
 
 			public static FileStream CreateFor(FileMode mode, string fn, params string[] fns)
 			{
 				string path = File<T>.Local.FullPathName(true, fn, fns);
-				return new FileStream(path, (SIO.FileMode)mode);
+				return mode == FileMode.ReadOnly
+						? new FileStream(path)
+						: new FileStream(path, (SIO.FileMode)mode)
+					;
 			}
 		}
 
