@@ -195,7 +195,19 @@ namespace KSPe.Util
 		public static Version LoadVersion(string addonName, bool nameSpaceAsDirectory, string vendor = null)
 		{
 			return LoadVersionFromFile(
-				(
+				// This Combine is not necessarily needed. The Solve thingies return an ending directory separator if the path
+				// exists and it's a directory, and so the string concatenarion will work as intended.
+				//
+				// However, if the target directory doesn't exists, the Solve will not add the trailing directory separator (and it's
+				// by desigm, as the code doesn't do guesses, aiming to fail to the safe side), and then the pathname will be
+				// build wrongly, without the separator before the `addonName + ".version"` parcel.
+				//
+				// This doesn't affects the outcome - if the directory doesn't exists (or the path is not a directory), the file will
+				// not neither for sure - but it renders the error message "weird", potentially misleading the diagnoser into wrongly
+				// thinking there's a bug on the code.
+				//
+				// So the Combine will guarantee that the path will be built correctly even when the target directory doesn't exists.
+				IO.Path.Combine(
 					nameSpaceAsDirectory
 						?	IO.Hierarchy.GAMEDATA.Solve(vendor??".", addonName.Split('.')) // Dirty Hack from Hell! the Path.Combine will get rid of the "." later!
 						:	(
@@ -203,7 +215,8 @@ namespace KSPe.Util
 									? IO.Hierarchy.GAMEDATA.Solve(vendor, addonName)
 									: IO.Hierarchy.GAMEDATA.Solve(addonName)
 							)
-				) + addonName + ".version"
+					, addonName + ".version"
+				)
 			);
 		}
 
