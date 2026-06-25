@@ -136,7 +136,7 @@ namespace KSPe.IO
 		public static string GetTempFileName()							{ return SIO.Path.GetTempFileName(); }
 
 		[System.Security.Permissions.EnvironmentPermission(System.Security.Permissions.SecurityAction.Demand, Unrestricted = true)]
-		public static string GetTempPath()								{ return EnsureTrailingSeparatorOnDir(SIO.Path.GetTempPath()); }
+		public static string GetTempPath()								{ return EnsureTrailingSeparatorOnDir(SIO.Path.GetTempPath(),true); }
 
 		public static bool HasExtension(string path)					{ return SIO.Path.HasExtension(path); }
 		public static bool IsPathRooted(string path)					{ return SIO.Path.IsPathRooted(path); }

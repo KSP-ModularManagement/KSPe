@@ -80,7 +80,11 @@ namespace KSPe.IO
 
 		public static string[] GetLogicalDrives ()					{ return Path.GetFullPathInternal(SIO.Directory.GetLogicalDrives(), true); }
 
-		public static SIO.DirectoryInfo GetParent (string path)	{ return SIO.Directory.GetParent(RealPath(path)); }
+		public static SIO.DirectoryInfo GetParent (string path)
+		{
+			SIO.DirectoryInfo r = SIO.Directory.GetParent(RealPath(path));
+			return new SIO.DirectoryInfo(Path.GetFullPathInternal(r.FullName,true));
+		}
 
 		public static void Move (string sourceDirName, string destDirName)
 		{

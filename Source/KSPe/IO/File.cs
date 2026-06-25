@@ -49,7 +49,7 @@ namespace KSPe.IO
 		{
 			string fn = Path.GetTempPath();
 			fn = Path.Combine(fn, TEMP_DIR_ROOT);
-			if (!Directory.Exists(fn))
+			if (Directory.Exists(fn))
 			{
 				Log.detail("Deleting temp files at {1}", fn);
 				SIO.Directory.Delete(fn, true);
