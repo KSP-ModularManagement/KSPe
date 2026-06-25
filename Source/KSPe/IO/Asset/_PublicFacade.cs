@@ -39,6 +39,12 @@ namespace KSPe.IO
 				return (ConfigNode)base.Load();
 			}
 
+			public static ConfigNode For(string name)
+			{
+				string path = IO.File<T>.Asset.FullPathName(name + ".cfg");
+				return new ConfigNode(name, path);
+			}
+
 			public static ConfigNode For(string name, string filename)
 			{
 				string path = IO.File<T>.Asset.FullPathName(filename);
