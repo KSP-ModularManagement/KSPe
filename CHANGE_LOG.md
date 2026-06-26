@@ -1,5 +1,11 @@
 # KSP Enhanced /L :: Change Log
 
+* 2026-0625: 2.5.5.3 (Lisias) for KSP >= 1.2
+	+ Fix a nasty problem about the pathnames normalizations that caused some serious grief on the `KSPe.IO.Save<T>` abstract file system ("savegames")
+	+ *MOAR* 😆 Convenience Methods (multiple subsystems)
+	+ More sane temp files handling - auto cleanup.
+	+ Finally getting my *sheet* 😝 together and reading DLL files in readonly mode.
+		- Damn...
 * 2026-0321: 2.5.5.2 (Lisias) for KSP >= 1.2
 	+ Adding a "dummy" logger - for that moments in which you **really** don't want to log anything...
 	+ **Finally** solving a problem that was bitting my sorry arse for years on the `SaveGameMonitor` feature!
