@@ -37,18 +37,18 @@ namespace KSPe
 		private static GameObject myGameObject = null;
 		private void Awake()
 		{
-			if (Multiplatform.LowLevelTools.Security.isElevated)
-			{
-				FatalErrors.RunningAsPrivilegedUser.Show();
-				if (!OPTIONS.AllowRunningAsPrivilegedUser) return;
-			}
-
 			if (null != myGameObject)
 			{
 				Log.warn("Whoopsy... It looks KSPe was loaded twice. Aborting the redundant initialisation.");
 				return;
 			}
 			myGameObject = GameObject.Find(myGameObjectName);
+
+			if (Multiplatform.LowLevelTools.Security.isElevated)
+			{
+				FatalErrors.RunningAsPrivilegedUser.Show();
+				if (!OPTIONS.AllowRunningAsPrivilegedUser) return;
+			}
 
 			try
 			{ 

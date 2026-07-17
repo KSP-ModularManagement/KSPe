@@ -281,7 +281,7 @@ Really, really, <b>never</b> run <b>anything</b> under a Priviledged Account. It
 			if (null != GameObject.Find("KSPe.FatalError.RunningAsPrivilegedUser")) return; // Already being shown.
 			if (OPTIONS.AllowRunningAsPrivilegedUser)
 			{
-				Log.error("Fatal Error RunningAsPrivilegedUser was omitted. You really should visit {0}", URL);
+				Log.error("A Fatal Error RunningAsPrivilegedUser was supressed. You really should visit {0} and reconsider your life choices...", URL);
 				return;
 			}
 
