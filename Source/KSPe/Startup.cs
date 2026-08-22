@@ -20,6 +20,8 @@
 
 */
 using UnityEngine;
+using LLT = KSPe.Multiplatform.LowLevelTools;
+
 namespace KSPe
 {
 	[KSPAddon(KSPAddon.Startup.Instantly, true)]
@@ -27,10 +29,23 @@ namespace KSPe
 	{
 		private void Start()
 		{
-			Log.force("Version {0}, on KSP {1} under Unity {2}", Version.Text, Versioning.GetVersionStringFull(), UnityEngine.Application.unityVersion);
+			Log.force("Version {0}, on KSP {1} under Unity {2} on {3}", Version.Text, Versioning.GetVersionStringFull(), UnityEngine.Application.unityVersion, getRunningEnv());
 			SanityChecks.DoIt();
 			if (OPTIONS.SuicidalMode)
 				Log.force("You configured KSP to run in Suicidal Mode. Good luck!");
+		}
+		private static string getRunningEnv()
+		{
+			if (LLT.Windows.IsThisWindows) return string.Format("Windows");
+			if (LLT.SteamDeck.IsThisSteamDeck)
+				return string.Format("Steam Deck {0} {1} (#HURRAY!!)"
+					, LLT.SteamOS.Version
+					, ( LLT.SteamDeck.IsRunningGameMode ? "Game UI" : "Desktop" )
+				);
+			if (LLT.Unix.IsThisLinux) return string.Format("Linux {0} {1}", LLT.Linux.Distribution, LLT.Linux.Version);
+			if (LLT.Unix.IsThisMacOS) return string.Format("MacOS {0}", LLT.MacOS.Version);
+			if (LLT.Unix.IsThisUnix) return "some UNIX";
+			return "Unknown Environment";
 		}
 
 		private readonly string myGameObjectName = "/"+typeof(Startup).AssemblyQualifiedName;
