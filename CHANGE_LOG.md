@@ -1,5 +1,8 @@
 # KSP Enhanced /L :: Change Log
 
+* 2026-1113: 2.5.5.4 (Lisias) for KSP >= 1.2
+	+ There's this new strange kid in the block, KSP 1.13.0, and since KSPe knows nothing about, it borks.
+	+ *Gambiarrando* something to see if it sticks until I find what this is about.
 * 2026-0625: 2.5.5.3 (Lisias) for KSP >= 1.2
 	+ Fix a nasty problem about the pathnames normalizations that caused some serious grief on the `KSPe.IO.Save<T>` abstract file system ("savegames")
 	+ *MOAR* 😆 Convenience Methods (multiple subsystems)
