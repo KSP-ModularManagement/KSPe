@@ -275,7 +275,10 @@ namespace KSPe.Util
 				foreach (Version v in PUBLISHED_VERSIONS)
 					if (v.MAJOR == major && v.MINOR == minor && v.PATCH == patch)
 						return v;
-				throw new ArgumentOutOfRangeException(String.Format("{0}.{1}.{2}", major, minor, patch));
+				//throw new ArgumentOutOfRangeException(String.Format("{0}.{1}.{2}", major, minor, patch));
+				Version r = new Version(major, minor, patch);
+				KSPe.Log.warn("Unknown KSP {0}. Trying our luck anyway...", r.ToString());
+				return r;
 			}
 
 			/// <summary>
