@@ -401,11 +401,14 @@ namespace KSPe.Util
 				SReflection.Assembly assembly = System.AppDomain.CurrentDomain.Load(assemblyName);
 				foreach (SType type in assembly.GetTypes())
 				{
+					LOG.debug("LoadAndStartup is checking {0}...", type.ToString());
 					if ("Startup" != type.Name) continue;
 
+					LOG.debug("LoadAndStartup is instancing and bootstraping {0}...", type.ToString());
 					object instance = System.Activator.CreateInstance(type);
 					InvokeOrNull(type, instance, "Awake");
 					InvokeOrNull(type, instance, "Start");
+					LOG.debug("LoadAndStartup finished sucesfully with {0}.", type.ToString());
 					break;
 				}
 				return assembly;

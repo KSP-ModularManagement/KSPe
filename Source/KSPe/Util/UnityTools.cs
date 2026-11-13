@@ -41,6 +41,8 @@ namespace KSPe.Util
 							? 2017
 						: (UnityEngine.Application.unityVersion.StartsWith("2019."))  // 2019.2.????
 							? 2019
+						: (UnityEngine.Application.unityVersion.StartsWith("6000."))  // 6000.7.????
+							? 2019	// Hack: I will report Unity 6.* as 2019 until I figure out if I need to support it directly.
 						: 0;
 				}
 				return _unityVersion;
